@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, HasMany } from 'pinia-orm/decorators'
+import { Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 import { Interview } from 'models/interview'
 
 export default class Project extends Model {

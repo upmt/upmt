@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/decorators'
+import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import { Justification } from 'models/justification'
 import { ConcreteCategory } from 'models/concretecategory'
 

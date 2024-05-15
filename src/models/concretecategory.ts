@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/decorators'
+import { Str, Uid } from 'pinia-orm/dist/decorators'
 
 export default class ConcreteCategory extends Model {
   static entity = 'concretecategory'

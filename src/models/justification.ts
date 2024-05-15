@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/decorators'
+import { Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 import { Descriptem } from 'models/descriptem'
 
 export default class Justification extends Model {

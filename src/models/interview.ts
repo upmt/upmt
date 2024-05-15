@@ -1,4 +1,5 @@
-import { Model, Str, Uid, Attr } from 'pinia-orm'
+import { Model } from 'pinia-orm'
+import { Str, Uid, Attr } from 'pinia-orm/dist/decorators'
 import { Moment } from 'models/moment'
 
 export default class Interview extends Model {
