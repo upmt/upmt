@@ -1,9 +1,9 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
-import { Descriptem } from 'models/descriptem'
+import Descriptem from 'src/models/descriptem'
 
 export default class Justification extends Model {
-  static entity = 'justification'
+  static entity = 'justifications'
   @Uid() declare id: string
   @Str('') declare name: string
 

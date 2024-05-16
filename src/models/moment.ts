@@ -1,10 +1,10 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
-import { Justification } from 'models/justification'
-import { ConcreteCategory } from 'models/concretecategory'
+import Justification from 'src/models/justification'
+import ConcreteCategory from 'src/models/concretecategory'
 
 export default class Moment extends Model {
-  static entity = 'moment'
+  static entity = 'moments'
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string
