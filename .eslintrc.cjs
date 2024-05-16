@@ -85,7 +85,10 @@ module.exports = {
 
     'prefer-promise-reject-errors': 'off',
 
-    quotes: ['warn', 'single', { avoidEscape: true }],
+    quotes: ['off', 'double', { avoidEscape: true }],
+
+//  Indent with 4 spaces
+   "indent": ["off", 4],
 
     // this rule, if on, would require explicit return type on the `render` function
     '@typescript-eslint/explicit-function-return-type': 'off',
