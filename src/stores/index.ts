@@ -1,7 +1,9 @@
 import { store } from 'quasar/wrappers'
 import { createPinia } from 'pinia'
+import { createORM } from 'pinia-orm'
 import { Router } from 'vue-router'
 
+// See https://github.com/quasarframework/quasar/discussions/12539 ?
 /*
  * When adding new properties to stores, you should also
  * extend the `PiniaCustomProperties` interface.
@@ -23,10 +25,7 @@ declare module 'pinia' {
  */
 
 export default store((/* { ssrContext } */) => {
-  const pinia = createPinia()
-
-  // You can add Pinia plugins here
-  // pinia.use(SomePiniaPlugin)
-
-  return pinia
+  const pinia = createPinia();
+  pinia.use(createORM({ model: { withMeta: true } }));
+  return pinia;
 })

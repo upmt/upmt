@@ -2,11 +2,11 @@
   <div>
     <p>{{ title }}</p>
     <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
-        {{ todo.id }} - {{ todo.content }}
+      <li v-for="project in items" :key="project.id" @click="increment">
+        {{ project.id }} - {{ project.name }}
       </li>
     </ul>
-    <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
+    <p>Count: {{ itemCount }} / {{ meta.totalCount }}</p>
     <p>Active: {{ active ? 'yes' : 'no' }}</p>
     <p>Clicks on todos: {{ clickCount }}</p>
   </div>
@@ -14,17 +14,18 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Todo, Meta } from './models'
+import Project from 'src/models/project'
+import { Meta } from './models'
 
 interface Props {
   title: string;
-  todos?: Todo[];
+  items?: Project[];
   meta: Meta;
   active: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  todos: () => []
+  items: () => []
 })
 
 const clickCount = ref(0)
@@ -33,5 +34,5 @@ function increment () {
   return clickCount.value
 }
 
-const todoCount = computed(() => props.todos.length)
+const itemCount = computed(() => props.items.length)
 </script>
