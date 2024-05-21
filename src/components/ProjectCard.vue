@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRepo } from 'pinia-orm'
-import Project from 'src/models/project'
+import Project from 'stores/models/project'
 
 const repo = useRepo(Project)
 

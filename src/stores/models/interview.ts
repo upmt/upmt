@@ -1,9 +1,9 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid, Attr } from 'pinia-orm/dist/decorators'
-import Moment from 'src/models/moment'
+import Moment from './moment'
 
 export default class Interview extends Model {
-  static entity = 'interviews'
+  static entity = 'interview'
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string

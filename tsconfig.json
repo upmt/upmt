@@ -2,8 +2,8 @@
   "extends": "@quasar/app-vite/tsconfig-preset",
   "compilerOptions": {
     "baseUrl": ".",
-    "useDefineForClassFields": true,
-    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true
   },
   "exclude": [
     "./dist",
@@ -12,7 +12,5 @@
     "./src-capacitor",
     "./src-cordova",
     "./quasar.config.*.temporary.compiled*",
-    // Do not check types for the moment in the models (pinia-orm 1.9.0)
-    "./src/models",
   ]
 }

@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import Project from 'src/models/project'
+import Project from 'stores/models/project'
 import { Meta } from './models'
 
 interface Props {
