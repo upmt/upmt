@@ -27,12 +27,9 @@ const $q = useQuasar()
 const filename = ref(null)
 const repo = useRepo(Project)
 
-interface Props {
-    project?: Project | null
-}
-const props = withDefaults(defineProps<Props>(), {
-  project: null
-})
+const props = defineProps({
+    project: { type: Project, default: null }
+  });
 
 const interviewCount = computed(() => {
   if (props.project) {
@@ -89,7 +86,10 @@ async function uploadFile (event: Event) {
             try {
                 jsonData = JSON.parse(reader.result as string)
             } catch (error) {
-                $q.notify(`Error loading file: ${error}`)
+                $q.notify({
+                    type: 'error',
+                    message: `Error loading file: ${error}`
+                })
                 jsonData = null
             }
             console.log("Read data", jsonData)
@@ -99,7 +99,10 @@ async function uploadFile (event: Event) {
         }
         reader.onerror = () => {
             console.error('Error reading file:', reader.error)
-            $q.notify(`Error reading file: ${reader.error}`)
+            $q.notify({
+                type: 'error',
+                message: `Error reading file: ${reader.error}`
+            })
         }
         // Load data from file - the readAsText will
         // trigger the load event that is handled just
@@ -107,7 +110,10 @@ async function uploadFile (event: Event) {
         reader.readAsText(files[0])
     } catch (e) {
         console.log(e)
-        $q.notify(`General exception: ${e}`)
+        $q.notify({
+            type: 'error',
+            message: `General exception: ${e}`
+        })
     }
   }
 
