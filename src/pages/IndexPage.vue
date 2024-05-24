@@ -6,7 +6,8 @@
       :items="projects"
       :meta="meta"
       ></example-component>
-    <project-card>
+    <project-card
+      :project="selectedProject">
     </project-card>
     <project-tree
       :project="selectedProject">
@@ -28,8 +29,8 @@ defineOptions({
 
 const projectStore = useProjectStore()
 const projects = computed(() => projectStore.getAllProjects())
-const selectedProject = computed(() => {
-    if (projects.value) {
+  const selectedProject = computed(() => {
+    if (projects.value.length) {
         return projects.value[0]
     } else {
         return undefined
