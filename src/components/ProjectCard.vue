@@ -7,6 +7,9 @@
         {{ interview.id }} - {{ interview.name }}
       </li>
     </ul>
+    <pre>{{ JSON.stringify(repo.all()) }}</pre>
+    <pre>{{ JSON.stringify(projects) }}</pre>
+
     <p>Project count: {{ repo.all().length }}</p>
     <q-btn @click="addProject">Add project</q-btn>
   </q-card>
@@ -16,6 +19,7 @@
 import { computed } from 'vue'
 import { useRepo } from 'pinia-orm'
 import Project from 'stores/models/project'
+import { useProjectStore } from 'stores/projectStore'
 
 const repo = useRepo(Project)
 
@@ -34,26 +38,31 @@ const interviewCount = computed(() => {
   }
 })
 
+const pstore = useProjectStore()
+const projects = computed(() => pstore.getAllProjects())
+
+let counter = 1
 const addProject = () => {
-    repo.save({
-        name: "Test project",
+    pstore.createProject({
+        name: `Test project${counter++}`,
         interviews: [
             {
-                name: "interview1",
+                name: `interview${counter++}`,
                 color: "black",
                 comment: "",
-                interviewText: "Bla bla bli",
-                participantName: "she"
+                interviewText: `Bla bla bli ${counter}`,
+                participantName: "she",
+                rootMoment: null
             },
             {
-                name: "interview2",
+                name: `interview${counter++}`,
                 color: "red",
                 comment: "comm",
-                interviewText: "Bla bla bli",
-                participantName: "she"
+                interviewText: `Bla bla bli ${counter}`,
+                participantName: "she",
+                rootMoment: null
             }
         ]
     })
-    console.log("inserted project in", repo.piniaStore())
 }
 </script>

@@ -9,13 +9,13 @@
     <project-card>
     </project-card>
     <pre>
-      {{ JSON.stringify(projectStore) }}
+      Project visible: {{ JSON.stringify(projects.length) }}
     </pre>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import { Meta } from 'components/models'
 import ExampleComponent from 'components/ExampleComponent.vue'
@@ -26,7 +26,7 @@ defineOptions({
 })
 
 const projectStore = useProjectStore()
-const projects = projectStore.getAllProjects()
+const projects = computed(() => projectStore.getAllProjects())
 
 const meta = ref<Meta>({
   totalCount: 1200
