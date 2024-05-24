@@ -4,7 +4,7 @@ import Justification from './justification'
 import ConcreteCategory from './concretecategory'
 
 export default class Moment extends Model {
-  static entity = 'moment'
+  static entity = 'moments'
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string
