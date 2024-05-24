@@ -1,7 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <example-component
-      title="Example component"
+      title="Project list"
       active
       :items="projects"
       :meta="meta"
@@ -9,7 +9,7 @@
     <project-card>
     </project-card>
     <pre>
-      Project visible: {{ JSON.stringify(projects.length) }}
+      Project count: {{ JSON.stringify(projects.length) }}
     </pre>
   </q-page>
 </template>

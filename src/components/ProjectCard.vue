@@ -12,15 +12,19 @@
 
     <p>Project count: {{ repo.all().length }}</p>
     <q-btn @click="addProject">Add project</q-btn>
+    <q-file label="Load File" v-model="filename" filled @input="uploadFile"/>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRepo } from 'pinia-orm'
 import Project from 'stores/models/project'
 import { useProjectStore } from 'stores/projectStore'
+import { useQuasar } from 'quasar'
 
+const $q = useQuasar()
+const filename = ref(null)
 const repo = useRepo(Project)
 
 interface Props {
@@ -65,4 +69,46 @@ const addProject = () => {
         ]
     })
 }
+
+const importProject = (data: Project) => {
+    pstore.createProject(data)
+}
+
+async function uploadFile (event: Event) {
+    try {
+        // `event.target.files[0]` is the desired file object
+        const files = (event.target as HTMLInputElement).files
+        if (!files || files.length === 0) {
+            return;
+        }
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            // Parse file and extract data
+            let jsonData = null
+            try {
+                jsonData = JSON.parse(reader.result as string)
+            } catch (error) {
+                $q.notify(`Error loading file: ${error}`)
+                jsonData = null
+            }
+            console.log("Read data", jsonData)
+            if (jsonData !== null) {
+                importProject(jsonData);
+            }
+        }
+        reader.onerror = () => {
+            console.error('Error reading file:', reader.error)
+            $q.notify(`Error reading file: ${reader.error}`)
+        }
+        // Load data from file - the readAsText will
+        // trigger the load event that is handled just
+        // above.
+        reader.readAsText(files[0])
+    } catch (e) {
+        console.log(e)
+        $q.notify(`General exception: ${e}`)
+    }
+  }
+
 </script>
