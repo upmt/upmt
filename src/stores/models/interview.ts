@@ -13,4 +13,12 @@ export default class Interview extends Model {
   @Str('') declare participantName: string
 
   @Attr(null) declare rootMoment: Moment | null
+
+  get label (): string {
+    if (this.name) {
+      return `Interview ${this.name}`
+    } else {
+      return `Interview ${this.participantName} (${this.date})`
+    }
+  }
 }

@@ -8,9 +8,9 @@
       ></example-component>
     <project-card>
     </project-card>
-    <pre>
-      Project count: {{ JSON.stringify(projects.length) }}
-    </pre>
+    <project-tree
+      :project="selectedProject">
+    </project-tree>
   </q-page>
 </template>
 
@@ -20,6 +20,7 @@ import { useProjectStore } from 'stores/projectStore'
 import { Meta } from 'components/models'
 import ExampleComponent from 'components/ExampleComponent.vue'
 import ProjectCard from 'components/ProjectCard.vue'
+import ProjectTree from 'components/ProjectTree.vue'
 
 defineOptions({
   name: 'IndexPage'
@@ -27,7 +28,13 @@ defineOptions({
 
 const projectStore = useProjectStore()
 const projects = computed(() => projectStore.getAllProjects())
-
+const selectedProject = computed(() => {
+    if (projects.value) {
+        return projects.value[0]
+    } else {
+        return undefined
+    }
+  })
 const meta = ref<Meta>({
   totalCount: 1200
 })

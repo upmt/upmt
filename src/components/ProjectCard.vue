@@ -7,10 +7,7 @@
         {{ interview.id }} - {{ interview.name }}
       </li>
     </ul>
-    <pre>{{ JSON.stringify(repo.all()) }}</pre>
-    <pre>{{ JSON.stringify(projects) }}</pre>
-
-    <p>Project count: {{ repo.all().length }}</p>
+    <p>Project count: {{ projects.length }}</p>
     <q-btn @click="addProject">Add project</q-btn>
     <q-file label="Load File" v-model="filename" filled @input="uploadFile"/>
   </q-card>
@@ -18,14 +15,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRepo } from 'pinia-orm'
 import Project from 'stores/models/project'
 import { useProjectStore } from 'stores/projectStore'
 import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
 const filename = ref(null)
-const repo = useRepo(Project)
 
 const props = defineProps({
     project: { type: Project, default: null }
@@ -67,8 +62,16 @@ const addProject = () => {
     })
 }
 
-const importProject = (data: Project) => {
-    pstore.createProject(data)
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const importProject = (data: any) => {
+    pstore.createProject({
+        name: data.name,
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        interviews: data.interview_list.map((i: any) => ({
+            ...i,
+            interviewText: i.interviewText.text
+        }))
+    })
 }
 
 async function uploadFile (event: Event) {
@@ -92,7 +95,6 @@ async function uploadFile (event: Event) {
                 })
                 jsonData = null
             }
-            console.log("Read data", jsonData)
             if (jsonData !== null) {
                 importProject(jsonData);
             }

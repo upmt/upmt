@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useRepo } from 'pinia-orm'
 import Project from './models/project'
+import Interview from './models/interview'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
  * This should be put in some common module.
@@ -16,6 +17,8 @@ type Subset<K> = {
 }
 
 const repo = useRepo(Project)
+const irepo = useRepo(Interview)
+
 export const useProjectStore = defineStore('projectStore', {
   state: () => ({
   }),
@@ -25,6 +28,12 @@ export const useProjectStore = defineStore('projectStore', {
     },
     getAllProjects (): Project[] {
       return repo.all()
+    },
+    getProject (id: string): Project {
+      return repo.find(id)
+    },
+    getInterview (id: string): Interview {
+      return irepo.find(id)
     }
   }
 })
