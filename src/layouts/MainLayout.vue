@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 defineOptions({
@@ -66,6 +66,9 @@ const linksList: EssentialLinkProps[] = [];
 const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+    leftDrawerOpen.value = !leftDrawerOpen.value
 }
+onMounted(() => {
+    leftDrawerOpen.value = false
+})
 </script>
