@@ -100,6 +100,13 @@ module.exports = {
     // does not work with type definitions
     'no-unused-vars': 'off',
 
+    "@typescript-eslint/no-use-before-define": [
+        2,
+        {
+            "classes": false
+        }
+    ],
+
     // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       "semi": [0, "always"]
