@@ -9,12 +9,14 @@
     </ul>
     <p>Project count: {{ projects.length }}</p>
     <q-btn @click="addProject">Add project</q-btn>
+    <q-btn @click="loadSample">Load sample</q-btn>
     <q-file label="Load File" v-model="filename" filled @input="uploadFile"/>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import axios from 'axios'
 import Project from 'stores/models/project'
 import { useProjectStore } from 'stores/projectStore'
 import { useQuasar } from 'quasar'
@@ -70,6 +72,12 @@ const addProject = () => {
             }
         ]
     })
+}
+
+async function loadSample () {
+    axios.get('./OPEVA-G1.upmt').then((response) => {
+        pstore.importProject(response.data)
+    });
 }
 
 async function uploadFile (event: Event) {
