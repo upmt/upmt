@@ -7,5 +7,5 @@ export default class Project extends Model {
 
   @Uid() declare id: string
   @Str('') declare name: string
-  @HasMany(() => Interview, 'interviewId') declare interviews: Interview[]
+  @HasMany(() => Interview, 'projectId') declare interviews: Interview[]
 }

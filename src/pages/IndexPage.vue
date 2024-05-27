@@ -1,27 +1,23 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Project list"
-      active
-      :items="projects"
-      :meta="meta"
-      ></example-component>
+    <q-select
+      v-model="selected"
+      :options="projectList">
+    </q-select>
     <project-card
       :project="selectedProject">
     </project-card>
-    <project-tree
+    <ProjectTextRepresentation
       :project="selectedProject">
-    </project-tree>
+    </ProjectTextRepresentation>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
-import { Meta } from 'components/models'
-import ExampleComponent from 'components/ExampleComponent.vue'
 import ProjectCard from 'components/ProjectCard.vue'
-import ProjectTree from 'components/ProjectTree.vue'
+import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
 
 defineOptions({
   name: 'IndexPage'
@@ -29,14 +25,21 @@ defineOptions({
 
 const projectStore = useProjectStore()
 const projects = computed(() => projectStore.getAllProjects())
-  const selectedProject = computed(() => {
-    if (projects.value.length) {
-        return projects.value[0]
+
+interface SelectItem {
+    label: string
+    value: string
+}
+const selected = ref<SelectItem | null>(null)
+const projectList = computed((): SelectItem[] => projects.value.map(p => ({
+    label: p.name,
+    value: p.id
+  })))
+const selectedProject = computed(() => {
+    if (selected.value) {
+        return projectStore.getProject(selected.value.value)
     } else {
         return undefined
     }
   })
-const meta = ref<Meta>({
-  totalCount: 1200
-})
 </script>

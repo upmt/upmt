@@ -48,29 +48,27 @@ const addProject = () => {
                 comment: "",
                 interviewText: `Bla bla bli ${counter}`,
                 participantName: "she",
-                rootMoment: null
+                analysis: {
+                    rootMoment: {
+                        name: `Moment ${counter}`,
+                        color: "blue",
+                        children: [
+                            {
+                                name: `Child moment ${counter}`,
+                                color: "red"
+                            }
+                        ]
+                    }
+                }
             },
             {
                 name: `interview${counter++}`,
                 color: "red",
                 comment: "comm",
                 interviewText: `Bla bla bli ${counter}`,
-                participantName: "she",
-                rootMoment: null
+                participantName: "she"
             }
         ]
-    })
-}
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const importProject = (data: any) => {
-    pstore.createProject({
-        name: data.name,
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        interviews: data.interview_list.map((i: any) => ({
-            ...i,
-            interviewText: i.interviewText.text
-        }))
     })
 }
 
@@ -96,7 +94,7 @@ async function uploadFile (event: Event) {
                 jsonData = null
             }
             if (jsonData !== null) {
-                importProject(jsonData);
+                pstore.importProject(jsonData);
             }
         }
         reader.onerror = () => {

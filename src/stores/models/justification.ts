@@ -7,5 +7,5 @@ export default class Justification extends Model {
   @Uid() declare id: string
   @Str('') declare name: string
 
-  @HasMany(() => Descriptem, 'descriptemId') declare descriptems: Descriptem[]
+  @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
 }

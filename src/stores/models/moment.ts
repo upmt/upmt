@@ -13,6 +13,9 @@ export default class Moment extends Model {
   @Bool(false) declare isCommentVisible: boolean
   @Bool(false) declare isTransitional: boolean
 
-  @HasOne(() => Justification, 'justificationId') declare justification: Justification | null
-  @HasMany(() => ConcreteCategory, 'categoryId') declare concreteCategories: ConcreteCategory[]
+  @HasOne(() => Justification, 'momentId') declare justification: Justification | undefined
+  // FIXME: ??? what usage?
+  @HasMany(() => ConcreteCategory, 'momentId') declare concreteCategories: ConcreteCategory[]
+  /* eslint-disable no-use-before-define */
+  @HasMany(() => Moment, 'parentId') declare children: Moment[]
 }

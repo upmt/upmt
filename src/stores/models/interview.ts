@@ -1,6 +1,6 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid, Attr } from 'pinia-orm/dist/decorators'
-import Moment from './moment'
+import Analysis from './analysis'
 
 export default class Interview extends Model {
   static entity = 'interviews'
@@ -12,7 +12,7 @@ export default class Interview extends Model {
   @Str('') declare interviewText: string
   @Str('') declare participantName: string
 
-  @Attr(null) declare rootMoment: Moment | null
+  @Attr(null) declare analysis: Analysis | undefined
 
   get label (): string {
     if (this.name) {

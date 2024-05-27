@@ -63,7 +63,7 @@ const linksList: EssentialLinkProps[] = [];
     },
     */
 
-const leftDrawerOpen = ref(false);
+const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer () {
   leftDrawerOpen.value = !leftDrawerOpen.value
