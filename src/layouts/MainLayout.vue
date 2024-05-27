@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -21,22 +21,24 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
+      overlay
       bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+      >
+      <q-scroll-area class="fit">
+        <q-list>
+          <template v-for="(item, index) in menuList" :key="index">
+              <q-item clickable v-ripple>
+                <q-item-section avatar v-if="item.icon">
+                  <q-icon :name="item.icon" />
+                </q-item-section>
+                <q-item-section>
+                  {{ item.label }}
+                </q-item-section>
+              </q-item>
+              <q-separator :key="'sep' + index" v-if="item.separator" />
+            </template>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
@@ -47,21 +49,25 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 defineOptions({
   name: 'MainLayout'
 })
 
-const linksList: EssentialLinkProps[] = [];
-/*
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-    },
-    */
+interface MenuItem {
+    label: string
+    icon?: string
+    link?: string
+    action?: object
+    separator?: boolean
+}
+const menuList: MenuItem[] = [
+    {
+        label: 'Open',
+        icon: 'mdi-open',
+        link: 'open'
+    }
+]
 
 const leftDrawerOpen = ref(false)
 
