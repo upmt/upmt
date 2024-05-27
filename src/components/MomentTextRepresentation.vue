@@ -6,7 +6,7 @@
     <div :style="backgroundStyle" class="moment-metadata">
       <span class="moment-name">{{ moment.name }}</span>
       <span class="moment-comment">{{ moment.comment }}</span>
-      <span class="moment-isCollapsed">{{ moment.isCollapsed }}</span>
+<!--      <span class="moment-isCollapsed">{{ moment.isCollapsed }}</span> -->
     </div>
 
     <div class="moment-justification">
