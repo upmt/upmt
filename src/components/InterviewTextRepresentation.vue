@@ -9,10 +9,10 @@
     </div>
     <div class="interview-text">Text with {{ interview.interviewText.length }} characters
     </div>
-    Foo
+
     <AnalysisTextRepresentation :analysis="interview.analysis">
     </AnalysisTextRepresentation>
-    Bar
+
   </div>
 </template>
 
