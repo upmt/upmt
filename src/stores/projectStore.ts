@@ -36,7 +36,7 @@ interface OldMoment {
    comment: string
    isCollapsed: boolean
    isCommentVisible: boolean
-   isTransitional: boolean
+   transitional: boolean
    justification: OldJustification
    moment_list: OldMoment[]
 }
@@ -58,7 +58,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
     comment: m.comment,
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
-    isTransitional: m.isTransitional,
+    isTransitional: m.transitional,
     justification: justificationrepo.make({
       descriptems: m.justification?.descripteme_list.map(d => descriptemrepo.make({
         startIndex: d.startIndex,
