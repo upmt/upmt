@@ -6,33 +6,57 @@
     <div :style="{ backgroundColor: moment.color }" class="moment-metadata">
       <span class="moment-name">{{ moment.name }}</span>
       <span class="moment-comment">{{ moment.comment }}</span>
-<!--      <span class="moment-isCollapsed">{{ moment.isCollapsed }}</span> -->
     </div>
 
-    <div class="moment-justification">
-      <JustificationTextRepresentation :justification="moment.justification">
-      </JustificationTextRepresentation>
-    </div>
+    <q-expansion-item
+      dense
+      dense-toggle
+      expand-icon-toggle
+      expand-separator
+      v-model="expand"
+      :label="summary"
+      >
 
-    <div :class="[ 'moment-children', layout ]">
-      <li v-for="m in moment.children" :key="m.id">
-        <MomentTextRepresentation :moment="m">
-        </MomentTextRepresentation>
-      </li>
-    </div>
+      <div class="moment-justification">
+        <JustificationTextRepresentation :justification="moment.justification">
+        </JustificationTextRepresentation>
+      </div>
+
+      <div :class="[ 'moment-children', layout ]">
+        <li v-for="m in moment.children" :key="m.id">
+          <MomentTextRepresentation :moment="m">
+          </MomentTextRepresentation>
+        </li>
+      </div>
+
+    </q-expansion-item>
 
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import Moment from 'stores/models/moment'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 
-defineProps({
+const props = defineProps({
     moment: { type: Moment, default: null },
     layout: { type: String, default: "vertical" }
   });
+
+const expand = ref(!props.moment.isCollapsed)
+
+const summary = computed(() => {
+    const count = props.moment.children.length;
+    let message = `${props.moment.children.length} sous-moments`
+    if (count === 0) {
+        message = "0 sous-moment"
+    } else if (count === 1) {
+        message = "1 sous-moment"
+    }
+    return message
+})
 </script>
 
   <style>
