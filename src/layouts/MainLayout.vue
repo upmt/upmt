@@ -15,7 +15,6 @@
           UPMT
         </q-toolbar-title>
 
-        <div>Anonymous</div>
         <q-btn
           dense
           flat
