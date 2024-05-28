@@ -1,8 +1,5 @@
 <template>
   <div class="analysis" :data-moment="analysis.id">
-    <div class="analysis-metadata">
-      <span class="analysis-name">Analysis {{ analysis.name }}</span>
-    </div>
     <div class="analysis-content">
       <MomentTextRepresentation :moment="analysis.rootMoment"
                                 layout="horizontal">

@@ -1,13 +1,12 @@
 <template>
   <div class="interview" :data-interview="interview.id">
     <div class="interview-metadata">
-      <span :style="{ backgroundColor: interview.color }">
+      <span class="interview-title"
+            :style="{ backgroundColor: interview.color }">
         <span class="interview-participantName">{{ interview.participantName }}</span>
-        <span class="interview-date">{{ interview.date }}</span>
+        &nbsp;(<span class="interview-date">{{ interview.date }}</span>)
       </span>
       <span class="interview-comment">{{ interview.comment }}</span>
-    </div>
-    <div class="interview-text">Text with {{ interview.text.length }} characters
     </div>
 
     <AnalysisTextRepresentation :analysis="interview.analysis">
@@ -29,6 +28,11 @@ defineProps({
   .interview-metadata {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+  }
+  .interview-metadata > span {
+      margin: 0 1em;
+  }
+  .interview-title {
+      font-weight: bold;
   }
 </style>
