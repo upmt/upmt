@@ -18,9 +18,9 @@ export default class Interview extends Model {
 
   get label (): string {
     if (this.name) {
-      return `Interview ${this.name}`
+      return this.name
     } else {
-      return `Interview ${this.participantName} (${this.date})`
+      return `${this.participantName} (${this.date})`
     }
   }
 }
