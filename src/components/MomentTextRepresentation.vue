@@ -14,7 +14,7 @@
       </JustificationTextRepresentation>
     </div>
 
-    <div class="moment-children">
+    <div :class="[ 'moment-children', layout ]">
       <li v-for="m in moment.children" :key="m.id">
         <MomentTextRepresentation :moment="m">
         </MomentTextRepresentation>
@@ -31,7 +31,8 @@ import JustificationTextRepresentation from './JustificationTextRepresentation.v
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 
 const props = defineProps({
-    moment: { type: Moment, default: null }
+    moment: { type: Moment, default: null },
+    layout: { type: String, default: "vertical" }
   });
 
 const backgroundStyle = computed(() => {
@@ -42,8 +43,17 @@ const backgroundStyle = computed(() => {
 <style>
   .moment-children {
     list-style: none;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey
+  }
+  .moment-children.horizontal {
+      flex-direction: row;
   }
   .moment {
+      min-width: 200px;
+      min-height: 120px;
       display: flex;
       flex-direction: row;
       border: 1px solid grey

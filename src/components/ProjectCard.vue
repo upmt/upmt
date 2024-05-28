@@ -48,7 +48,7 @@ const addProject = () => {
                 name: `interview${counter++}`,
                 color: "black",
                 comment: "",
-                interviewText: `Bla bla bli ${counter}`,
+                text: `Bla bla bli ${counter}`,
                 participantName: "she",
                 analysis: {
                     rootMoment: {
@@ -67,7 +67,7 @@ const addProject = () => {
                 name: `interview${counter++}`,
                 color: "red",
                 comment: "comm",
-                interviewText: `Bla bla bli ${counter}`,
+                text: `Bla bla bli ${counter}`,
                 participantName: "she"
             }
         ]

@@ -22,3 +22,11 @@ defineProps({
     justification: { type: Justification, default: null }
 });
 </script>
+
+<style>
+  .justification-descriptems {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

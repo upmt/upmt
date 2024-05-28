@@ -3,7 +3,7 @@
     <strong>Project {{ project?.name }}</strong>
 
     <h2>{{ project.interviews.length }} interviews</h2>
-    <ul>
+    <ul class="interview-list">
       <li v-for="interview in project.interviews" :key="interview.id">
         <InterviewTextRepresentation :interview="interview">
         </InterviewTextRepresentation>
@@ -21,3 +21,9 @@ defineProps({
     project: { type: Project, default: null }
 });
 </script>
+
+<style>
+  .interview-list {
+    list-style: none;
+  }
+</style>

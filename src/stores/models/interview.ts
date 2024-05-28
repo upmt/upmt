@@ -1,6 +1,7 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Attr } from 'pinia-orm/dist/decorators'
+import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Analysis from './analysis'
+import Annotation from './annotation'
 
 export default class Interview extends Model {
   static entity = 'interviews'
@@ -9,10 +10,11 @@ export default class Interview extends Model {
   @Str('') declare color: string
   @Str('') declare comment: string
   @Str('') declare date: string
-  @Str('') declare interviewText: string
+  @Str('') declare text: string
   @Str('') declare participantName: string
 
-  @Attr(null) declare analysis: Analysis | undefined
+  @HasMany(() => Annotation, 'interviewId') declare annotations: Annotation[]
+  @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis | undefined
 
   get label (): string {
     if (this.name) {

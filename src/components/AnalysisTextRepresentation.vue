@@ -4,7 +4,8 @@
       <span class="analysis-name">Analysis {{ analysis.name }}</span>
     </div>
     <div class="analysis-content">
-      <MomentTextRepresentation :moment="analysis.rootMoment">
+      <MomentTextRepresentation :moment="analysis.rootMoment"
+                                layout="horizontal">
       </MomentTextRepresentation>
     </div>
   </div>

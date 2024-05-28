@@ -5,7 +5,11 @@ import Interview from './interview'
 export default class Descriptem extends Model {
   static entity = 'descriptems'
   @Uid() declare id: string
-  @HasOne(() => Interview, 'interviewId') declare interview: Interview
+  @HasOne(() => Interview, 'descriptemId') declare interview: Interview
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
+
+  get text (): string {
+    return this.interview.text.slice(this.startIndex, this.endIndex)
+  }
 }

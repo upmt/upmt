@@ -1,5 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
+    <!--
     <q-select
       v-model="selected"
       :options="projectList">
@@ -7,6 +8,7 @@
     <project-card
       :project="selectedProject">
     </project-card>
+    -->
     <ProjectTextRepresentation
       :project="selectedProject">
     </ProjectTextRepresentation>
@@ -14,27 +16,31 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
-import ProjectCard from 'components/ProjectCard.vue'
+// import ProjectCard from 'components/ProjectCard.vue'
 import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from 'axios'
 
 defineOptions({
   name: 'IndexPage'
 })
 
 const projectStore = useProjectStore()
-const projects = computed(() => projectStore.getAllProjects())
 
 interface SelectItem {
     label: string
     value: string
 }
 const selected = ref<SelectItem | null>(null)
+/*
+const projects = computed(() => projectStore.getAllProjects())
 const projectList = computed((): SelectItem[] => projects.value.map(p => ({
     label: p.name,
     value: p.id
-  })))
+    })))
+    */
 const selectedProject = computed(() => {
     if (selected.value) {
         return projectStore.getProject(selected.value.value)
@@ -42,4 +48,19 @@ const selectedProject = computed(() => {
         return undefined
     }
   })
+
+function loadSample () {
+    axios.get('./OPEVA-G1.upmt').then((response) => {
+        const p = useProjectStore().importProject(response.data)
+        selected.value = { label: p.name, value: p.id }
+    })
+}
+
+onMounted(() => {
+    if (document.location.hash.includes('init')) {
+        loadSample()
+        console.log("Debugging pstore", projectStore)
+    }
+})
+
 </script>

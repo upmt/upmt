@@ -1,6 +1,6 @@
 <template>
   <div class="descriptem" :data-descriptem="descriptem.id">
-    Descriptem {{ descriptem.id }}
+    <q-icon size="xs" name="mdi-format-quote-close-outline"></q-icon> {{ descriptem.text }}
   </div>
 </template>
 

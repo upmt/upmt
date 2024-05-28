@@ -4,6 +4,8 @@ import Project from './models/project'
 import Interview from './models/interview'
 import Justification from './models/justification'
 import Moment from './models/moment'
+import Analysis from './models/analysis'
+import Descriptem from './models/descriptem'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
  * This should be put in some common module.
@@ -21,7 +23,13 @@ type Subset<K> = {
 const repo = useRepo(Project)
 const interviewrepo = useRepo(Interview)
 const momentrepo = useRepo(Moment)
+const analysisrepo = useRepo(Analysis)
+const justificationrepo = useRepo(Justification)
+const descriptemrepo = useRepo(Descriptem)
 
+interface OldJustification {
+   descripteme_list: Descriptem[]
+}
 interface OldMoment {
    name: string
    color: string
@@ -29,12 +37,21 @@ interface OldMoment {
    isCollapsed: boolean
    isCommentVisible: boolean
    isTransitional: boolean
-   justification: Justification
+   justification: OldJustification
    moment_list: OldMoment[]
+}
+interface OldInterview {
+   date: string
+   color: string
+   comment: string
+   participantName: string
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+   interviewText: any
+   rootMoment: OldMoment
 }
 
 // Map an imported moment to a Moment
-function mapMoment (m: OldMoment): Moment {
+function mapMoment (m: OldMoment, interview: Interview): Moment {
   return momentrepo.make({
     name: m.name,
     color: m.color,
@@ -42,9 +59,30 @@ function mapMoment (m: OldMoment): Moment {
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.isTransitional,
-    justification: m.justification,
-    children: m.moment_list.map((c: OldMoment) => mapMoment(c))
+    justification: justificationrepo.make({
+      descriptems: m.justification?.descripteme_list.map(d => descriptemrepo.make({
+        startIndex: d.startIndex,
+        endIndex: d.endIndex,
+        interview
+      }))
+    }),
+    children: m.moment_list.map((c: OldMoment) => mapMoment(c, interview))
   })
+}
+
+function mapInterview (i: OldInterview): Interview {
+  const interview: Interview = interviewrepo.make({
+    date: i.date,
+    color: i.color,
+    comment: i.comment,
+    participantName: i.participantName,
+    text: i.interviewText.text,
+    annotations: i.interviewText.annotation_list
+  })
+  interview.analysis = analysisrepo.make({
+    rootMoment: mapMoment(i.rootMoment, interview)
+  })
+  return interview
 }
 
 export const useProjectStore = defineStore('projectStore', {
@@ -58,16 +96,10 @@ export const useProjectStore = defineStore('projectStore', {
     importProject (data: any) {
       const out = repo.save({
         name: data.name,
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        interviews: data.interview_list.map((i: any) => ({
-          ...i,
-          analysis: {
-            rootMoment: mapMoment(i.rootMoment)
-          },
-          interviewText: i.interviewText.text
-        }))
+        interviews: data.interview_list.map((i: OldInterview) => mapInterview(i))
       })
       console.log("Imported", out)
+      return out
     },
     getAllProjects (): Project[] {
       return repo.all()

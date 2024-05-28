@@ -7,7 +7,7 @@
       </span>
       <span class="interview-comment">{{ interview.comment }}</span>
     </div>
-    <div class="interview-text">Text with {{ interview.interviewText.length }} characters
+    <div class="interview-text">Text with {{ interview.text.length }} characters
     </div>
 
     <AnalysisTextRepresentation :analysis="interview.analysis">
@@ -27,3 +27,11 @@ const interviewStyle = () => {
       return `background-color: ${props.interview.color}`
 }
 </script>
+
+<style>
+  .interview-metadata {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+</style>
