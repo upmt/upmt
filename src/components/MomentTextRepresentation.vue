@@ -3,7 +3,7 @@
        v-if="moment"
        :data-moment="moment.id">
 
-    <div :style="backgroundStyle" class="moment-metadata">
+    <div :style="{ backgroundColor: moment.color }" class="moment-metadata">
       <span class="moment-name">{{ moment.name }}</span>
       <span class="moment-comment">{{ moment.comment }}</span>
 <!--      <span class="moment-isCollapsed">{{ moment.isCollapsed }}</span> -->
@@ -25,19 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import Moment from 'stores/models/moment'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 
-const props = defineProps({
+defineProps({
     moment: { type: Moment, default: null },
     layout: { type: String, default: "vertical" }
   });
-
-const backgroundStyle = computed(() => {
-    return { backgroundColor: props.moment.color }
-})
 </script>
 
   <style>

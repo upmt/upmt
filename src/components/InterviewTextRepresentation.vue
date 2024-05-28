@@ -1,7 +1,7 @@
 <template>
   <div class="interview" :data-interview="interview.id">
     <div class="interview-metadata">
-      <span :style="interviewStyle">
+      <span :style="{ backgroundColor: interview.color }">
         <span class="interview-participantName">{{ interview.participantName }}</span>
         <span class="interview-date">{{ interview.date }}</span>
       </span>
@@ -20,12 +20,9 @@
 import Interview from 'stores/models/interview'
 import AnalysisTextRepresentation from './AnalysisTextRepresentation.vue'
 
-const props = defineProps({
+defineProps({
     interview: { type: Interview, default: null }
 });
-const interviewStyle = () => {
-      return `background-color: ${props.interview.color}`
-}
 </script>
 
 <style>
