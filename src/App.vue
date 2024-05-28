@@ -7,3 +7,9 @@ defineOptions({
   name: 'App'
 })
 </script>
+
+<style>
+  :root {
+    --transitional-color: #bbb;
+  }
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="moment"
+  <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
        v-if="moment"
        :data-moment="moment.id">
 
@@ -36,17 +36,22 @@ const props = defineProps({
   });
 
 const backgroundStyle = computed(() => {
-    return `background-color: ${props.moment.color}`
+    return { backgroundColor: props.moment.color }
 })
 </script>
 
-<style>
+  <style>
+  .moment-name {
+    font-weight: bold;
+  }
+  .moment-metadata {
+    text-align: center;
+  }
   .moment-children {
     list-style: none;
     min-width: 200px;
     display: flex;
     flex-direction: column;
-    border: 1px solid grey
   }
   .moment-children.horizontal {
       flex-direction: row;
@@ -54,8 +59,12 @@ const backgroundStyle = computed(() => {
   .moment {
       min-width: 200px;
       min-height: 120px;
+      margin: 1em;
       display: flex;
-      flex-direction: row;
-      border: 1px solid grey
+      flex-direction: column;
+      border: 1px solid grey;
+  }
+  .transitional {
+      background-color: var(--transitional-color);
   }
 </style>
