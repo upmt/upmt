@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="hHr lpr fFr">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -16,6 +16,12 @@
         </q-toolbar-title>
 
         <div>Anonymous</div>
+        <q-btn
+          dense
+          flat
+          round
+          icon="menu"
+          @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
@@ -41,9 +47,20 @@
       </q-scroll-area>
     </q-drawer>
 
+    <q-drawer
+      v-model="rightDrawerOpen"
+      bordered
+      side="right"
+      >
+      <q-scroll-area class="fit">
+        Right drawer content
+      </q-scroll-area>
+    </q-drawer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
+
   </q-layout>
 </template>
 
@@ -70,11 +87,16 @@ const menuList: MenuItem[] = [
 ]
 
 const leftDrawerOpen = ref(false)
+const rightDrawerOpen = ref(false)
 
 function toggleLeftDrawer () {
     leftDrawerOpen.value = !leftDrawerOpen.value
 }
+function toggleRightDrawer () {
+    rightDrawerOpen.value = !rightDrawerOpen.value
+}
 onMounted(() => {
     leftDrawerOpen.value = false
+    rightDrawerOpen.value = false
 })
 </script>
