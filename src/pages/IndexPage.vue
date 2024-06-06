@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page class="row fit">
     <!--
     <q-select
       v-model="selected"
@@ -9,9 +9,15 @@
       :project="selectedProject">
     </project-card>
     -->
+    <!--
     <ProjectTextRepresentation
       :project="selectedProject">
     </ProjectTextRepresentation>
+    -->
+    <ProjectInterviewSelection
+      class="col-grow"
+      :project="selectedProject">
+    </ProjectInterviewSelection>
   </q-page>
 </template>
 
@@ -19,7 +25,8 @@
 import { computed, onMounted, ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 // import ProjectCard from 'components/ProjectCard.vue'
-import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
+// import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
+import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios'
 
@@ -34,13 +41,6 @@ interface SelectItem {
     value: string
 }
 const selected = ref<SelectItem | null>(null)
-/*
-const projects = computed(() => projectStore.getAllProjects())
-const projectList = computed((): SelectItem[] => projects.value.map(p => ({
-    label: p.name,
-    value: p.id
-    })))
-    */
 const selectedProject = computed(() => {
     if (selected.value) {
         return projectStore.getProject(selected.value.value)
