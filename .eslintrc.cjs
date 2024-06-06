@@ -109,6 +109,8 @@ module.exports = {
 
     // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      "semi": [0, "always"]
+      "semi": [0, "always"],
+      "key-spacing": "off",
+
   }
 }

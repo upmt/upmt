@@ -1,7 +1,7 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
-import ConcreteCategory from './concretecategory'
+import Category from './category'
 
 export default class Moment extends Model {
   static entity = 'moments'
@@ -14,8 +14,7 @@ export default class Moment extends Model {
   @Bool(false) declare isTransitional: boolean
 
   @HasOne(() => Justification, 'momentId') declare justification: Justification | undefined
-  // FIXME: ??? what usage?
-  @HasMany(() => ConcreteCategory, 'momentId') declare concreteCategories: ConcreteCategory[]
+  @HasMany(() => Category, 'momentId') declare categories: Category[]
   /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
 }

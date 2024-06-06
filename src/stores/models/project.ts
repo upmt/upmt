@@ -1,11 +1,13 @@
 import { Model } from 'pinia-orm'
-import { HasMany, Str, Uid } from 'pinia-orm/dist/decorators'
+import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
+import ModelFolder from './modelfolder'
 
 export default class Project extends Model {
   static entity = 'projects'
 
   @Uid() declare id: string
   @Str('') declare name: string
+  @HasOne(() => ModelFolder, 'projectId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'projectId') declare interviews: Interview[]
 }
