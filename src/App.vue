@@ -11,5 +11,6 @@ defineOptions({
 <style>
   :root {
     --transitional-color: #bbb;
+    --header-height: 82px;
   }
 </style>

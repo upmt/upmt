@@ -31,7 +31,6 @@
           transition-next="jump-up"
         >
           <q-tab-panel v-for="interview in project.interviews"
-                       col
                        :name="interview.id"
                        :key="interview.id">
 
@@ -40,12 +39,16 @@
               :limits="[5,95]">
 
               <template v-slot:before>
-                <InterviewTextRepresentation :interview="interview">
+                <InterviewTextRepresentation
+                  class="fit fullwindow-height"
+                  :interview="interview">
                 </InterviewTextRepresentation>
               </template>
 
               <template v-slot:after>
-                <TextAnnotation :interview="interview">
+                <TextAnnotation
+                  class="fit fullwindow-height"
+                  :interview="interview">
                 </TextAnnotation>
               </template>
             </q-splitter>
@@ -79,4 +82,9 @@
 </script>
 
 <style>
+  .fullwindow-height {
+    min-height: calc(100vh - var(--header-height));
+    max-height: calc(100vh - var(--header-height));
+    overflow: auto;
+}
 </style>
