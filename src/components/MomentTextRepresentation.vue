@@ -55,7 +55,7 @@ const props = defineProps({
 const expand = ref(!props.moment.isCollapsed)
 </script>
 
-<style scoped>
+<style>
   .header-class {
     font-weight: bold;
     text-align: center;
