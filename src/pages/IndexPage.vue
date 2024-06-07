@@ -33,6 +33,7 @@ import axios from 'axios'
 defineOptions({
   name: 'IndexPage'
 })
+const $q = useQuasar()
 
 const projectStore = useProjectStore()
 
@@ -51,8 +52,10 @@ const selectedProject = computed(() => {
 
 function loadSample () {
     axios.get('./OPEVA-G1.upmt').then((response) => {
+    $q.loading.show()
         const p = useProjectStore().importProject(response.data)
         selected.value = { label: p.name, value: p.id }
+        $q.loading.hide()
     })
 }
 
