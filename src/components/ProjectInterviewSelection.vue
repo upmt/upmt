@@ -2,7 +2,7 @@
   <div
     row
     v-if="project">
-    <strong>Project {{ project.name }} - {{ project.interviews.length }} interviews</strong>
+    <strong>{{ project.label }}</strong>
 
     <q-splitter
       v-model="splitterModel"

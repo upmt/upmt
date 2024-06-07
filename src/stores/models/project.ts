@@ -10,4 +10,12 @@ export default class Project extends Model {
   @Str('') declare name: string
   @HasOne(() => ModelFolder, 'projectId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'projectId') declare interviews: Interview[]
+
+  get label (): string {
+    if (this.name) {
+      return `${this.name} - ${this.interviews.length} interviews`
+    } else {
+      return "Unnamed project"
+    }
+  }
 }
