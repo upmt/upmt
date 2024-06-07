@@ -2,7 +2,6 @@
   <div
     row
     v-if="project">
-    <strong>{{ project.label }}</strong>
 
     <q-splitter
       v-model="splitterModel"
@@ -13,6 +12,7 @@
             v-model="tab"
             vertical
             >
+            <strong>{{ project.label }}</strong>
             <q-tab v-for="interview in project.interviews"
                    :name="interview.id"
                    :key="interview.id"
