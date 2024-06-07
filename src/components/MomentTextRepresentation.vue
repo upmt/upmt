@@ -8,9 +8,10 @@
       dense
       dense-toggle
       expand-icon-toggle
-      expand-separator
+      switch-toggle-side
       v-model="expand"
       class="moment-name"
+      header-class="header-class"
       :label="moment.name"
       :title="moment.comment"
       >
@@ -55,8 +56,9 @@ const expand = ref(!props.moment.isCollapsed)
 </script>
 
 <style scoped>
-  .moment-name .q-item__label {
+  .header-class {
     font-weight: bold;
+    text-align: center;
   }
   .moment-children {
     list-style: none;
@@ -69,7 +71,7 @@ const expand = ref(!props.moment.isCollapsed)
   }
   .moment {
       min-width: 200px;
-      min-height: 120px;
+      min-height: 40px;
       margin: 1em;
       display: flex;
       flex-direction: column;

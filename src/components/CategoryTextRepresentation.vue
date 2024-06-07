@@ -34,7 +34,7 @@ defineProps({
 })
 </script>
 
-  <style>
+<style scoped>
   .category-name {
     font-weight: bold;
   }
