@@ -1,12 +1,8 @@
 <template>
   <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
+       :style="{ backgroundColor: moment.color }"
        v-if="moment"
        :data-moment="moment.id">
-
-    <div :style="{ backgroundColor: moment.color }" class="moment-metadata">
-      <span class="moment-name">{{ moment.name }}</span>
-      <span class="moment-comment">{{ moment.comment }}</span>
-    </div>
 
     <q-expansion-item
       dense
@@ -14,12 +10,21 @@
       expand-icon-toggle
       expand-separator
       v-model="expand"
-      :label="summary"
+      class="moment-name"
+      :label="moment.name"
+      :title="moment.comment"
       >
 
       <div class="moment-justification">
         <JustificationTextRepresentation :justification="moment.justification">
         </JustificationTextRepresentation>
+      </div>
+
+      <div :class="[ 'moment-categories', layout ]">
+        <li v-for="c in moment.categories" :key="c.id">
+          <CategoryTextRepresentation :category="c">
+          </CategoryTextRepresentation>
+        </li>
       </div>
 
       <div :class="[ 'moment-children', layout ]">
@@ -35,9 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import Moment from 'stores/models/moment'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
+import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 
 const props = defineProps({
@@ -46,25 +52,11 @@ const props = defineProps({
   });
 
 const expand = ref(!props.moment.isCollapsed)
-
-const summary = computed(() => {
-    const count = props.moment.children.length;
-    let message = `${props.moment.children.length} sous-moments`
-    if (count === 0) {
-        message = "0 sous-moment"
-    } else if (count === 1) {
-        message = "1 sous-moment"
-    }
-    return message
-})
 </script>
 
   <style>
-  .moment-name {
+  .moment-name .q-item__label {
     font-weight: bold;
-  }
-  .moment-metadata {
-    text-align: center;
   }
   .moment-children {
     list-style: none;
