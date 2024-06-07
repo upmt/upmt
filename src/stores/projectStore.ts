@@ -201,6 +201,7 @@ function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel {
     model = repo.PropertyModel.make({
       name: sp.name
     })
+    idCache.PropertyModel[sp['@id']] = model
   }
   return model
 }
@@ -231,6 +232,7 @@ function mapMomentType (mt: OldMomentType): MomentModel {
       // It should be mapped to existing defined refs
       categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
     })
+    idCache.MomentModel[mt['@id']] = model
   }
   return model
 }
@@ -262,7 +264,7 @@ export const useProjectStore = defineStore('projectStore', {
         interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
         modelfolder: schema
       })
-      console.log("Imported", out)
+      console.log("Imported", { project: out, idcache: idCache })
       return out
     },
     getAllProjects (): Project[] {
