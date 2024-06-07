@@ -4,7 +4,7 @@
     text="interview.text"
     :annotations="annotations"
     :lines="textLines"
-    :debug="true"
+    :debug="false"
     :show-labels="false"
     render="nested"
     @click-annotation="onClick"

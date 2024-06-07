@@ -9,4 +9,24 @@ export default class Property extends Model {
   @Str('') declare value: string
   @HasOne(() => PropertyModel, 'propertyId') declare model: PropertyModel | undefined
   @HasOne(() => Justification, 'propertyId') declare justification: Justification | undefined
+
+  get label (): string {
+    return `${this.model?.name}: ${this.value}`
+  }
+
+  get name (): string {
+    if (this.model) {
+      return this.model.name
+    } else {
+      return `<${this.id}>`
+    }
+  }
+
+  get color (): string {
+    if (this.model) {
+      return this.model.color
+    } else {
+      return 'transparent'
+    }
+  }
 }
