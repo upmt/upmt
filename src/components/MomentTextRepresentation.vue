@@ -21,17 +21,17 @@
       </div>
 
       <div :class="[ 'moment-categories', layout ]">
-        <li v-for="c in moment.categories" :key="c.id">
+        <div v-for="c in moment.categories" :key="c.id">
           <CategoryTextRepresentation :category="c">
           </CategoryTextRepresentation>
-        </li>
+        </div>
       </div>
 
       <div :class="[ 'moment-children', layout ]">
-        <li v-for="m in moment.children" :key="m.id">
+        <div v-for="m in moment.children" :key="m.id">
           <MomentTextRepresentation :moment="m">
           </MomentTextRepresentation>
-        </li>
+        </div>
       </div>
 
     </q-expansion-item>
@@ -54,7 +54,7 @@ const props = defineProps({
 const expand = ref(!props.moment.isCollapsed)
 </script>
 
-  <style>
+<style scoped>
   .moment-name .q-item__label {
     font-weight: bold;
   }
