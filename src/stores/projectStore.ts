@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useRepo } from 'pinia-orm'
 import Analysis from './models/analysis'
+import Category from './models/category'
 import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
 import Interview from './models/interview'
@@ -9,6 +10,7 @@ import ModelFolder from './models/modelfolder'
 import Moment from './models/moment'
 import MomentModel from './models/momentmodel'
 import Project from './models/project'
+import Property from './models/property'
 import PropertyModel from './models/propertymodel'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
@@ -41,6 +43,7 @@ const repo = Object.fromEntries([
 const repo = {
   Analysis:         useRepo(Analysis),
   CategoryModel:    useRepo(CategoryModel),
+  Category:         useRepo(Category),
   Descriptem:       useRepo(Descriptem),
   Interview:        useRepo(Interview),
   Justification:    useRepo(Justification),
@@ -48,27 +51,35 @@ const repo = {
   Moment:           useRepo(Moment),
   MomentModel:      useRepo(MomentModel),
   Project:          useRepo(Project),
+  Property:         useRepo(Property),
   PropertyModel:    useRepo(PropertyModel)
 }
 
+type ReffableModel = CategoryModel | PropertyModel | MomentModel
+
+const idCache: Record<string, Record<number, ReffableModel>> = {
+  CategoryModel: {} as Record<number, CategoryModel>,
+  PropertyModel: {} as Record<number, PropertyModel>,
+  MomentModel: {} as Record<number, MomentModel>
+}
 interface OldReference {
-   "@id": string
+   "@id": number
 }
 // .interview_list[0].rootMoment.moment_list[0].moment_list[0].moment_list[0].concreteCategory_list[0].concreteProperty_list[0]
 interface OldSchemaProperty {
-   "@id": string
+   "@id": number
    expanded: boolean
    name: string
 }
 interface OldSchemaCategory {
-   "@id": string
+   "@id": number
    color: string
    expanded: boolean
    name: string
    schemaProperty_list: OldSchemaProperty[]
 }
 interface OldMomentType {
-   "@id": string
+   "@id": number
    color: string
    expanded: boolean
    name: string
@@ -130,6 +141,24 @@ function fixColorName (c: string): string {
     return c
   }
 }
+function mapConcreteProperty (p: OldProperty): Property {
+  const model = idCache.PropertyModel[p.schemaProperty['@id']] as PropertyModel
+  return repo.Property.make({
+    model,
+    value: p.value,
+    justification: p.justification
+  })
+}
+
+function mapConcreteCategory (c: OldCategory): Category {
+  const model = idCache.CategoryModel[c.schemaCategory['@id']] as CategoryModel
+  return repo.Category.make({
+    model,
+    justification: c.justification,
+    properties: c.concreteProperty_list.map(mapConcreteProperty)
+  })
+}
+
 // Map an imported moment to a Moment
 function mapMoment (m: OldMoment, interview: Interview): Moment {
   return repo.Moment.make({
@@ -139,7 +168,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
-    categories: m.concreteCategory_list,
+    categories: m.concreteCategory_list?.map(mapConcreteCategory),
     justification: repo.Justification.make({
       descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
@@ -167,31 +196,43 @@ function mapInterview (i: OldInterview): Interview {
 }
 
 function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel {
-  return repo.PropertyModel.make({
-    id: sp['@id'],
-    name: sp.name
-  })
+  let model = idCache.PropertyModel[sp['@id']] as PropertyModel
+  if (!model) {
+    model = repo.PropertyModel.make({
+      name: sp.name
+    })
+  }
+  return model
 }
 
 function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
-  return repo.CategoryModel.make({
-    id: sc['@id'],
-    name: sc.name,
-    isExpanded: sc.expanded,
-    /* FIXME: check ?. */
-    properties: sc.schemaProperty_list?.map(mapSchemaProperty)
-  })
+  let model = idCache.CategoryModel[sc['@id']] as CategoryModel
+  if (!model) {
+    model = repo.CategoryModel.make({
+      name: sc.name,
       color: fixColorName(sc.color),
+      isExpanded: sc.expanded,
+      /* FIXME: check ?. */
+      properties: sc.schemaProperty_list?.map(mapSchemaProperty)
+    })
+    idCache.CategoryModel[sc['@id']] = model
+  }
+  return model
 }
 
 function mapMomentType (mt: OldMomentType): MomentModel {
-  return repo.MomentModel.make({
-    id: mt['@id'],
-    name: mt.name,
-    isExpanded: mt.expanded,
-    categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
-  })
+  let model = idCache.MomentModel[mt['@id']] as MomentModel
+  if (!model) {
+    model = repo.MomentModel.make({
+      id: mt['@id'],
+      name: mt.name,
       color: fixColorName(mt.color),
+      isExpanded: mt.expanded,
+      // It should be mapped to existing defined refs
+      categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
+    })
+  }
+  return model
 }
 
 function mapFolder (f: OldSchemaFolder): ModelFolder {
@@ -214,10 +255,12 @@ export const useProjectStore = defineStore('projectStore', {
     },
     /* eslint-disable @typescript-eslint/no-explicit-any */
     importProject (data: any) {
+      // Load schema first so that idCache is properly initialized
+      const schema = mapFolder(data.schemaTreeRoot)
       const out = repo.Project.save({
         name: data.name,
         interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
-        modelfolder: mapFolder(data.schemaTreeRoot)
+        modelfolder: schema
       })
       console.log("Imported", out)
       return out
