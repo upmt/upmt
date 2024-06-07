@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import Project from 'stores/models/project'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
@@ -69,9 +69,13 @@
       project: { type: Project, default: null }
   })
 
-  const tab = ref(props.project?.interviews[0].id)
+  const tab = ref("")
   const splitterModel = ref(10)
   const splitterTranscript = ref(90)
+
+  watch(() => props.project, (newValue) => {
+      tab.value = newValue.interviews[0].id
+  })
 </script>
 
 <style>
