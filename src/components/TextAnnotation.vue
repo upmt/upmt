@@ -5,7 +5,7 @@
     :annotations="annotations"
     :lines="textLines"
     :debug="true"
-    :show-labels="true"
+    :show-labels="false"
     render="nested"
     @click-annotation="onClick"
     @_mousemove="onMouseOver"
@@ -15,11 +15,13 @@
 <script setup lang="ts">
   import { computed } from 'vue'
   import {
-      type Annotation,
+      type Annotation as ViewAnnotation,
       type Line,
 //      type AnnotationTarget,
       AnnotatedText
   } from '@ghentcdh/vue-component-annotated-text'
+  import "@ghentcdh/vue-component-annotated-text/style.css"
+  import Annotation from 'stores/models/annotation'
   import Interview from 'stores/models/interview'
 
   const props = defineProps({
@@ -76,8 +78,18 @@
     metadata: { id: 1 },
     label: "typo",
     },
-    */
-  const annotations = computed((): Annotation[] => {
+  */
+  const annotation2class = (a: Annotation) => {
+      const mapping: Record<string, string> = {
+          '0x7084b0ff': '2',
+          '0x7bcf7bff': '4',
+          '0xff9797ff': '1',
+          '0xffdc97ff': '3'
+      }
+      return `annotation--color-${mapping[a.color] ?? '9'}`
+  }
+
+  const annotations = computed((): ViewAnnotation[] => {
       console.log(`converting ${props.interview.annotations.length} annotations`)
       return props.interview.annotations.map(a => {
           return {
@@ -85,8 +97,11 @@
               end: a.endIndex,
               target: "span",
               label: a.color,
-              class: "annotation annotation--color-1"
+              class: `annotation ${annotation2class(a)}`
           }
       })
   })
 </script>
+
+<style scoped>
+</style>

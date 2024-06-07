@@ -16,8 +16,8 @@
             <q-tab v-for="interview in project.interviews"
                    :name="interview.id"
                    :key="interview.id"
+                   :title="interview.comment"
                    :label="interview.label">
-              {{ interview.label }}
             </q-tab>
           </q-tabs>
       </template>
