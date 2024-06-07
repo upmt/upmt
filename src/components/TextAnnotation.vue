@@ -8,7 +8,6 @@
     :show-labels="false"
     render="nested"
     @click-annotation="onClick"
-    @_mousemove="onMouseOver"
     />
 </template>
 
@@ -60,12 +59,8 @@
 
   const textLines = computed(() => textToLines(props.interview.text))
 
-  const onClick = (event: Event) => {
-      console.log(event)
-  }
-
-  const onMouseOver = (event: Event) => {
-      console.log(event)
+  const onClick = (annotation: Annotation) => {
+      console.log(annotation)
   }
 
   /*
@@ -81,10 +76,10 @@
   */
   const annotation2class = (a: Annotation) => {
       const mapping: Record<string, string> = {
-          '0x7084b0ff': '2',
-          '0x7bcf7bff': '4',
-          '0xff9797ff': '1',
-          '0xffdc97ff': '3'
+          '#7084b0': '2',
+          '#7bcf7b': '4',
+          '#ff9797': '1',
+          '#ffdc97': '3'
       }
       return `annotation--color-${mapping[a.color] ?? '9'}`
   }

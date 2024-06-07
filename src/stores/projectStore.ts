@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useRepo } from 'pinia-orm'
 import Analysis from './models/analysis'
+import Annotation from './models/annotation'
 import Category from './models/category'
 import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
@@ -187,7 +188,10 @@ function mapInterview (i: OldInterview): Interview {
     comment: i.comment,
     participantName: i.participantName,
     text: i.interviewText.text,
-    annotations: i.interviewText.annotation_list
+    annotations: i.interviewText.annotation_list.map((a: Annotation) => ({
+      ...a,
+      color: fixColorName(a.color)
+    }))
   })
   interview.analysis = repo.Analysis.make({
     rootMoment: mapMoment(i.rootMoment, interview)
