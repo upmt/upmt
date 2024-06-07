@@ -53,7 +53,9 @@ function loadSample (filename = './OPEVA-G1.upmt') {
 
 watch(() => props.source,
       () => {
-          loadSample(props.source)
+          if (props.source) {
+              loadSample(props.source)
+          }
         },
       { once: true })
 
