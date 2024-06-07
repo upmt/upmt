@@ -12,5 +12,6 @@ defineOptions({
   :root {
     --transitional-color: #bbb;
     --header-height: 82px;
+    --chart-zoom: 1;
   }
 </style>

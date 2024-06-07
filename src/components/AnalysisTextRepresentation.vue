@@ -23,4 +23,7 @@ defineProps({
     display: flex;
     flex-direction: row;
   }
+  .analysis {
+      zoom: var(--chart-zoom);
+  }
 </style>
