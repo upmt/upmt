@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'home', component: () => import('pages/IndexPage.vue') },
-      { path: '', name: 'init', component: () => import('pages/IndexPage.vue'), props: { filename: './OPEVA-G1.upmt' } },
+      { path: 'init', name: 'init', component: () => import('pages/IndexPage.vue'), props: { source: './OPEVA-G1.upmt' } },
       { path: 'debug', name: 'debug', component: DebugPage }
     ]
   },

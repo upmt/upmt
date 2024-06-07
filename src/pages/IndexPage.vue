@@ -1,19 +1,5 @@
 <template>
   <q-page class="row fit">
-    <!--
-    <q-select
-      v-model="selected"
-      :options="projectList">
-    </q-select>
-    <project-card
-      :project="selectedProject">
-    </project-card>
-    -->
-    <!--
-    <ProjectTextRepresentation
-      :project="selectedProject">
-    </ProjectTextRepresentation>
-    -->
     <ProjectInterviewSelection
       class="col-grow"
       :project="selectedProject">
@@ -22,10 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { useQuasar } from 'quasar'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
-// import ProjectCard from 'components/ProjectCard.vue'
-// import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
 import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios'
@@ -33,6 +18,13 @@ import axios from 'axios'
 defineOptions({
   name: 'IndexPage'
 })
+const props = defineProps({
+    source: {
+        type: String,
+        default: null
+    }
+})
+
 const $q = useQuasar()
 
 const projectStore = useProjectStore()
@@ -50,14 +42,20 @@ const selectedProject = computed(() => {
     }
   })
 
-function loadSample () {
-    axios.get('./OPEVA-G1.upmt').then((response) => {
+function loadSample (filename = './OPEVA-G1.upmt') {
     $q.loading.show()
+    axios.get(filename).then((response) => {
         const p = useProjectStore().importProject(response.data)
         selected.value = { label: p.name, value: p.id }
         $q.loading.hide()
     })
 }
+
+watch(() => props.source,
+      () => {
+          loadSample(props.source)
+        },
+      { once: true })
 
 onMounted(() => {
     if (document.location.hash.includes('init')) {
