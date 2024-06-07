@@ -86,7 +86,7 @@ const menuList: MenuItem[] = [
     },
     {
         label: 'Init',
-        icon: 'mdi-init',
+        icon: 'mdi-semantic-web',
         link: 'init'
     },
     {
