@@ -116,11 +116,25 @@ interface OldInterview {
    rootMoment: OldMoment
 }
 
+// Fix the color name
+// It is sometimes written as 0x7084b0ff, sometimes as 7092be
+function fixColorName (c: string): string {
+  if (typeof c !== 'string') {
+    return c
+  }
+  if (c.length === 6) {
+    return `#${c}`
+  } else if (c.startsWith('0x')) {
+    return `#${c.slice(2, 8)}`
+  } else {
+    return c
+  }
+}
 // Map an imported moment to a Moment
 function mapMoment (m: OldMoment, interview: Interview): Moment {
   return repo.Moment.make({
     name: m.name,
-    color: m.color,
+    color: fixColorName(m.color),
     comment: m.comment,
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
@@ -140,7 +154,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
 function mapInterview (i: OldInterview): Interview {
   const interview: Interview = repo.Interview.make({
     date: i.date,
-    color: i.color,
+    color: fixColorName(i.color),
     comment: i.comment,
     participantName: i.participantName,
     text: i.interviewText.text,
@@ -163,21 +177,21 @@ function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
   return repo.CategoryModel.make({
     id: sc['@id'],
     name: sc.name,
-    color: sc.color,
     isExpanded: sc.expanded,
     /* FIXME: check ?. */
     properties: sc.schemaProperty_list?.map(mapSchemaProperty)
   })
+      color: fixColorName(sc.color),
 }
 
 function mapMomentType (mt: OldMomentType): MomentModel {
   return repo.MomentModel.make({
     id: mt['@id'],
     name: mt.name,
-    color: mt.color,
     isExpanded: mt.expanded,
     categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
   })
+      color: fixColorName(mt.color),
 }
 
 function mapFolder (f: OldSchemaFolder): ModelFolder {
