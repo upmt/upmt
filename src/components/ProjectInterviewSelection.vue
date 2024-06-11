@@ -13,12 +13,13 @@
             vertical
             >
             <strong>{{ project.label }}</strong>
-            <q-tab v-for="interview in project.interviews"
-                   :name="interview.id"
-                   :key="interview.id"
-                   :title="interview.comment"
-                   :label="interview.label">
-            </q-tab>
+            <q-route-tab v-for="interview in project.interviews"
+                         :to="{ query: { tab: interview.id } }"
+                         :name="interview.id"
+                         :key="interview.id"
+                         :title="interview.comment"
+                         :label="interview.label">
+            </q-route-tab>
           </q-tabs>
       </template>
 
