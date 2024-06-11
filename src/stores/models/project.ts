@@ -7,6 +7,7 @@ export default class Project extends Model {
   static entity = 'projects'
 
   @Uid() declare id: string
+  @Str('') declare filename: string
   @Str('') declare name: string
   @HasOne(() => ModelFolder, 'projectId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'projectId') declare interviews: Interview[]

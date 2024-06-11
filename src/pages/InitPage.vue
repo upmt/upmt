@@ -39,7 +39,7 @@ const project = ref<Project>()
 function loadSample (filename = './OPEVA-G1.upmt') {
     $q.loading.show()
     axios.get(filename).then((response) => {
-        const p = useProjectStore().importProject(response.data)
+        const p = useProjectStore().importProject(response.data, filename)
         project.value = p
         $q.loading.hide()
     })

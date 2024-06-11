@@ -55,8 +55,9 @@ const addProject = () => {
 }
 
 async function loadSample () {
-    axios.get('./OPEVA-G1.upmt').then((response) => {
-        pstore.importProject(response.data)
+    const filename = './OPEVA-G1.upmt'
+    axios.get(filename).then((response) => {
+        pstore.importProject(response.data, filename)
     });
 }
 
@@ -82,7 +83,7 @@ async function uploadFile (event: Event) {
                 jsonData = null
             }
             if (jsonData !== null) {
-                pstore.importProject(jsonData);
+                pstore.importProject(jsonData, files[0].name)
             }
         }
         reader.onerror = () => {

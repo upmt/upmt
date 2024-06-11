@@ -260,10 +260,11 @@ export const useProjectStore = defineStore('projectStore', {
       repo.Project.save(projectData)
     },
     /* eslint-disable @typescript-eslint/no-explicit-any */
-    importProject (data: any) {
+    importProject (data: any, filename: string) {
       // Load schema first so that idCache is properly initialized
       const schema = mapFolder(data.schemaTreeRoot)
       const out = repo.Project.save({
+        filename,
         name: data.name,
         interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
         modelfolder: schema
