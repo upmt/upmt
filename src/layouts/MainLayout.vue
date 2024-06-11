@@ -82,17 +82,17 @@ const menuList: MenuItem[] = [
     {
         label: 'Home',
         icon: 'mdi-home',
-        link: 'home'
+        link: '/home'
     },
     {
         label: 'Init',
         icon: 'mdi-semantic-web',
-        link: 'init'
+        link: '/init'
     },
     {
         label: 'Debug',
         icon: 'mdi-eye',
-        link: 'debug'
+        link: '/debug'
     }
 
 ]

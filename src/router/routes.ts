@@ -8,7 +8,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', name: 'home', component: () => import('pages/IndexPage.vue') },
       { path: 'home', redirect: '/' },
-      { path: 'init', name: 'init', component: () => import('pages/IndexPage.vue'), props: { source: './OPEVA-G1.upmt' } },
+      { path: 'project/:id', name: 'project', component: () => import('pages/ProjectPage.vue'), props: true },
+      { path: 'init', name: 'init', component: () => import('pages/InitPage.vue'), props: { source: './OPEVA-G1.upmt' } },
       { path: 'debug', name: 'debug', component: DebugPage }
     ]
   },

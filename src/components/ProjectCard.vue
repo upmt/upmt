@@ -1,13 +1,6 @@
 <template>
   <q-card>
-    <strong>Project {{ project?.name }}</strong>
-    <p>Interview count: {{ interviewCount }}</p>
-    <ul>
-      <li v-for="interview in project?.interviews" :key="interview.id">
-        {{ interview.id }} - {{ interview.name }}
-      </li>
-    </ul>
-    <p>Project count: {{ projects.length }}</p>
+    <p>{{ projects.length }} loaded projects.</p>
     <q-btn @click="addProject">Add project</q-btn>
     <q-btn @click="loadSample">Load sample</q-btn>
     <q-file label="Load File" v-model="filename" filled @input="uploadFile"/>
@@ -17,24 +10,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import axios from 'axios'
-import Project from 'stores/models/project'
 import { useProjectStore } from 'stores/projectStore'
 import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
 const filename = ref(null)
-
-const props = defineProps({
-    project: { type: Project, default: null }
-  });
-
-const interviewCount = computed(() => {
-  if (props.project) {
-    return props.project.interviews.length
-  } else {
-    return 0
-  }
-})
 
 const pstore = useProjectStore()
 const projects = computed(() => pstore.getAllProjects())

@@ -69,7 +69,7 @@
   import TextAnnotation from 'components/TextAnnotation.vue'
 
   const props = defineProps({
-      project: { type: Project, default: null }
+      project: { type: Project, required: true }
   })
 
   const tab = ref("")
