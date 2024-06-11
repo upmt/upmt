@@ -10,11 +10,14 @@
       expand-icon-toggle
       switch-toggle-side
       v-model="expand"
-      class="moment-name"
       header-class="header-class"
-      :label="moment.name"
       :title="moment.comment"
       >
+
+      <template v-slot:header>
+        <q-icon size="xs" name="mdi-note-outline"></q-icon>
+        <span class="moment-name">{{ moment.name }}</span>
+      </template>
 
       <div class="moment-justification">
         <JustificationTextRepresentation :justification="moment.justification">
