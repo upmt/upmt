@@ -12,4 +12,13 @@ export default class Descriptem extends Model {
   get text (): string {
     return this.interview.text.slice(this.startIndex, this.endIndex)
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      interviewId: this.interview.id,
+      startIndex: this.startIndex,
+      endIndex: this.endIndex
+    }
+  }
 }

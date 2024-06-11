@@ -7,7 +7,7 @@ import CategoryModel from './categorymodel'
 export default class Category extends Model {
   static entity = 'categories'
   @Uid() declare id: string
-  @HasOne(() => CategoryModel, 'categoryId') declare model: CategoryModel | undefined
+  @HasOne(() => CategoryModel, 'categoryId') declare model: CategoryModel
   @HasOne(() => Justification, 'categoryId') declare justification: Justification | undefined
   @HasMany(() => Property, 'categoryId') declare properties: Property[]
 
@@ -24,6 +24,15 @@ export default class Category extends Model {
       return this.model.color
     } else {
       return 'black'
+    }
+  }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      modelId: this.model.id,
+      justification: this.justification?.toJSON(),
+      properties: this.properties.map(p => p.toJSON())
     }
   }
 }

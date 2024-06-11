@@ -17,4 +17,19 @@ export default class Moment extends Model {
   @HasMany(() => Category, 'momentId') declare categories: Category[]
   /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      name: this.name,
+      color: this.color,
+      comment: this.comment,
+      isCollapsed: this.isCollapsed,
+      isCommentVisible: this.isCommentVisible,
+      isTransitional: this.isTransitional,
+      justification: this.justification?.toJSON(),
+      categories: this.categories.map(c => c.toJSON()),
+      children: this.children.map(m => m.toJSON())
+    }
+  }
 }

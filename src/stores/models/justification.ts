@@ -8,4 +8,12 @@ export default class Justification extends Model {
   @Str('') declare name: string
 
   @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      name: this.name,
+      descriptems: this.descriptems.map(d => d.toJSON())
+    }
+  }
 }

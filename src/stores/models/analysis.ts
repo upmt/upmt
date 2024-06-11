@@ -9,4 +9,12 @@ export default class Analysis extends Model {
   @Uid() declare id: string
   @Str('') declare name: string
   @HasOne(() => Moment, 'analysisId') declare rootMoment: Moment
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      name: this.name,
+      rootMoment: this.rootMoment?.toJSON()
+    }
+  }
 }

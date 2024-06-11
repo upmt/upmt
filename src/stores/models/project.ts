@@ -18,4 +18,13 @@ export default class Project extends Model {
       return "Unnamed project"
     }
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      name: this.name,
+      modelfolder: this.modelfolder.toJSON(),
+      interviews: this.interviews.map(i => i.toJSON())
+    }
+  }
 }

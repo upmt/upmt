@@ -10,4 +10,14 @@ export default class MomentModel extends Model {
   @Bool(false) declare isTransitional: boolean
 
   @HasMany(() => CategoryModel, 'momenttypeId') declare categories: CategoryModel[]
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      name: this.name,
+      color: this.color,
+      isTransitional: this.isTransitional,
+      categories: this.categories.map(c => c.toJSON())
+    }
+  }
 }

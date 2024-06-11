@@ -7,7 +7,7 @@ export default class Property extends Model {
   static entity = 'properties'
   @Uid() declare id: string
   @Str('') declare value: string
-  @HasOne(() => PropertyModel, 'propertyId') declare model: PropertyModel | undefined
+  @HasOne(() => PropertyModel, 'propertyId') declare model: PropertyModel
   @HasOne(() => Justification, 'propertyId') declare justification: Justification | undefined
 
   get label (): string {
@@ -27,6 +27,15 @@ export default class Property extends Model {
       return this.model.color
     } else {
       return 'transparent'
+    }
+  }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      value: this.value,
+      modelId: this.model.id,
+      justification: this.justification?.toJSON()
     }
   }
 }

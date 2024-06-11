@@ -23,4 +23,19 @@ export default class Interview extends Model {
       return `${this.participantName} (${this.date})`
     }
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  toJSON (): any {
+    return {
+      id: this.id,
+      name: this.name,
+      participantName: this.participantName,
+      color: this.color,
+      comment: this.comment,
+      date: this.date,
+      annotations: this.annotations.map(a => a.toJSON()),
+      analysis: this.analysis?.toJSON(),
+      text: this.text
+    }
+  }
 }
