@@ -85,7 +85,6 @@
   }
 
   const annotations = computed((): ViewAnnotation[] => {
-      console.log(`converting ${props.interview.annotations.length} annotations`)
       return props.interview.annotations.map(a => {
           return {
               start: a.startIndex,
@@ -98,5 +97,9 @@
   })
 </script>
 
-<style scoped>
+<style>
+  .annotated-text {
+      display: flex;
+      flex-direction: column;
+  }
 </style>
