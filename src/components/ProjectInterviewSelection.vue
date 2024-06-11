@@ -14,7 +14,7 @@
             >
             <strong>{{ project.label }}</strong>
             <q-route-tab v-for="interview in project.interviews"
-                         :to="{ query: { tab: interview.id } }"
+                         :to="{ query: { tab: interview.label } }"
                          :name="interview.id"
                          :key="interview.id"
                          :title="interview.comment"
