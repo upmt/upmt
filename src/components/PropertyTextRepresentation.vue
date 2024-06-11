@@ -1,8 +1,8 @@
 <template>
   <div class="property" :data-property="property.id" :title="property.label">
     <q-icon size="xs" name="mdi-note-text-outline"></q-icon>
-    <span class="property-name">{{ property.name }}</span>
-    <span class="property-value">{{ property.value }}</span>
+    <div class="property-name">{{ property.name }}</div>
+    <div class="property-value">{{ property.value }}</div>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ defineProps({
   .property {
     display: flex;
     flex-direction: row;
-    height: 1.2em;
+    min-height: 1.2em;
   }
   .property-value {
       flex: 1 1 0;
