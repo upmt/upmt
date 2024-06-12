@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div :class="[ 'moment-children', layout ]">
+      <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
           <MomentTextRepresentation :moment="m">
           </MomentTextRepresentation>
