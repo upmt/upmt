@@ -16,7 +16,11 @@
 
       <template v-slot:header>
         <q-icon size="xs" name="mdi-note-outline"></q-icon>
-        <span class="moment-name">{{ moment.name }}</span>
+        <span class="moment-name">{{ momentName }}
+          <q-popup-edit v-model="momentName" auto-save v-slot="scope">
+            <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+          </q-popup-edit>
+        </span>
       </template>
 
       <div class="moment-justification">
@@ -44,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import Moment from 'stores/models/moment'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
@@ -55,7 +59,19 @@ const props = defineProps({
     layout: { type: String, default: "vertical" }
   });
 
-const expand = ref(!props.moment.isCollapsed)
+const expand = computed(() => !props.moment.isCollapsed)
+
+const momentName = computed({
+    get () {
+        return props.moment?.name
+    },
+    set (value: string) {
+        const moment = props.moment
+        if (moment) {
+            moment.name = value
+        }
+    }
+})
 </script>
 
 <style>
