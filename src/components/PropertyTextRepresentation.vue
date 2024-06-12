@@ -3,7 +3,7 @@
     <q-icon size="xs" name="mdi-note-text-outline"></q-icon>
     <div class="property-name">{{ property.name }}</div>
     <div class="property-value">{{ property.value }}
-      <q-popup-edit v-model="propertyValue" auto-save v-slot="scope">
+      <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
         <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
       </q-popup-edit>
     </div>

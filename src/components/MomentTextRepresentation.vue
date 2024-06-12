@@ -17,7 +17,7 @@
       <template v-slot:header>
         <q-icon size="xs" name="mdi-note-outline"></q-icon>
         <span class="moment-name">{{ momentName }}
-          <q-popup-edit v-model="momentName" auto-save v-slot="scope">
+          <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
             <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
           </q-popup-edit>
         </span>
