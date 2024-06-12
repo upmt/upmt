@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Num, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Num, Uid } from 'pinia-orm/dist/decorators'
 
 export default class Annotation extends Model {
   static entity = 'annotations'
@@ -7,6 +7,8 @@ export default class Annotation extends Model {
   @Str('') declare color: string
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
+
+  @Attr() interviewId!: string
 
   get text (): string {
       return `${this.startIndex}-${this.endIndex}`

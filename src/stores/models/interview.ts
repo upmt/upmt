@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Analysis from './analysis'
 import Annotation from './annotation'
 
@@ -15,6 +15,8 @@ export default class Interview extends Model {
 
   @HasMany(() => Annotation, 'interviewId') declare annotations: Annotation[]
   @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis | undefined
+
+  @Attr() projectId!: string
 
   get label (): string {
     if (this.name) {

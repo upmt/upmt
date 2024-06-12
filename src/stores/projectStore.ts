@@ -263,6 +263,7 @@ export const useProjectStore = defineStore('projectStore', {
     importProject (data: any, filename: string) {
       // Load schema first so that idCache is properly initialized
       const schema = mapFolder(data.schemaTreeRoot)
+      repo.ModelFolder.save(schema)
       const out = repo.Project.save({
         filename,
         name: data.name,
@@ -280,6 +281,11 @@ export const useProjectStore = defineStore('projectStore', {
     },
     getInterview (id: string): Interview {
       return repo.Interview.find(id)
+    },
+    getFolder (id: string): ModelFolder | null {
+      // return repo.ModelFolder.with('categories').with('moments').with('folders').find(id)
+      return repo.ModelFolder.withAll().find(id)
+      // return repo.ModelFolder.find(id)
     }
   }
 })

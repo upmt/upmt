@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
 import CategoryModel from './categorymodel'
 
 export default class MomentModel extends Model {
@@ -10,6 +10,8 @@ export default class MomentModel extends Model {
   @Bool(false) declare isTransitional: boolean
 
   @HasMany(() => CategoryModel, 'momenttypeId') declare categories: CategoryModel[]
+
+  @Attr() modelfolderId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {

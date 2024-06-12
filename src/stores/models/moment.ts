@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import Category from './category'
 
@@ -12,6 +12,8 @@ export default class Moment extends Model {
   @Bool(false) declare isCollapsed: boolean
   @Bool(false) declare isCommentVisible: boolean
   @Bool(false) declare isTransitional: boolean
+
+  @Attr() analysisId!: string
 
   @HasOne(() => Justification, 'momentId') declare justification: Justification | undefined
   @HasMany(() => Category, 'momentId') declare categories: Category[]

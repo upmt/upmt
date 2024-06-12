@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
 import CategoryModel from './categorymodel'
 import MomentModel from './momentmodel'
 
@@ -9,6 +9,9 @@ export default class ModelFolder extends Model {
   @Str('') declare name: string
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
+
+  @Attr() projectId!: string
+  @Attr() parentId!: string
 
   /* eslint-disable no-use-before-define */
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]

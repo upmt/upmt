@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 import Descriptem from './descriptem'
 
 export default class Justification extends Model {
@@ -8,6 +8,8 @@ export default class Justification extends Model {
   @Str('') declare name: string
 
   @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
+
+  @Attr() momentId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {

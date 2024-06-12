@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Uid, HasOne, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Uid, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import Property from './property'
 import CategoryModel from './categorymodel'
@@ -10,6 +10,8 @@ export default class Category extends Model {
   @HasOne(() => CategoryModel, 'categoryId') declare model: CategoryModel
   @HasOne(() => Justification, 'categoryId') declare justification: Justification | undefined
   @HasMany(() => Property, 'categoryId') declare properties: Property[]
+
+  @Attr() momentId!: string
 
   get name (): string {
     if (this.model) {

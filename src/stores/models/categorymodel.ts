@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 import PropertyModel from './propertymodel'
 
 export default class CategoryModel extends Model {
@@ -9,6 +9,9 @@ export default class CategoryModel extends Model {
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
   @HasMany(() => PropertyModel, 'categorymodelId') declare properties: PropertyModel[]
+
+  @Attr() categoryId!: string
+  @Attr() modelfolderId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {

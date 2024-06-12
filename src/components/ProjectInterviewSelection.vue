@@ -21,6 +21,10 @@
                          :label="interview.label">
             </q-route-tab>
           </q-tabs>
+          <q-separator />
+          <folder-tree
+            :folder="project.modelfolder">
+          </folder-tree>
       </template>
 
       <template v-slot:after>
@@ -67,7 +71,8 @@
   import { ref, watch } from 'vue'
   import Project from 'stores/models/project'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
-  import TextAnnotation from 'components/TextAnnotation.vue'
+  import FolderTree from 'components/FolderTree.vue'
+import TextAnnotation from 'components/TextAnnotation.vue'
 
   const props = defineProps({
       project: { type: Project, required: true }
