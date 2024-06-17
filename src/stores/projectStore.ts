@@ -289,6 +289,9 @@ export const useProjectStore = defineStore('projectStore', {
       // return repo.ModelFolder.with('categories').with('moments').with('folders').find(id)
       return repo.ModelFolder.withAll().find(id)
       // return repo.ModelFolder.find(id)
+    },
+    getRepo () {
+      return repo
     }
   }
 })
