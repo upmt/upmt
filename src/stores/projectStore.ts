@@ -58,22 +58,25 @@ const repo = {
 
 type ReffableModel = CategoryModel | PropertyModel | MomentModel
 
-const idCache: Record<string, Record<number, ReffableModel>> = {
+const idCache: Record<string, Record<string, ReffableModel>> = {
   CategoryModel: {} as Record<number, CategoryModel>,
   PropertyModel: {} as Record<number, PropertyModel>,
   MomentModel: {} as Record<number, MomentModel>
 }
 interface OldReference {
-   "@id": number
+   "@id": number,
+   "@model": string
 }
 // .interview_list[0].rootMoment.moment_list[0].moment_list[0].moment_list[0].concreteCategory_list[0].concreteProperty_list[0]
 interface OldSchemaProperty {
    "@id": number
+   "@model": string
    expanded: boolean
    name: string
 }
 interface OldSchemaCategory {
    "@id": number
+   "@model": string
    color: string
    expanded: boolean
    name: string
@@ -81,6 +84,7 @@ interface OldSchemaCategory {
 }
 interface OldMomentType {
    "@id": number
+   "@model": string
    color: string
    expanded: boolean
    name: string
@@ -88,6 +92,7 @@ interface OldMomentType {
 }
 interface OldSchemaFolder {
    "@id": string
+   "@model": string
    expanded: boolean
    name: string
    schemaCategory_list: OldSchemaCategory[]
@@ -142,8 +147,21 @@ function fixColorName (c: string): string {
     return c
   }
 }
+
+/*
+ * Return a reference id, built from the entity model and the numerical id
+ * to avoid clashes (same numerical ids for different entities e.g. Category and Folder)
+ */
+function getReferenceId (e: OldReference): string {
+  return `${e['@model']}-${e['@id']}`
+}
+
 function mapConcreteProperty (p: OldProperty): Property {
-  const model = idCache.PropertyModel[p.schemaProperty['@id']] as PropertyModel
+  const key = getReferenceId(p.schemaProperty)
+  const model = idCache.PropertyModel[key] as PropertyModel
+  if (!model) {
+    console.error(`Missing ${key}`)
+  }
   return repo.Property.make({
     propertymodelId: model.id,
     value: p.value,
@@ -152,9 +170,10 @@ function mapConcreteProperty (p: OldProperty): Property {
 }
 
 function mapConcreteCategory (c: OldCategory): Category {
-  const model = idCache.CategoryModel[c.schemaCategory['@id']] as CategoryModel
+  const key = getReferenceId(c.schemaCategory)
+  const model = idCache.CategoryModel[key] as CategoryModel
   if (!model) {
-    console.error(`Missing ${c.schemaCategory['@id']} schemaCategory`)
+    console.error(`Missing ${key}`)
   }
   return repo.Category.make({
     categorymodelId: model.id,
@@ -203,43 +222,44 @@ function mapInterview (i: OldInterview): Interview {
 }
 
 function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel {
-  let model = idCache.PropertyModel[sp['@id']] as PropertyModel
+  const key = getReferenceId(sp)
+  let model = idCache.PropertyModel[key] as PropertyModel
   if (!model) {
     model = repo.PropertyModel.make({
       name: sp.name
     })
-    idCache.PropertyModel[sp['@id']] = model
+    idCache.PropertyModel[key] = model
   }
   return model
 }
 
 function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
-  let model = idCache.CategoryModel[sc['@id']] as CategoryModel
+  const key = getReferenceId(sc)
+  let model = idCache.CategoryModel[key] as CategoryModel
   if (!model) {
     model = repo.CategoryModel.make({
       name: sc.name,
       color: fixColorName(sc.color),
       isExpanded: sc.expanded,
-      /* FIXME: check ?. */
       properties: sc.schemaProperty_list?.map(mapSchemaProperty)
     })
-    idCache.CategoryModel[sc['@id']] = model
+    idCache.CategoryModel[key] = model
   }
   return model
 }
 
 function mapMomentType (mt: OldMomentType): MomentModel {
-  let model = idCache.MomentModel[mt['@id']] as MomentModel
+  const key = getReferenceId(mt)
+  let model = idCache.MomentModel[key] as MomentModel
   if (!model) {
     model = repo.MomentModel.make({
-      id: mt['@id'],
       name: mt.name,
       color: fixColorName(mt.color),
       isExpanded: mt.expanded,
       // It should be mapped to existing defined refs
       categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
     })
-    idCache.MomentModel[mt['@id']] = model
+    idCache.MomentModel[key] = model
   }
   return model
 }
@@ -290,6 +310,9 @@ export const useProjectStore = defineStore('projectStore', {
           if (cm.modelfolderId !== folder.id) {
             console.log("Error for cm", folder, cm)
           }
+          if (!cm.modelfolderId) {
+            console.log("Empty modelfolderId for cm", folder, cm)
+          }
         }
         for (const mm of (folder.momentmodels ?? [])) {
           if (mm.modelfolderId !== folder.id) {
@@ -310,7 +333,8 @@ export const useProjectStore = defineStore('projectStore', {
           return
         }
         if (folder.categorymodels.length !== stored.categorymodels.length) {
-          console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length)
+          const missing = (new Set(folder.categorymodels.map(cm => cm.name))).difference(new Set(stored.categorymodels.map(cm => cm.name)))
+          console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length, missing)
         }
         if (folder.momentmodels.length !== stored.momentmodels.length) {
           console.log("Differing mm for folder", folder.name, folder.id, folder.momentmodels.length, stored.momentmodels.length)
