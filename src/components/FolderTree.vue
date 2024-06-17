@@ -56,43 +56,50 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             return {
                 label: i.label,
                 id: getKey(i),
+                icon: 'mdi-graph-outline',
                 lazy: true
             }
         }))
     } else if (entitytype === 'modelfolders') {
         const folder = pstore.getFolder(entityid)
-        console.log("Got folder", entityid, folder)
         if (!folder) {
             done([])
         } else {
-            done([{
-                label: "Folders",
-                id: `${node.id}-folders`,
-                children: folder.folders?.map(f => ({
-                    label: f.name,
-                    id: getKey(f),
-                    lazy: true
+            const folders = (folder.folders ?? []).map(f => ({
+                label: f.name,
+                id: getKey(f),
+                icon: 'mdi-folder-outline',
+                lazy: true
+            }));
+            const categorymodels = (folder.categorymodels ?? []).map(cm => ({
+                label: cm.name,
+                id: getKey(cm),
+                icon: 'mdi-tag-outline',
+                lazy: false,
+                children: cm.properties?.map(p => ({
+                    label: p.name,
+                    id: getKey(p),
+                    icon: 'mdi-note-text-outline',
+                    lazy: false
                 }))
-            },
-                  {
-                      label: "Categories",
-                      id: `${node.id}-categories`,
-                      children: folder.categories?.map(c => ({
-                          label: c.name,
-                          id: getKey(c),
-                          lazy: true
-                      }))
-                  },
-                  {
-                      label: "Moments",
-                      id: `${node.id}-moments`,
-                      children: folder.moments?.map(m => ({
-                          label: m.name,
-                          id: getKey(m),
-                          lazy: true
-                      }))
-                  }
-                 ])
+            }))
+            const momentmodels = (folder.momentmodels ?? []).map(m => ({
+                label: m.name,
+                id: getKey(m),
+                icon: 'mdi-note-outline',
+                lazy: false,
+                children: m.categories?.map(c => ({
+                    label: c.name,
+                    id: getKey(c),
+                    children: c.properties?.map(p => ({
+                        label: p.name,
+                        id: getKey(p),
+                        lazy: false
+                    }))
+                }))
+            }))
+            console.log("Tree row", { folder, folders, categorymodels, momentmodels })
+            done(folders.concat(categorymodels, momentmodels))
         }
     } else {
         // Catch-all entity
