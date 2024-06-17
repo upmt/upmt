@@ -250,8 +250,8 @@ function mapFolder (f: OldSchemaFolder): ModelFolder {
     color: 'black',
     isExpanded: f.expanded,
     folders: f.schemaFolder_list.map(mapFolder),
-    categories: f.schemaCategory_list.map(mapSchemaCategory),
-    moments: f.schemaMomentType_list.map(mapMomentType)
+    categorymodels: f.schemaCategory_list.map(mapSchemaCategory),
+    momentmodels: f.schemaMomentType_list.map(mapMomentType)
     })
 }
 
@@ -266,7 +266,6 @@ export const useProjectStore = defineStore('projectStore', {
     importProject (data: any, filename: string) {
       // Load schema first so that idCache is properly initialized
       const schema = mapFolder(data.schemaTreeRoot)
-      repo.ModelFolder.save(schema)
       const out = repo.Project.save({
         filename,
         name: data.name,

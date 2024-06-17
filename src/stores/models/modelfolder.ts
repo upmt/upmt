@@ -15,8 +15,8 @@ export default class ModelFolder extends Model {
 
   /* eslint-disable no-use-before-define */
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
-  @HasMany(() => CategoryModel, 'modelfolderId') declare categories: CategoryModel[]
-  @HasMany(() => MomentModel, 'modelfolderId') declare moments: MomentModel[]
+  @HasMany(() => CategoryModel, 'modelfolderId') declare categorymodels: CategoryModel[]
+  @HasMany(() => MomentModel, 'modelfolderId') declare momentmodels: MomentModel[]
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
@@ -25,8 +25,8 @@ export default class ModelFolder extends Model {
       color: this.color,
       isExpanded: this.isExpanded,
       folders: this.folders.map(f => f.toJSON()),
-      categories: this.categories.map(c => c.toJSON()),
-      moments: this.moments.map(m => m.toJSON())
+      categorymodels: this.categorymodels.map(c => c.toJSON()),
+      momentmodels: this.momentmodels.map(m => m.toJSON())
     }
   }
 }

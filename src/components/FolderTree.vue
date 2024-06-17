@@ -88,7 +88,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                 id: getKey(m),
                 icon: 'mdi-note-outline',
                 lazy: false,
-                children: m.categories?.map(c => ({
+                children: m.categorymodels?.map(c => ({
                     label: c.name,
                     id: getKey(c),
                     children: c.properties?.map(p => ({
