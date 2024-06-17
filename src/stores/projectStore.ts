@@ -285,9 +285,11 @@ export const useProjectStore = defineStore('projectStore', {
       return repo.Interview.find(id)
     },
     getFolder (id: string): ModelFolder | null {
-      // return repo.ModelFolder.with('categories').with('moments').with('folders').find(id)
-      return repo.ModelFolder.withAll().find(id)
-      // return repo.ModelFolder.find(id)
+      return repo.ModelFolder
+        .with('categorymodels', (query) => { query.with('properties') })
+        .with('momentmodels', (query) => { query.with('categorymodels', (query) => { query.with('properties') }) })
+        .with('folders', (query) => { query.withAll() })
+        .find(id)
     },
     getRepo () {
       return repo
