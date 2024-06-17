@@ -145,7 +145,7 @@ function fixColorName (c: string): string {
 function mapConcreteProperty (p: OldProperty): Property {
   const model = idCache.PropertyModel[p.schemaProperty['@id']] as PropertyModel
   return repo.Property.make({
-    model,
+    propertymodelId: model.id,
     value: p.value,
     justification: p.justification
   })
@@ -157,7 +157,7 @@ function mapConcreteCategory (c: OldCategory): Category {
     console.error(`Missing ${c.schemaCategory['@id']} schemaCategory`)
   }
   return repo.Category.make({
-    model,
+    categorymodelId: model.id,
     justification: c.justification,
     properties: c.concreteProperty_list.map(mapConcreteProperty)
   })
