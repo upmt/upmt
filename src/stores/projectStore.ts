@@ -273,9 +273,70 @@ export const useProjectStore = defineStore('projectStore', {
         modelfolder: schema
       })
       console.log("Imported", { project: out, idcache: idCache })
+      // Check missing ids in the loaded data: normally, all children
+      // elements should have a link to the parent id
+      const checkMissingRef = (folder: ModelFolder | null) => {
+        if (!folder) {
+          console.log("Null folder")
+          return
+        }
+        for (const f of (folder.folders ?? [])) {
+          if (f.parentId !== folder.id) {
+            console.log("Error for f", folder, f)
+          }
+          checkMissingRef(f)
+        }
+        for (const cm of (folder.categorymodels ?? [])) {
+          if (cm.modelfolderId !== folder.id) {
+            console.log("Error for cm", folder, cm)
+          }
+        }
+        for (const mm of (folder.momentmodels ?? [])) {
+          if (mm.modelfolderId !== folder.id) {
+            console.log("Error for mm", folder, mm)
+          }
+        }
+      }
+      // Compare the loaded folder structure with the structure returned through getFolder
+      // by comparing the number of children (categorymodels, momentmodels)
+      const compareFolder = (folder: ModelFolder | null) => {
+        if (!folder) {
+          console.log("NULL folder???")
+          return
+        }
+        const stored = this.getFolder(folder.id)
+        if (!stored) {
+          console.log("NULL folder", folder.id)
+          return
+        }
+        if (folder.categorymodels.length !== stored.categorymodels.length) {
+          console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length)
+        }
+        if (folder.momentmodels.length !== stored.momentmodels.length) {
+          console.log("Differing mm for folder", folder.name, folder.id, folder.momentmodels.length, stored.momentmodels.length)
+        }
+        if (folder.folders.length !== stored.folders.length) {
+          console.log("Differing folder count for folder", folder.name, folder.id, folder.folders.length, stored.folders.length)
+        }
+        for (const f of folder.folders) {
+          compareFolder(f)
+        }
+      }
+      console.log("Checking refs", this)
+      checkMissingRef(schema)
+      // Loaded folder
+      // console.log("Re-Checking refs")
+      // const loaded = this.getFolder(schema.id)
+      // checkMissingRef(loaded)
+      console.log("Comparing loaded vs stored")
+      compareFolder(schema)
+
       return out
     },
     getAllProjects (): Project[] {
+      // Beware
+      // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
+      // this does not process relations (i.e. withAll will not work)
       return repo.Project.all()
     },
     getProject (id: string): Project {
