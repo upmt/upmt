@@ -247,7 +247,7 @@ function mapMomentType (mt: OldMomentType): MomentModel {
 function mapFolder (f: OldSchemaFolder): ModelFolder {
   return repo.ModelFolder.make({
     name: f.name,
-    color: 'black',
+    color: 'transparent',
     isExpanded: f.expanded,
     folders: f.schemaFolder_list.map(mapFolder),
     categorymodels: f.schemaCategory_list.map(mapSchemaCategory),

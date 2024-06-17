@@ -26,7 +26,7 @@ export default class Category extends Model {
     if (this.model) {
       return this.model.color
     } else {
-      return 'black'
+      return 'transparent'
     }
   }
 
