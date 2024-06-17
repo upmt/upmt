@@ -68,6 +68,7 @@ async function uploadFile (event: Event) {
         if (!files || files.length === 0) {
             return;
         }
+        const sourceFile = files[0]
         const reader = new FileReader()
 
         reader.onload = () => {
@@ -83,7 +84,7 @@ async function uploadFile (event: Event) {
                 jsonData = null
             }
             if (jsonData !== null) {
-                pstore.importProject(jsonData, files[0].name)
+                pstore.importProject(jsonData, sourceFile.name)
             }
         }
         reader.onerror = () => {
@@ -96,7 +97,7 @@ async function uploadFile (event: Event) {
         // Load data from file - the readAsText will
         // trigger the load event that is handled just
         // above.
-        reader.readAsText(files[0])
+        reader.readAsText(sourceFile)
     } catch (e) {
         console.log(e)
         $q.notify({
