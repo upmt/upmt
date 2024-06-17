@@ -153,6 +153,9 @@ function mapConcreteProperty (p: OldProperty): Property {
 
 function mapConcreteCategory (c: OldCategory): Category {
   const model = idCache.CategoryModel[c.schemaCategory['@id']] as CategoryModel
+  if (!model) {
+    console.error(`Missing ${c.schemaCategory['@id']} schemaCategory`)
+  }
   return repo.Category.make({
     model,
     justification: c.justification,
