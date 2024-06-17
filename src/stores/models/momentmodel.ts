@@ -9,7 +9,7 @@ export default class MomentModel extends Model {
   @Str('') declare color: string
   @Bool(false) declare isTransitional: boolean
 
-  @HasMany(() => CategoryModel, 'momenttypeId') declare categories: CategoryModel[]
+  @HasMany(() => CategoryModel, 'momenttypeId') declare categorymodels: CategoryModel[]
 
   @Attr() modelfolderId!: string
 
@@ -19,7 +19,7 @@ export default class MomentModel extends Model {
       name: this.name,
       color: this.color,
       isTransitional: this.isTransitional,
-      categories: this.categories.map(c => c.toJSON())
+      categorymodels: this.categorymodels.map(c => c.toJSON())
     }
   }
 }
