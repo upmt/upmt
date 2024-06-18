@@ -8,6 +8,7 @@
       :limits="[10,90]">
 
       <template v-slot:before>
+        <div class="fit fullwindow-height">
           <q-tabs
             v-model="tab"
             vertical
@@ -25,6 +26,7 @@
           <folder-tree
             :folder="project.modelfolder">
           </folder-tree>
+        </div>
       </template>
 
       <template v-slot:after>
