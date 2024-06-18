@@ -10,7 +10,6 @@ export default class CategoryModel extends Model {
   @Bool(true) declare isExpanded: boolean
   @HasMany(() => PropertyModel, 'categorymodelId') declare properties: PropertyModel[]
 
-  @Attr() categoryId!: string
   @Attr() modelfolderId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */

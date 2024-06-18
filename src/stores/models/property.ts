@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { BelongsTo, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import PropertyModel from './propertymodel'
 
@@ -7,8 +7,20 @@ export default class Property extends Model {
   static entity = 'properties'
   @Uid() declare id: string
   @Str('') declare value: string
-  @BelongsTo(() => PropertyModel, 'propertymodelId') declare model: PropertyModel
   @HasOne(() => Justification, 'propertyId') declare justification: Justification | undefined
+
+  @Attr() declare propertymodelId: string
+  @Attr() _model!: PropertyModel
+
+  get model (): PropertyModel {
+    return this._model
+  }
+
+  set model (pm: PropertyModel) {
+    debugger
+    this._model = pm
+    this.propertymodelId = pm.id
+  }
 
   get label (): string {
     return `${this.model?.name}: ${this.value}`

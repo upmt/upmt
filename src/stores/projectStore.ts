@@ -88,7 +88,7 @@ interface OldMomentType {
    color: string
    expanded: boolean
    name: string
-   schemaCategory_list: OldSchemaCategory[]
+   schemaCategory_list: OldReference[]
 }
 interface OldSchemaFolder {
    "@id": string
@@ -156,6 +156,15 @@ function getReferenceId (e: OldReference): string {
   return `${e['@model']}-${e['@id']}`
 }
 
+function mapSchemaCategoryReference (sc: OldReference): CategoryModel {
+  const key = getReferenceId(sc)
+  const model = idCache.CategoryModel[key] as CategoryModel
+  if (!model) {
+    console.error(`Missing ${key}`)
+  }
+  return model
+}
+
 function mapConcreteProperty (p: OldProperty): Property {
   const key = getReferenceId(p.schemaProperty)
   const model = idCache.PropertyModel[key] as PropertyModel
@@ -163,6 +172,7 @@ function mapConcreteProperty (p: OldProperty): Property {
     console.error(`Missing ${key}`)
   }
   return repo.Property.make({
+    _model: model,
     propertymodelId: model.id,
     value: p.value,
     justification: p.justification
@@ -170,12 +180,9 @@ function mapConcreteProperty (p: OldProperty): Property {
 }
 
 function mapConcreteCategory (c: OldCategory): Category {
-  const key = getReferenceId(c.schemaCategory)
-  const model = idCache.CategoryModel[key] as CategoryModel
-  if (!model) {
-    console.error(`Missing ${key}`)
-  }
+  const model = mapSchemaCategoryReference(c.schemaCategory)
   return repo.Category.make({
+    _model: model,
     categorymodelId: model.id,
     justification: c.justification,
     properties: c.concreteProperty_list.map(mapConcreteProperty)
@@ -257,7 +264,7 @@ function mapMomentType (mt: OldMomentType): MomentModel {
       color: fixColorName(mt.color),
       isExpanded: mt.expanded,
       // It should be mapped to existing defined refs
-      categorymodels: mt.schemaCategory_list.map(mapSchemaCategory)
+      categorymodels: mt.schemaCategory_list.map(mapSchemaCategoryReference)
     })
     idCache.MomentModel[key] = model
   }
@@ -333,7 +340,7 @@ export const useProjectStore = defineStore('projectStore', {
           return
         }
         if (folder.categorymodels.length !== stored.categorymodels.length) {
-          const missing = (new Set(folder.categorymodels.map(cm => cm.name))).difference(new Set(stored.categorymodels.map(cm => cm.name)))
+          const missing = (new Set(folder.categorymodels.map(cm => cm.name)) as any).difference(new Set(stored.categorymodels.map(cm => cm.name)))
           console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length, missing)
         }
         if (folder.momentmodels.length !== stored.momentmodels.length) {
