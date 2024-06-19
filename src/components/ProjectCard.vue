@@ -3,7 +3,10 @@
     <p>{{ projects.length }} loaded projects.</p>
     <q-btn @click="addProject">Add project</q-btn>
     <q-btn @click="loadSample">Load sample</q-btn>
-    <q-file label="Load File" v-model="filename" filled @input="uploadFile"/>
+    <q-file label="Load File"
+            v-model="filename"
+            accept=".upmt"
+            filled @input="uploadFile"/>
   </q-card>
 </template>
 
