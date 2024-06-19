@@ -58,7 +58,12 @@ async function loadSample () {
     const filename = './OPEVA-G1.upmt'
     axios.get(filename).then((response) => {
         pstore.importProject(response.data, filename)
-    });
+    }).catch(error => {
+        $q.notify({
+            type: 'error',
+            message: `Error loading file: ${error}`
+        })
+    })
 }
 
 async function uploadFile (event: Event) {
@@ -66,7 +71,7 @@ async function uploadFile (event: Event) {
         // `event.target.files[0]` is the desired file object
         const files = (event.target as HTMLInputElement).files
         if (!files || files.length === 0) {
-            return;
+            return
         }
         const sourceFile = files[0]
         const reader = new FileReader()

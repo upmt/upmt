@@ -17,7 +17,6 @@ export default class Property extends Model {
   }
 
   set model (pm: PropertyModel) {
-    debugger
     this._model = pm
     this.propertymodelId = pm.id
   }
