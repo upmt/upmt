@@ -353,12 +353,9 @@ export const useProjectStore = defineStore('projectStore', {
           compareFolder(f)
         }
       }
+      /* FIXME: to remove once loading is solid */
       console.log("Checking refs", this)
       checkMissingRef(schema)
-      // Loaded folder
-      // console.log("Re-Checking refs")
-      // const loaded = this.getFolder(schema.id)
-      // checkMissingRef(loaded)
       console.log("Comparing loaded vs stored")
       compareFolder(schema)
 
@@ -379,7 +376,8 @@ export const useProjectStore = defineStore('projectStore', {
     getFolder (id: string): ModelFolder | null {
       return repo.ModelFolder
         .with('categorymodels', (query) => { query.with('properties') })
-        .with('momentmodels', (query) => { query.with('categorymodels', (query) => { query.with('properties') }) })
+        // .with('momentmodels', (query) => { query.with('categorymodels', (query) => { query.with('properties') }) })
+        .with('momentmodels')
         .with('folders', (query) => { query.withAll() })
         .find(id)
     },
