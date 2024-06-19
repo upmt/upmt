@@ -59,7 +59,15 @@ const props = defineProps({
     layout: { type: String, default: "vertical" }
   });
 
-const expand = computed(() => !props.moment.isCollapsed)
+const expand = computed({
+    get () {
+        return !props.moment.isCollapsed
+    },
+    set (value: boolean) {
+        const moment = props.moment
+        moment.isCollapsed = !value
+    }
+  })
 
 const momentName = computed({
     get () {
