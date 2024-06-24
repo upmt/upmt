@@ -370,19 +370,54 @@ export const useProjectStore = defineStore('projectStore', {
     getProject (id: string): Project {
       return repo.Project.find(id)
     },
-    getInterview (id: string): Interview {
-      return repo.Interview.find(id)
-    },
     getFolder (id: string): ModelFolder | null {
       return repo.ModelFolder
         .with('categorymodels', (query) => { query.with('properties') })
-        // .with('momentmodels', (query) => { query.with('categorymodels', (query) => { query.with('properties') }) })
         .with('momentmodels')
         .with('folders', (query) => { query.withAll() })
         .find(id)
     },
     getRepo () {
       return repo
+    },
+    getAnalysis (id: string) {
+      return repo.Analysis.with('rootMoment', (query) => query.with('children')).find(id)
+    },
+    getCategory (id: string) {
+      return repo.Category.with('justification').with('properties').find(id)
+    },
+    getDescriptem (id: string) {
+      return repo.Descriptem.with('interviews').find(id)
+    },
+    getInterview (id: string) {
+      return repo.Interview.with('annotations').with('analysis').find(id)
+    },
+    getJustification (id: string) {
+      return repo.Justification.find(id)
+    },
+    getMoment (id: string) {
+      return repo.Moment.with('children').with('justification').with('categories').find(id)
+    },
+    getProperty (id: string) {
+      const prop = repo.Property.with('justification').find(id)
+      if (prop) {
+        prop.model = repo.PropertyModel.find(prop.propertymodelId)
+      }
+      return prop
+    },
+    updatePropertyValue (p: Property | null, value: string) {
+      if (p) {
+        p.value = value
+        repo.Property.save(p)
+      }
+      return p
+    },
+    updateMomentName (m: Moment | null, name: string) {
+      if (m) {
+        m.name = name
+        repo.Moment.save(m)
+      }
+      return m
     }
   }
 })
