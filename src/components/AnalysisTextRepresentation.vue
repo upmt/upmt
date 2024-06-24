@@ -1,8 +1,10 @@
 <template>
-  <div class="analysis" :data-moment="analysis.id">
+  <div v-if="analysis"
+       class="analysis"
+       :data-moment="analysisId">
     <div class="analysis-content moment-children">
       <div v-for="m in analysis.rootMoment.children" :key="m.id">
-        <MomentTextRepresentation :moment="m">
+        <MomentTextRepresentation :momentId="m.id">
         </MomentTextRepresentation>
       </div>
     </div>
@@ -10,12 +12,20 @@
 </template>
 
 <script setup lang="ts">
-import Analysis from 'stores/models/analysis'
-import MomentTextRepresentation from './MomentTextRepresentation.vue'
+  import { computed } from 'vue'
+  import MomentTextRepresentation from './MomentTextRepresentation.vue'
+  import { useProjectStore } from 'stores/projectStore'
 
-defineProps({
-    analysis: { type: Analysis, default: null }
-});
+  const store = useProjectStore()
+  const props = defineProps({
+      analysisId: { type: String, default: "" }
+  });
+
+  const analysis = computed(() => {
+      const result = store.getAnalysis(props.analysisId)
+      console.log("Analysis", result)
+      return result
+  })
 </script>
 
 <style scoped>

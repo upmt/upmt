@@ -16,7 +16,7 @@
 
     <div class="category-properties">
       <div v-for="p in category.properties" :key="p.id">
-        <PropertyTextRepresentation :property="p">
+        <PropertyTextRepresentation :propertyId="p.id">
         </PropertyTextRepresentation>
       </div>
     </div>
@@ -25,13 +25,17 @@
 </template>
 
 <script setup lang="ts">
-import Category from 'stores/models/category'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import PropertyTextRepresentation from './PropertyTextRepresentation.vue'
+import { computed } from 'vue'
+import { useProjectStore } from 'stores/projectStore'
 
-defineProps({
-    category: { type: Category, default: null }
+const store = useProjectStore()
+
+const props = defineProps({
+    categoryId: { type: String, default: "" }
 })
+const category = computed(() => store.getCategory(props.categoryId))
 </script>
 
 <style scoped>

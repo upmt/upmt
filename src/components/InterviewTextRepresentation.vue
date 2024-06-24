@@ -1,5 +1,7 @@
 <template>
-  <div class="interview" :data-interview="interview.id">
+  <div class="interview"
+       v-if="interview"
+       :data-interview="interviewId">
     <div class="interview-metadata">
       <span class="interview-title"
             :style="{ backgroundColor: interview.color }">
@@ -10,25 +12,36 @@
       <q-slider v-model="zoom" :min="0.1" :max="2" :step=".1"></q-slider>
     </div>
 
-    <AnalysisTextRepresentation :analysis="interview.analysis">
+    <AnalysisTextRepresentation
+      v-if="interview.analysis"
+      :analysisId="interview.analysis.id">
     </AnalysisTextRepresentation>
 
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { Ref } from 'vue'
 import { useCssVar } from '@vueuse/core'
-import Interview from 'stores/models/interview'
 import AnalysisTextRepresentation from './AnalysisTextRepresentation.vue'
+import { useProjectStore } from 'stores/projectStore'
 
-defineProps({
-    interview: { type: Interview, default: null }
+const store = useProjectStore()
+
+const props = defineProps({
+    interviewId: { type: String, default: "" }
 })
 
+const interview = computed(() => store.getInterview(props.interviewId))
 const el = ref(null)
-const zoom = useCssVar('--chart-zoom', el) as unknown as Ref<number>
+const zoomVar = useCssVar('--chart-zoom', el) as unknown as Ref<number>
+// useCssVar returns a string, and QSlider expects a number. Convert it.
+// Using it directly works but produces a warning.
+const zoom = computed({
+    get: () => Number(zoomVar.value),
+    set: (value) => { zoomVar.value = value }
+  })
 </script>
 
   <style>

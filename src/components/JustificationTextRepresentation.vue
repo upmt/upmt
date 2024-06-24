@@ -1,13 +1,13 @@
 <template>
   <div class="justification"
        v-if="justification"
-       :data-justification="justification.id">
+       :data-justification="justificationId">
     <div class="justification-metadata">
       <span class="justification-name">{{ justification.name }}</span>
     </div>
     <ul class="justification-descriptems">
       <li v-for="descriptem in justification.descriptems" :key="descriptem.id">
-        <DescriptemTextRepresentation :descriptem="descriptem">
+        <DescriptemTextRepresentation :descriptemId="descriptem.id">
         </DescriptemTextRepresentation>
       </li>
     </ul>
@@ -15,12 +15,16 @@
 </template>
 
 <script setup lang="ts">
-import Justification from 'stores/models/justification'
 import DescriptemTextRepresentation from './DescriptemTextRepresentation.vue'
+import { computed } from 'vue'
+import { useProjectStore } from 'stores/projectStore'
 
-defineProps({
-    justification: { type: Justification, default: null }
+const store = useProjectStore()
+
+const props = defineProps({
+    justificationId: { type: String, default: "" }
 });
+const justification = computed(() => store.getJustification(props.justificationId))
 </script>
 
 <style>

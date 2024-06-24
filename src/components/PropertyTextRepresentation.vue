@@ -1,8 +1,11 @@
 <template>
-  <div class="property" :data-property="property.id" :title="property.label">
+  <div class="property"
+       v-if="property"
+       :data-property="property.id"
+       :title="property.label">
     <q-icon size="xs" name="mdi-note-text-outline"></q-icon>
     <div class="property-name">{{ property.name }}</div>
-    <div class="property-value">{{ property.value }}
+    <div class="property-value">{{ propertyValue }}
       <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
         <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
       </q-popup-edit>
@@ -12,21 +15,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import Property from 'stores/models/property'
+import { useProjectStore } from 'stores/projectStore'
+
+const store = useProjectStore()
 
 const props = defineProps({
-    property: { type: Property, default: null }
+    propertyId: { type: String, default: "" }
 })
 
+const property = computed(() => store.getProperty(props.propertyId))
 const propertyValue = computed({
-    get () {
-        return props.property?.value
-    },
-    set (value: string) {
-        const property = props.property
-        if (property) {
-            property.value = value
-        }
+    get: () => property.value ? property.value.value : "",
+    set: (value) => {
+        store.updatePropertyValue(property.value, value)
     }
 })
 </script>

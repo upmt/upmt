@@ -24,20 +24,20 @@
       </template>
 
       <div class="moment-justification">
-        <JustificationTextRepresentation :justification="moment.justification">
+        <JustificationTextRepresentation :justificationId="moment.justification?.id">
         </JustificationTextRepresentation>
       </div>
 
       <div :class="[ 'moment-categories', layout ]">
         <div v-for="c in moment.categories" :key="c.id">
-          <CategoryTextRepresentation :category="c">
+          <CategoryTextRepresentation :categoryId="c.id">
           </CategoryTextRepresentation>
         </div>
       </div>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
-          <MomentTextRepresentation :moment="m">
+          <MomentTextRepresentation :momentId="m.id">
           </MomentTextRepresentation>
         </div>
       </div>
@@ -49,35 +49,37 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import Moment from 'stores/models/moment'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
+import { useProjectStore } from 'stores/projectStore'
+
+const store = useProjectStore()
 
 const props = defineProps({
-    moment: { type: Moment, default: null },
+    momentId: { type: String, default: "" },
     layout: { type: String, default: "vertical" }
   });
 
+const moment = computed(() => store.getMoment(props.momentId))
+
 const expand = computed({
     get () {
-        return !props.moment.isCollapsed
+        return moment.value ? !moment.value.isCollapsed : true
     },
     set (value: boolean) {
-        const moment = props.moment
-        moment.isCollapsed = !value
+        if (moment.value) {
+            moment.value.isCollapsed = !value
+        }
     }
   })
 
 const momentName = computed({
     get () {
-        return props.moment?.name
+        return moment.value ? moment.value.name : ""
     },
     set (value: string) {
-        const moment = props.moment
-        if (moment) {
-            moment.name = value
-        }
+        store.updateMomentName(moment.value, value)
     }
 })
 </script>

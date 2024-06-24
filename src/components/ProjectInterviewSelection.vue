@@ -48,7 +48,7 @@
               <template v-slot:before>
                 <InterviewTextRepresentation
                   class="fit fullwindow-height"
-                  :interview="interview">
+                  :interviewId="interview.id">
                 </InterviewTextRepresentation>
               </template>
 

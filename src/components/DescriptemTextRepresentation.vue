@@ -1,16 +1,23 @@
 <template>
-  <div class="descriptem" :data-descriptem="descriptem.id" :title="descriptem.text">
+  <div class="descriptem"
+       v-if="descriptem"
+       :data-descriptem="descriptem.id"
+       :title="descriptem.text">
     <q-icon size="xs" name="mdi-format-quote-close-outline"></q-icon>
     <span class="descriptem-header">{{ descriptem.text }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import Descriptem from 'stores/models/descriptem'
+import { computed } from 'vue'
+import { useProjectStore } from 'stores/projectStore'
 
-defineProps({
-    descriptem: { type: Descriptem, default: null }
-});
+const store = useProjectStore()
+
+const props = defineProps({
+    descriptemId: { type: String, default: "" }
+  })
+const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 </script>
 
   <style>
