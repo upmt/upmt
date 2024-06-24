@@ -14,6 +14,7 @@ export default class Moment extends Model {
   @Bool(false) declare isTransitional: boolean
 
   @Attr() analysisId!: string
+  @Attr() parentId!: string
 
   @HasOne(() => Justification, 'momentId') declare justification: Justification | undefined
   @HasMany(() => Category, 'momentId') declare categories: Category[]

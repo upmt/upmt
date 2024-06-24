@@ -11,6 +11,7 @@ export default class Property extends Model {
 
   @Attr() declare propertymodelId: string
   @Attr() _model!: PropertyModel
+  @Attr() categoryId!: string
 
   get model (): PropertyModel {
     return this._model
