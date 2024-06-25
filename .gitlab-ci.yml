@@ -14,6 +14,7 @@ before_script:
 pages:
   script:
     - npx quasar build -d
+    - /bin/rm -rf public/
     - cp -a dist/spa/ public/
   artifacts:
     paths:
