@@ -3,8 +3,8 @@ image: node:20-slim
 
 # Functions that should be executed before the build script is run
 before_script:
-  - echo http_proxy $http_proxy
-  - echo https_proxy $https_proxy
+  - export ELECTRON_GET_USE_PROXY=true
+  - export GLOBAL_AGENT_HTTPS_PROXY=$https_proxy
   - npm config set proxy $http_proxy
   - npm config set https-proxy $https_proxy
   - npm install
