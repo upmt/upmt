@@ -203,7 +203,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
       descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
         endIndex: d.endIndex,
-        interview
+        interviewId: interview.id
       }))
     }),
     children: m.moment_list.map((c: OldMoment) => mapMoment(c, interview))
@@ -387,13 +387,17 @@ export const useProjectStore = defineStore('projectStore', {
       return repo.Category.with('justification').with('properties').find(id)
     },
     getDescriptem (id: string) {
-      return repo.Descriptem.with('interviews').find(id)
+      const d = repo.Descriptem.find(id)
+      if (d) {
+        d.interview = repo.Interview.find(d.interviewId)
+      }
+      return d
     },
     getInterview (id: string) {
       return repo.Interview.with('annotations').with('analysis').find(id)
     },
     getJustification (id: string) {
-      return repo.Justification.find(id)
+      return repo.Justification.with('descriptems').find(id)
     },
     getMoment (id: string) {
       return repo.Moment.with('children').with('justification').with('categories').find(id)
