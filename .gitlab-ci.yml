@@ -3,11 +3,14 @@ image: node:20-slim
 
 # Functions that should be executed before the build script is run
 before_script:
+  # Needed for electron
   - export ELECTRON_GET_USE_PROXY=true
   - export GLOBAL_AGENT_HTTPS_PROXY=$https_proxy
   - npm config set proxy $http_proxy
   - npm config set https-proxy $https_proxy
   - npm install
+  # Post-install: fix vue-annotated-text component
+  - perl -pe 's@./@./dist/@' node_modules/@ghentcdh/vue-component-annotated-text/dist/index.d.ts > node_modules/@ghentcdh/vue-component-annotated-text/index.d.ts
 pages:
   script:
     - npx quasar build -d
