@@ -13,6 +13,7 @@
     </div>
 
     <AnalysisTextRepresentation
+      class="scrollable"
       v-if="interview.analysis"
       :analysisId="interview.analysis.id">
     </AnalysisTextRepresentation>
@@ -45,6 +46,11 @@ const zoom = computed({
 </script>
 
   <style>
+  .interview {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+  }
   .interview::-webkit-scrollbar:horizontal{} {
     background-color: red;
     width: 32px;
@@ -58,5 +64,8 @@ const zoom = computed({
   }
   .interview-title {
       font-weight: bold;
+  }
+  .scrollable {
+      overflow: auto;
   }
 </style>
