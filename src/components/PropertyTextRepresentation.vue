@@ -48,6 +48,7 @@ const propertyValue = computed({
   }
   .property-handle {
       opacity: .5;
+      cursor: pointer;
   }
   .property-handle:hover {
       opacity: .7;

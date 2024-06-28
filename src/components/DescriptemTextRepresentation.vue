@@ -39,6 +39,7 @@ const descriptem = computed(() => store.getDescriptem(props.descriptemId))
   }
   .descriptem-handle {
       opacity: .5;
+      cursor: pointer;
   }
   .descriptem-handle:hover {
       opacity: .7;

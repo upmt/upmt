@@ -115,6 +115,7 @@ const momentName = computed({
   }
   .moment-handle {
       opacity: .5;
+      cursor: pointer;
   }
   .moment-handle:hover {
       opacity: .8;

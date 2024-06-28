@@ -19,6 +19,7 @@ defineProps({
 <style>
   .categorymodel-handle {
       opacity: .5;
+      cursor: pointer;
   }
   .categorymodel-handle:hover {
       opacity: .7;

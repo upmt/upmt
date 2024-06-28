@@ -68,6 +68,7 @@ const category = computed(() => store.getCategory(props.categoryId))
   }
   .category-handle {
       opacity: .5;
+      cursor: pointer;
   }
   .category-handle:hover {
       opacity: .7;
