@@ -9,7 +9,11 @@
         &nbsp;(<span class="interview-date">{{ interview.date }}</span>)
       </span>
       <span class="interview-comment">{{ interview.comment }}</span>
-      <q-slider v-model="zoom" :min="0.1" :max="2" :step=".1"></q-slider>
+      <q-slider v-model="zoom"
+                :min="0.1"
+                :max="2"
+                :step=".1"
+                ></q-slider>
     </div>
 
     <AnalysisTextRepresentation
