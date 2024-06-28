@@ -32,7 +32,7 @@ export default class Descriptem extends Model {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
     return {
-      interviewId: this.interview.id,
+      interviewId: this.interviewId,
       startIndex: this.startIndex,
       endIndex: this.endIndex
     }

@@ -18,7 +18,7 @@ export default class MomentModel extends Model {
       name: this.name,
       color: this.color,
       isTransitional: this.isTransitional,
-      categorymodels: this.categorymodels.map(c => c.toJSON())
+      categorymodels: this.categorymodels.map(cm => cm.toJSON())
     }
   }
 }
