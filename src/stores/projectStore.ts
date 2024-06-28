@@ -388,6 +388,9 @@ export const useProjectStore = defineStore('projectStore', {
     getCategory (id: string) {
       return repo.Category.with('justification').with('properties').find(id)
     },
+    getCategoryModel (id: string) {
+      return repo.CategoryModel.with('properties').find(id)
+    },
     getDescriptem (id: string) {
       const d = repo.Descriptem.find(id)
       if (d) {
@@ -403,6 +406,9 @@ export const useProjectStore = defineStore('projectStore', {
     },
     getMoment (id: string) {
       return repo.Moment.with('children').with('justification').with('categories').find(id)
+    },
+    getMomentModel (id: string) {
+      return repo.MomentModel.find(id)
     },
     getProperty (id: string) {
       const prop = repo.Property.with('justification').find(id)
