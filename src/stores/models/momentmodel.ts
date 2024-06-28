@@ -1,6 +1,7 @@
 import { Model } from 'pinia-orm'
-import { Attr, Str, Uid, Bool } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsToMany, Str, Uid, Bool } from 'pinia-orm/dist/decorators'
 import CategoryModel from './categorymodel'
+import CategoryMomentModel from './categorymomentmodel'
 
 export default class MomentModel extends Model {
   static entity = 'momentmodels'
@@ -9,7 +10,7 @@ export default class MomentModel extends Model {
   @Str('') declare color: string
   @Bool(false) declare isTransitional: boolean
 
-  @Attr() categorymodels!: CategoryModel[]
+  @BelongsToMany(() => CategoryModel, () => CategoryMomentModel, 'momentmodelId', 'categorymodelId') declare categorymodels: CategoryModel[]
   @Attr() modelfolderId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
