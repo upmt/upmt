@@ -293,7 +293,9 @@ export const useProjectStore = defineStore('projectStore', {
     importProject (data: any, filename: string) {
       // Load schema first so that idCache is properly initialized
       const schema = mapFolder(data.schemaTreeRoot)
+      const id = filename.replace('.upmt', '').replace(/[^A-Za-z0-9_-]/g, '_')
       const out = repo.Project.save({
+        id,
         filename,
         name: data.name,
         interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
