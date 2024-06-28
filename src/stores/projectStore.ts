@@ -363,6 +363,25 @@ export const useProjectStore = defineStore('projectStore', {
 
       return out
     },
+    /* Return a project structure with all relationships hydrated */
+    hydrateProject (id: string): any {
+      /* eslint-disable @typescript-eslint/no-this-alias */
+      const store = this
+      const project = { ...store.getProject(id) }
+      /* Go through all related elements and fetch them */
+      console.log("Export project", project)
+      const hydrateFolder = (id: string) => {
+        const folder = store.getFolder(id)
+        if (folder) {
+          folder.categorymodels = folder.categorymodels.map(cm => store.getCategoryModel(cm.id) as CategoryModel)
+          folder.momentmodels = folder.momentmodels.map(mm => store.getMomentModel(mm.id))
+          folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
+        }
+        return folder
+      }
+      project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
+      return project
+    },
     getAllProjects (): Project[] {
       // Beware
       // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
@@ -382,6 +401,13 @@ export const useProjectStore = defineStore('projectStore', {
     getRepo () {
       return repo
     },
+    /* Getter methods for elements.
+    Since we are  using the Pinia store through the PiniaORM, each element type has its own repository/store.
+
+    To preserve reactivity of attributes, we need to get a reference
+    to the element directly from the store, from its id.
+    This also allows us to control the items that must be fetched along ("with").
+     */
     getAnalysis (id: string) {
       return repo.Analysis.with('rootMoment', (query) => query.with('children')).find(id)
     },
@@ -408,7 +434,7 @@ export const useProjectStore = defineStore('projectStore', {
       return repo.Moment.with('children').with('justification').with('categories').find(id)
     },
     getMomentModel (id: string) {
-      return repo.MomentModel.find(id)
+      return repo.MomentModel.with('categorymodels').find(id) as MomentModel
     },
     getProperty (id: string) {
       const prop = repo.Property.with('justification').find(id)

@@ -73,7 +73,7 @@ function loadSample (filename = './OPEVA-G1.upmt') {
 }
 
 function exportProject (project: Project) {
-    const data = project.toJSON()
+    const data = useProjectStore().hydrateProject(project.id)
 
     const status = exportFile(project.filename ?? project.label,
                               JSON.stringify(data, null, 2), {
