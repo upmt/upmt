@@ -15,7 +15,11 @@
       >
 
       <template v-slot:header>
-        <q-icon size="xs" name="mdi-note-outline"></q-icon>
+        <q-icon
+          ref="handle"
+          class="moment-handle"
+          size="xs"
+          name="mdi-note-outline"></q-icon>
         <span class="moment-name">{{ momentName }}
           <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
             <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
@@ -108,5 +112,11 @@ const momentName = computed({
   }
   .transitional {
       background-color: var(--transitional-color);
+  }
+  .moment-handle {
+      opacity: .5;
+  }
+  .moment-handle:hover {
+      opacity: .8;
   }
 </style>

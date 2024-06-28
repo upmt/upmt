@@ -3,7 +3,11 @@
        v-if="property"
        :data-property="property.id"
        :title="property.label">
-    <q-icon size="xs" name="mdi-note-text-outline"></q-icon>
+    <q-icon
+      ref="handle"
+      class="property-handle"
+      size="xs"
+      name="mdi-note-text-outline"></q-icon>
     <div class="property-name">{{ property.name }}</div>
     <div class="property-value">{{ propertyValue }}
       <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
@@ -32,7 +36,7 @@ const propertyValue = computed({
 })
 </script>
 
-  <style>
+<style>
   .property {
     display: flex;
     flex-direction: row;
@@ -41,5 +45,11 @@ const propertyValue = computed({
   .property-value {
       flex: 1 1 0;
       text-align: right;
+  }
+  .property-handle {
+      opacity: .5;
+  }
+  .property-handle:hover {
+      opacity: .7;
   }
 </style>

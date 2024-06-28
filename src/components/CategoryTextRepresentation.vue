@@ -5,7 +5,11 @@
        :data-category="category.id">
 
     <div class="category-metadata">
-      <q-icon size="xs" name="mdi-tag-outline"></q-icon>
+      <q-icon
+        ref="handle"
+        class="category-handle"
+        size="xs"
+        name="mdi-tag-outline"></q-icon>
       <span class="category-name">{{ category.name }}</span>
     </div>
 
@@ -61,5 +65,11 @@ const category = computed(() => store.getCategory(props.categoryId))
       display: flex;
       flex-direction: column;
       border: 1px solid grey;
+  }
+  .category-handle {
+      opacity: .5;
+  }
+  .category-handle:hover {
+      opacity: .7;
   }
 </style>

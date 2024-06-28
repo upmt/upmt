@@ -3,7 +3,11 @@
        v-if="descriptem"
        :data-descriptem="descriptem.id"
        :title="descriptem.text">
-    <q-icon size="xs" name="mdi-format-quote-close-outline"></q-icon>
+    <q-icon
+      ref="handle"
+      class="descriptem-handle"
+      size="xs"
+      name="mdi-format-quote-close-outline"></q-icon>
     <span class="descriptem-header">{{ descriptem.text }}</span>
   </div>
 </template>
@@ -32,5 +36,11 @@ const descriptem = computed(() => store.getDescriptem(props.descriptemId))
     overflow: hidden;
     width: 100%;
     height: 1.2em;
+  }
+  .descriptem-handle {
+      opacity: .5;
+  }
+  .descriptem-handle:hover {
+      opacity: .7;
   }
 </style>
