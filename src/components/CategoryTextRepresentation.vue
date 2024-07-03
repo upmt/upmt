@@ -60,7 +60,7 @@ const category = computed(() => store.getCategory(props.categoryId))
   }
   .category {
       min-width: 200px;
-      min-height: 120px;
+      min-height: 80px;
       margin: 1em;
       display: flex;
       flex-direction: column;
