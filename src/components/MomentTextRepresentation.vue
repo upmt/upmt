@@ -105,7 +105,7 @@ const momentName = computed({
   .moment {
       min-width: 200px;
       min-height: 40px;
-      margin: 1em;
+      margin: 2px;
       display: flex;
       flex-direction: column;
       border: 1px solid grey;
