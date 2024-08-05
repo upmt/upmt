@@ -32,5 +32,6 @@ const justification = computed(() => store.getJustification(props.justificationI
     list-style: none;
     display: flex;
     flex-direction: column;
+    margin: 0;
   }
 </style>
