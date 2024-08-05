@@ -471,12 +471,12 @@ export const useProjectStore = defineStore('projectStore', {
       }
       return p
     },
-    updateMomentName (m: Moment | null, name: string) {
+    updateMoment (m: Moment | null, values: object) {
       if (m) {
-        m.name = name
-        repo.Moment.save(m)
+        repo.Moment.where('id', m.id).update(values)
       }
       return m
     }
+
   }
 })
