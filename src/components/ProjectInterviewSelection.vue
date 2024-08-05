@@ -10,6 +10,7 @@
       <template v-slot:before>
         <div class="fit fullwindow-height">
           <q-tabs
+            dense
             v-model="tab"
             vertical
             >
