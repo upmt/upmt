@@ -17,6 +17,7 @@
       <template v-slot:header>
         <q-icon
           ref="handle"
+          @click="debug"
           class="moment-handle"
           size="xs"
           name="mdi-note-outline"></q-icon>
@@ -66,6 +67,11 @@ const props = defineProps({
   });
 
 const moment = computed(() => store.getMoment(props.momentId))
+
+const debug = () => {
+      (window as any).moment = moment
+      console.log("Moment", moment)
+}
 
 const expand = computed({
     get () {
