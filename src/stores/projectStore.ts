@@ -271,14 +271,14 @@ function mapMomentType (mt: OldMomentType): MomentModel {
   return model
 }
 
-function mapFolder (f: OldSchemaFolder): ModelFolder {
-  return repo.ModelFolder.make({
-    name: f.name,
-    color: 'transparent',
-    isExpanded: f.expanded,
-    folders: f.schemaFolder_list.map(mapFolder),
-    categorymodels: f.schemaCategory_list.map(mapSchemaCategory),
-    momentmodels: f.schemaMomentType_list.map(mapMomentType)
+function mapOldFolder (f: OldSchemaFolder): ModelFolder {
+    return repo.ModelFolder.make({
+      name: f.name,
+      color: 'transparent',
+      isExpanded: f.expanded,
+      folders: f.schemaFolder_list.map(mapOldFolder),
+      categorymodels: f.schemaCategory_list.map(mapSchemaCategory),
+      momentmodels: f.schemaMomentType_list.map(mapMomentType)
     })
 }
 
@@ -292,15 +292,25 @@ export const useProjectStore = defineStore('projectStore', {
     /* eslint-disable @typescript-eslint/no-explicit-any */
     importProject (data: any, filename: string) {
       // Load schema first so that idCache is properly initialized
-      const schema = mapFolder(data.schemaTreeRoot)
       const id = filename.replace('.upmt', '').replace(/[^A-Za-z0-9_-]/g, '_')
-      const out = repo.Project.save({
-        id,
-        filename,
-        name: data.name,
-        interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
-        modelfolder: schema
-      })
+      let out
+      let schema
+      if ('modelfolder' in data) {
+        // New style
+        out = repo.Project.save(data as Project)
+        schema = out.modelfolder
+        // We must remap models
+      } else {
+        // Old upmt files
+        schema = mapOldFolder(data.schemaTreeRoot)
+        out = repo.Project.save({
+          id,
+          filename,
+          name: data.name,
+          interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
+          modelfolder: schema
+        })
+      }
       console.log("Imported", { project: out, idcache: idCache })
       // Check missing ids in the loaded data: normally, all children
       // elements should have a link to the parent id
@@ -379,7 +389,9 @@ export const useProjectStore = defineStore('projectStore', {
         }
         return folder
       }
-      project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
+      if (project.modelfolder) {
+        project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
+      }
       return project
     },
     getAllProjects (): Project[] {
@@ -388,7 +400,7 @@ export const useProjectStore = defineStore('projectStore', {
       // this does not process relations (i.e. withAll will not work)
       return repo.Project.all()
     },
-    getProject (id: string): Project {
+    getProject (id: string): Project | null {
       return repo.Project.find(id)
     },
     getFolder (id: string): ModelFolder | null {
@@ -420,7 +432,10 @@ export const useProjectStore = defineStore('projectStore', {
     getDescriptem (id: string) {
       const d = repo.Descriptem.find(id)
       if (d) {
-        d.interview = repo.Interview.find(d.interviewId)
+        const interview = repo.Interview.find(d.interviewId)
+        if (interview) {
+          d.interview = interview
+        }
       }
       return d
     },
@@ -439,7 +454,13 @@ export const useProjectStore = defineStore('projectStore', {
     getProperty (id: string) {
       const prop = repo.Property.with('justification').find(id)
       if (prop) {
-        prop.model = repo.PropertyModel.find(prop.propertymodelId)
+        const model = repo.PropertyModel.find(prop.propertymodelId)
+        if (model) {
+          prop.model = model
+        } else {
+          // Unconsistency error!
+          console.error(`Unconsistency - no model ${prop.propertymodelId} for ${prop}`)
+        }
       }
       return prop
     },

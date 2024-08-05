@@ -18,7 +18,10 @@ import Project from 'stores/models/project'
 import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
 
 defineProps({
-    project: { type: Project, default: null }
+    project: {
+        type: Project,
+        default: null
+    }
 });
 </script>
 

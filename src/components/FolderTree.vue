@@ -52,14 +52,22 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
 
     if (entitytype === 'projects') {
         const project = pstore.getProject(entityid)
-        done(project.interviews.map((i): QTreeNode => {
-            return {
-                label: i.label,
-                id: getKey(i),
-                icon: 'mdi-graph-outline',
-                lazy: true
-            }
-        }))
+        if (project) {
+            done(project.interviews.map((i): QTreeNode => {
+                return {
+                    label: i.label,
+                    id: getKey(i),
+                    icon: 'mdi-graph-outline',
+                    lazy: true
+                }
+            }))
+        } else {
+            done([{
+                    label: "No project",
+                    id: "no_project",
+                    icon: 'mdi-graph-outline'
+            }])
+        }
     } else if (entitytype === 'modelfolders') {
         const folder = pstore.getFolder(entityid)
         if (!folder) {

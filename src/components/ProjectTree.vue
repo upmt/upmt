@@ -48,13 +48,20 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
 
     if (entitytype === 'projects') {
         const project = pstore.getProject(entityid)
-        done(project.interviews.map((i: Interview): QTreeNode => {
-            return {
-                label: i.label,
-                id: getKey(i),
-                lazy: false
+        if (project) {
+            done(project.interviews.map((i: Interview): QTreeNode => {
+                return {
+                    label: i.label,
+                    id: getKey(i),
+                    lazy: false
             }
-        }))
+            }))
+        } else {
+            done([{
+                label: "No project",
+                id: "no_project"
+            }])
+        }
     }
 }
 </script>

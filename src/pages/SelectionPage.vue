@@ -37,7 +37,7 @@ const projectList = computed((): SelectItem[] => projects.value.map(p => ({
   })))
 const selectedProject = computed(() => {
     if (selected.value) {
-        return projectStore.getProject(selected.value.value)
+        return projectStore.getProject(selected.value.value) || undefined
     } else {
         return undefined
     }
