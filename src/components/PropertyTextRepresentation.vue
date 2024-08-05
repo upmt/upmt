@@ -31,7 +31,7 @@ const property = computed(() => store.getProperty(props.propertyId))
 const propertyValue = computed({
     get: () => property.value ? property.value.value : "",
     set: (value) => {
-        store.updatePropertyValue(property.value, value)
+        store.updateProperty(property.value, { value })
     }
 })
 </script>

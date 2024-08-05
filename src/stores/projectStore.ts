@@ -464,10 +464,9 @@ export const useProjectStore = defineStore('projectStore', {
       }
       return prop
     },
-    updatePropertyValue (p: Property | null, value: string) {
+    updateProperty (p: Property | null, values: object) {
       if (p) {
-        p.value = value
-        repo.Property.save(p)
+        repo.Property.where('id', p.id).update(values)
       }
       return p
     },
