@@ -43,8 +43,13 @@ const propertyValue = computed({
     min-height: 1.2em;
   }
   .property-value {
+      margin-left: 1em;
       flex: 1 1 0;
       text-align: right;
+      border: 1px;
+  }
+  .property-value:hover {
+      border: 1px dashed grey;
   }
   .property-handle {
       opacity: .5;
