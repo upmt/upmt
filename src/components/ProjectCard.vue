@@ -1,8 +1,10 @@
 <template>
   <q-card>
     <p>{{ projects.length }} loaded projects.</p>
-    <q-btn @click="addProject">Add project</q-btn>
-    <q-btn @click="loadSample">Load sample</q-btn>
+    <div v-if="isLocalhost()">
+      <q-btn @click="addProject">Add project</q-btn>
+      <q-btn @click="loadSample">Load sample</q-btn>
+    </div>
     <q-file label="Load File"
             v-model="filename"
             accept=".upmt"
@@ -21,6 +23,10 @@ const filename = ref(null)
 
 const pstore = useProjectStore()
 const projects = computed(() => pstore.getAllProjects())
+
+function isLocalhost () {
+    return document.location.hostname === 'localhost'
+}
 
 let counter = 1
 const addProject = () => {
