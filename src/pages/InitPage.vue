@@ -32,7 +32,7 @@ const props = defineProps({
 
 const $q = useQuasar()
 
-const projectStore = useProjectStore()
+const store = useProjectStore()
 
 const project = ref<Project>()
 
@@ -55,8 +55,10 @@ watch(() => props.source,
 
 onMounted(() => {
     if (!project.value) {
-        loadSample()
-        console.log("Debugging pstore", projectStore)
+        loadSample();
+        (window as any).store = store;
+        (window as any).quasar = $q;
+        console.log("Debugging store", store, "quasar", $q);
     }
 })
 </script>
