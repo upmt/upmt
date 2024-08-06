@@ -282,154 +282,50 @@ function mapOldFolder (f: OldSchemaFolder): ModelFolder {
     })
 }
 
-export const useProjectStore = defineStore('projectStore', {
-  state: () => ({
-  }),
-  actions: {
-    createProject (projectData: Subset<Project>) {
-      repo.Project.save(projectData)
-    },
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    importProject (data: any, filename: string) {
-      // Load schema first so that idCache is properly initialized
-      const id = filename.replace('.upmt', '').replace(/[^A-Za-z0-9_-]/g, '_')
-      let out
-      let schema
-      if ('modelfolder' in data) {
-        // New style
-        out = repo.Project.save(data as Project)
-        schema = out.modelfolder
-        // We must remap models
-      } else {
-        // Old upmt files
-        schema = mapOldFolder(data.schemaTreeRoot)
-        out = repo.Project.save({
-          id,
-          filename,
-          name: data.name,
-          interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
-          modelfolder: schema
-        })
-      }
-      console.log("Imported", { project: out, idcache: idCache })
-      // Check missing ids in the loaded data: normally, all children
-      // elements should have a link to the parent id
-      const checkMissingRef = (folder: ModelFolder | null) => {
-        if (!folder) {
-          console.log("Null folder")
-          return
-        }
-        for (const f of (folder.folders ?? [])) {
-          if (f.parentId !== folder.id) {
-            console.log("Error for f", folder, f)
-          }
-          checkMissingRef(f)
-        }
-        for (const cm of (folder.categorymodels ?? [])) {
-          if (cm.modelfolderId !== folder.id) {
-            console.log("Error for cm", folder, cm)
-          }
-          if (!cm.modelfolderId) {
-            console.log("Empty modelfolderId for cm", folder, cm)
-          }
-        }
-        for (const mm of (folder.momentmodels ?? [])) {
-          if (mm.modelfolderId !== folder.id) {
-            console.log("Error for mm", folder, mm)
-          }
-        }
-      }
-      // Compare the loaded folder structure with the structure returned through getFolder
-      // by comparing the number of children (categorymodels, momentmodels)
-      const compareFolder = (folder: ModelFolder | null) => {
-        if (!folder) {
-          console.log("NULL folder???")
-          return
-        }
-        const stored = this.getFolder(folder.id)
-        if (!stored) {
-          console.log("NULL folder", folder.id)
-          return
-        }
-        if (folder.categorymodels.length !== stored.categorymodels.length) {
-          const missing = (new Set(folder.categorymodels.map(cm => cm.name)) as any).difference(new Set(stored.categorymodels.map(cm => cm.name)))
-          console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length, missing)
-        }
-        if (folder.momentmodels.length !== stored.momentmodels.length) {
-          console.log("Differing mm for folder", folder.name, folder.id, folder.momentmodels.length, stored.momentmodels.length)
-        }
-        if (folder.folders.length !== stored.folders.length) {
-          console.log("Differing folder count for folder", folder.name, folder.id, folder.folders.length, stored.folders.length)
-        }
-        for (const f of folder.folders) {
-          compareFolder(f)
-        }
-      }
-      /* FIXME: to remove once loading is solid */
-      console.log("Checking refs", this)
-      checkMissingRef(schema)
-      console.log("Comparing loaded vs stored")
-      compareFolder(schema)
-
-      return out
-    },
-    /* Return a project structure with all relationships hydrated */
-    hydrateProject (id: string): any {
-      /* eslint-disable @typescript-eslint/no-this-alias */
-      const store = this
-      const project = { ...store.getProject(id) }
-      /* Go through all related elements and fetch them */
-      console.log("Export project", project)
-      const hydrateFolder = (id: string) => {
-        const folder = store.getFolder(id)
-        if (folder) {
-          folder.categorymodels = folder.categorymodels.map(cm => store.getCategoryModel(cm.id) as CategoryModel)
-          folder.momentmodels = folder.momentmodels.map(mm => store.getMomentModel(mm.id))
-          folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
-        }
-        return folder
-      }
-      if (project.modelfolder) {
-        project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
-      }
-      return project
-    },
-    getAllProjects (): Project[] {
-      // Beware
-      // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
+export const useProjectStore = defineStore('projectStore', () => {
+  function getAllProjects (): Project[] {
+    // Beware
+    // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
       // this does not process relations (i.e. withAll will not work)
-      return repo.Project.all()
-    },
-    getProject (id: string): Project | null {
+    return repo.Project.all()
+  }
+
+  function getProject (id: string): Project | null {
       return repo.Project.find(id)
-    },
-    getFolder (id: string): ModelFolder | null {
+    }
+
+  function getFolder (id: string): ModelFolder | null {
       return repo.ModelFolder
         .with('categorymodels', (query) => { query.with('properties') })
         .with('momentmodels')
         .with('folders', (query) => { query.withAll() })
         .find(id)
-    },
-    getRepo () {
+    }
+
+  function getRepo () {
       return repo
-    },
-    /* Getter methods for elements.
+    }
+
+  /* Getter methods for elements.
     Since we are  using the Pinia store through the PiniaORM, each element type has its own repository/store.
 
     To preserve reactivity of attributes, we need to get a reference
     to the element directly from the store, from its id.
     This also allows us to control the items that must be fetched along ("with").
      */
-    getAnalysis (id: string) {
+  function getAnalysis (id: string) {
       return repo.Analysis.with('rootMoment', (query) => query.with('children')).find(id)
-    },
-    getCategory (id: string) {
+  }
+
+  function getCategory (id: string) {
       return repo.Category.with('justification').with('properties').find(id)
-    },
-    getCategoryModel (id: string) {
+  }
+
+  function getCategoryModel (id: string) {
       return repo.CategoryModel.with('properties').find(id)
-    },
-    getDescriptem (id: string) {
+    }
+
+  function getDescriptem (id: string) {
       const d = repo.Descriptem.find(id)
       if (d) {
         const interview = repo.Interview.find(d.interviewId)
@@ -438,20 +334,25 @@ export const useProjectStore = defineStore('projectStore', {
         }
       }
       return d
-    },
-    getInterview (id: string) {
+    }
+
+  function getInterview (id: string) {
       return repo.Interview.with('annotations').with('analysis').find(id)
-    },
-    getJustification (id: string) {
+    }
+
+  function getJustification (id: string) {
       return repo.Justification.with('descriptems').find(id)
-    },
-    getMoment (id: string) {
+    }
+
+  function getMoment (id: string) {
       return repo.Moment.with('children').with('justification').with('categories').find(id)
-    },
-    getMomentModel (id: string) {
+    }
+
+  function getMomentModel (id: string) {
       return repo.MomentModel.with('categorymodels').find(id) as MomentModel
-    },
-    getProperty (id: string) {
+    }
+
+  function getProperty (id: string) {
       const prop = repo.Property.with('justification').find(id)
       if (prop) {
         const model = repo.PropertyModel.find(prop.propertymodelId)
@@ -463,19 +364,147 @@ export const useProjectStore = defineStore('projectStore', {
         }
       }
       return prop
-    },
-    updateProperty (p: Property | null, values: object) {
+  }
+
+  function createProject (projectData: Subset<Project>) {
+    repo.Project.save(projectData)
+  }
+
+  function importProject (data: any, filename: string) {
+    // Load schema first so that idCache is properly initialized
+    const id = filename.replace('.upmt', '').replace(/[^A-Za-z0-9_-]/g, '_')
+    let out
+    let schema
+    if ('modelfolder' in data) {
+      // New style
+      out = repo.Project.save(data as Project)
+      schema = out.modelfolder
+      // We must remap models
+    } else {
+      // Old upmt files
+      schema = mapOldFolder(data.schemaTreeRoot)
+      out = repo.Project.save({
+        id,
+        filename,
+        name: data.name,
+        interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
+        modelfolder: schema
+      })
+    }
+    console.log("Imported", { project: out, idcache: idCache })
+    // Check missing ids in the loaded data: normally, all children
+    // elements should have a link to the parent id
+    const checkMissingRef = (folder: ModelFolder | null) => {
+      if (!folder) {
+        console.log("Null folder")
+        return
+      }
+      for (const f of (folder.folders ?? [])) {
+        if (f.parentId !== folder.id) {
+            console.log("Error for f", folder, f)
+        }
+        checkMissingRef(f)
+      }
+      for (const cm of (folder.categorymodels ?? [])) {
+        if (cm.modelfolderId !== folder.id) {
+          console.log("Error for cm", folder, cm)
+        }
+        if (!cm.modelfolderId) {
+          console.log("Empty modelfolderId for cm", folder, cm)
+        }
+      }
+      for (const mm of (folder.momentmodels ?? [])) {
+        if (mm.modelfolderId !== folder.id) {
+          console.log("Error for mm", folder, mm)
+        }
+      }
+    }
+    // Compare the loaded folder structure with the structure returned through getFolder
+      // by comparing the number of children (categorymodels, momentmodels)
+    const compareFolder = (folder: ModelFolder | null) => {
+      if (!folder) {
+        console.log("NULL folder???")
+        return
+      }
+      const stored = getFolder(folder.id)
+      if (!stored) {
+        console.log("NULL folder", folder.id)
+        return
+      }
+      if (folder.categorymodels.length !== stored.categorymodels.length) {
+        const missing = (new Set(folder.categorymodels.map(cm => cm.name)) as any).difference(new Set(stored.categorymodels.map(cm => cm.name)))
+        console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length, missing)
+      }
+      if (folder.momentmodels.length !== stored.momentmodels.length) {
+        console.log("Differing mm for folder", folder.name, folder.id, folder.momentmodels.length, stored.momentmodels.length)
+      }
+      if (folder.folders.length !== stored.folders.length) {
+        console.log("Differing folder count for folder", folder.name, folder.id, folder.folders.length, stored.folders.length)
+      }
+      for (const f of folder.folders) {
+        compareFolder(f)
+      }
+    }
+    /* FIXME: to remove once loading is solid */
+    console.log("Checking refs")
+    checkMissingRef(schema)
+    console.log("Comparing loaded vs stored")
+    compareFolder(schema)
+    return out
+  }
+
+  /* Return a project structure with all relationships hydrated */
+  function hydrateProject (id: string): any {
+    const project = { ...getProject(id) }
+    /* Go through all related elements and fetch them */
+    console.log("Export project", project)
+    const hydrateFolder = (id: string) => {
+      const folder = getFolder(id)
+      if (folder) {
+        folder.categorymodels = folder.categorymodels.map(cm => getCategoryModel(cm.id) as CategoryModel)
+        folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
+        folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
+      }
+        return folder
+    }
+    if (project.modelfolder) {
+      project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
+    }
+    return project
+  }
+
+  function updateProperty (p: Property | null, values: object) {
       if (p) {
         repo.Property.where('id', p.id).update(values)
       }
       return p
-    },
-    updateMoment (m: Moment | null, values: object) {
+    }
+
+  function updateMoment (m: Moment | null, values: object) {
       if (m) {
         repo.Moment.where('id', m.id).update(values)
       }
       return m
-    }
+  }
 
+  return {
+    createProject,
+    importProject,
+    hydrateProject,
+    getAllProjects,
+    getProject,
+    getFolder,
+    getRepo,
+    getAnalysis,
+    getCategory,
+    getCategoryModel,
+    getDescriptem,
+    getInterview,
+    getJustification,
+    getMoment,
+    getMomentModel,
+    getProperty,
+    updateProperty,
+    updateMoment
   }
 })
