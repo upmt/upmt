@@ -473,18 +473,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     return project
   }
 
-  function updateProperty (p: Property | null, values: object) {
-      if (p) {
-        repo.Property.where('id', p.id).update(values)
-      }
-      return p
-    }
+  function updateProperty (identifier: string, values: object) {
+    repo.Property.where('id', identifier).update(values)
+  }
 
-  function updateMoment (m: Moment | null, values: object) {
-      if (m) {
-        repo.Moment.where('id', m.id).update(values)
-      }
-      return m
+  function updateMoment (identifier: string, values: object) {
+    repo.Moment.where('id', identifier).update(values)
   }
 
   return {

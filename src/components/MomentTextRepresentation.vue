@@ -78,7 +78,7 @@ const expand = computed({
         return moment.value ? !moment.value.isCollapsed : true
     },
     set (value: boolean) {
-        store.updateMoment(moment.value, { isCollapsed:!value })
+        store.updateMoment(props.momentId, { isCollapsed:!value })
     }
   })
 
@@ -87,7 +87,7 @@ const momentName = computed({
         return moment.value ? moment.value.name : ""
     },
     set (value: string) {
-        store.updateMoment(moment.value, { name:value })
+        store.updateMoment(props.momentId, { name:value })
     }
 })
 </script>
