@@ -22,7 +22,7 @@ defineProps({
         type: Project,
         default: null
     }
-});
+})
 </script>
 
 <style>

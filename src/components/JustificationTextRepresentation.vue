@@ -23,7 +23,7 @@ const store = useProjectStore()
 
 const props = defineProps({
     justificationId: { type: String, default: "" }
-});
+})
 const justification = computed(() => store.getJustification(props.justificationId))
 </script>
 
