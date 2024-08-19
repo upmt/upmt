@@ -98,7 +98,8 @@ module.exports = {
 
     // The core 'no-unused-vars' rules (in the eslint:recommended ruleset)
     // does not work with type definitions
-    'no-unused-vars': 'off',
+      'no-unused-vars': 'off',
+      'array-bracket-spacing': 'off',
 
     "@typescript-eslint/no-use-before-define": [
         2,
