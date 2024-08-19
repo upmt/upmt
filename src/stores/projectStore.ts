@@ -481,6 +481,24 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function moveMoment (sourceMomentId: string, destinationMomentId: string, index: number) {
+    const sourceMoment = getMoment(sourceMomentId)
+    const destinationMoment = getMoment(destinationMomentId)
+    console.log("Trying to move", sourceMomentId, " to ", destinationMomentId, " at index ", index)
+    if (!sourceMoment || !sourceMoment.parentId) {
+      return
+    }
+    const sourceParent = getMoment(sourceMoment.parentId)
+
+    if (destinationMoment && sourceMoment && sourceParent) {
+      // Remove moment from its previous parent
+      sourceParent.children = sourceParent.children.filter(el => el.id !== sourceMoment.id)
+      // and add it to destination
+      destinationMoment.children.push(sourceMoment)
+    } else {
+      console.log("Missing element", destinationMoment, sourceMoment, sourceParent)
+    }
+  }
   return {
     createProject,
     importProject,
@@ -499,6 +517,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMomentModel,
     getProperty,
     updateProperty,
-    updateMoment
+    updateMoment,
+    moveMoment
   }
 })

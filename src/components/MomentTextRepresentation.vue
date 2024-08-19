@@ -15,12 +15,16 @@
       >
 
       <template v-slot:header>
-        <q-icon
+        <div
           ref="handle"
-          @click="debug"
           class="moment-handle"
-          size="xs"
-          name="mdi-note-outline"></q-icon>
+          draggable="true"
+          @dragstart="onDragStart($event)"
+          @click="debug">
+          <q-icon
+            size="xs"
+            name="mdi-note-outline"></q-icon>
+        </div>
         <span class="moment-name">{{ momentName }}
           <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
             <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
@@ -41,9 +45,13 @@
       </div>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
-        <div v-for="m in moment.children" :key="m.id">
+        <div v-for="(m, index) in moment.children" :key="m.id">
           <MomentTextRepresentation :momentId="m.id">
           </MomentTextRepresentation>
+          <DropZone :data="index.toString()"
+                    types="upmt/moment"
+                    @moment="droppedMoment">
+          </DropZone>
         </div>
       </div>
 
@@ -57,6 +65,7 @@ import { computed } from 'vue'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
+import DropZone from './DropZone.vue'
 import { useProjectStore } from 'stores/projectStore'
 
 const store = useProjectStore()
@@ -64,13 +73,28 @@ const store = useProjectStore()
 const props = defineProps({
     momentId: { type: String, default: "" },
     layout: { type: String, default: "vertical" }
-  });
+  })
 
 const moment = computed(() => store.getMoment(props.momentId))
 
-const debug = () => {
+function debug () {
       (window as any).moment = moment
       console.log("Moment", moment)
+}
+
+function onDragStart (event: DragEvent) {
+    if (event.dataTransfer) {
+        event.dataTransfer.setData('upmt/moment', props.momentId)
+        console.log("Setting dt data", props.momentId)
+    } else {
+        console.log("Empty dt")
+    }
+    console.log("onDragStart", event)
+}
+
+function droppedMoment (momentId: string, data: string) {
+    console.log("Dropped Moment", momentId, "data", data)
+    store.moveMoment(momentId, props.momentId, Number(data))
 }
 
 const expand = computed({
