@@ -345,8 +345,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getMoment (id: string) {
-      return repo.Moment.with('children').with('justification').with('categories').find(id)
-    }
+    return repo.Moment.with('children')
+      .with('justification', query => query.with('descriptems'))
+      .with('categories', query => query.with('properties'))
+      .find(id)
+  }
 
   function getMomentModel (id: string) {
       return repo.MomentModel.with('categorymodels').find(id) as MomentModel
