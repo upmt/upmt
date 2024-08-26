@@ -485,24 +485,48 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function moveMoment (sourceMomentId: string, destinationMomentId: string, index: number) {
-    const sourceMoment = getMoment(sourceMomentId)
-    const destinationMoment = getMoment(destinationMomentId)
     console.log("Trying to move", sourceMomentId, " to ", destinationMomentId, " at index ", index)
-    if (!sourceMoment || !sourceMoment.parentId) {
-      return
-    }
-    const sourceParent = getMoment(sourceMoment.parentId)
+    // FIXME: reparenting is not that simple. Clone the moment then link the new one/
+    // This does not work:
+    //    repo.Property.where('id', sourceMomentId).update({ parentId: destinationMomentId });
 
-    if (destinationMoment && sourceMoment && sourceParent) {
-      // Remove moment from its previous parent
-      sourceParent.children = sourceParent.children.filter(el => el.id !== sourceMoment.id)
-      // and add it to destination
-      destinationMoment.children.push(sourceMoment)
-    } else {
-      console.log("Missing element", destinationMoment, sourceMoment, sourceParent)
+    const source = getMoment(sourceMomentId)
+    if (source) {
+      console.log("Cloning", sourceMomentId, source.toJSON())
+      repo.Moment.save({
+        ...source.toJSON(),
+        parentId: destinationMomentId
+      })
     }
   }
+
+  function addDescriptemToMoment (descriptemId: string, momentId: string) {
+    console.log("addDescriptemToMoment", descriptemId, momentId)
+    const source = getDescriptem(descriptemId)
+    const moment = getMoment(momentId)
+    if (source && moment) {
+      console.log({ ...source.toJSON() })
+      if (!moment.justification) {
+        console.log("Creating justification")
+        // Create justification + descriptem
+        repo.Justification.save({
+          momentId: moment.id,
+          descriptems: [
+            source.toJSON()
+          ]
+        })
+      } else {
+        console.log(`Adding to  justification ${moment.justification.id}`)
+        repo.Descriptem.save({
+          ...source.toJSON(),
+          justificationId: moment.justification.id
+        })
+      }
+    }
+  }
+
   return {
+    addDescriptemToMoment,
     createProject,
     importProject,
     hydrateProject,
@@ -519,8 +543,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMoment,
     getMomentModel,
     getProperty,
+    moveMoment,
     updateProperty,
-    updateMoment,
-    moveMoment
+    updateMoment
   }
 })
