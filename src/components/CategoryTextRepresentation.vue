@@ -5,12 +5,16 @@
        :data-category="category.id">
 
     <div class="category-metadata">
-      <q-icon
-        ref="handle"
-        class="category-handle"
-        size="xs"
-        name="mdi-tag-outline"></q-icon>
-      <span class="category-name">{{ category.name }}</span>
+        <DragElement
+          type="category"
+          :data="categoryId">
+          <q-icon
+            ref="handle"
+            class="category-handle"
+            size="xs"
+            name="mdi-tag-outline"></q-icon>
+          <span class="category-name">{{ category.name }}</span>
+        </DragElement>
     </div>
 
     <div class="category-justification">
@@ -33,6 +37,7 @@ import JustificationTextRepresentation from './JustificationTextRepresentation.v
 import PropertyTextRepresentation from './PropertyTextRepresentation.vue'
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
+import DragElement from './DragElement.vue'
 
 const store = useProjectStore()
 

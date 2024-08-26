@@ -15,16 +15,17 @@
       >
 
       <template v-slot:header>
-        <div
-          ref="handle"
-          class="moment-handle"
-          draggable="true"
-          @dragstart="onDragStart($event)"
-          @click="debug">
-          <q-icon
-            size="xs"
-            name="mdi-note-outline"></q-icon>
-        </div>
+        <DropZone types="upmt/descriptem"
+                  @descriptem="droppedDescriptem">
+          <DragElement
+            type="moment"
+            :data="momentId"
+            @click.meta="debug">
+            <q-icon
+              size="xs"
+              name="mdi-note-outline"></q-icon>
+          </DragElement>
+        </DropZone>
         <span class="moment-name">{{ momentName }}
           <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
             <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
@@ -66,6 +67,7 @@ import JustificationTextRepresentation from './JustificationTextRepresentation.v
 import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 import DropZone from './DropZone.vue'
+import DragElement from './DragElement.vue'
 import { useProjectStore } from 'stores/projectStore'
 
 const store = useProjectStore()
@@ -78,18 +80,13 @@ const props = defineProps({
 const moment = computed(() => store.getMoment(props.momentId))
 
 function debug () {
-      (window as any).moment = moment
-      console.log("Moment", moment)
+    (window as any).moment = moment.value
+    console.log("Moment", moment.value?.toJSON())
 }
 
-function onDragStart (event: DragEvent) {
-    if (event.dataTransfer) {
-        event.dataTransfer.setData('upmt/moment', props.momentId)
-        console.log("Setting dt data", props.momentId)
-    } else {
-        console.log("Empty dt")
-    }
-    console.log("onDragStart", event)
+function droppedDescriptem (descriptemId: string, data: string) {
+    console.log("Dropped descriptem", descriptemId, data)
+    store.addDescriptemToMoment(descriptemId, props.momentId)
 }
 
 function droppedMoment (momentId: string, data: string) {

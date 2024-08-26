@@ -3,18 +3,23 @@
        v-if="descriptem"
        :data-descriptem="descriptem.id"
        :title="descriptem.text">
-    <q-icon
-      ref="handle"
-      class="descriptem-handle"
-      size="xs"
-      name="mdi-format-quote-close-outline"></q-icon>
-    <span class="descriptem-header">{{ descriptem.text }}</span>
+    <DragElement
+      type="descriptem"
+      :data="descriptemId">
+      <q-icon
+        ref="handle"
+        class="descriptem-handle"
+        size="xs"
+        name="mdi-format-quote-close-outline"></q-icon>
+      <span class="descriptem-header">{{ descriptem.text }}</span>
+    </DragElement>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
+import DragElement from './DragElement.vue'
 
 const store = useProjectStore()
 
