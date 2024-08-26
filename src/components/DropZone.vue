@@ -1,16 +1,17 @@
 <template>
   <div class="dropzone"
        @drop="onDrop($event)"
-       @dragover.prevent
+       @dragover.prevent="onDragOver($event)"
        @dragleave.prevent="onDragLeave($event)"
-       @dragenter.prevent="onDragEnter($event)">
+       @dragenter.prevent>
+    <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
   import { computed } from 'vue'
 
-  const emit = defineEmits([ 'moment', 'property' ])
+  const emit = defineEmits([ 'category', 'descriptem', 'moment', 'property' ])
 
   const props = defineProps({
       data: {
@@ -45,7 +46,7 @@
       return false
   }
 
-  function onDragEnter (event: DragEvent) {
+  function onDragOver (event: DragEvent) {
       if (hasValidType(event) && event.currentTarget) {
           (event.currentTarget as HTMLElement).classList.add('is_droppable')
       }
