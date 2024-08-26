@@ -1,6 +1,7 @@
 import { Model } from 'pinia-orm'
-import { Attr, Num, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Num, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
+import Justification from './justification'
 
 export default class Descriptem extends Model {
   static entity = 'descriptems'
@@ -9,6 +10,8 @@ export default class Descriptem extends Model {
   @Num(0) declare endIndex: number
 
   @Attr() justificationId!: string
+  @BelongsTo(() => Justification, 'justificationId') declare justification: Justification | null
+
   @Attr() interviewId!: string
   @Attr() _interview!: Interview
 

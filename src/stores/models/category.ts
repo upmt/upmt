@@ -41,6 +41,7 @@ export default class Category extends Model {
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
+    // FIXME: it this.properties is null, then denormalization has not occurred - should refetch from repo with dependencies
     return {
       modelId: this.model.id,
       justification: this.justification?.toJSON(),
