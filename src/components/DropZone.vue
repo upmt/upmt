@@ -78,6 +78,10 @@
   .dropzone {
     background-color: #fafafa;
     border: 1px solid transparent;
+    display: flex;
+    flex-direction: row;
+  }
+  .dropzone.empty_padding {
     margin-bottom: 6px;
     padding: 6px;
   }

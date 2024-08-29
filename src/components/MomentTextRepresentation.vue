@@ -50,6 +50,7 @@
           <MomentTextRepresentation :momentId="m.id">
           </MomentTextRepresentation>
           <DropZone :data="index.toString()"
+                    class="empty_padding"
                     types="upmt/moment"
                     @moment="droppedMoment">
           </DropZone>
