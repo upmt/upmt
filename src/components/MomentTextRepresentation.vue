@@ -1,63 +1,80 @@
 <template>
-  <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
-       :style="{ backgroundColor: moment.color }"
-       v-if="moment"
-       :data-moment="moment.id">
+  <div class="moment-container">
 
-    <q-expansion-item
-      dense
-      dense-toggle
-      expand-icon-toggle
-      switch-toggle-side
-      v-model="expand"
-      header-class="header-class"
-      :title="moment.comment"
-      >
+    <DropZone data="before"
+              class="empty_padding"
+              types="upmt/moment"
+              @moment="droppedMoment">
+    </DropZone>
 
-      <template v-slot:header>
-        <DropZone types="upmt/descriptem"
+    <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
+         :style="{ backgroundColor: moment.color }"
+         v-if="moment"
+         :data-moment="moment.id">
+
+      <q-expansion-item
+        class="moment-body"
+        dense
+        dense-toggle
+        expand-icon-toggle
+        switch-toggle-side
+        v-model="expand"
+        header-class="header-class"
+        :title="moment.comment"
+        >
+
+        <template v-slot:header>
+          <DropZone types="upmt/descriptem"
                   @descriptem="droppedDescriptem">
-          <DragElement
-            type="moment"
-            :data="momentId"
-            @click.meta="debug">
-            <q-icon
-              size="xs"
-              name="mdi-note-outline"></q-icon>
+            <DragElement
+              type="moment"
+              :data="momentId"
+              @click.meta="debug">
+              <q-icon
+                size="xs"
+                name="mdi-note-outline"></q-icon>
           </DragElement>
-        </DropZone>
-        <span class="moment-name">{{ momentName }}
-          <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
-            <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-          </q-popup-edit>
-        </span>
-      </template>
+          </DropZone>
+          <span class="moment-name">{{ momentName }}
+            <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
+              <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+            </q-popup-edit>
+          </span>
+        </template>
 
-      <div class="moment-justification">
-        <JustificationTextRepresentation :justificationId="moment.justification?.id">
-        </JustificationTextRepresentation>
-      </div>
-
-      <div :class="[ 'moment-categories', layout ]">
-        <div v-for="c in moment.categories" :key="c.id">
-          <CategoryTextRepresentation :categoryId="c.id">
-          </CategoryTextRepresentation>
+        <div class="moment-justification">
+          <JustificationTextRepresentation :justificationId="moment.justification?.id">
+          </JustificationTextRepresentation>
         </div>
-      </div>
+
+        <div :class="[ 'moment-categories', layout ]">
+          <div v-for="c in moment.categories" :key="c.id">
+            <CategoryTextRepresentation :categoryId="c.id">
+            </CategoryTextRepresentation>
+          </div>
+        </div>
+
+      </q-expansion-item>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="(m, index) in moment.children" :key="m.id">
           <MomentTextRepresentation :momentId="m.id">
           </MomentTextRepresentation>
-          <DropZone :data="index.toString()"
-                    class="empty_padding"
-                    types="upmt/moment"
-                    @moment="droppedMoment">
-          </DropZone>
+        <DropZone :data="index.toString()"
+                  class="empty_padding"
+                  types="upmt/moment"
+                  @moment="droppedMoment">
+        </DropZone>
         </div>
       </div>
 
-    </q-expansion-item>
+    </div>
+
+    <DropZone data="after"
+              class="empty_padding"
+              types="upmt/moment"
+              @moment="droppedMoment">
+    </DropZone>
 
   </div>
 </template>
@@ -128,12 +145,19 @@ const momentName = computed({
   .moment-children.horizontal {
       flex-direction: row;
   }
+  .moment-container {
+      display: flex;
+      flex-direction: row;
+  }
   .moment {
       min-width: 200px;
       min-height: 40px;
       margin: 2px;
       display: flex;
       flex-direction: column;
+      border: 1px solid transparent;
+  }
+  .moment-body {
       border: 1px solid grey;
   }
   .transitional {
