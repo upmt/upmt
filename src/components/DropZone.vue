@@ -11,7 +11,7 @@
 <script setup lang="ts">
   import { computed } from 'vue'
 
-  const emit = defineEmits([ 'category', 'descriptem', 'moment', 'property' ])
+  const emit = defineEmits([ 'category', 'descriptem', 'moment', 'property', 'categorymodel', 'momentmodel' ])
 
   const props = defineProps({
       data: {

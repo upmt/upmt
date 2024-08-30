@@ -3,6 +3,23 @@
     :nodes="nodes"
     node-key="id"
     @lazy-load="onLazyLoad">
+    <template v-slot:default-header="prop">
+      <div class="row items-center">
+        <DropZone types="upmt/descriptem upmt/category upmt/moment"
+                  :data="prop.node.id"
+                  @descriptem="droppedDescriptem"
+                  @category="droppedCategory"
+                  @moment="droppedMoment">
+          <DragElement
+            :type="prop.node.dragType"
+            :data="prop.node.id"
+            >
+            <q-icon :name="prop.node.icon || 'share'" class="q-mr-sm" />
+            <div class="text-primary">{{ prop.node.label }}</div>
+          </DragElement>
+        </DropZone>
+      </div>
+    </template>
   </q-tree>
 </template>
 
@@ -11,6 +28,8 @@ import { computed, ComputedRef } from 'vue'
 import ModelFolder from 'stores/models/modelfolder'
 import { useProjectStore } from 'stores/projectStore'
 import { QTreeLazyLoadParams, QTreeNode } from 'quasar'
+import DropZone from './DropZone.vue'
+import DragElement from './DragElement.vue'
 
 const pstore = useProjectStore()
 
@@ -82,11 +101,13 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             const categorymodels = (folder.categorymodels ?? []).map(cm => ({
                 label: cm.name,
                 id: getKey(cm),
+                dragType: "categorymodel",
                 icon: 'mdi-tag-outline',
                 lazy: false,
                 children: cm.properties?.map(p => ({
                     label: p.name,
                     id: getKey(p),
+                    dragType: 'property',
                     icon: 'mdi-note-text-outline',
                     lazy: false
                 }))
@@ -94,6 +115,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             const momentmodels = (folder.momentmodels ?? []).map(m => ({
                 label: m.name,
                 id: getKey(m),
+                dragType: "momentmodel",
                 icon: 'mdi-note-outline',
                 lazy: false,
                 children: m.categorymodels?.map(c => ({
@@ -101,6 +123,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                     id: getKey(c),
                     children: c.properties?.map(p => ({
                         label: p.name,
+                        dragType: 'property',
                         id: getKey(p),
                         lazy: false
                     }))
@@ -115,4 +138,19 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
     }
   }
 
+  function droppedMoment (momentId: string, data: string) {
+      console.log("Dropped Moment", momentId, " to ", data)
+      // store.moveMoment(momentId, props.momentId, Number(data))
+  }
+  function droppedCategory (categoryId: string, data: string) {
+      console.log("Dropped Category", categoryId, " to ", data)
+  }
+  function droppedDescriptem (descriptemId: string, data: string) {
+      console.log("Dropped Descriptem ", descriptemId, " to ", data)
+  }
 </script>
+<style>
+  .q-tree__node {
+    padding: 0 0 0px 2px;
+  }
+</style>
