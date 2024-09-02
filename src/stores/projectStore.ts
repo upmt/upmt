@@ -484,6 +484,33 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function momentAddCategoryModel (cmId: string, destinationMomentId: string) {
+    const categoryModel = getCategoryModel(cmId)
+    const moment = getMoment(destinationMomentId)
+
+    console.log("addCategoryModel", moment, categoryModel)
+    if (moment && categoryModel) {
+      console.log("Creating new category", categoryModel.name)
+      // We create a new Category and attach it to the destinationMomentId
+      repo.Category.save({
+        categoryModelId: cmId,
+        justification: {
+          name: ''
+        },
+        properties: categoryModel.properties.map(pm => ({
+          value: '',
+          propertymodelId: pm.id,
+          justification: {
+            name: ''
+          },
+          _model: pm
+        })),
+        momentId: destinationMomentId,
+        _model: categoryModel
+      })
+    }
+  }
+
   function moveMoment (sourceMomentId: string, destinationMomentId: string, index: number) {
     console.log("Trying to move", sourceMomentId, " to ", destinationMomentId, " at index ", index)
     // FIXME: reparenting is not that simple. Clone the moment then link the new one/
@@ -516,7 +543,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           ]
         })
       } else {
-        console.log(`Adding to  justification ${moment.justification.id}`)
+        console.log(`Adding ${source.text} to justification ${moment.justification.id}`)
         repo.Descriptem.save({
           ...source.toJSON(),
           justificationId: moment.justification.id
@@ -543,6 +570,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMoment,
     getMomentModel,
     getProperty,
+    momentAddCategoryModel,
     moveMoment,
     updateProperty,
     updateMoment
