@@ -12,7 +12,7 @@
                   @moment="droppedMoment">
           <DragElement
             :type="prop.node.dragType"
-            :data="prop.node.id"
+            :data="prop.node.realId"
             >
             <q-icon :name="prop.node.icon || 'share'" class="q-mr-sm" />
             <div class="text-primary">{{ prop.node.label }}</div>
@@ -76,6 +76,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                 return {
                     label: i.label,
                     id: getKey(i),
+                    realId: i.id,
                     icon: 'mdi-graph-outline',
                     lazy: true
                 }
@@ -84,6 +85,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             done([{
                     label: "No project",
                     id: "no_project",
+                    realId: "no_project",
                     icon: 'mdi-graph-outline'
             }])
         }
@@ -95,18 +97,21 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             const folders = (folder.folders ?? []).map(f => ({
                 label: f.name,
                 id: getKey(f),
+                realId: f.id,
                 icon: 'mdi-folder-outline',
                 lazy: true
             }));
             const categorymodels = (folder.categorymodels ?? []).map(cm => ({
                 label: cm.name,
                 id: getKey(cm),
+                realId: cm.id,
                 dragType: "categorymodel",
                 icon: 'mdi-tag-outline',
                 lazy: false,
                 children: cm.properties?.map(p => ({
                     label: p.name,
                     id: getKey(p),
+                    realId: p.id,
                     dragType: 'property',
                     icon: 'mdi-note-text-outline',
                     lazy: false
@@ -115,16 +120,19 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             const momentmodels = (folder.momentmodels ?? []).map(m => ({
                 label: m.name,
                 id: getKey(m),
+                realId: m.id,
                 dragType: "momentmodel",
                 icon: 'mdi-note-outline',
                 lazy: false,
                 children: m.categorymodels?.map(c => ({
                     label: c.name,
                     id: getKey(c),
+                    realId: c.id,
                     children: c.properties?.map(p => ({
                         label: p.name,
                         dragType: 'property',
                         id: getKey(p),
+                        realId: p.id,
                         lazy: false
                     }))
                 }))
