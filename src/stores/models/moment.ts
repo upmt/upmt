@@ -41,7 +41,7 @@ export default class Moment extends Model {
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
       categories: this.categories.map(c => c.toJSON()),
-      children: this.children.map(m => m.toJSON())
+      children: this.children.map(m => ({ id: m.id }))
     }
   }
 }
