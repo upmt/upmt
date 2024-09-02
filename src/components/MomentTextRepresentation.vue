@@ -12,20 +12,24 @@
          v-if="moment"
          :data-moment="moment.id">
 
-      <q-expansion-item
-        class="moment-body"
-        dense
-        dense-toggle
-        expand-icon-toggle
-        switch-toggle-side
-        v-model="expand"
-        header-class="header-class"
-        :title="moment.comment"
-        >
+      <DropZone data="before"
+                class="empty_padding"
+                types="upmt/categorymodel upmt/category upmt/descriptem"
+                @category="droppedCategory"
+                @categorymodel="droppedCategoryModel"
+                @descriptem="droppedDescriptem">
+        <q-expansion-item
+          class="moment-body"
+          dense
+          dense-toggle
+          expand-icon-toggle
+          switch-toggle-side
+          v-model="expand"
+          header-class="header-class"
+          :title="moment.comment"
+          >
 
-        <template v-slot:header>
-          <DropZone types="upmt/descriptem"
-                  @descriptem="droppedDescriptem">
+          <template v-slot:header>
             <DragElement
               type="moment"
               :data="momentId"
@@ -33,28 +37,29 @@
               <q-icon
                 size="xs"
                 name="mdi-note-outline"></q-icon>
-          </DragElement>
-          </DropZone>
-          <span class="moment-name">{{ momentName }}
-            <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
-              <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </span>
-        </template>
+            </DragElement>
+            <span class="moment-name">{{ momentName }}
+              <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
+                <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+              </q-popup-edit>
+            </span>
+          </template>
 
-        <div class="moment-justification">
-          <JustificationTextRepresentation :justificationId="moment.justification?.id">
-          </JustificationTextRepresentation>
-        </div>
-
-        <div :class="[ 'moment-categories', layout ]">
-          <div v-for="c in moment.categories" :key="c.id">
-            <CategoryTextRepresentation :categoryId="c.id">
-            </CategoryTextRepresentation>
+          <div class="moment-justification">
+            <JustificationTextRepresentation :justificationId="moment.justification?.id">
+            </JustificationTextRepresentation>
           </div>
-        </div>
 
-      </q-expansion-item>
+          <div :class="[ 'moment-categories', layout ]">
+            <div v-for="c in moment.categories" :key="c.id">
+              <CategoryTextRepresentation :categoryId="c.id">
+              </CategoryTextRepresentation>
+            </div>
+          </div>
+
+        </q-expansion-item>
+
+      </DropZone>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="(m, index) in moment.children" :key="m.id">
@@ -100,6 +105,16 @@ const moment = computed(() => store.getMoment(props.momentId))
 function debug () {
     (window as any).moment = moment.value
     console.log("Moment", moment.value?.toJSON())
+}
+
+function droppedCategory (categoryId: string, data: string) {
+    console.log("droppedCategory", categoryId, props.momentId, data)
+    // store.momentAddCategoryModel(cmId, props.momentId)
+}
+
+function droppedCategoryModel (cmId: string, data: string) {
+    console.log("droppedCategoryModel", cmId, " on ", props.momentId, " as ", data)
+    store.momentAddCategoryModel(cmId, props.momentId)
 }
 
 function droppedDescriptem (descriptemId: string, data: string) {
@@ -152,13 +167,15 @@ const momentName = computed({
   .moment {
       min-width: 200px;
       min-height: 40px;
-      margin: 2px;
+      margin: 0;
       display: flex;
       flex-direction: column;
       border: 1px solid transparent;
   }
   .moment-body {
       border: 1px solid grey;
+      display: flex;
+      flex-grow: 1;
   }
   .transitional {
       background-color: var(--transitional-color);
