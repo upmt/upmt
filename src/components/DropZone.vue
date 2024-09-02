@@ -76,7 +76,7 @@
 </script>
 <style>
   .dropzone {
-    background-color: #fafafa;
+    background-color: transparent;
     border: 1px solid transparent;
     display: flex;
     flex-direction: row;
