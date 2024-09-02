@@ -82,8 +82,8 @@
     flex-direction: row;
   }
   .dropzone.empty_padding {
-    margin-bottom: 6px;
-    padding: 6px;
+      margin-bottom: 4px;
+      padding: 4px;
   }
   .is_droppable {
       background-color: #eee;
