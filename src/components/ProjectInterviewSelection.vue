@@ -76,7 +76,7 @@
   import Project from 'stores/models/project'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
   import FolderTree from 'components/FolderTree.vue'
-import TextAnnotation from 'components/TextAnnotation.vue'
+  import TextAnnotation from 'components/TextAnnotation.vue'
 
   const props = defineProps({
       project: { type: Project, required: true }
