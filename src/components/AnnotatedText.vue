@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  const OVERLAPPING_COLOR = "#deadbabe"
+
   // Adapted from https://github.com/derhuerst/flatten-overlapping-ranges/
   // ISC License
   // Copyright (c) 2018, Jannis R
@@ -30,8 +32,6 @@
   // LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
   // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
   // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-  const OVERLAPPING_COLOR = "#deadbabe"
 
   const sortedInsert = (arr, val) => {
       const l = arr.length
@@ -171,7 +171,9 @@
               type: Function,
               /* eslint-disable @typescript-eslint/no-unused-vars */
               default: function (annotation) {
-                  return "#ffffff"
+                  // Should return a string representation of the color
+                  // If null, no style attribute will be generated
+                  return null
               }
           },
           getAnnotationInfo: Function,
@@ -199,8 +201,6 @@
           spanClasses: {
               get () {
                   // Generate span classes for each span id using getSpanClasses
-                  console.log("Generating span classes for spans")
-                  const spanClasses = {}
                   this.spans.forEach((span) => {
                       spanClasses[span.id] = this.getSpanClasses(span)
                   })
@@ -249,8 +249,13 @@
               return annotations
           },
           getSpanStyle: function (span) {
-              return {
-                  backgroundColor: this.getSpanColor(span)
+              const color = this.getSpanColor(span)
+              if (color) {
+                  return {
+                      backgroundColor: color
+                  }
+              } else {
+                  return null
               }
           },
           getSpanColor: function (span) {
@@ -259,14 +264,16 @@
               const annotations = this.getAnnotations(annotationIds)
               let colors = annotations.map((annotation) =>
                   this.getAnnotationColor(annotation)
-              )
+              ).filter(color => color)
+
               colors = [...new Set(colors)]
               if (colors.length > 1) {
                   // Overlapping spans - use the overlap color
                   color = OVERLAPPING_COLOR
-              } else {
+              } else if (colors.length) {
                   color = colors[0]
               }
+              // null if none specified
               return color
           }
       }
