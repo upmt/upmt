@@ -1,5 +1,5 @@
 <template>
-  <span class="transcript" ref="containerSpan" v-on:mouseup="$emit('container-span-mouseup')">
+  <div class="transcript">
     <span
       v-for="span in spans"
       :key="span.id"
@@ -11,7 +11,7 @@
       v-bind="spanAttributes"
       v-on="preppedSpanEvents"
       >{{ span.text }}</span>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -185,7 +185,7 @@
           },
           getSpanClasses: {
               type: Function,
-              default: function () {
+              default: function (span) {
                   /* eslint-disable @typescript-eslint/no-empty-function */
                   return () => {}
               }
