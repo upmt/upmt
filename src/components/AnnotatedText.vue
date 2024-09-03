@@ -117,27 +117,27 @@ const flatten = (ranges) => {
   // SOFTWARE.
   const buildSpanList = (text, annotations) => {
       // Prepare range list to send to flatten-overlapping-spans.flatten()
-  let ranges = [];
-  const fullRange = ["baseText", 0, text.length];
-  ranges.push(fullRange);
+  let ranges = []
+  const fullRange = ["baseText", 0, text.length]
+  ranges.push(fullRange)
   const annotationRanges = annotations.map(annotation => {
-    return [annotation.id, annotation.start, annotation.length];
-  });
-  ranges = ranges.concat(annotationRanges);
+    return [annotation.id, annotation.start, annotation.length]
+  })
+  ranges = ranges.concat(annotationRanges)
   // Flatten
-  const sections = Array.from(flatten(ranges));
+  const sections = Array.from(flatten(ranges))
   // Each section becomes a span
-  let sectionTextStart = 0;
-  let spanId = 0;
+  let sectionTextStart = 0
+  let spanId = 0
   const spans = sections.map(section => {
-    const length = section[0];
-    let annotationIds = section[1];
+    const length = section[0]
+    let annotationIds = section[1]
     annotationIds = annotationIds.filter(annotationId => {
       return annotationId !== 'baseText'
     })
-    const start = sectionTextStart;
-    const end = sectionTextStart + length;
-    const sectionText = text.slice(start, end);
+    const start = sectionTextStart
+    const end = sectionTextStart + length
+    const sectionText = text.slice(start, end)
     const span = {
       id: spanId,
       start,
@@ -149,12 +149,12 @@ const flatten = (ranges) => {
           return annotationIds.includes(annotation.id)
         })
       }
-    };
-    spanId = spanId + 1;
-    sectionTextStart = end;
-    return span;
-  });
-  return spans;
+    }
+    spanId = spanId + 1
+    sectionTextStart = end
+    return span
+  })
+  return spans
 }
 
 export default {
@@ -164,21 +164,21 @@ export default {
     annotations: {
       type: Array,
       default: function () {
-        return [];
+        return []
       }
     },
     getAnnotationColor: {
         type: Function,
         /* eslint-disable @typescript-eslint/no-unused-vars */
         default: function (annotation) {
-            return "#ffffff";
+            return "#ffffff"
       }
     },
     getAnnotationInfo: Function,
     spanEvents: {
       type: Object,
       default: function () {
-        return {};
+        return {}
       }
     },
     getSpanClasses: {
@@ -199,75 +199,75 @@ export default {
     spanClasses: {
       get () {
         // Generate span classes for each span id using getSpanClasses
-        console.log("Generating span classes for spans");
-        const spanClasses = {};
+        console.log("Generating span classes for spans")
+        const spanClasses = {}
         this.spans.forEach((span) => {
-          spanClasses[span.id] = this.getSpanClasses(span);
-        });
-        return spanClasses;
+          spanClasses[span.id] = this.getSpanClasses(span)
+        })
+        return spanClasses
       }
     },
     spans: function () {
-      const spans = buildSpanList(this.text, this.annotations);
-      return spans;
+      const spans = buildSpanList(this.text, this.annotations)
+      return spans
     },
     preppedSpanEvents () {
       // Get annotations and pass to the event callback
-      const spanEvents = this.spanEvents;
-      const preppedSpanEvents = {};
+      const spanEvents = this.spanEvents
+      const preppedSpanEvents = {}
       Object.keys(spanEvents).forEach((eventType) => {
-        const callback = spanEvents[eventType];
+        const callback = spanEvents[eventType]
         const newCallback = (e) => {
-          const spanId = this.elementSpanId(e.target);
-          const span = this.spanById(spanId);
-          const annotationIds = span.annotationIds;
-          const annotations = this.getAnnotations(annotationIds);
-          callback(e, annotations);
-        };
-        preppedSpanEvents[eventType] = newCallback;
-      });
-      return preppedSpanEvents;
+          const spanId = this.elementSpanId(e.target)
+          const span = this.spanById(spanId)
+          const annotationIds = span.annotationIds
+          const annotations = this.getAnnotations(annotationIds)
+          callback(e, annotations)
+        }
+        preppedSpanEvents[eventType] = newCallback
+      })
+      return preppedSpanEvents
     }
   },
   methods: {
     elementSpanId (el) {
-      let spanId = el.attributes["data-span-id"].value;
-      spanId = Number(spanId);
-      return spanId;
+      let spanId = el.attributes["data-span-id"].value
+      spanId = Number(spanId)
+      return spanId
     },
     spanById (spanId) {
       const spans = this.spans.filter((span) => {
-        return span.id === spanId;
-      });
-      const span = spans[0];
-      return span;
+        return span.id === spanId
+      })
+      const span = spans[0]
+      return span
     },
     getAnnotations (annotationIds) {
       const annotations = this.annotations.filter((annotation) => {
-        return annotationIds.includes(annotation.id);
-      });
-      return annotations;
+        return annotationIds.includes(annotation.id)
+      })
+      return annotations
     },
     getSpanStyle: function (span) {
       return {
         backgroundColor: this.getSpanColor(span)
-      };
+      }
     },
     getSpanColor: function (span) {
-      let color = null;
-      const annotationIds = span.annotationIds;
-      const annotations = this.getAnnotations(annotationIds);
+      let color = null
+      const annotationIds = span.annotationIds
+      const annotations = this.getAnnotations(annotationIds)
       let colors = annotations.map((annotation) =>
         this.getAnnotationColor(annotation)
-      );
-      colors = [...new Set(colors)];
+      )
+      colors = [...new Set(colors)]
         if (colors.length > 1) {
             // Overlapping spans - use the overlap color
-            color = OVERLAPPING_COLOR;
+            color = OVERLAPPING_COLOR
         } else {
-            color = colors[0];
+            color = colors[0]
         }
-      return color;
+      return color
     }
   }
 }
