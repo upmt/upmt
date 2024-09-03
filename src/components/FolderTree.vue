@@ -158,7 +158,4 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
   }
 </script>
 <style>
-  .q-tree__node {
-    padding: 0 0 0px 2px;
-  }
 </style>
