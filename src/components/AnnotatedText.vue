@@ -201,10 +201,7 @@
           spanClasses: {
               get () {
                   // Generate span classes for each span id using getSpanClasses
-                  this.spans.forEach((span) => {
-                      spanClasses[span.id] = this.getSpanClasses(span)
-                  })
-                  return spanClasses
+                  return Object.fromEntries(this.spans.map(span => [ span.id, this.getSpanClasses(span) ]))
               }
           },
           spans: function () {
