@@ -2,6 +2,7 @@
   <q-tree
     :nodes="nodes"
     node-key="id"
+    dense
     @lazy-load="onLazyLoad">
     <template v-slot:default-header="prop">
       <div class="row items-center">
