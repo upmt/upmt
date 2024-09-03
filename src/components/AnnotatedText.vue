@@ -1,5 +1,5 @@
 <template>
-  <span ref="containerSpan" v-on:mouseup="$emit('container-span-mouseup')">
+  <span class="transcript" ref="containerSpan" v-on:mouseup="$emit('container-span-mouseup')">
     <span
       v-for="span in spans"
       :key="span.id"
@@ -276,3 +276,8 @@
       }
   }
 </script>
+<style scoped>
+  .transcript {
+    white-space: pre-wrap;
+  }
+</style>
