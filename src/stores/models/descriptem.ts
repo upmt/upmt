@@ -11,18 +11,8 @@ export default class Descriptem extends Model {
 
   @Attr() justificationId!: string
   @BelongsTo(() => Justification, 'justificationId') declare justification: Justification | null
-
   @Attr() interviewId!: string
-  @Attr() _interview!: Interview
-
-  get interview (): Interview {
-    return this._interview
-  }
-
-  set interview (i: Interview) {
-    this._interview = i
-    this.interviewId = i?.id
-  }
+  @BelongsTo(() => Interview, 'interviewId') declare interview: Interview
 
   get text (): string {
     if (this.interview) {
