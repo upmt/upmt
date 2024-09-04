@@ -29,7 +29,7 @@ const props = defineProps({
 const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 </script>
 
-  <style>
+<style scoped>
   .descriptem {
     display: flex;
     flex-direction: row;

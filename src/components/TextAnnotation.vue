@@ -13,6 +13,9 @@
   import AnnotatedText from './AnnotatedText.vue'
   import Annotation from 'stores/models/annotation'
   import Interview from 'stores/models/interview'
+  import { useProjectStore } from 'stores/projectStore'
+
+  const store = useProjectStore()
 
   const props = defineProps({
       interview: { type: Interview, default: null }
@@ -42,7 +45,7 @@
   }
 
   const annotations = computed(() => {
-      return props.interview.annotations.map(a => {
+      const interviewAnnotations = props.interview.annotations.map(a => {
           return {
               id: a.id,
               start: a.startIndex,
@@ -52,10 +55,22 @@
               item: a
           }
       })
+      const interviewDescriptems = store.getInterviewDescriptems(props.interview.id).map(d => {
+          return {
+              id: d.id,
+              start: d.startIndex,
+              length: d.endIndex - d.startIndex,
+              color: null,
+              class: 'descriptem',
+              item: d
+          }
+      })
+      console.log(`Annotation: ${interviewAnnotations.length} annotations - ${interviewDescriptems.length} descriptems}`)
+      return [ ...interviewAnnotations, ...interviewDescriptems ]
   })
 
   function getSpanClasses (span: any) {
-      const classes = [ ...new Set(span.annotations.map((a: Annotation) => annotation2class(a))) ]
+      const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]
       return classes.join(" ")
   }
 </script>

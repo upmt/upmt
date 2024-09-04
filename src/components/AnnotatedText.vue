@@ -280,4 +280,23 @@
   .transcript {
     white-space: pre-wrap;
   }
+  .category1 {
+      background-color: #ff9797;
+  }
+  .category2 {
+      background-color: #7084b0;
+  }
+  .category3 {
+      background-color: #ffdc97;
+  }
+  .category4 {
+      background-color: #7bcf7b;
+  }
+  /* For undefined categories */
+  .category9 {
+      background-color: yellow;
+  }
+  .descriptem {
+      text-decoration: underline;
+  }
 </style>
