@@ -11,6 +11,8 @@
       v-bind="spanAttributes"
       v-on="preppedSpanEvents"
       >{{ span.text }}</span>
+    <slot>
+    </slot>
   </div>
 </template>
 
