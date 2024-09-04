@@ -9,11 +9,10 @@ before_script:
   - npm config set proxy $http_proxy
   - npm config set https-proxy $https_proxy
   - npm install
-  # Post-install: fix vue-annotated-text component
-  - perl -pe 's@./@./dist/@' node_modules/@ghentcdh/vue-component-annotated-text/dist/index.d.ts > node_modules/@ghentcdh/vue-component-annotated-text/index.d.ts
 pages:
   script:
     - npx quasar build -d
+    - git describe > public/version.txt 2>&1
     - /bin/rm -rf public/assets
     - cp -a dist/spa/assets public/assets
     - cp dist/spa/index.html public/index.html
