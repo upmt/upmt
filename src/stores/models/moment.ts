@@ -1,9 +1,9 @@
-import { Model } from 'pinia-orm'
 import { Attr, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import Category from './category'
+import Justifiable from './justifiable'
 
-export default class Moment extends Model {
+export default class Moment extends Justifiable {
   static entity = 'moments'
   @Uid() declare id: string
   @Str('') declare name: string
@@ -16,7 +16,7 @@ export default class Moment extends Model {
   @Attr() analysisId!: string
   @Attr() parentId!: string
 
-  @HasOne(() => Justification, 'momentId') declare justification: Justification | null
+  @HasOne(() => Justification, 'parentId') declare justification: Justification | null
   @HasMany(() => Category, 'momentId') declare categories: Category[]
   /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]

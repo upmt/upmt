@@ -1,13 +1,13 @@
-import { Model } from 'pinia-orm'
 import { Attr, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import Justifiable from './justifiable'
 import Justification from './justification'
 import PropertyModel from './propertymodel'
 
-export default class Property extends Model {
+export default class Property extends Justifiable {
   static entity = 'properties'
   @Uid() declare id: string
   @Str('') declare value: string
-  @HasOne(() => Justification, 'propertyId') declare justification: Justification | undefined
+  @HasOne(() => Justification, 'parentId') declare justification: Justification
 
   @Attr() declare propertymodelId: string
   @Attr() _model!: PropertyModel

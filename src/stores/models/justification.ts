@@ -1,7 +1,7 @@
 import { Model } from 'pinia-orm'
 import { Attr, Str, Uid, BelongsTo, HasMany } from 'pinia-orm/dist/decorators'
 import Descriptem from './descriptem'
-import Moment from './moment'
+import Justifiable from './justifiable'
 
 export default class Justification extends Model {
   static entity = 'justifications'
@@ -10,14 +10,14 @@ export default class Justification extends Model {
 
   @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
 
-  @Attr() momentId!: string
-  @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
+  @Attr() parentId!: string
+  @BelongsTo(() => Justifiable, 'parentId') declare parent: Justifiable | null
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
     return {
       name: this.name,
-      descriptems: (this.descriptems || []).map(d => d.toJSON())
+      descriptems: this.descriptems.map(d => d.toJSON())
     }
   }
 }
