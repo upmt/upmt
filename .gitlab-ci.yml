@@ -12,7 +12,7 @@ before_script:
 pages:
   script:
     - npx quasar build -d
-    - git describe --always || echo "Error in git describe: $?"
+    - git describe --always
     - /bin/rm -rf public/assets
     - cp -a dist/spa/assets public/assets
     - cp dist/spa/index.html public/index.html
