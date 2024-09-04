@@ -167,7 +167,7 @@ function mapSchemaCategoryReference (sc: OldReference): CategoryModel {
   return model
 }
 
-function mapConcreteProperty (p: OldProperty): Property {
+function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
   const key = getReferenceId(p.schemaProperty)
   const model = idCache.PropertyModel[key] as PropertyModel
   if (!model) {
@@ -177,17 +177,29 @@ function mapConcreteProperty (p: OldProperty): Property {
     _model: model,
     propertymodelId: model.id,
     value: p.value,
-    justification: p.justification
+    justification: repo.Justification.make({
+      descriptems: p.justification?.descripteme_list.map(d => repo.Descriptem.make({
+        startIndex: d.startIndex,
+        endIndex: d.endIndex,
+        interviewId: interview.id
+      }))
+    })
   })
 }
 
-function mapConcreteCategory (c: OldCategory): Category {
+function mapConcreteCategory (c: OldCategory, interview: Interview): Category {
   const model = mapSchemaCategoryReference(c.schemaCategory)
   return repo.Category.make({
     _model: model,
     categorymodelId: model.id,
-    justification: c.justification,
-    properties: c.concreteProperty_list.map(mapConcreteProperty)
+    justification: repo.Justification.make({
+      descriptems: c.justification?.descripteme_list.map(d => repo.Descriptem.make({
+        startIndex: d.startIndex,
+        endIndex: d.endIndex,
+        interviewId: interview.id
+      }))
+    }),
+    properties: c.concreteProperty_list.map(p => mapConcreteProperty(p, interview))
   })
 }
 
@@ -200,7 +212,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
-    categories: m.concreteCategory_list?.map(mapConcreteCategory),
+    categories: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
     justification: repo.Justification.make({
       descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
@@ -308,7 +320,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getRepo () {
       return repo
-    }
+  }
 
   /* Getter methods for elements.
     Since we are  using the Pinia store through the PiniaORM, each element type has its own repository/store.
@@ -322,7 +334,10 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getCategory (id: string) {
-      return repo.Category.with('justification').with('properties').find(id)
+    return repo.Category
+      .with('justification', query => query.with('descriptems'))
+      .with('properties')
+      .find(id)
   }
 
   function getCategoryModel (id: string) {
@@ -330,15 +345,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getDescriptem (id: string) {
-      const d = repo.Descriptem.find(id)
-      if (d) {
-        const interview = repo.Interview.find(d.interviewId)
-        if (interview) {
-          d.interview = interview
-        }
-      }
-      return d
-    }
+    return repo.Descriptem.with('interview').find(id)
+  }
+
   function getAnnotation (id: string) {
     return repo.Annotation.with('interview').find(id)
   }
@@ -348,13 +357,16 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getJustification (id: string) {
-      return repo.Justification.with('descriptems').find(id)
+    return repo.Justification
+      .with('descriptems')
+      .find(id)
     }
 
   function getMoment (id: string) {
-    return repo.Moment.with('children')
-      .with('justification', query => query.with('descriptems'))
-      .with('categories', query => query.with('properties'))
+    return repo.Moment
+      .with('children')
+      .with('justification', (query) => query.with('descriptems'))
+      .with('categories', (query) => query.with('properties'))
       .find(id)
   }
 
@@ -363,17 +375,20 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getProperty (id: string) {
-      const prop = repo.Property.with('justification').find(id)
-      if (prop) {
-        const model = repo.PropertyModel.find(prop.propertymodelId)
-        if (model) {
-          prop.model = model
-        } else {
-          // Unconsistency error!
-          console.error(`Unconsistency - no model ${prop.propertymodelId} for ${prop}`)
-        }
+    const prop = repo.Property
+      .with('justification', (query) => query.with('descriptems'))
+      .find(id)
+
+    if (prop) {
+      const model = repo.PropertyModel.find(prop.propertymodelId)
+      if (model) {
+        prop.model = model
+      } else {
+        // Unconsistency error!
+        console.error(`Unconsistency - no model ${prop.propertymodelId} for ${prop}`)
       }
-      return prop
+    }
+    return prop
   }
 
   function getInterviewDescriptems (id: string) {
