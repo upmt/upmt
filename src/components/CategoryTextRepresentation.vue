@@ -7,7 +7,8 @@
     <div class="category-metadata">
         <DragElement
           type="category"
-          :data="categoryId">
+          :data="categoryId"
+          @click.meta="debug">
           <q-icon
             ref="handle"
             class="category-handle"
@@ -18,7 +19,7 @@
     </div>
 
     <div class="category-justification">
-      <JustificationTextRepresentation :justification="category.justification">
+      <JustificationTextRepresentation :justificationId="category.justification.id">
       </JustificationTextRepresentation>
     </div>
 
@@ -45,6 +46,12 @@ const props = defineProps({
     categoryId: { type: String, default: "" }
 })
 const category = computed(() => store.getCategory(props.categoryId))
+
+function debug () {
+    (window as any).category = category.value
+    console.log("Category", category.value?.toJSON())
+}
+
 </script>
 
 <style scoped>

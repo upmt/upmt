@@ -1,12 +1,12 @@
 <template>
   <div class="justification"
-       v-if="justification"
+       v-if="justificationId"
        :data-justification="justificationId">
     <div class="justification-metadata">
-      <span class="justification-name">{{ justification.name }}</span>
+      <span class="justification-name">{{ justification?.name }}</span>
     </div>
     <ul class="justification-descriptems">
-      <li v-for="descriptem in justification.descriptems" :key="descriptem.id">
+      <li v-for="descriptem in justification?.descriptems" :key="descriptem.id">
         <DescriptemTextRepresentation :descriptemId="descriptem.id">
         </DescriptemTextRepresentation>
       </li>

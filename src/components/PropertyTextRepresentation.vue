@@ -14,12 +14,17 @@
         <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
       </q-popup-edit>
     </div>
+    <div class="property-justification">
+      <JustificationTextRepresentation :justificationId="property.justification.id">
+      </JustificationTextRepresentation>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
+import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
 
 const store = useProjectStore()
 
