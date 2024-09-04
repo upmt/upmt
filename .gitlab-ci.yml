@@ -13,7 +13,7 @@ pages:
   script:
     - npx quasar build -d
     - /bin/rm -rf public/assets
-    - cp .git/refs/heads/main public/version.txt
+    - echo ${CI_COMMIT_SHA} > public/version.txt
     - cp -a dist/spa/assets public/assets
     - cp dist/spa/index.html public/index.html
   artifacts:
