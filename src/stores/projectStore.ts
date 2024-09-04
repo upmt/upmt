@@ -369,6 +369,11 @@ export const useProjectStore = defineStore('projectStore', () => {
       return prop
   }
 
+  function getInterviewDescriptems (id: string) {
+    // Return the descriptems defined on a specific interview
+    return repo.Descriptem.where('interviewId', id).with('interview').all()
+  }
+
   function createProject (projectData: Subset<Project>) {
     repo.Project.save(projectData)
   }
@@ -566,6 +571,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getCategoryModel,
     getDescriptem,
     getInterview,
+    getInterviewDescriptems,
     getJustification,
     getMoment,
     getMomentModel,
