@@ -30,6 +30,7 @@ type Subset<K> = {
 /* Should find how to dynamically inject typescript definitions here:
 const repo = Object.fromEntries([
   Analysis,
+  Annotation,
   CategoryModel,
   Descriptem,
   Interview,
@@ -43,6 +44,7 @@ const repo = Object.fromEntries([
  */
 const repo = {
   Analysis:         useRepo(Analysis),
+  Annotation:       useRepo(Annotation),
   CategoryModel:    useRepo(CategoryModel),
   Category:         useRepo(Category),
   Descriptem:       useRepo(Descriptem),
@@ -216,12 +218,14 @@ function mapInterview (i: OldInterview): Interview {
     color: fixColorName(i.color),
     comment: i.comment,
     participantName: i.participantName,
-    text: i.interviewText.text,
-    annotations: i.interviewText.annotation_list.map((a: Annotation) => ({
-      ...a,
-      color: fixColorName(a.color)
-    }))
+    text: i.interviewText.text
   })
+  interview.annotations = repo.Annotation.make(i.interviewText.annotation_list.map((a: Annotation) => ({
+    ...a,
+    color: fixColorName(a.color),
+    interview
+  })))
+
   interview.analysis = repo.Analysis.make({
     rootMoment: mapMoment(i.rootMoment, interview)
   })
@@ -335,6 +339,9 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       return d
     }
+  function getAnnotation (id: string) {
+    return repo.Annotation.with('interview').find(id)
+  }
 
   function getInterview (id: string) {
       return repo.Interview.with('annotations').with('analysis').find(id)
@@ -567,6 +574,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getFolder,
     getRepo,
     getAnalysis,
+    getAnnotation,
     getCategory,
     getCategoryModel,
     getDescriptem,

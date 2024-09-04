@@ -1,5 +1,6 @@
 import { Model } from 'pinia-orm'
-import { Attr, Str, Num, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Str, Num, Uid } from 'pinia-orm/dist/decorators'
+import Interview from './interview'
 
 export default class Annotation extends Model {
   static entity = 'annotations'
@@ -9,9 +10,14 @@ export default class Annotation extends Model {
   @Num(0) declare endIndex: number
 
   @Attr() interviewId!: string
+  @BelongsTo(() => Interview, 'interviewId') declare interview: Interview
 
   get text (): string {
-      return `${this.startIndex}-${this.endIndex}`
+    if (this.interview) {
+      return this.interview.text.slice(this.startIndex, this.endIndex)
+    } else {
+      return `(${this.startIndex}-${this.endIndex})`
+    }
   }
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
