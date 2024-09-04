@@ -1,21 +1,76 @@
 <template>
-  <AnnotatedText
-    v-if="interview"
-    :text="interview.text"
-    :annotations="annotations"
-    :getSpanClasses="getSpanClasses"
-    @click-annotation="onClick"
-    />
+  <div class="textAnnotationContainer">
+    <div class="inspector">
+      <div>
+        <strong>Active annotations </strong>
+        <span ref="activeAnnotationInspector"></span>
+      </div>
+      <div>
+        <strong>Selected annotations </strong>
+        <span ref="selectedAnnotationInspector"></span>
+      </div>
+    </div>
+    <AnnotatedText
+      class="textAnnotationComponent"
+      v-if="interview"
+      :text="interview.text"
+      :annotations="annotations"
+      :getSpanClasses="getSpanClasses"
+      :spanEvents="spanEvents"
+      @click-annotation="onClick"
+      >
+      <q-menu
+        touch-position
+        context-menu
+        >
+        <q-list dense style="min-width: 100px">
+          <q-item
+            v-for="descriptem in activeDescriptems"
+            :key="descriptem.id"
+            clickable
+            v-close-popup>
+            <q-item-section>Descriptem {{ descriptem.text }}</q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item
+            v-for="annotation in activeAnnotations"
+            :key="annotation.id"
+            clickable
+            v-close-popup>
+            <q-item-section>Annotation {{ annotation.text }}</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </AnnotatedText>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { ref, computed } from 'vue'
   import AnnotatedText from './AnnotatedText.vue'
   import Annotation from 'stores/models/annotation'
+  import Descriptem from 'stores/models/descriptem'
   import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
 
+  // BaseAnnotation that is used to communicate with
+  // AnnotatedText. Not to be confused with model Annotation
+  type BaseAnnotation = {
+      id: string,
+      start: number,
+      length: number,
+      color: string | null,
+      class: string,
+      item: Annotation | Descriptem
+  }
+
   const store = useProjectStore()
+
+  const activeAnnotationInspector = ref<HTMLDivElement | null>(null)
+  const selectedAnnotationInspector = ref<HTMLDivElement | null>(null)
+
+  const activeAnnotations = ref<Annotation[]>([])
+  const activeDescriptems = ref<Descriptem[]>([])
 
   const props = defineProps({
       interview: { type: Interview, default: null }
@@ -45,7 +100,7 @@
   }
 
   const annotations = computed(() => {
-      const interviewAnnotations = props.interview.annotations.map(a => {
+      const interviewAnnotations: BaseAnnotation[] = props.interview.annotations.map(a => {
           return {
               id: a.id,
               start: a.startIndex,
@@ -55,7 +110,7 @@
               item: a
           }
       })
-      const interviewDescriptems = store.getInterviewDescriptems(props.interview.id).map(d => {
+      const interviewDescriptems: BaseAnnotation[] = store.getInterviewDescriptems(props.interview.id).map(d => {
           return {
               id: d.id,
               start: d.startIndex,
@@ -73,27 +128,39 @@
       const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]
       return classes.join(" ")
   }
+
+  const spanEvents = {
+      click: (event: Event, annotations: BaseAnnotation[]) => {
+          console.log("Click", event, annotations)
+          // annotations can contain descriptems or annotations
+          if (selectedAnnotationInspector.value) {
+              const message = annotations.map(a => `${a.start}:${a.start + a.length} ${a.class}`).join(" ")
+              selectedAnnotationInspector.value.textContent = message
+          }
+      },
+      // Do not activate mouseover/leave for the moment, it has a small performance cost
+      mouseover: (event: Event, annotations: BaseAnnotation[]) => {
+          activeDescriptems.value = annotations.filter(a => a.class === 'descriptem').map(a => a.item as Descriptem)
+          activeAnnotations.value = annotations.filter(a => a.class !== 'descriptem').map(a => a.item as Annotation)
+          if (activeAnnotationInspector.value) {
+              // console.log("Mouseover", event, annotations),
+              let message = "No annotations or descriptems"
+              if (activeDescriptems.value.length || activeAnnotations.value.length) {
+                  message = `${activeAnnotations.value.length} annotations - ${activeDescriptems.value.length} descriptems`
+              }
+              activeAnnotationInspector.value.textContent = message
+          }
+      }
+      // mouseleave: (event: Event, annotations: Array<unknown>) => console.log("Mouseleave", event, annotations)
+  }
+
 </script>
 
-<style>
-  .annotated-text {
-      display: flex;
-      flex-direction: column;
+<style scoped>
+  .textAnnotationContainer {
   }
-  .category1 {
-      background-color: #ff9797;
+  .inspector {
   }
-  .category2 {
-      background-color: #7084b0;
-  }
-  .category3 {
-      background-color: #ffdc97;
-  }
-  .category4 {
-      background-color: #7bcf7b;
-  }
-  /* For undefined categories */
-  .category9 {
-      background-color: yellow;
+  .textAnnotationComponent {
   }
 </style>
