@@ -60,8 +60,7 @@
       start: number,
       length: number,
       color: string | null,
-      class: string,
-      item: Annotation | Descriptem
+      class: string
   }
 
   const store = useProjectStore()
@@ -106,8 +105,7 @@
               start: a.startIndex,
               length: a.endIndex - a.startIndex,
               color: a.color,
-              class: annotation2class(a),
-              item: a
+              class: annotation2class(a)
           }
       })
       const interviewDescriptems: BaseAnnotation[] = store.getInterviewDescriptems(props.interview.id).map(d => {
@@ -116,8 +114,7 @@
               start: d.startIndex,
               length: d.endIndex - d.startIndex,
               color: null,
-              class: 'descriptem',
-              item: d
+              class: 'descriptem'
           }
       })
       console.log(`Annotation: ${interviewAnnotations.length} annotations - ${interviewDescriptems.length} descriptems}`)
@@ -140,8 +137,8 @@
       },
       // Do not activate mouseover/leave for the moment, it has a small performance cost
       mouseover: (event: Event, annotations: BaseAnnotation[]) => {
-          activeDescriptems.value = annotations.filter(a => a.class === 'descriptem').map(a => a.item as Descriptem)
-          activeAnnotations.value = annotations.filter(a => a.class !== 'descriptem').map(a => a.item as Annotation)
+          activeDescriptems.value = (annotations.filter(a => a.class === 'descriptem').map(a => store.getDescriptem(a.id))) as Descriptem[]
+          activeAnnotations.value = (annotations.filter(a => a.class !== 'descriptem').map(a => store.getAnnotation(a.id))) as Annotation[]
           if (activeAnnotationInspector.value) {
               // console.log("Mouseover", event, annotations),
               let message = "No annotations or descriptems"
