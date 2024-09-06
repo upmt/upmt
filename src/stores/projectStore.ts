@@ -345,7 +345,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getDescriptem (id: string) {
-    return repo.Descriptem.with('interview').find(id)
+    return repo.Descriptem
+      .with('justification')
+      .with('interview')
+      .find(id)
   }
 
   function getAnnotation (id: string) {
