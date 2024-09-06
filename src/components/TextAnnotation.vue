@@ -17,11 +17,11 @@
       :annotations="annotations"
       :getSpanClasses="getSpanClasses"
       :spanEvents="spanEvents"
-      @click-annotation="onClick"
       >
       <q-menu
         touch-position
         context-menu
+        v-model="contextMenuVisible"
         >
         <q-list dense style="min-width: 100px">
           <q-item
@@ -29,7 +29,12 @@
             :key="descriptem.id"
             clickable
             v-close-popup>
-            <q-item-section>Descriptem {{ descriptem.text }}</q-item-section>
+            <DragElement
+              type="descriptem"
+              :data="descriptem.id">
+              <q-item-section>Descriptem {{ descriptem.shorttext }}
+              </q-item-section>
+            </DragElement>
           </q-item>
           <q-separator />
           <q-item
@@ -37,7 +42,12 @@
             :key="annotation.id"
             clickable
             v-close-popup>
-            <q-item-section>Annotation {{ annotation.text }}</q-item-section>
+            <DragElement
+              type="annotation"
+              :data="annotation.id">
+              <q-item-section>Annotation {{ annotation.shorttext }}
+              </q-item-section>
+            </DragElement>
           </q-item>
         </q-list>
       </q-menu>
@@ -52,6 +62,7 @@
   import Descriptem from 'stores/models/descriptem'
   import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
+  import DragElement from './DragElement.vue'
 
   // BaseAnnotation that is used to communicate with
   // AnnotatedText. Not to be confused with model Annotation
@@ -62,6 +73,8 @@
       color: string | null,
       class: string
   }
+
+  const contextMenuVisible = ref(false)
 
   const store = useProjectStore()
 
@@ -74,10 +87,6 @@
   const props = defineProps({
       interview: { type: Interview, default: null }
   })
-
-  const onClick = (annotation: Annotation) => {
-      console.log(annotation)
-  }
 
   /*
     export const annotationsTest = [
@@ -128,7 +137,9 @@
 
   const spanEvents = {
       click: (event: Event, annotations: BaseAnnotation[]) => {
-          console.log("Click", event, annotations)
+          console.log("window.annotations = ", annotations);
+          (window as any).annotations = annotations
+
           // annotations can contain descriptems or annotations
           if (selectedAnnotationInspector.value) {
               const message = annotations.map(a => `${a.start}:${a.start + a.length} ${a.class}`).join(" ")
