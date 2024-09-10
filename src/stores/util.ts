@@ -1,4 +1,4 @@
-const SHORT_TEXT_LIMIT = 21
+const SHORT_TEXT_LIMIT = 25
 
 function ellipsize (text: string, limit: number = SHORT_TEXT_LIMIT): string {
   if (text.length < limit) {
