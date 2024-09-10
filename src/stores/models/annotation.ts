@@ -1,8 +1,7 @@
 import { Model } from 'pinia-orm'
 import { Attr, BelongsTo, Str, Num, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
-
-const SHORT_TEXT_LIMIT = 21
+import { ellipsize } from 'stores/util'
 
 export default class Annotation extends Model {
   static entity = 'annotations'
@@ -23,12 +22,7 @@ export default class Annotation extends Model {
   }
 
   get shorttext (): string {
-    const text = this.text
-    if (text.length < SHORT_TEXT_LIMIT) {
-      return text
-    } else {
-      return `${text.slice(0, SHORT_TEXT_LIMIT / 2)}\u{2026}${text.slice(-SHORT_TEXT_LIMIT / 2)}`
-    }
+    return ellipsize(this.text)
   }
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -36,7 +30,8 @@ export default class Annotation extends Model {
     return {
       color: this.color,
       startIndex: this.startIndex,
-      endIndex: this.endIndex
+      endIndex: this.endIndex,
+      interviewId: this.interviewId
     }
   }
 }

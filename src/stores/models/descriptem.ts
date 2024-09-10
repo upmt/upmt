@@ -2,8 +2,7 @@ import { Model } from 'pinia-orm'
 import { Attr, BelongsTo, Num, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
 import Justification from './justification'
-
-const SHORT_TEXT_LIMIT = 21
+import { ellipsize } from 'stores/util'
 
 export default class Descriptem extends Model {
   static entity = 'descriptems'
@@ -25,12 +24,7 @@ export default class Descriptem extends Model {
   }
 
   get shorttext (): string {
-    const text = this.text
-    if (text.length < SHORT_TEXT_LIMIT) {
-      return text
-    } else {
-      return `${text.slice(0, SHORT_TEXT_LIMIT / 2)}\u{2026}${text.slice(-SHORT_TEXT_LIMIT / 2)}`
-    }
+    return ellipsize(this.text)
   }
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
