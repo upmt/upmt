@@ -3,26 +3,31 @@
     <q-card>
       <div class="text-h1">uPMT</div>
     </q-card>
-    <div class="q-pa-md row items-start q-gutter-md">
+
+    <div class="q-pa-md row items-end q-gutter-md">
+
       <q-card
         v-for="project in projects"
         :key="project.id"
         class="project-card">
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h6">{{ project.name }}</div>
-        <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
-      </q-card-section>
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h6">{{ project.name }}</div>
+          <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
+        </q-card-section>
 
-      <q-separator />
+        <q-separator />
 
-      <q-card-actions align="right">
-        <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
-        <q-btn @click="exportProject(project)" flat>Export</q-btn>
-      </q-card-actions>
+        <q-card-actions align="right">
+          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
+          <q-btn @click="exportProject(project)" flat>Export</q-btn>
+        </q-card-actions>
       </q-card>
+
+      <q-btn @click="newProject" round size="xl" icon="add" />
+
     </div>
 
-    <project-card
+   <project-card
       :project="selectedProject">
     </project-card>
   </q-page>
@@ -69,6 +74,29 @@ function loadSample (filename = './OPEVA-G1.upmt') {
         const p = useProjectStore().importProject(response.data, filename)
         selected.value = { label: p.name, value: p.id }
         $q.loading.hide()
+    })
+}
+
+function newProject () {
+    projectStore.createProject({
+        name: "Nouveau projet",
+        interviews: [
+            {
+                name: `Interview 1`,
+                color: "black",
+                comment: "Commentaire",
+                text: "[vide]",
+                participantName: "Participant",
+                annotations: [],
+                analysis: {
+                    rootMoment: {
+                    }
+                }
+            }
+        ],
+        modelfolder: {
+            name: "Model"
+        }
     })
 }
 
