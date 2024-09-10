@@ -10,6 +10,7 @@
         ref="handle"
         class="descriptem-handle"
         size="xs"
+        @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-header">{{ descriptem.text }}</span>
     </DragElement>
@@ -26,7 +27,13 @@ const store = useProjectStore()
 const props = defineProps({
     descriptemId: { type: String, default: "" }
   })
+
 const descriptem = computed(() => store.getDescriptem(props.descriptemId))
+
+function debug () {
+    (window as any).descriptem = descriptem.value
+    console.log("Descriptem", descriptem.value?.toJSON())
+}
 </script>
 
 <style scoped>

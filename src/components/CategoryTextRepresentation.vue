@@ -7,12 +7,12 @@
     <div class="category-metadata">
         <DragElement
           type="category"
-          :data="categoryId"
-          @click.meta="debug">
+          :data="categoryId">
           <q-icon
             ref="handle"
             class="category-handle"
             size="xs"
+            @click.meta="debug"
             name="mdi-tag-outline"></q-icon>
           <span class="category-name">{{ category.name }}</span>
         </DragElement>

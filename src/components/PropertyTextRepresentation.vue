@@ -7,6 +7,7 @@
       ref="handle"
       class="property-handle"
       size="xs"
+      @click.meta="debug"
       name="mdi-note-text-outline"></q-icon>
     <div class="property-name">{{ property.name }}</div>
     <div class="property-value">{{ propertyValue }}
@@ -39,6 +40,12 @@ const propertyValue = computed({
         store.updateProperty(props.propertyId, { value })
     }
 })
+
+function debug () {
+    (window as any).property = property.value
+    console.log("Property", property.value?.toJSON())
+}
+
 </script>
 
 <style>
