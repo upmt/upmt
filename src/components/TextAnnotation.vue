@@ -63,8 +63,8 @@
             <DragElement
               type="annotation"
               :data="annotation.id">
-              <q-item-section>Annotation {{ annotation.shorttext }}
-              </q-item-section>
+              <span>Annotation&nbsp;</span>
+              <span :style="{ backgroundColor: annotation.color }">{{ annotation.shorttext }}</span>
             </DragElement>
           </q-item>
         </q-list>
