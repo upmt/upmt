@@ -9,6 +9,10 @@
         <strong>Selected annotations </strong>
         <span ref="selectedAnnotationInspector"></span>
       </div>
+      <div>
+        <strong>Selected text </strong>
+        <span>{{ selectionShorttext }}</span>
+      </div>
     </div>
     <AnnotatedText
       class="textAnnotationComponent"
@@ -17,6 +21,7 @@
       :annotations="annotations"
       :getSpanClasses="getSpanClasses"
       :spanEvents="spanEvents"
+      @selection="textSelection"
       >
       <q-menu
         touch-position
@@ -24,6 +29,19 @@
         v-model="contextMenuVisible"
         >
         <q-list dense style="min-width: 100px">
+          <q-item
+            v-if="currentSelection"
+            key="current"
+            clickable
+            v-close-popup>
+            <DragElement
+              type="selection"
+              :data="currentSelectionDataAsString">
+              <q-item-section>Selection {{ selectionShorttext }}
+              </q-item-section>
+            </DragElement>
+          </q-item>
+
           <q-item
             v-for="descriptem in activeDescriptems"
             :key="descriptem.id"
@@ -62,6 +80,7 @@
   import Descriptem from 'stores/models/descriptem'
   import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
+  import { ellipsize } from 'stores/util'
   import DragElement from './DragElement.vue'
 
   // BaseAnnotation that is used to communicate with
@@ -74,6 +93,12 @@
       class: string
   }
 
+  type TextSelection = {
+      startIndex: number,
+      endIndex: number,
+      interviewId: string
+  }
+
   const contextMenuVisible = ref(false)
 
   const store = useProjectStore()
@@ -83,6 +108,7 @@
 
   const activeAnnotations = ref<Annotation[]>([])
   const activeDescriptems = ref<Descriptem[]>([])
+  const currentSelection = ref<TextSelection| null>(null)
 
   const props = defineProps({
       interview: { type: Interview, default: null }
@@ -130,6 +156,16 @@
       return [ ...interviewAnnotations, ...interviewDescriptems ]
   })
 
+  const selectionShorttext = computed(() => {
+      if (currentSelection.value) {
+          const text = props.interview.text.slice(currentSelection.value.startIndex,
+                                                  currentSelection.value.endIndex)
+          return ellipsize(text)
+      } else {
+          return ""
+      }
+  })
+
   function getSpanClasses (span: any) {
       const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]
       return classes.join(" ")
@@ -162,6 +198,21 @@
       // mouseleave: (event: Event, annotations: Array<unknown>) => console.log("Mouseleave", event, annotations)
   }
 
+  const currentSelectionDataAsString = computed(() => {
+      if (currentSelection.value) {
+          return JSON.stringify(currentSelection.value)
+      } else {
+          return '{}'
+      }
+  })
+
+  function textSelection (data: any) {
+      currentSelection.value = {
+          startIndex: data.begin,
+          endIndex: data.end,
+          interviewId: props.interview.id
+      }
+  }
 </script>
 
 <style scoped>

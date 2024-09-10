@@ -14,9 +14,11 @@
 
       <DropZone data="before"
                 class="empty_padding"
-                types="upmt/categorymodel upmt/category upmt/descriptem"
+                types="upmt/categorymodel upmt/category upmt/descriptem upmt/annotation upmt/selection"
                 @category="droppedCategory"
                 @categorymodel="droppedCategoryModel"
+                @annotation="droppedAnnotation"
+                @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
         <q-expansion-item
           class="moment-body"
@@ -120,6 +122,21 @@ function droppedCategoryModel (cmId: string, data: string) {
 function droppedDescriptem (descriptemId: string, data: string) {
     console.log("Dropped descriptem", descriptemId, data)
     store.addDescriptemToMoment(descriptemId, props.momentId)
+}
+
+function droppedAnnotation (annotationId: string, data: string) {
+    console.log("Dropped annotation", annotationId, data)
+    store.addAnnotationToMoment(annotationId, props.momentId)
+}
+
+function droppedSelection (selectionData: string) {
+    try {
+        const selection = JSON.parse(selectionData)
+        // addTextSelectionToMoment will do the necessary key checks
+        store.addTextSelectionToMoment(selection, props.momentId)
+    } catch (e) {
+        console.log(`Cannot parse ${selectionData}`)
+    }
 }
 
 function droppedMoment (momentId: string, data: string) {

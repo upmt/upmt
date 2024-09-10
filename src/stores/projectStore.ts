@@ -58,6 +58,12 @@ const repo = {
   PropertyModel:    useRepo(PropertyModel)
 }
 
+type TextSelection = {
+  startIndex: number,
+  endIndex: number,
+  interviewId: string
+}
+
 type ReffableModel = CategoryModel | PropertyModel | MomentModel
 
 const idCache: Record<string, Record<string, ReffableModel>> = {
@@ -557,33 +563,50 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addDescriptemToMoment (descriptemId: string, momentId: string) {
-    console.log("addDescriptemToMoment", descriptemId, momentId)
-    const source = getDescriptem(descriptemId)
+  function addTextSelectionToMoment (selectionData: TextSelection, momentId: string) {
+    // Add JSON representation of text selection (Annotation or Descriptem) to moment
     const moment = getMoment(momentId)
-    if (source && moment) {
-      console.log({ ...source.toJSON() })
+    console.log("Add textselection", selectionData, "to", moment)
+    if (moment) {
       if (!moment.justification) {
-        console.log("Creating justification")
         // Create justification + descriptem
         repo.Justification.save({
           momentId: moment.id,
           descriptems: [
-            source.toJSON()
+            selectionData
           ]
         })
       } else {
-        console.log(`Adding ${source.text} to justification ${moment.justification.id}`)
         repo.Descriptem.save({
-          ...source.toJSON(),
+          ...selectionData,
           justificationId: moment.justification.id
         })
       }
     }
   }
 
+  function addAnnotationToMoment (annotationId: string, momentId: string) {
+    console.log("addAnnotationToMoment", annotationId, momentId)
+    const source = getAnnotation(annotationId)
+    const moment = getMoment(momentId)
+    if (source && moment) {
+      addTextSelectionToMoment(source.toJSON() as TextSelection, momentId)
+    }
+  }
+
+  function addDescriptemToMoment (descriptemId: string, momentId: string) {
+    console.log("addDescriptemToMoment", descriptemId, momentId)
+    const source = getDescriptem(descriptemId)
+    const moment = getMoment(momentId)
+    if (source && moment) {
+      addTextSelectionToMoment(source.toJSON() as TextSelection, momentId)
+    }
+  }
+
   return {
+    addAnnotationToMoment,
     addDescriptemToMoment,
+    addTextSelectionToMoment,
     createProject,
     importProject,
     hydrateProject,
