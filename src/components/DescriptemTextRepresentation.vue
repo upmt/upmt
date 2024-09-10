@@ -12,7 +12,7 @@
         size="xs"
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
-      <span class="descriptem-header">{{ descriptem.text }}</span>
+      <span class="descriptem-header">{{ descriptem.shorttext }}</span>
     </DragElement>
   </div>
 </template>
