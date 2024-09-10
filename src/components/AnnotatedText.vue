@@ -1,5 +1,7 @@
 <template>
-  <div class="transcript">
+  <div class="transcript"
+       ref="transcript"
+       @mouseup="getSelection">
     <span
       v-for="span in spans"
       :key="span.id"
@@ -161,6 +163,7 @@
 
   export default {
       name: "AnnotatedText",
+      emits: [ "selection" ],
       props: {
           text: String,
           annotations: {
@@ -274,6 +277,20 @@
               }
               // null if none specified
               return color
+          },
+          getSelection: function () {
+              const selection = document.getSelection()
+              if (selection) {
+                  const range = selection.getRangeAt(0)
+                  const container = range.startContainer.parentElement.parentElement
+                  if (container === this.$refs.transcript) {
+                      // We are in the transcript container.
+                      // startContainer/endContainer should be text element whose parent is a span
+                      const begin = Number(range.startContainer.parentElement.dataset.textOffset) + range.startOffset
+                      const end = Number(range.endContainer.parentElement.dataset.textOffset) + range.endOffset
+                      this.$emit("selection", { begin, end, text: this.text.slice(begin, end) })
+                  }
+              }
           }
       }
   }
