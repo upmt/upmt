@@ -3,17 +3,19 @@
        v-if="property"
        :data-property="property.id"
        :title="property.label">
-    <q-icon
-      ref="handle"
-      class="property-handle"
-      size="xs"
-      @click.meta="debug"
-      name="mdi-note-text-outline"></q-icon>
-    <div class="property-name">{{ property.name }}</div>
-    <div class="property-value">{{ propertyValue }}
-      <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
-        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-      </q-popup-edit>
+    <div class="property-content" row>
+      <q-icon
+        ref="handle"
+        class="property-handle"
+        size="xs"
+        @click.meta="debug"
+        name="mdi-note-text-outline"></q-icon>
+      <div class="property-name">{{ property.name }}</div>
+      <div class="property-value">{{ propertyValue }}
+        <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
+          <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+        </q-popup-edit>
+      </div>
     </div>
     <div class="property-justification">
       <JustificationTextRepresentation :justificationId="property.justification.id">
@@ -51,8 +53,12 @@ function debug () {
 <style>
   .property {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     min-height: 1.2em;
+  }
+  .property-content {
+    display: flex;
+    flex-direction: row;
   }
   .property-value {
       margin-left: 1em;
