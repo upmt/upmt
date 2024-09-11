@@ -4,6 +4,8 @@
       <div class="text-h1">μPMT</div>
     </q-card>
 
+    <h4>My projects</h4>
+
     <div class="q-pa-md row items-end q-gutter-md">
 
       <q-card
@@ -18,7 +20,7 @@
         <q-separator />
 
         <q-card-actions align="right">
-          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
+          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>View</q-btn>
           <q-btn @click="exportProject(project)" flat>Export</q-btn>
         </q-card-actions>
       </q-card>
