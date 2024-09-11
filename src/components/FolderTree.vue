@@ -1,11 +1,13 @@
 <template>
   <q-tree
+    v-if="folder"
     :nodes="nodes"
     node-key="id"
     dense
+    items-stretch
     @lazy-load="onLazyLoad">
     <template v-slot:default-header="prop">
-      <div class="row items-center">
+      <div class="col-grow row items-stretch space-between menu-item">
         <DropZone types="upmt/descriptem upmt/category upmt/moment"
                   :data="prop.node.id"
                   @descriptem="droppedDescriptem"
@@ -19,6 +21,31 @@
             <div class="text-primary">{{ prop.node.label }}</div>
           </DragElement>
         </DropZone>
+        <q-space />
+        <q-btn
+          class="menu-icon"
+          size="xs"
+          @click.stop
+          flat
+          round
+          dense
+          icon="more_vert">
+          <q-menu
+            touch-position>
+            <q-list dense style="min-width: 100px">
+              <q-item
+                clickable
+                v-close-popup>
+                Close {{ prop.node.label }}
+              </q-item>
+              <q-item
+                clickable
+                v-close-popup>
+                Delete {{ prop.node.label }}
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </div>
     </template>
   </q-tree>
@@ -42,7 +69,7 @@ const props = defineProps({
 })
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-  const getKey = (element: any): string => {
+const getKey = (element: any): string => {
       if (element.$modelEntity) {
           return `${element.$modelEntity()}:${element.id}`
       } else {
@@ -157,6 +184,13 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
   function droppedDescriptem (descriptemId: string, data: string) {
       console.log("Dropped Descriptem ", descriptemId, " to ", data)
   }
+
 </script>
-<style>
+<style scoped>
+  .menu-icon {
+    opacity: 0;
+  }
+  .menu-item:hover .menu-icon {
+    opacity: 1;
+  }
 </style>
