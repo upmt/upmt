@@ -64,8 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
+import { useProjectStore } from 'stores/projectStore'
 
 defineOptions({
   name: 'MainLayout'
@@ -78,12 +79,27 @@ interface MenuItem {
     action?: object
     separator?: boolean
 }
-const menuList: MenuItem[] = [
+
+const store = useProjectStore()
+
+const menuList = computed<MenuItem[]>(() => [
     {
         label: 'Home',
         icon: 'mdi-home',
         link: '/home'
     },
+    {
+        label: 'Example',
+        icon: 'mdi-semantic-web',
+        link: '/example'
+    },
+    ...store.getAllProjects().map(p => {
+        return {
+            label: p.name,
+            icon: 'mdi-semantic-web',
+            link: `/project/${p.id}`
+        }
+    }),
     {
         label: 'Init',
         icon: 'mdi-semantic-web',
@@ -94,8 +110,7 @@ const menuList: MenuItem[] = [
         icon: 'mdi-eye',
         link: '/debug'
     }
-
-]
+  ])
 
 const leftDrawerOpen = ref(false)
 const rightDrawerOpen = ref(false)
