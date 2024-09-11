@@ -27,7 +27,7 @@ export default class Category extends Justifiable {
   }
 
   get description_label () {
-    return `${this.moment.name} | ${this.name}`
+    return `${this.name} | ${this.moment.name}`
   }
 
   get name (): string {

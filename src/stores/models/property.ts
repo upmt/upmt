@@ -26,7 +26,7 @@ export default class Property extends Justifiable {
   }
 
   get description_label () {
-    return `${this.category.moment.name} | ${this.category.name} | ${this.name}: ${this.value}`
+    return `${this.name}: ${this.value} | ${this.category.name} | ${this.category.moment.name} |  `
   }
 
   get label (): string {
