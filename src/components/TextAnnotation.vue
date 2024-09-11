@@ -37,8 +37,10 @@
             <DragElement
               type="selection"
               :data="currentSelectionDataAsString">
-              <span>Selection&nbsp;</span>
-              <span>{{ selectionShorttext }}</span>
+              <q-icon
+                size="xs"
+                name="mdi-select"></q-icon>
+              <span class="extract">{{ selectionShorttext }}</span>
             </DragElement>
           </q-item>
 
@@ -46,12 +48,17 @@
             v-for="descriptem in activeDescriptems"
             :key="descriptem.id"
             clickable
+            row
             v-close-popup>
             <DragElement
               type="descriptem"
               :data="descriptem.id">
-              <span>Descriptem&nbsp;</span>
-              <span>{{ descriptemShorttext(descriptem as Descriptem) }}</span>
+              <q-icon
+                size="xs"
+                name="mdi-format-quote-close-outline"></q-icon>
+              <span class="extract">{{ descriptem.shorttext }}</span>
+              <q-space />
+              <span>{{ descriptemContext(descriptem as Descriptem) }}</span>
             </DragElement>
           </q-item>
           <q-separator />
@@ -63,8 +70,11 @@
             <DragElement
               type="annotation"
               :data="annotation.id">
-              <span>Annotation&nbsp;</span>
-              <span :style="{ backgroundColor: annotation.color }">{{ annotation.shorttext }}</span>
+              <q-icon
+                size="xs"
+                :style="{ backgroundColor: annotation.color }"
+                name="mdi-comment-quote-outline"></q-icon>
+              <span class="extract">{{ annotation.shorttext }}</span>
             </DragElement>
           </q-item>
         </q-list>
@@ -166,7 +176,7 @@
       }
   })
 
-  function descriptemShorttext (descriptem: Descriptem) {
+  function descriptemContext (descriptem: Descriptem) {
       const full = store.getDescriptem(descriptem.id)
       if (full && full.justification) {
           const parent = store.getJustificationParent(full.justification.parentId)
@@ -174,12 +184,12 @@
           // Category: ${category.moment.name} | ${category.name}
           // Property: ${property.category.moment.name} | ${property.category.name} | ${property.name}: ${property.value}
           if (parent) {
-              return `${full.shorttext} | ${parent.description_label}`
+              return parent.description_label
           } else {
-              return full.shorttext
+              return ""
           }
       } else {
-          return descriptem.shorttext
+          return ""
       }
   }
 
@@ -238,5 +248,8 @@
   .inspector {
   }
   .textAnnotationComponent {
+  }
+  .extract {
+      font-style: italic;
   }
 </style>
