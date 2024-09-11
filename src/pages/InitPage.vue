@@ -36,7 +36,7 @@ const store = useProjectStore()
 
 const project = ref<Project>()
 
-function loadSample (filename = './OPEVA-G1.upmt') {
+function loadSample (filename = './examples/example.upmt') {
     $q.loading.show()
     axios.get(filename).then((response) => {
         const p = useProjectStore().importProject(response.data, filename)
