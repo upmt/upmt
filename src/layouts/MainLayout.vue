@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          UPMT
+          μPMT
         </q-toolbar-title>
 
         <q-btn
