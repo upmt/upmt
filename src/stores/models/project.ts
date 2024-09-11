@@ -14,7 +14,7 @@ export default class Project extends Model {
 
   get label (): string {
     if (this.name) {
-      return `${this.name} - ${this.interviews.length} interviews`
+      return this.name
     } else {
       return "Unnamed project"
     }
