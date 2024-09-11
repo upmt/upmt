@@ -30,15 +30,15 @@
         >
         <q-list dense style="min-width: 100px">
           <q-item
-            v-if="currentSelection"
+            v-if="selectionShorttext"
             key="current"
             clickable
             v-close-popup>
             <DragElement
               type="selection"
               :data="currentSelectionDataAsString">
-              <q-item-section>Selection {{ selectionShorttext }}
-              </q-item-section>
+              <span>Selection&nbsp;</span>
+              <span>{{ selectionShorttext }}</span>
             </DragElement>
           </q-item>
 
@@ -50,8 +50,8 @@
             <DragElement
               type="descriptem"
               :data="descriptem.id">
-              <q-item-section>Descriptem {{ descriptem.shorttext }}
-              </q-item-section>
+              <span>Descriptem&nbsp;</span>
+              <span>{{ descriptemShorttext(descriptem as Descriptem) }}</span>
             </DragElement>
           </q-item>
           <q-separator />
@@ -165,6 +165,16 @@
           return ""
       }
   })
+
+  function descriptemShorttext (descriptem: Descriptem) {
+      const full = store.getDescriptem(descriptem.id)
+      if (full && full.justification) {
+          // const parent = store.getJustificationParent(full.justification.parentId)
+          return `${full.shorttext} | ${full.justification.id}`
+      } else {
+          return descriptem.shorttext
+      }
+  }
 
   function getSpanClasses (span: any) {
       const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]

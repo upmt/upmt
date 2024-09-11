@@ -270,7 +270,7 @@ function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
       name: sc.name,
       color: fixColorName(sc.color),
       isExpanded: sc.expanded,
-      properties: sc.schemaProperty_list?.map(mapSchemaProperty)
+      properties: sc.schemaProperty_list?.map(p => mapSchemaProperty(p))
     })
     idCache.CategoryModel[key] = model
   }
@@ -293,14 +293,14 @@ function mapMomentType (mt: OldMomentType): MomentModel {
   return model
 }
 
-function mapOldFolder (f: OldSchemaFolder): ModelFolder {
+function mapOldFolder (folder: OldSchemaFolder): ModelFolder {
     return repo.ModelFolder.make({
-      name: f.name,
+      name: folder.name,
       color: 'transparent',
-      isExpanded: f.expanded,
-      folders: f.schemaFolder_list.map(mapOldFolder),
-      categorymodels: f.schemaCategory_list.map(mapSchemaCategory),
-      momentmodels: f.schemaMomentType_list.map(mapMomentType)
+      isExpanded: folder.expanded,
+      folders: folder.schemaFolder_list.map(mapOldFolder),
+      categorymodels: folder.schemaCategory_list.map(mapSchemaCategory),
+      momentmodels: folder.schemaMomentType_list.map(mapMomentType)
     })
 }
 
@@ -352,7 +352,8 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getDescriptem (id: string) {
     return repo.Descriptem
-      .with('justification')
+      .with('justification',
+        query => query.with('parent'))
       .with('interview')
       .find(id)
   }
@@ -369,7 +370,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Justification
       .with('descriptems')
       .find(id)
-    }
+  }
 
   function getMoment (id: string) {
     return repo.Moment
@@ -403,6 +404,18 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getInterviewDescriptems (id: string) {
     // Return the descriptems defined on a specific interview
     return repo.Descriptem.where('interviewId', id).with('interview').all()
+  }
+
+  function getJustificationParent (id: string) {
+    // Parent can be either Category/Moment/Property
+    let parent: Moment | Category | Property | null = getMoment(id)
+    if (!parent) {
+      parent = getCategory(id)
+    }
+    if (!parent) {
+      parent = getProperty(id)
+    }
+    return parent
   }
 
   function createProject (projectData: Subset<Project>) {
@@ -622,6 +635,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getInterview,
     getInterviewDescriptems,
     getJustification,
+    getJustificationParent,
     getMoment,
     getMomentModel,
     getProperty,
