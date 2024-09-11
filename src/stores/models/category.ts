@@ -12,9 +12,9 @@ export default class Category extends Justifiable {
   @HasOne(() => Justification, 'parentId') declare justification: Justification
   @HasMany(() => Property, 'categoryId') declare properties: Property[]
 
+  @Attr() momentId!: string
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment
 
-  @Attr() momentId!: string
   @Attr() _model!: CategoryModel
 
   get model (): CategoryModel {
@@ -24,6 +24,10 @@ export default class Category extends Justifiable {
   set model (cm: CategoryModel) {
     this._model = cm
     this.categorymodelId = cm.id
+  }
+
+  get description_label () {
+    return `${this.moment.name} | ${this.name}`
   }
 
   get name (): string {

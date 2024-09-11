@@ -27,6 +27,10 @@ export default class Moment extends Justifiable {
     console.log("Updating moment", model)
   }
 
+  get description_label () {
+    return this.name
+  }
+
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
     if (this.categories === null || this.children === null) {

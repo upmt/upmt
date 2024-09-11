@@ -169,8 +169,15 @@
   function descriptemShorttext (descriptem: Descriptem) {
       const full = store.getDescriptem(descriptem.id)
       if (full && full.justification) {
-          // const parent = store.getJustificationParent(full.justification.parentId)
-          return `${full.shorttext} | ${full.justification.id}`
+          const parent = store.getJustificationParent(full.justification.parentId)
+          // Moment: ${moment.name}
+          // Category: ${category.moment.name} | ${category.name}
+          // Property: ${property.category.moment.name} | ${property.category.name} | ${property.name}: ${property.value}
+          if (parent) {
+              return `${full.shorttext} | ${parent.description_label}`
+          } else {
+              return full.shorttext
+          }
       } else {
           return descriptem.shorttext
       }

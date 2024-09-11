@@ -408,12 +408,12 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getJustificationParent (id: string) {
     // Parent can be either Category/Moment/Property
-    let parent: Moment | Category | Property | null = getMoment(id)
+    let parent: Moment | Category | Property | null = repo.Moment.find(id)
     if (!parent) {
-      parent = getCategory(id)
+      parent = repo.Category.with('moment').find(id)
     }
     if (!parent) {
-      parent = getProperty(id)
+      parent = repo.Property.with('category', query => query.with('moment')).find(id)
     }
     return parent
   }
