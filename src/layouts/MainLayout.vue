@@ -19,7 +19,7 @@
           dense
           flat
           round
-          icon="menu"
+          icon="mdi-account"
           @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
