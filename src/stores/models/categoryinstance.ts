@@ -5,12 +5,12 @@ import Property from './property'
 import CategoryModel from './categorymodel'
 import Justifiable from './justifiable'
 
-export default class Category extends Justifiable {
-  static entity = 'categories'
+export default class CategoryInstance extends Justifiable {
+  static entity = 'categoryinstances'
   @Uid() declare id: string
   @Attr() categorymodelId!: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
-  @HasMany(() => Property, 'categoryId') declare properties: Property[]
+  @HasMany(() => Property, 'categoryinstanceId') declare properties: Property[]
 
   @Attr() momentId!: string
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment

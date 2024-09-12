@@ -1,30 +1,30 @@
 <template>
-  <div class="category"
-       :style="{ backgroundColor: category.color }"
-       v-if="category"
-       :data-category="category.id">
+  <div class="categoryinstance"
+       :style="{ backgroundColor: categoryinstance.color }"
+       v-if="categoryinstance"
+       :data-categoryinstance="categoryinstance.id">
 
-    <div class="category-metadata">
+    <div class="categoryinstance-metadata">
         <DragElement
-          type="category"
-          :data="categoryId">
+          type="categoryinstance"
+          :data="categoryinstanceId">
           <q-icon
             ref="handle"
-            class="category-handle"
+            class="categoryinstance-handle"
             size="xs"
             @click.meta="debug"
             name="mdi-tag-outline"></q-icon>
-          <span class="category-name">{{ category.name }}</span>
+          <span class="categoryinstance-name">{{ categoryinstance.name }}</span>
         </DragElement>
     </div>
 
-    <div class="category-justification">
-      <JustificationTextRepresentation :justificationId="category.justification.id">
+    <div class="categoryinstance-justification">
+      <JustificationTextRepresentation :justificationId="categoryinstance.justification.id">
       </JustificationTextRepresentation>
     </div>
 
-    <div class="category-properties">
-      <div v-for="p in category.properties" :key="p.id">
+    <div class="categoryinstance-properties">
+      <div v-for="p in categoryinstance.properties" :key="p.id">
         <PropertyTextRepresentation :propertyId="p.id">
         </PropertyTextRepresentation>
       </div>
@@ -43,34 +43,34 @@ import DragElement from './DragElement.vue'
 const store = useProjectStore()
 
 const props = defineProps({
-    categoryId: { type: String, default: "" }
+    categoryinstanceId: { type: String, default: "" }
 })
-const category = computed(() => store.getCategory(props.categoryId))
+const categoryinstance = computed(() => store.getCategoryInstance(props.categoryinstanceId))
 
 function debug () {
-    (window as any).category = category.value
-    console.log("Category", category.value?.toJSON())
+    (window as any).categoryinstance = categoryinstance.value
+    console.log("Category instance", categoryinstance.value?.toJSON())
 }
 
 </script>
 
 <style scoped>
-  .category-name {
+  .categoryinstance-name {
     font-weight: bold;
   }
-  .category-metadata {
+  .categoryinstance-metadata {
     text-align: center;
   }
-  .category-children {
+  .categoryinstance-children {
     list-style: none;
     min-width: 200px;
     display: flex;
     flex-direction: column;
   }
-  .category-children.horizontal {
+  .categoryinstance-children.horizontal {
       flex-direction: row;
   }
-  .category {
+  .categoryinstance {
       min-width: 200px;
       min-height: 40px;
       margin: 2px;
@@ -78,11 +78,11 @@ function debug () {
       flex-direction: column;
       border: 1px solid grey;
   }
-  .category-handle {
+  .categoryinstance-handle {
       opacity: .5;
       cursor: pointer;
   }
-  .category-handle:hover {
+  .categoryinstance-handle:hover {
       opacity: .7;
   }
 </style>

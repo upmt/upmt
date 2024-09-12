@@ -1,5 +1,5 @@
 import { Attr, BelongsTo, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
-import Category from './category'
+import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
 import Justification from './justification'
 import PropertyModel from './propertymodel'
@@ -13,8 +13,8 @@ export default class Property extends Justifiable {
   @Attr() declare propertymodelId: string
   @Attr() _model!: PropertyModel
 
-  @Attr() categoryId!: string
-  @BelongsTo(() => Category, 'categoryId') declare category: Category
+  @Attr() categoryInstanceId!: string
+  @BelongsTo(() => CategoryInstance, 'categoryInstanceId') declare categoryinstance: CategoryInstance
 
   get model (): PropertyModel {
     return this._model
@@ -26,7 +26,7 @@ export default class Property extends Justifiable {
   }
 
   get description_label () {
-    return `${this.name}: ${this.value} | ${this.category.name} | ${this.category.moment.name} |  `
+    return `${this.name}: ${this.value} | ${this.categoryinstance.name} | ${this.categoryinstance.moment.name}`
   }
 
   get label (): string {

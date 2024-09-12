@@ -14,8 +14,8 @@
 
       <DropZone data="before"
                 class="empty_padding"
-                types="upmt/categorymodel upmt/category upmt/descriptem upmt/annotation upmt/selection"
-                @category="droppedCategory"
+                types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
+                @categoryinstance="droppedCategoryInstance"
                 @categorymodel="droppedCategoryModel"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
@@ -52,10 +52,9 @@
             </JustificationTextRepresentation>
           </div>
 
-          <div :class="[ 'moment-categories', layout ]">
-            <div v-for="c in moment.categories" :key="c.id">
-              <CategoryTextRepresentation :categoryId="c.id">
-              </CategoryTextRepresentation>
+          <div :class="[ 'moment-categoryinstances', layout ]">
+            <div v-for="c in moment.categoryinstances" :key="c.id">
+              <CategoryInstanceTextRepresentation :categoryinstanceId="c.id" />
             </div>
           </div>
 
@@ -89,7 +88,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
-import CategoryTextRepresentation from './CategoryTextRepresentation.vue'
+import CategoryInstanceTextRepresentation from './CategoryInstanceTextRepresentation.vue'
 import MomentTextRepresentation from './MomentTextRepresentation.vue'
 import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
@@ -109,8 +108,8 @@ function debug () {
     console.log("Moment", moment.value?.toJSON())
 }
 
-function droppedCategory (categoryId: string, data: string) {
-    console.log("droppedCategory", categoryId, props.momentId, data)
+function droppedCategoryInstance (categoryinstanceId: string, data: string) {
+    console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
     // store.momentAddCategoryModel(cmId, props.momentId)
 }
 

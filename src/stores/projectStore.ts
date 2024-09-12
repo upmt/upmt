@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useRepo } from 'pinia-orm'
 import Analysis from './models/analysis'
 import Annotation from './models/annotation'
-import Category from './models/category'
+import CategoryInstance from './models/categoryinstance'
 import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
 import Interview from './models/interview'
@@ -46,7 +46,7 @@ const repo = {
   Analysis:         useRepo(Analysis),
   Annotation:       useRepo(Annotation),
   CategoryModel:    useRepo(CategoryModel),
-  Category:         useRepo(Category),
+  CategoryInstance: useRepo(CategoryInstance),
   Descriptem:       useRepo(Descriptem),
   Interview:        useRepo(Interview),
   Justification:    useRepo(Justification),
@@ -193,9 +193,9 @@ function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
   })
 }
 
-function mapConcreteCategory (c: OldCategory, interview: Interview): Category {
+function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryInstance {
   const model = mapSchemaCategoryReference(c.schemaCategory)
-  return repo.Category.make({
+  return repo.CategoryInstance.make({
     _model: model,
     categorymodelId: model.id,
     justification: repo.Justification.make({
@@ -218,7 +218,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
-    categories: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
+    categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
     justification: repo.Justification.make({
       descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
@@ -339,8 +339,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       return repo.Analysis.with('rootMoment', (query) => query.with('children')).find(id)
   }
 
-  function getCategory (id: string) {
-    return repo.Category
+  function getCategoryInstance (id: string) {
+    return repo.CategoryInstance
       .with('justification', query => query.with('descriptems'))
       .with('properties')
       .find(id)
@@ -376,7 +376,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment
       .with('children')
       .with('justification', (query) => query.with('descriptems'))
-      .with('categories', (query) => query.with('properties'))
+      .with('categoryinstances', (query) => query.with('properties'))
       .find(id)
   }
 
@@ -408,12 +408,12 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getJustificationParent (id: string) {
     // Parent can be either Category/Moment/Property
-    let parent: Moment | Category | Property | null = repo.Moment.find(id)
+    let parent: Moment | CategoryInstance | Property | null = repo.Moment.find(id)
     if (!parent) {
-      parent = repo.Category.with('moment').find(id)
+      parent = repo.CategoryInstance.with('moment').find(id)
     }
     if (!parent) {
-      parent = repo.Property.with('category', query => query.with('moment')).find(id)
+      parent = repo.Property.with('categoryinstance', query => query.with('moment')).find(id)
     }
     return parent
   }
@@ -539,9 +539,9 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     console.log("addCategoryModel", moment, categoryModel)
     if (moment && categoryModel) {
-      console.log("Creating new category", categoryModel.name)
+      console.log("Creating new categoryinstance ", categoryModel.name)
       // We create a new Category and attach it to the destinationMomentId
-      repo.Category.save({
+      repo.CategoryInstance.save({
         categoryModelId: cmId,
         justification: {
           name: ''
@@ -629,7 +629,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getRepo,
     getAnalysis,
     getAnnotation,
-    getCategory,
+    getCategoryInstance,
     getCategoryModel,
     getDescriptem,
     getInterview,

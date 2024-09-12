@@ -8,10 +8,10 @@
     @lazy-load="onLazyLoad">
     <template v-slot:default-header="prop">
       <div class="col-grow row items-stretch space-between menu-item">
-        <DropZone types="upmt/descriptem upmt/category upmt/moment"
+        <DropZone types="upmt/descriptem upmt/categoryinstance upmt/moment"
                   :data="prop.node.id"
                   @descriptem="droppedDescriptem"
-                  @category="droppedCategory"
+                  @categoryinstance="droppedCategoryInstance"
                   @moment="droppedMoment">
           <DragElement
             :type="prop.node.dragType"
@@ -178,8 +178,8 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
       console.log("Dropped Moment", momentId, " to ", data)
       // store.moveMoment(momentId, props.momentId, Number(data))
   }
-  function droppedCategory (categoryId: string, data: string) {
-      console.log("Dropped Category", categoryId, " to ", data)
+  function droppedCategoryInstance (categoryinstanceId: string, data: string) {
+      console.log("Dropped CategoryInstance", categoryinstanceId, " to ", data)
   }
   function droppedDescriptem (descriptemId: string, data: string) {
       console.log("Dropped Descriptem ", descriptemId, " to ", data)

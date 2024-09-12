@@ -12,7 +12,8 @@
   import { computed } from 'vue'
 
   const emit = defineEmits([ 'annotation', 'descriptem', 'selection',
-                             'category', 'moment', 'property', 'categorymodel', 'momentmodel' ])
+                             'categoryinstance', 'moment', 'property',
+                             'categorymodel', 'momentmodel' ])
 
   const props = defineProps({
       data: {

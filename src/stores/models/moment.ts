@@ -1,6 +1,6 @@
 import { Attr, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
-import Category from './category'
+import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
 
 export default class Moment extends Justifiable {
@@ -17,7 +17,7 @@ export default class Moment extends Justifiable {
   @Attr() parentId!: string
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
-  @HasMany(() => Category, 'momentId') declare categories: Category[]
+  @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
   /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
@@ -33,7 +33,7 @@ export default class Moment extends Justifiable {
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
-    if (this.categories === null || this.children === null) {
+    if (this.categoryinstances === null || this.children === null) {
       console.error("Query error for ", this, " - should fetch its relations")
     }
     return {
@@ -44,7 +44,7 @@ export default class Moment extends Justifiable {
       isCommentVisible: this.isCommentVisible,
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
-      categories: this.categories.map(c => c.toJSON()),
+      categoryinstances: this.categoryinstances.map(c => c.toJSON()),
       children: this.children.map(m => ({ id: m.id }))
     }
   }
