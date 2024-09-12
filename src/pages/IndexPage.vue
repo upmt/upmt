@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { useQuasar, exportFile, QFile } from 'quasar'
-import { computed, ref, Ref } from 'vue'
+  import { computed, ref, Ref, onMounted } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import Project from 'stores/models/project'
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -205,6 +205,15 @@ function exportProject (project: Project) {
         console.error('Error: ' + status)
     }
 }
+
+onMounted(() => {
+    if (!selected.value) {
+        loadSample();
+        (window as any).store = store;
+        (window as any).quasar = $q;
+        console.log("Debugging store", store, "quasar", $q);
+    }
+})
 
 </script>
 
