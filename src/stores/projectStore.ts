@@ -399,10 +399,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     // Parent can be either Category/Moment/Property
     let parent: Moment | CategoryInstance | Property | null = repo.Moment.find(id)
     if (!parent) {
-      parent = repo.CategoryInstance.with('moment').find(id)
+      parent = repo.CategoryInstance.with('model').with('moment').find(id)
     }
     if (!parent) {
-      parent = repo.Property.with('categoryinstance', query => query.with('moment')).find(id)
+      parent = repo.Property
+        .with('model')
+        .with('categoryinstance', query =>
+          query.with('model').with('moment'))
+        .find(id)
     }
     return parent
   }
