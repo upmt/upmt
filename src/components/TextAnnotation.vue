@@ -21,6 +21,7 @@
       :annotations="annotations"
       :getSpanClasses="getSpanClasses"
       :spanEvents="spanEvents"
+      @dragstart="onDragStart($event)"
       @selection="textSelection"
       >
       <q-menu
@@ -215,6 +216,16 @@
           startIndex: data.begin,
           endIndex: data.end,
           interviewId: props.interview.id
+      }
+  }
+
+  /*
+   * Add app-specific information when dragging text directly
+   */
+  function onDragStart (event: DragEvent) {
+      if (event.dataTransfer) {
+          console.log("Adding ", currentSelectionDataAsString.value)
+          event.dataTransfer.setData(`upmt/selection`, currentSelectionDataAsString.value)
       }
   }
 </script>

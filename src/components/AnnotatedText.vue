@@ -1,7 +1,7 @@
 <template>
   <div class="transcript"
        ref="transcript"
-       @mouseup="getSelection">
+       @mouseup="emitSelection">
     <span
       v-for="span in spans"
       :key="span.id"
@@ -288,8 +288,19 @@
                       // startContainer/endContainer should be text element whose parent is a span
                       const begin = Number(range.startContainer.parentElement.dataset.textOffset) + range.startOffset
                       const end = Number(range.endContainer.parentElement.dataset.textOffset) + range.endOffset
-                      this.$emit("selection", { begin, end, text: this.text.slice(begin, end) })
+                      return {
+                          begin,
+                          end,
+                          text: this.text.slice(begin, end)
+                      }
                   }
+              }
+              return null
+          },
+          emitSelection: function () {
+              const textSelection = this.getSelection()
+              if (textSelection) {
+                  this.$emit("selection", textSelection)
               }
           }
       }
