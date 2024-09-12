@@ -180,7 +180,6 @@ function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
     console.error(`Missing ${key}`)
   }
   return repo.Property.make({
-    _model: model,
     propertymodelId: model.id,
     value: p.value,
     justification: repo.Justification.make({
@@ -196,7 +195,6 @@ function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
 function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryInstance {
   const model = mapSchemaCategoryReference(c.schemaCategory)
   return repo.CategoryInstance.make({
-    _model: model,
     categorymodelId: model.id,
     justification: repo.Justification.make({
       descriptems: c.justification?.descripteme_list.map(d => repo.Descriptem.make({
@@ -341,8 +339,9 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getCategoryInstance (id: string) {
     return repo.CategoryInstance
+      .with('model')
       .with('justification', query => query.with('descriptems'))
-      .with('properties')
+      .with('properties', query => query.with('model'))
       .find(id)
   }
 
@@ -385,20 +384,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
   function getProperty (id: string) {
-    const prop = repo.Property
+    return repo.Property
+      .with('model')
       .with('justification', (query) => query.with('descriptems'))
       .find(id)
-
-    if (prop) {
-      const model = repo.PropertyModel.find(prop.propertymodelId)
-      if (model) {
-        prop.model = model
-      } else {
-        // Unconsistency error!
-        console.error(`Unconsistency - no model ${prop.propertymodelId} for ${prop}`)
-      }
-    }
-    return prop
   }
 
   function getInterviewDescriptems (id: string) {
@@ -552,10 +541,10 @@ export const useProjectStore = defineStore('projectStore', () => {
           justification: {
             name: ''
           },
-          _model: pm
+          model: pm
         })),
         momentId: destinationMomentId,
-        _model: categoryModel
+        model: categoryModel
       })
     }
   }

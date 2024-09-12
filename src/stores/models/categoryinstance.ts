@@ -8,26 +8,20 @@ import Justifiable from './justifiable'
 export default class CategoryInstance extends Justifiable {
   static entity = 'categoryinstances'
   @Uid() declare id: string
-  @Attr() categorymodelId!: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
   @HasMany(() => Property, 'categoryinstanceId') declare properties: Property[]
 
   @Attr() momentId!: string
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment
 
-  @Attr() _model!: CategoryModel
+  @Attr() categorymodelId!: string
+  @BelongsTo(() => CategoryModel, 'categorymodelId') declare model: CategoryModel
 
-  get model (): CategoryModel {
-    return this._model
-  }
-
-  set model (cm: CategoryModel) {
-    this._model = cm
-    this.categorymodelId = cm.id
-  }
-
-  get description_label () {
-    return `${this.name} | ${this.moment.name}`
+  get asContext () {
+    return {
+      moment: this.moment,
+      categoryinstance: this
+    }
   }
 
   get name (): string {

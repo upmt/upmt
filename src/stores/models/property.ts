@@ -11,22 +11,17 @@ export default class Property extends Justifiable {
   @HasOne(() => Justification, 'parentId') declare justification: Justification
 
   @Attr() declare propertymodelId: string
-  @Attr() _model!: PropertyModel
+  @BelongsTo(() => PropertyModel, 'propertymodelId') declare model: PropertyModel
 
-  @Attr() categoryInstanceId!: string
-  @BelongsTo(() => CategoryInstance, 'categoryInstanceId') declare categoryinstance: CategoryInstance
+  @Attr() categoryinstanceId!: string
+  @BelongsTo(() => CategoryInstance, 'categoryinstanceId') declare categoryinstance: CategoryInstance
 
-  get model (): PropertyModel {
-    return this._model
-  }
-
-  set model (pm: PropertyModel) {
-    this._model = pm
-    this.propertymodelId = pm.id
-  }
-
-  get description_label () {
-    return `${this.name}: ${this.value} | ${this.categoryinstance.name} | ${this.categoryinstance.moment.name}`
+  get asContext () {
+    return {
+      moment: this.categoryinstance?.moment,
+      categoryinstance: this.categoryinstance,
+      property: this
+    }
   }
 
   get label (): string {
