@@ -157,7 +157,6 @@
               class: 'descriptem'
           }
       })
-      console.log(`Annotation: ${interviewAnnotations.length} annotations - ${interviewDescriptems.length} descriptems}`)
       return [ ...interviewAnnotations, ...interviewDescriptems ]
   })
 
@@ -178,9 +177,6 @@
 
   const spanEvents = {
       click: (event: Event, annotations: BaseAnnotation[]) => {
-          console.log("window.annotations = ", annotations);
-          (window as any).annotations = annotations
-
           // annotations can contain descriptems or annotations
           if (selectedAnnotationInspector.value) {
               const message = annotations.map(a => `${a.start}:${a.start + a.length} ${a.class}`).join(" ")
@@ -192,7 +188,6 @@
           activeDescriptems.value = (annotations.filter(a => a.class === 'descriptem').map(a => store.getDescriptem(a.id))) as Descriptem[]
           activeAnnotations.value = (annotations.filter(a => a.class !== 'descriptem').map(a => store.getAnnotation(a.id))) as Annotation[]
           if (activeAnnotationInspector.value) {
-              // console.log("Mouseover", event, annotations),
               let message = "No annotations or descriptems"
               if (activeDescriptems.value.length || activeAnnotations.value.length) {
                   message = `${activeAnnotations.value.length} annotations - ${activeDescriptems.value.length} descriptems`
@@ -224,7 +219,6 @@
    */
   function onDragStart (event: DragEvent) {
       if (event.dataTransfer) {
-          console.log("Adding ", currentSelectionDataAsString.value)
           event.dataTransfer.setData(`upmt/selection`, currentSelectionDataAsString.value)
       }
   }

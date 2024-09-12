@@ -94,7 +94,7 @@ const nodes: ComputedRef<QTreeNode[]> = computed(() => {
 const onLazyLoad = function (params: QTreeLazyLoadParams) {
     const { node, key, done, fail } = params;
     // const { node, done } = params
-    console.log("lazy load", node, key, done, fail)
+    // console.log("lazy load", node, key, done, fail)
     const [entitytype, entityid] = node.id.split(':', 2)
 
     if (entitytype === 'projects') {
@@ -165,7 +165,6 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                     }))
                 }))
             }))
-            console.log("Tree row", { folder, folders, categorymodels, momentmodels })
             done(folders.concat(categorymodels, momentmodels))
         }
     } else {
