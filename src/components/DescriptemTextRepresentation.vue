@@ -104,6 +104,7 @@ const context = computed((): Context => {
     overflow: hidden;
     width: 100%;
     height: 1.2em;
+    font-style: italic;
   }
   .descriptem-handle {
       opacity: .5;
