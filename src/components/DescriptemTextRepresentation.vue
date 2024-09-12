@@ -13,6 +13,33 @@
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-header">{{ descriptem.shorttext }}</span>
+      <div v-if="withContext" class="descriptem-context">
+        <span class="context-item"
+              v-if="context.property">
+          <q-icon
+            size="xs"
+            name="mdi-note-text-outline"></q-icon>
+          <div class="property-name">{{ context.property.name }}</div>
+          <div class="property-value">{{ context.property.value }}
+          </div>
+        </span>
+        <span
+          class="context-item"
+          v-if="context.categoryinstance">
+          <q-icon
+            size="xs"
+            name="mdi-tag-outline"></q-icon>
+          <span class="categoryinstance-name">{{ context.categoryinstance.name }}</span>
+        </span>
+        <span
+          class="context-item"
+          v-if="context.moment">
+          <q-icon
+            size="xs"
+            name="mdi-note-outline"></q-icon>
+          <span class="moment-name">{{ context.moment.name }}</span>
+        </span>
+      </div>
     </DragElement>
   </div>
 </template>
@@ -21,11 +48,15 @@
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import DragElement from './DragElement.vue'
+import Moment from 'stores/models/moment'
+import Property from 'stores/models/property'
+import CategoryInstance from 'stores/models/categoryinstance'
 
 const store = useProjectStore()
 
 const props = defineProps({
-    descriptemId: { type: String, default: "" }
+    descriptemId: { type: String, default: "" },
+    withContext: { type: Boolean, default: false }
   })
 
 const descriptem = computed(() => store.getDescriptem(props.descriptemId))
@@ -34,6 +65,31 @@ function debug () {
     (window as any).descriptem = descriptem.value
     console.log("Descriptem", descriptem.value?.toJSON())
 }
+
+type Context = {
+    moment?: Moment,
+    categoryinstance?: CategoryInstance,
+    property?: Property
+}
+
+// context is an object with optional moment / categoryinstance / property values
+const context = computed((): Context => {
+    if (descriptem.value && descriptem.value.justification) {
+        const parent = store.getJustificationParent(descriptem.value.justification.parentId)
+        // Moment: ${moment.name}
+        // Category: ${category.moment.name} | ${category.name}
+        // Property: ${property.categoryinstance.moment.name} | ${property.categoryinstance.name} | ${property.name}: ${property.value}
+        if (parent) {
+            console.log("Context", parent, parent.asContext)
+            return parent.asContext
+        } else {
+            return { }
+        }
+    } else {
+        return { }
+    }
+  })
+
 </script>
 
 <style scoped>
@@ -55,5 +111,14 @@ function debug () {
   }
   .descriptem-handle:hover {
       opacity: .7;
+  }
+  .descriptem-context {
+      display: flex;
+      flex-direction: row;
+  }
+  .context-item {
+      display: flex;
+      flex-direction: row;
+      font-size: x-small;
   }
 </style>

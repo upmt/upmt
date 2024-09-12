@@ -50,16 +50,9 @@
             clickable
             row
             v-close-popup>
-            <DragElement
-              type="descriptem"
-              :data="descriptem.id">
-              <q-icon
-                size="xs"
-                name="mdi-format-quote-close-outline"></q-icon>
-              <span class="extract">{{ descriptem.shorttext }}</span>
-              <q-space />
-              <span>{{ descriptemContext(descriptem as Descriptem) }}</span>
-            </DragElement>
+            <DescriptemTextRepresentation
+              :descriptemId="descriptem.id"
+              withContext />
           </q-item>
           <q-separator />
           <q-item
@@ -86,6 +79,7 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import AnnotatedText from './AnnotatedText.vue'
+  import DescriptemTextRepresentation from './DescriptemTextRepresentation.vue'
   import Annotation from 'stores/models/annotation'
   import Descriptem from 'stores/models/descriptem'
   import Interview from 'stores/models/interview'
@@ -175,23 +169,6 @@
           return ""
       }
   })
-
-  function descriptemContext (descriptem: Descriptem) {
-      const full = store.getDescriptem(descriptem.id)
-      if (full && full.justification) {
-          const parent = store.getJustificationParent(full.justification.parentId)
-          // Moment: ${moment.name}
-          // Category: ${category.moment.name} | ${category.name}
-          // Property: ${property.category.moment.name} | ${property.category.name} | ${property.name}: ${property.value}
-          if (parent) {
-              return parent.description_label
-          } else {
-              return ""
-          }
-      } else {
-          return ""
-      }
-  }
 
   function getSpanClasses (span: any) {
       const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]

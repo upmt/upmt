@@ -105,7 +105,7 @@ const moment = computed(() => store.getMoment(props.momentId))
 
 function debug () {
     (window as any).moment = moment.value
-    console.log("Moment", moment.value?.toJSON())
+    console.log("Moment", moment.value)
 }
 
 function droppedCategoryInstance (categoryinstanceId: string, data: string) {
