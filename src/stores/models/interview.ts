@@ -1,7 +1,8 @@
 import { Model } from 'pinia-orm'
-import { Attr, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Analysis from './analysis'
 import Annotation from './annotation'
+import Project from './project'
 
 export default class Interview extends Model {
   static entity = 'interviews'
@@ -17,6 +18,7 @@ export default class Interview extends Model {
   @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis | undefined
 
   @Attr() projectId!: string
+  @BelongsTo(() => Project, 'projectId') declare project: Project | null
 
   get label (): string {
     if (this.name) {
