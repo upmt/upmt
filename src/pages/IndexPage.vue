@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { useQuasar, exportFile, QFile } from 'quasar'
-  import { computed, ref, Ref, onMounted } from 'vue'
+import { computed, ref, Ref, onMounted } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import Project from 'stores/models/project'
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -166,28 +166,27 @@ function uploadFile (event: Event) {
     }
   }
 
-function newProject () {
-    store.createProject({
-        name: "Nouveau projet",
-        interviews: [
-            {
-                name: `Interview 1`,
-                color: "black",
-                comment: "Commentaire",
-                text: "[vide]",
-                participantName: "Participant",
-                annotations: [],
-                analysis: {
-                    rootMoment: {
-                    }
-                }
-            }
-        ],
-        modelfolder: {
-            name: "Model"
-        }
-    })
-}
+  function newProject () {
+      $q.dialog({
+          title: 'Create a new project',
+          message: 'What is the project name?',
+          prompt: {
+              model: '',
+              isValid: val => val !== "" && store.getProjectByName(val) === null,
+              type: 'text'
+          },
+          cancel: true,
+          persistent: true
+      }).onOk(name => {
+          store.createProject({
+              name,
+              interviews: [],
+              modelfolder: {
+                  name: "Model"
+              }
+          })
+      })
+  }
 
 function exportProject (project: Project) {
     const data = useProjectStore().hydrateProject(project.id)
