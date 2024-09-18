@@ -75,16 +75,22 @@
             <h5>Create a new interview</h5>
             <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
 
-            <div>
-              <q-btn label="Submit" type="submit" color="primary"/>
-              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-            </div>
-
             <q-form
               name="creating"
               @submit="onSubmit"
               class="q-gutter-md"
               >
+
+              <div>
+                <q-btn label="Submit"
+                       type="submit"
+                       color="primary"/>
+                <q-btn label="Cancel"
+                       color="primary"
+                       flat
+                       class="q-ml-sm"
+                       @click="onCancel" />
+              </div>
 
               <q-input
                 filled
@@ -157,11 +163,14 @@
 
 <script setup lang="ts">
   import { useQuasar, QFile } from 'quasar'
+  import { useRouter } from 'vue-router'
   import { computed, ref, Ref, watch } from 'vue'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
   import FolderTree from 'components/FolderTree.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import { useProjectStore } from 'stores/projectStore'
+
+  const router = useRouter()
 
   const $q = useQuasar()
 
@@ -206,14 +215,49 @@
               date: creatingDate.value,
               text: creatingText.value,
               projectId: props.projectId,
+              annotations: [
+              ],
               analysis: {
                   name: "",
                   rootMoment: {
-                      name: ""
+                      // Root moment is not visible per-se, it serves
+                      // as a placeholder for its children
+                      name: "Root moment",
+                      children: [
+                          {
+                              name: "Moment 1"
+                          }
+                      ]
                   }
               }
           })
-          console.log("Created", i)
+          // Switch to tab of new interview
+          setTimeout(() => {
+              router.push({
+                  query: {
+                      tab: i.name
+                  }
+              })
+          }, 300)
+      }
+  }
+
+  function onCancel () {
+      // Reset all form values
+      creatingParticipant.value = ""
+      creatingName.value = ""
+      creatingDate.value = ""
+      creatingText.value = ""
+      creatingComment.value = ""
+
+      // If there is at least 1 interview, activate it
+      console.log("project ", project.value, project.value?.interviews)
+      if (project.value && project.value.interviews) {
+          router.push({
+              query: {
+                  tab: project.value.interviews[0].name
+              }
+          })
       }
   }
 
