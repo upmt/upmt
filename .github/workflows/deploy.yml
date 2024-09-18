@@ -52,6 +52,7 @@ jobs:
           echo ${CI_COMMIT_SHA} > public/version.txt
           cp -a dist/spa/assets public/assets
           cp dist/spa/index.html public/index.html
+          cp -a examples/ public/examples/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
