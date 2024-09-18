@@ -135,23 +135,15 @@
                 >
                  <template v-slot:label>
                    <div class="row items-center all-pointer-events">
-                     Interview text
-                     <q-btn flat
-                            @click="uploadCreatingText"
-                            icon="upload">
-                       <q-tooltip class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">You can upload an existing text file</q-tooltip>
-                     </q-btn>
-                     <q-tooltip class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">Interview text</q-tooltip>
+                     Paste interview text or
+                     <q-file label="drag an existing text file here"
+                             v-model="interviewFilename"
+                             ref="filepicker"
+                             filled
+                             @update:model-value="uploadInterviewFile"/>
                    </div>
                  </template>
               </q-input>
-              <q-file label="Upload interview file"
-                      ref="filepicker"
-                      class="hidden"
-                      v-model="interviewFilename"
-                      accept=".txt"
-                      filled
-                      @input="uploadInterviewFile"/>
             </q-form>
           </q-tab-panel>
         </q-tab-panels>
@@ -262,45 +254,25 @@
       }
   }
 
-  // Show load interview text file dialog
-  function uploadCreatingText () {
-      if (filepicker.value) {
-          filepicker.value.pickFiles()
+  function uploadInterviewFile (sourceFile: File) {
+      console.log("uploadInterviewFile", event)
+      const reader = new FileReader()
+      reader.onload = () => {
+          // Parse file and extract data
+          creatingText.value = reader.result as string
       }
-  }
+      reader.onerror = () => {
+          console.error('Error reading file:', reader.error)
+              $q.notify({
+                  type: 'error',
+                  message: `Error reading file: ${reader.error}`
+              })
+      }
 
-  function uploadInterviewFile (event: Event) {
-    try {
-        // `event.target.files[0]` is the desired file object
-        const files = (event.target as HTMLInputElement).files
-        if (!files || files.length === 0) {
-            return
-        }
-        const sourceFile = files[0]
-        const reader = new FileReader()
-
-        reader.onload = () => {
-            // Parse file and extract data
-            creatingText.value = reader.result as string
-        }
-        reader.onerror = () => {
-            console.error('Error reading file:', reader.error)
-            $q.notify({
-                type: 'error',
-                message: `Error reading file: ${reader.error}`
-            })
-        }
-        // Load data from file - the readAsText will
-        // trigger the load event that is handled just
-        // above.
-        reader.readAsText(sourceFile)
-    } catch (e) {
-        console.log(e)
-        $q.notify({
-            type: 'error',
-            message: `General exception: ${e}`
-        })
-    }
+      // Load data from file - the readAsText will
+      // trigger the load event that is handled just
+      // above.
+      reader.readAsText(sourceFile)
   }
 </script>
 
