@@ -27,23 +27,21 @@
         </q-card-actions>
       </q-card>
 
-            <q-btn @click="newProject"
-             round
-             size="md"
-             icon="add">
-        <q-tooltip>
-          Create a new project
-        </q-tooltip>
-      </q-btn>
+      <q-fab color="secondary" push icon="add" direction="right">
 
-      <q-btn @click="loadProject"
-             round
-             size="md"
-             icon="mdi-upload-circle-outline">
-        <q-tooltip>
-          Load a local .upmt file
-        </q-tooltip>
-      </q-btn>
+        <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
+          <q-tooltip>
+            Create a new blank project
+          </q-tooltip>
+        </q-fab-action>
+
+        <q-fab-action color="primary" @click="loadProject" icon="mdi-upload-circle-outline">
+          <q-tooltip>
+            Load a local .upmt file
+          </q-tooltip>
+        </q-fab-action>
+
+      </q-fab>
 
       <q-file label="Load File"
               ref="filepicker"
