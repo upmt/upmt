@@ -1,7 +1,7 @@
 <template>
   <q-page class="col fit">
     <q-card>
-      <div class="text-h1">μPMT</div>
+      <div class="text-h1">μ<span style="font-weight: 400">PMT</span></div>
     </q-card>
 
     <h4>

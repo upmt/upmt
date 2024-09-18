@@ -3,7 +3,7 @@
     <ProjectInterviewSelection
       class="col-grow"
       v-if="project"
-      :project="project">
+      :projectId="project.id">
     </ProjectInterviewSelection>
   </q-page>
 </template>

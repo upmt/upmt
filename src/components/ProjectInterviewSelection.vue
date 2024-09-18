@@ -74,6 +74,12 @@
                        :key="newInterview">
             <h5>Create a new interview</h5>
             <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
+
+            <div>
+              <q-btn label="Submit" type="submit" color="primary"/>
+              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+            </div>
+
             <q-form
               name="creating"
               @submit="onSubmit"
@@ -97,7 +103,7 @@
               <q-input
                 filled
                 v-model="creatingParticipant"
-                label="Participant *"
+                label="Participant name *"
                 lazy-rules
                 :rules="[ val => val && val.length > 0 || 'It  must be filled']"
                 />
@@ -115,6 +121,7 @@
                 label-slot
                 autogrow
                 counter
+                hint="Please provide the interview text by pasting it below, uploading a file with the upload button or by dragging it here."
                 type="textarea"
                 v-model="creatingText"
                 label="Interview text *"
@@ -138,10 +145,6 @@
                       accept=".txt"
                       filled
                       @input="uploadInterviewFile"/>
-              <div>
-                <q-btn label="Submit" type="submit" color="primary"/>
-                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-              </div>
             </q-form>
           </q-tab-panel>
         </q-tab-panels>
@@ -153,9 +156,8 @@
 </template>
 
 <script setup lang="ts">
-    import { useQuasar, QFile } from 'quasar'
-  import { ref, Ref, watch } from 'vue'
-  import Project from 'stores/models/project'
+  import { useQuasar, QFile } from 'quasar'
+  import { computed, ref, Ref, watch } from 'vue'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
   import FolderTree from 'components/FolderTree.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
@@ -166,8 +168,10 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      project: { type: Project, required: true }
+      projectId: { type: String, required: true }
   })
+
+  const project = computed(() => store.getProject(props.projectId))
 
   const newInterview = "New interview"
 
@@ -184,10 +188,10 @@
   const creatingComment = ref("")
   const creatingText = ref("")
 
-  watch(() => props.project, (newValue) => {
+  watch(() => props.projectId, () => {
       // There are interviews. Select the first one
-      if (newValue.interviews) {
-          tab.value = newValue.interviews[0].id
+      if (project.value && project.value.interviews) {
+          tab.value = project.value.interviews[0].id
       } else {
           tab.value = newInterview
       }
@@ -201,7 +205,13 @@
               comment: creatingComment.value,
               date: creatingDate.value,
               text: creatingText.value,
-              project: props.project
+              projectId: props.projectId,
+              analysis: {
+                  name: "",
+                  rootMoment: {
+                      name: ""
+                  }
+              }
           })
           console.log("Created", i)
       }
