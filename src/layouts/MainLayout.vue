@@ -101,11 +101,6 @@ const menuList = computed<MenuItem[]>(() => [
         }
     }),
     {
-        label: 'Init',
-        icon: 'mdi-semantic-web',
-        link: '/init'
-    },
-    {
         label: 'Debug',
         icon: 'mdi-eye',
         link: '/debug'
