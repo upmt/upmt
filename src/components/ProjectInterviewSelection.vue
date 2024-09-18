@@ -79,24 +79,14 @@
               @submit="onSubmit"
               class="q-gutter-md"
               >
+
               <q-input
                 filled
                 v-model="creatingName"
-                label="Name *"
-                hint="Interview name"
+                label="Interview name/id *"
                 lazy-rules
                 :rules="[ val => val && val.length > 0 || 'It  must be filled']"
                 />
-
-              <q-input
-                filled
-                v-model="creatingParticipant"
-                label="Participant *"
-                hint="Participant name"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
-                />
-
               <q-input
                 filled
                 type="date"
@@ -104,10 +94,18 @@
                 label="Interview date"
                 lazy-rules
                 />
+              <q-input
+                filled
+                v-model="creatingParticipant"
+                label="Participant *"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+                />
 
               <q-input
                 filled
-                type="textarea"
+                autogrow
+                type="text"
                 v-model="creatingComment"
                 label="Comment"
                 />
@@ -115,6 +113,8 @@
               <q-input
                 filled
                 label-slot
+                autogrow
+                counter
                 type="textarea"
                 v-model="creatingText"
                 label="Interview text *"
