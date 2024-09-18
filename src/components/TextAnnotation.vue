@@ -139,7 +139,7 @@
   }
 
   const annotations = computed(() => {
-      const interviewAnnotations: BaseAnnotation[] = props.interview.annotations.map(a => {
+      const interviewAnnotations: BaseAnnotation[] = (props.interview.annotations ?? []).map(a => {
           return {
               id: a.id,
               start: a.startIndex,
