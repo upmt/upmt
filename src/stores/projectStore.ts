@@ -311,7 +311,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getProject (id: string): Project | null {
-      return repo.Project.find(id)
+    return repo.Project.with('modelfolder').with('interviews').find(id)
   }
 
   function getProjectByName (name: string): Project | null {
