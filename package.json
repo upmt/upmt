@@ -1,8 +1,8 @@
 {
-  "name": "qupmt",
-  "version": "0.0.1",
-  "description": "Quasar-UPMT",
-  "productName": "QUPMT",
+  "name": "upmt",
+  "version": "2.0.1",
+  "description": "μPMT - micro Phenomenology Modelling Tool",
+  "productName": "uPMT",
   "author": "Olivier Aubert",
   "private": true,
   "scripts": {
@@ -12,7 +12,6 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "@ghentcdh/vue-component-annotated-text": "^0.0.17",
     "@quasar/extras": "^1.16.4",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.2.1",

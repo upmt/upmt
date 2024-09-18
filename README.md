@@ -1,8 +1,22 @@
-# QUPMT (-qupmt)
+# μPMT - micro Phenomenology Modelling Tool
 
-Quasar-UPMT
+μPMT is aimed at researchers using microphenomenology interviews (also know as explicitation interviews) to study lived experience. It has been designed to help analyze the micro-dynamics of experience as described in interview transcriptions, by modelling and formalizing the sequential unfolding of "experience moments" described with categories and properties, and linked to the descriptemes - excerpts of the transcript - that justify them.
 
-## Install the dependencies
+Access the latest version at https://upmt.github.io/upmt/
+
+Read documentation at: https://github.com/upmt/upmt/wiki
+
+Ask questions and discuss with the community on the forum https://github.com/upmt/upmt/forum
+
+Report bugs and ask for features at: https://github.com/upmt/upmt/issues
+
+## LICENCE
+
+See the [LICENSE](LICENSE) file for license rights and limitations (GNU GPLv3).
+
+## Developer installation instructions
+
+### Install the dependencies
 ```bash
 yarn
 # or
@@ -11,23 +25,10 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+npx quasar dev
 ```
-
-
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
 
 ### Build the app for production
 ```bash
-quasar build
+npx quasar build
 ```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
