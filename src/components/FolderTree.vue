@@ -34,14 +34,12 @@
             touch-position>
             <q-list dense style="min-width: 100px">
               <q-item
+                v-for="[label, action] in itemActions(prop.node)"
                 clickable
+                :key="label"
+                @click="action"
                 v-close-popup>
-                Close {{ prop.node.label }}
-              </q-item>
-              <q-item
-                clickable
-                v-close-popup>
-                Delete {{ prop.node.label }}
+                {{ label }}
               </q-item>
             </q-list>
           </q-menu>
@@ -92,8 +90,8 @@ const nodes: ComputedRef<QTreeNode[]> = computed(() => {
   })
 
 const onLazyLoad = function (params: QTreeLazyLoadParams) {
-    const { node, key, done, fail } = params;
-    // const { node, done } = params
+    const { node, done } = params
+    // const { node, key, done, fail } = params;
     // console.log("lazy load", node, key, done, fail)
     const [entitytype, entityid] = node.id.split(':', 2)
 
@@ -184,6 +182,18 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
       console.log("Dropped Descriptem ", descriptemId, " to ", data)
   }
 
+  function debug (element: any) {
+      console.log(element)
+  }
+
+  type NamedActions = [ name: string, action: (element: any) => void][]
+  function itemActions (node: QTreeNode): NamedActions {
+      console.log("Item actions", node)
+      return [
+          [ `Create ${node.label}`, debug ],
+          [ `Delete ${node.label}`, debug ]
+      ]
+  }
 </script>
 <style scoped>
   .menu-icon {
