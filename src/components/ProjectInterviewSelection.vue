@@ -127,6 +127,7 @@
                 label-slot
                 autogrow
                 counter
+                :input-style="{ minHeight: '4em', maxHeight: '30em' }"
                 hint="Please provide the interview text by pasting it below, uploading a file with the upload button or by dragging it here."
                 type="textarea"
                 v-model="creatingText"
@@ -303,10 +304,10 @@
   }
 </script>
 
-<style>
+<style scoped>
   .fullwindow-height {
     min-height: calc(100vh - var(--header-height));
     max-height: calc(100vh - var(--header-height));
     overflow: auto;
-}
+  }
 </style>
