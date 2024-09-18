@@ -312,7 +312,11 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getProject (id: string): Project | null {
       return repo.Project.find(id)
-    }
+  }
+
+  function getProjectByName (name: string): Project | null {
+    return repo.Project.where('name', name).first()
+  }
 
   function getFolder (id: string): ModelFolder | null {
       return repo.ModelFolder
@@ -618,6 +622,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     hydrateProject,
     getAllProjects,
     getProject,
+    getProjectByName,
     getFolder,
     getRepo,
     getAnalysis,
