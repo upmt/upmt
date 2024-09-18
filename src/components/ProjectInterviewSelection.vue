@@ -72,7 +72,9 @@
 
           <q-tab-panel :name="newInterview"
                        :key="newInterview">
-            <h5>Create a new interview</h5>
+            <q-card-section class="bg-secondary text-white text-h5">
+              Create a new interview
+            </q-card-section>
             <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
 
             <q-form
@@ -82,7 +84,7 @@
               >
 
               <div>
-                <q-btn label="Submit"
+                <q-btn label="Create"
                        type="submit"
                        color="primary"/>
                 <q-btn label="Cancel"
@@ -92,27 +94,36 @@
                        @click="onCancel" />
               </div>
 
-              <q-input
-                filled
-                v-model="creatingName"
-                label="Interview name/id *"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
-                />
-              <q-input
-                filled
-                type="date"
-                v-model="creatingDate"
-                label="Interview date"
-                lazy-rules
-                />
-              <q-input
-                filled
-                v-model="creatingParticipant"
-                label="Participant name *"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
-                />
+              <div class="row">
+
+                <q-input
+                  filled
+                  v-model="creatingParticipant"
+                  label="Participant name *"
+                  lazy-rules
+                  class="col-4"
+                  :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+                  />
+
+                <q-input
+                  filled
+                  type="date"
+                  v-model="creatingDate"
+                  label="Interview date"
+                  lazy-rules
+                  class="col-4 q-px-md"
+                  />
+
+                <q-input
+                  filled
+                  v-model="creatingName"
+                  label="Interview name/id *"
+                  lazy-rules
+                  class="col-4"
+                  :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+                  />
+
+              </div>
 
               <q-input
                 filled
@@ -242,6 +253,7 @@
       creatingDate.value = ""
       creatingText.value = ""
       creatingComment.value = ""
+      interviewFilename.value = null
 
       // If there is at least 1 interview, activate it
       console.log("project ", project.value, project.value?.interviews)
