@@ -188,11 +188,27 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
 
   type NamedActions = [ name: string, action: (element: any) => void][]
   function itemActions (node: QTreeNode): NamedActions {
-      console.log("Item actions", node)
-      return [
-          [ `Create ${node.label}`, debug ],
-          [ `Delete ${node.label}`, debug ]
-      ]
+      if (node.id.startsWith('modelfolders:')) {
+          return [
+              [ `Rename ${node.label}`, debug ],
+              [ `Add a folder`, debug ],
+              [ `Add a category`, debug ],
+              [ `Delete ${node.label}`, debug ]
+          ]
+      } else if (node.id.startsWith('categorymodels:')) {
+          return [
+              [ `Rename ${node.label}`, debug ],
+              [ `Add a property`, debug ],
+              [ `Change color`, debug ],
+              [ `Delete ${node.label}`, debug ]
+          ]
+      } else if (node.id.startsWith('propertymodels:')) {
+          return [
+              [ `Rename ${node.label}`, debug ],
+              [ `Delete ${node.label}`, debug ]
+          ]
+      }
+      return []
   }
 </script>
 <style scoped>
