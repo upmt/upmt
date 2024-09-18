@@ -1,18 +1,26 @@
 <template>
   <div class="textAnnotationContainer">
     <div class="inspector">
-      <div>
-        <strong>Active annotations </strong>
-        <span ref="activeAnnotationInspector"></span>
-      </div>
-      <div>
-        <strong>Selected annotations </strong>
-        <span ref="selectedAnnotationInspector"></span>
-      </div>
-      <div>
-        <strong>Selected text </strong>
-        <span>{{ selectionShorttext }}</span>
-      </div>
+      <strong>Interview {{ interview.name }}</strong>
+      <q-expansion-item
+        dense
+        dense-toggle
+        expand-icon-toggle
+        label="Debug"
+          >
+        <div>
+          <strong>Active annotations </strong>
+          <span ref="activeAnnotationInspector"></span>
+        </div>
+        <div>
+          <strong>Selected annotations </strong>
+          <span ref="selectedAnnotationInspector"></span>
+        </div>
+        <div>
+          <strong>Selected text </strong>
+          <span>{{ selectionShorttext }}</span>
+        </div>
+      </q-expansion-item>
     </div>
     <AnnotatedText
       class="textAnnotationComponent"
