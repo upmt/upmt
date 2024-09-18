@@ -22,7 +22,13 @@
                          :title="interview.comment"
                          :label="interview.label">
             </q-route-tab>
+            <q-route-tab :to="{ query: { tab: newInterview } }"
+                         :name="newInterview"
+                         :key="newInterview"
+                         icon="add">
+            </q-route-tab>
           </q-tabs>
+
           <q-separator />
           <folder-tree
             :folder="project.modelfolder">
@@ -63,6 +69,81 @@
             </q-splitter>
 
           </q-tab-panel>
+
+          <q-tab-panel :name="newInterview"
+                       :key="newInterview">
+            <h5>Create a new interview</h5>
+            <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
+            <q-form
+              name="creating"
+              @submit="onSubmit"
+              class="q-gutter-md"
+              >
+              <q-input
+                filled
+                v-model="creatingName"
+                label="Name *"
+                hint="Interview name"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+                />
+
+              <q-input
+                filled
+                v-model="creatingParticipant"
+                label="Participant *"
+                hint="Participant name"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+                />
+
+              <q-input
+                filled
+                type="date"
+                v-model="creatingDate"
+                label="Interview date"
+                lazy-rules
+                />
+
+              <q-input
+                filled
+                type="textarea"
+                v-model="creatingComment"
+                label="Comment"
+                />
+
+              <q-input
+                filled
+                label-slot
+                type="textarea"
+                v-model="creatingText"
+                label="Interview text *"
+                >
+                 <template v-slot:label>
+                   <div class="row items-center all-pointer-events">
+                     Interview text
+                     <q-btn flat
+                            @click="uploadCreatingText"
+                            icon="upload">
+                       <q-tooltip class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">You can upload an existing text file</q-tooltip>
+                     </q-btn>
+                     <q-tooltip class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">Interview text</q-tooltip>
+                   </div>
+                 </template>
+              </q-input>
+              <q-file label="Upload interview file"
+                      ref="filepicker"
+                      class="hidden"
+                      v-model="interviewFilename"
+                      accept=".txt"
+                      filled
+                      @input="uploadInterviewFile"/>
+              <div>
+                <q-btn label="Submit" type="submit" color="primary"/>
+                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+              </div>
+            </q-form>
+          </q-tab-panel>
         </q-tab-panels>
       </template>
 
@@ -72,23 +153,100 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue'
+    import { useQuasar, QFile } from 'quasar'
+  import { ref, Ref, watch } from 'vue'
   import Project from 'stores/models/project'
   import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
   import FolderTree from 'components/FolderTree.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
+  import { useProjectStore } from 'stores/projectStore'
+
+  const $q = useQuasar()
+
+  const store = useProjectStore()
 
   const props = defineProps({
       project: { type: Project, required: true }
   })
 
+  const newInterview = "New interview"
+
   const tab = ref("")
   const splitterModel = ref(10)
   const splitterTranscript = ref(90)
 
+  const filepicker: Ref<QFile | null> = ref(null)
+  const interviewFilename = ref(null)
+
+  const creatingName = ref("")
+  const creatingParticipant = ref("")
+  const creatingDate = ref("")
+  const creatingComment = ref("")
+  const creatingText = ref("")
+
   watch(() => props.project, (newValue) => {
-      tab.value = newValue.interviews[0].id
+      // There are interviews. Select the first one
+      if (newValue.interviews) {
+          tab.value = newValue.interviews[0].id
+      } else {
+          tab.value = newInterview
+      }
   })
+
+  function onSubmit (event: Event) {
+      if (event.target) {
+          const i = store.getRepo().Interview.save({
+              name: creatingName.value,
+              participantName: creatingParticipant.value,
+              comment: creatingComment.value,
+              date: creatingDate.value,
+              text: creatingText.value,
+              project: props.project
+          })
+          console.log("Created", i)
+      }
+  }
+
+  // Show load interview text file dialog
+  function uploadCreatingText () {
+      if (filepicker.value) {
+          filepicker.value.pickFiles()
+      }
+  }
+
+  function uploadInterviewFile (event: Event) {
+    try {
+        // `event.target.files[0]` is the desired file object
+        const files = (event.target as HTMLInputElement).files
+        if (!files || files.length === 0) {
+            return
+        }
+        const sourceFile = files[0]
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            // Parse file and extract data
+            creatingText.value = reader.result as string
+        }
+        reader.onerror = () => {
+            console.error('Error reading file:', reader.error)
+            $q.notify({
+                type: 'error',
+                message: `Error reading file: ${reader.error}`
+            })
+        }
+        // Load data from file - the readAsText will
+        // trigger the load event that is handled just
+        // above.
+        reader.readAsText(sourceFile)
+    } catch (e) {
+        console.log(e)
+        $q.notify({
+            type: 'error',
+            message: `General exception: ${e}`
+        })
+    }
+  }
 </script>
 
 <style>
