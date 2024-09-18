@@ -311,7 +311,11 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getProject (id: string): Project | null {
-    return repo.Project.with('modelfolder').with('interviews').find(id)
+    return repo.Project
+      .with('modelfolder')
+      .with('interviews',
+        query => query.with('annotations').with('analysis'))
+      .find(id)
   }
 
   function getProjectByName (name: string): Project | null {
