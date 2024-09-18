@@ -1,12 +1,13 @@
 <template>
   <q-page class="col fit">
     <q-card>
-      <div class="text-h1">μ<span style="font-weight: 400">PMT</span></div>
+      <q-card-section>
+        <div class="text-h3">μ<span style="font-weight: 400">PMT</span> - micro Phenomenology Modelling Tool</div>
+      </q-card-section>
+        <q-card-section class="bg-primary text-white">
+        <div class="text-h4">Current projects</div>
+      </q-card-section>
     </q-card>
-
-    <h4>
-      My projects
-    </h4>
 
     <div class="q-pa-md row items-end q-gutter-md">
 
@@ -14,7 +15,7 @@
         v-for="project in projects"
         :key="project.id"
         class="project-card">
-        <q-card-section class="bg-primary text-white">
+        <q-card-section class="bg-secondary text-white">
           <div class="text-h6">{{ project.name }}</div>
           <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
         </q-card-section>
@@ -53,10 +54,48 @@
 
     </div>
 
-   <h4>News</h4>
-   <h4>Help</h4>
-   <h4>Contact</h4>
-   <h4>Forum</h4>
+    <div class="row">
+
+      <q-card class="col-md-3 col-12">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h4">News</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+        </q-card-section>
+      </q-card>
+
+      <q-card class="col-md-3 col-12">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h4">Help</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+          See the <a href="https://github.com/upmt/upmt/wiki">documentation wiki</a>
+        </q-card-section>
+      </q-card>
+
+      <q-card class="col-md-3 col-12">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h4">Contact</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+        </q-card-section>
+      </q-card>
+
+      <q-card class="col-md-3 col-12">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h4">Forum</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+          Ask questions and make suggestions on the <a href="https://github.com/upmt/upmt/discussions">discussions forum</a>.
+        </q-card-section>
+      </q-card>
+
+    </div>
+
   </q-page>
 </template>
 
