@@ -115,19 +115,22 @@ function droppedCategoryInstance (categoryinstanceId: string, data: string) {
     }
 }
 
-function droppedCategoryModel (cmId: string, data: string) {
-    console.log("droppedCategoryModel", cmId, " on ", props.momentId, " as ", data)
+function droppedCategoryModel (cmId: string) {
     store.momentAddCategoryModel(cmId, props.momentId)
 }
 
-function droppedDescriptem (descriptemId: string, data: string) {
-    console.log("Dropped descriptem", descriptemId, data)
-    store.addDescriptemToMoment(descriptemId, props.momentId)
+function droppedDescriptem (descriptemId: string) {
+    const descriptem = store.getDescriptem(descriptemId)
+    if (descriptem) {
+        store.addTextSelectionToMoment(descriptem.toJSON(), props.momentId)
+    }
 }
 
-function droppedAnnotation (annotationId: string, data: string) {
-    console.log("Dropped annotation", annotationId, data)
-    store.addAnnotationToMoment(annotationId, props.momentId)
+function droppedAnnotation (annotationId: string) {
+    const annotation = store.getAnnotation(annotationId)
+    if (annotation) {
+        store.addTextSelectionToMoment(annotation.toJSON(), props.momentId)
+    }
 }
 
 function droppedSelection (selectionData: string) {

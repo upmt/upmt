@@ -642,27 +642,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addAnnotationToMoment (annotationId: string, momentId: string) {
-    console.log("addAnnotationToMoment", annotationId, momentId)
-    const source = getAnnotation(annotationId)
-    const moment = getMoment(momentId)
-    if (source && moment) {
-      addTextSelectionToMoment(source.toJSON() as TextSelection, momentId)
-    }
-  }
-
-  function addDescriptemToMoment (descriptemId: string, momentId: string) {
-    console.log("addDescriptemToMoment", descriptemId, momentId)
-    const source = getDescriptem(descriptemId)
-    const moment = getMoment(momentId)
-    if (source && moment) {
-      addTextSelectionToMoment(source.toJSON() as TextSelection, momentId)
-    }
-  }
-
   return {
-    addAnnotationToMoment,
-    addDescriptemToMoment,
     addTextSelectionToMoment,
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
