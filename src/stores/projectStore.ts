@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useRepo } from 'pinia-orm'
+import axios from 'axios'
 import Analysis from './models/analysis'
 import Annotation from './models/annotation'
 import CategoryInstance from './models/categoryinstance'
@@ -506,6 +507,13 @@ export const useProjectStore = defineStore('projectStore', () => {
     return out
   }
 
+  function loadProject (url: string) {
+    return axios.get(url).then((response) => {
+      const p = importProject(response.data, url)
+      return p
+    })
+  }
+
   /* Return a project structure with all relationships hydrated */
   function hydrateProject (id: string): any {
     const project = { ...getProject(id) }
@@ -666,6 +674,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMoment,
     getMomentModel,
     getProperty,
+    loadProject,
     momentAddCategoryModel,
     moveMoment,
     updateProperty,

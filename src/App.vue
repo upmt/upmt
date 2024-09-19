@@ -3,9 +3,20 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'App'
-})
+  import { onMounted } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+
+  const store = useProjectStore()
+
+  defineOptions({
+      name: 'App'
+  })
+
+  onMounted(() => {
+      store.loadProject('./examples/example.upmt');
+      (window as any).store = store;
+      console.log("Debugging store", store);
+  })
 </script>
 
 <style>

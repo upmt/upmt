@@ -101,11 +101,9 @@
 
 <script setup lang="ts">
 import { useQuasar, exportFile, QFile } from 'quasar'
-import { computed, ref, Ref, onMounted } from 'vue'
+import { computed, ref, Ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import Project from 'stores/models/project'
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from 'axios'
 
 defineOptions({
   name: 'IndexPage'
@@ -115,40 +113,11 @@ const $q = useQuasar()
 
 const store = useProjectStore()
 
-interface SelectItem {
-    label: string
-    value: string
-  }
-
 const filepicker: Ref<QFile | null> = ref(null)
 
 const filename = ref(null)
 
-const selected = ref<SelectItem | null>(null)
-
-const selectedProject = computed(() => {
-    if (selected.value) {
-        return store.getProject(selected.value.value)
-    } else {
-        return undefined
-    }
-  })
-
 const projects = computed(() => store.getAllProjects())
-
-const projectList = computed((): SelectItem[] => projects.value.map(p => ({
-    label: p.label,
-    value: p.id
-    })))
-
-function loadSample (filename = './examples/example.upmt') {
-    $q.loading.show()
-    axios.get(filename).then((response) => {
-        const p = useProjectStore().importProject(response.data, filename)
-        selected.value = { label: p.name, value: p.id }
-        $q.loading.hide()
-    })
-}
 
 function loadProject () {
     console.log("loadProject", filepicker.value)
@@ -241,16 +210,6 @@ function exportProject (project: Project) {
         console.error('Error: ' + status)
     }
 }
-
-onMounted(() => {
-    if (!selected.value) {
-        loadSample();
-        (window as any).store = store;
-        (window as any).quasar = $q;
-        console.log("Debugging store", store, "quasar", $q);
-    }
-})
-
 </script>
 
 <style scoped>
