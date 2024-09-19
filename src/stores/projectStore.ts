@@ -542,6 +542,18 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function updateModelFolder (identifier: string, values: object) {
+    repo.ModelFolder.where('id', identifier).update(values)
+  }
+
+  function updateCategoryModel (identifier: string, values: object) {
+    repo.CategoryModel.where('id', identifier).update(values)
+  }
+
+  function updatePropertyModel (identifier: string, values: object) {
+    repo.PropertyModel.where('id', identifier).update(values)
+  }
+
   function momentAddCategoryModel (cmId: string, destinationMomentId: string) {
     const categoryModel = getCategoryModel(cmId)
     const moment = getMoment(destinationMomentId)
@@ -583,6 +595,33 @@ export const useProjectStore = defineStore('projectStore', () => {
         parentId: destinationMomentId
       })
     }
+  }
+
+  function addCategoryModel (parentId: string, name: string) {
+    return repo.CategoryModel.save({ parentId, name })
+  }
+
+  function addModelFolder (parentId: string, name: string) {
+    return repo.ModelFolder.save({ parentId, name })
+  }
+
+  function addPropertyModel (parentId: string, name: string) {
+    return repo.PropertyModel.save({ parentId, name })
+  }
+
+  function deleteModelFolder (folderId: string) {
+    // FIXME: should check that all descendants (categorymodel, propertymodel) do not have any instance
+    repo.ModelFolder.where('id', folderId).delete()
+  }
+
+  function deleteCategoryModel (cmId: string) {
+    // FIXME: should check that all descendants (propertymodel) do not have any instance
+    repo.CategoryModel.where('id', cmId).delete()
+  }
+
+  function deletePropertyModel (pmId: string) {
+    // FIXME: should check that it has no instance
+    repo.PropertyModel.where('id', pmId).delete()
   }
 
   function addTextSelectionToMoment (selectionData: TextSelection, momentId: string) {
@@ -651,10 +690,16 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   return {
+    addCategoryModel,
+    addModelFolder,
+    addPropertyModel,
     addTextSelectionToMoment,
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
     createProject,
+    deleteCategoryModel,
+    deletePropertyModel,
+    deleteModelFolder,
     importProject,
     hydrateProject,
     getAllProjects,
@@ -678,6 +723,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     momentAddCategoryModel,
     moveMoment,
     updateProperty,
-    updateMoment
+    updateMoment,
+    updateModelFolder,
+    updateCategoryModel,
+    updatePropertyModel
   }
 })

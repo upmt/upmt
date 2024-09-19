@@ -6,6 +6,7 @@
     dense
     items-stretch
     @lazy-load="onLazyLoad">
+
     <template v-slot:default-header="prop">
       <div class="col-grow row items-stretch space-between menu-item">
         <DropZone types="upmt/descriptem upmt/categoryinstance upmt/moment"
@@ -46,18 +47,22 @@
         </q-btn>
       </div>
     </template>
+
   </q-tree>
+
 </template>
 
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
 import ModelFolder from 'stores/models/modelfolder'
 import { useProjectStore } from 'stores/projectStore'
-import { QTreeLazyLoadParams, QTreeNode } from 'quasar'
+import { useQuasar, QTreeLazyLoadParams, QTreeNode } from 'quasar'
 import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
 
-const pstore = useProjectStore()
+const $q = useQuasar()
+
+const store = useProjectStore()
 
 const props = defineProps({
     folder: {
@@ -96,7 +101,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
     const [entitytype, entityid] = node.id.split(':', 2)
 
     if (entitytype === 'projects') {
-        const project = pstore.getProject(entityid)
+        const project = store.getProject(entityid)
         if (project) {
             done(project.interviews.map((i): QTreeNode => {
                 return {
@@ -116,7 +121,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             }])
         }
     } else if (entitytype === 'modelfolders') {
-        const folder = pstore.getFolder(entityid)
+        const folder = store.getFolder(entityid)
         if (!folder) {
             done([])
         } else {
@@ -182,30 +187,89 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
       console.log("Dropped Descriptem ", descriptemId, " to ", data)
   }
 
-  function debug (element: any) {
-      console.log(element)
+  function getValue (value: string,
+                     callback: (newValue: string) => any,
+                     title = 'Enter the new name') {
+      $q.dialog({
+          title,
+          prompt: {
+              model: value,
+              type: 'text'
+          },
+          cancel: true,
+          persistent: true
+      }).onOk(name => {
+          callback(name)
+      })
+  }
+
+  function renameFolder (folderId: string, name: string) {
+      getValue(name,
+               name => store.updateModelFolder(folderId, { name }))
+  }
+
+  function renameCategoryModel (cmId: string, name: string) {
+      getValue(name,
+               name => store.updateCategoryModel(cmId, { name }))
+  }
+
+  function renamePropertyModel (pmId: string, name: string) {
+      getValue(name,
+               name => store.updatePropertyModel(pmId, { name }))
+  }
+
+  function addModelFolder (parentId: string) {
+      getValue('',
+               name => {
+                   store.addModelFolder(parentId, name)
+               },
+               'Enter the new folder name')
+  }
+
+  function addCategoryModel (parentId: string) {
+      getValue('',
+               name => {
+                   store.addCategoryModel(parentId, name)
+               },
+               'Enter the new category name')
+  }
+
+  function addPropertyModel (parentId: string) {
+      getValue('',
+               name => {
+                   store.addPropertyModel(parentId, name)
+               },
+               'Enter the new property name')
+  }
+
+  function changeCategoryModelColor (cmId: string) {
+      getValue('',
+               color => {
+                   store.updateCategoryModel(cmId, { color })
+               },
+               'Enter the new color name (FIXME - color picker is coming)')
   }
 
   type NamedActions = [ name: string, action: (element: any) => void][]
   function itemActions (node: QTreeNode): NamedActions {
       if (node.id.startsWith('modelfolders:')) {
           return [
-              [ `Rename ${node.label}`, debug ],
-              [ `Add a folder`, debug ],
-              [ `Add a category`, debug ],
-              [ `Delete ${node.label}`, debug ]
+              [ `Rename ${node.label}`, () => renameFolder(node.id, node.label ?? '') ],
+              [ `Add a folder`, () => addModelFolder(node.id) ],
+              [ `Add a category`, () => addCategoryModel(node.id) ],
+              [ `Delete ${node.label}`, () => store.deleteModelFolder(node.id) ]
           ]
       } else if (node.id.startsWith('categorymodels:')) {
           return [
-              [ `Rename ${node.label}`, debug ],
-              [ `Add a property`, debug ],
-              [ `Change color`, debug ],
-              [ `Delete ${node.label}`, debug ]
+              [ `Rename ${node.label}`, () => renameCategoryModel(node.id, node.label ?? '') ],
+              [ `Add a property`, () => addPropertyModel(node.id) ],
+              [ `Change color`, () => changeCategoryModelColor(node.id) ],
+              [ `Delete ${node.label}`, () => store.deleteCategoryModel(node.id) ]
           ]
       } else if (node.id.startsWith('propertymodels:')) {
           return [
-              [ `Rename ${node.label}`, debug ],
-              [ `Delete ${node.label}`, debug ]
+              [ `Rename ${node.label}`, () => renamePropertyModel(node.id, node.label ?? '') ],
+              [ `Delete ${node.label}`, () => store.deletePropertyModel(node.id) ]
           ]
       }
       return []
