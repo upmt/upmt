@@ -139,14 +139,14 @@
                 autogrow
                 counter
                 :input-style="{ minHeight: '4em', maxHeight: '30em' }"
-                hint="Please provide the interview text by pasting it below, uploading a file with the upload button or by dragging it here."
+                hint="Please provide the interview text by pasting it here, uploading a file with the upload button or by dragging it here."
                 type="textarea"
                 v-model="creatingText"
                 label="Interview text *"
                 >
                  <template v-slot:label>
                    <div class="row items-center all-pointer-events">
-                     Paste interview text or
+                     Paste interview text here or
                      <q-file label="drag an existing text file here"
                              v-model="interviewFilename"
                              ref="filepicker"
