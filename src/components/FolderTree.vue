@@ -259,14 +259,14 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
               [ `Add a category`, () => addCategoryModel(node.realId) ],
               [ `Delete ${node.label}`, () => store.deleteModelFolder(node.realId) ]
           ]
-      } else if (node.realId.startsWith('categorymodels:')) {
+      } else if (node.id.startsWith('categorymodels:')) {
           return [
               [ `Rename ${node.label}`, () => renameCategoryModel(node.realId, node.label ?? '') ],
               [ `Add a property`, () => addPropertyModel(node.realId) ],
               [ `Change color`, () => changeCategoryModelColor(node.realId) ],
               [ `Delete ${node.label}`, () => store.deleteCategoryModel(node.realId) ]
           ]
-      } else if (node.realId.startsWith('propertymodels:')) {
+      } else if (node.id.startsWith('propertymodels:')) {
           return [
               [ `Rename ${node.label}`, () => renamePropertyModel(node.realId, node.label ?? '') ],
               [ `Delete ${node.label}`, () => store.deletePropertyModel(node.realId) ]
