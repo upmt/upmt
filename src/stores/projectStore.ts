@@ -585,7 +585,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       if (!moment.justification) {
         // Create justification + descriptem
         repo.Justification.save({
-          momentId: moment.id,
+          parentId: moment.id,
           descriptems: [
             selectionData
           ]
@@ -594,6 +594,49 @@ export const useProjectStore = defineStore('projectStore', () => {
         repo.Descriptem.save({
           ...selectionData,
           justificationId: moment.justification.id
+        })
+      }
+    }
+  }
+
+  function addTextSelectionToCategoryInstance (selectionData: TextSelection, categoryinstanceId: string) {
+    // Add JSON representation of text selection (Annotation or Descriptem) to CategoryInstance
+    const ci = getCategoryInstance(categoryinstanceId)
+    if (ci) {
+      if (!ci.justification) {
+        // Create justification + descriptem
+        repo.Justification.save({
+          parentId: ci.id,
+          descriptems: [
+            selectionData
+          ]
+        })
+      } else {
+        repo.Descriptem.save({
+          ...selectionData,
+          justificationId: ci.justification.id
+        })
+      }
+    }
+  }
+
+  function addTextSelectionToProperty (selectionData: TextSelection, propertyId: string) {
+    // Add JSON representation of text selection (Annotation or Descriptem) to property
+    const property = getProperty(propertyId)
+    console.log("Add textselection", selectionData, "to", property)
+    if (property) {
+      if (!property.justification) {
+        // Create justification + descriptem
+        repo.Justification.save({
+          parentId: property.id,
+          descriptems: [
+            selectionData
+          ]
+        })
+      } else {
+        repo.Descriptem.save({
+          ...selectionData,
+          justificationId: property.justification.id
         })
       }
     }
@@ -621,6 +664,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     addAnnotationToMoment,
     addDescriptemToMoment,
     addTextSelectionToMoment,
+    addTextSelectionToCategoryInstance,
+    addTextSelectionToProperty,
     createProject,
     importProject,
     hydrateProject,

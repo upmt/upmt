@@ -3,20 +3,25 @@
        v-if="property"
        :data-property="property.id"
        :title="property.label">
-    <div class="property-content" row>
-      <q-icon
-        ref="handle"
-        class="property-handle"
-        size="xs"
-        @click.meta="debug"
-        name="mdi-note-text-outline"></q-icon>
-      <div class="property-name">{{ property.name }}</div>
-      <div class="property-value">{{ propertyValue }}
-        <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
-          <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-        </q-popup-edit>
+    <DropZone types="upmt/descriptem upmt/annotation upmt/selection"
+              @annotation="droppedAnnotation"
+              @selection="droppedSelection"
+              @descriptem="droppedDescriptem">
+      <div class="property-content" row>
+        <q-icon
+          ref="handle"
+          class="property-handle"
+          size="xs"
+          @click.meta="debug"
+          name="mdi-note-text-outline"></q-icon>
+        <div class="property-name">{{ property.name }}</div>
+        <div class="property-value">{{ propertyValue }}
+          <q-popup-edit  style="zoom: var(--chart-zoom)" v-model="propertyValue" auto-save v-slot="scope">
+            <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+          </q-popup-edit>
+        </div>
       </div>
-    </div>
+    </DropZone>
     <div class="property-justification">
       <JustificationTextRepresentation :justificationId="property.justification.id">
       </JustificationTextRepresentation>
@@ -28,6 +33,7 @@
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
+import DropZone from './DropZone.vue'
 
 const store = useProjectStore()
 
@@ -46,6 +52,30 @@ const propertyValue = computed({
 function debug () {
     (window as any).property = property.value
     console.log("Property", property.value?.toJSON())
+}
+
+function droppedDescriptem (descriptemId: string) {
+    const descriptem = store.getDescriptem(descriptemId)
+    if (descriptem) {
+        store.addTextSelectionToProperty(descriptem.toJSON(), props.propertyId)
+    }
+}
+
+function droppedAnnotation (annotationId: string) {
+    const annotation = store.getAnnotation(annotationId)
+    if (annotation) {
+        store.addTextSelectionToProperty(annotation.toJSON(), props.propertyId)
+    }
+}
+
+function droppedSelection (selectionData: string) {
+    try {
+        const selection = JSON.parse(selectionData)
+        // addTextSelectionToMoment will do the necessary key checks
+        store.addTextSelectionToProperty(selection, props.propertyId)
+    } catch (e) {
+        console.log(`Cannot parse ${selectionData}`)
+    }
 }
 
 </script>

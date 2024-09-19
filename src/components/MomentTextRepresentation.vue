@@ -12,14 +12,6 @@
          v-if="moment"
          :data-moment="moment.id">
 
-      <DropZone data="before"
-                class="empty_padding"
-                types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
-                @categoryinstance="droppedCategoryInstance"
-                @categorymodel="droppedCategoryModel"
-                @annotation="droppedAnnotation"
-                @selection="droppedSelection"
-                @descriptem="droppedDescriptem">
         <q-expansion-item
           class="moment-body"
           dense
@@ -32,19 +24,28 @@
           >
 
           <template v-slot:header>
-            <DragElement
-              type="moment"
-              :data="momentId"
-              @click.meta="debug">
-              <q-icon
-                size="xs"
-                name="mdi-note-outline"></q-icon>
-            </DragElement>
-            <span class="moment-name">{{ momentName }}
-              <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
-                <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+            <DropZone data="before"
+                      class="empty_padding"
+                      types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
+                      @categoryinstance="droppedCategoryInstance"
+                      @categorymodel="droppedCategoryModel"
+                      @annotation="droppedAnnotation"
+                      @selection="droppedSelection"
+                      @descriptem="droppedDescriptem">
+              <DragElement
+                type="moment"
+                :data="momentId"
+                @click.meta="debug">
+                <q-icon
+                  size="xs"
+                  name="mdi-note-outline"></q-icon>
+              </DragElement>
+              <span class="moment-name">{{ momentName }}
+                <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
+                  <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
               </q-popup-edit>
-            </span>
+              </span>
+            </DropZone>
           </template>
 
           <div class="moment-justification">
@@ -59,8 +60,6 @@
           </div>
 
         </q-expansion-item>
-
-      </DropZone>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="(m, index) in moment.children" :key="m.id">
@@ -110,7 +109,10 @@ function debug () {
 
 function droppedCategoryInstance (categoryinstanceId: string, data: string) {
     console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
-    // store.momentAddCategoryModel(cmId, props.momentId)
+    const ci = store.getCategoryInstance(categoryinstanceId)
+    if (ci) {
+        store.momentAddCategoryModel(ci.model.id, props.momentId)
+    }
 }
 
 function droppedCategoryModel (cmId: string, data: string) {
