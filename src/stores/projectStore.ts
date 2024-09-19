@@ -606,7 +606,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function addPropertyModel (parentId: string, name: string) {
-    return repo.PropertyModel.save({ parentId, name })
+    return repo.PropertyModel.save({ categorymodelId: parentId, name })
   }
 
   function deleteModelFolder (folderId: string) {
