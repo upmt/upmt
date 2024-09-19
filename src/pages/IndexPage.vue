@@ -54,9 +54,9 @@
 
     </div>
 
-    <div class="row">
+    <div class="q-pa-sm row q-gutter-sm">
 
-      <q-card class="col-md-3 col-12">
+      <q-card class="col-md-4 col-12">
         <q-card-section class="bg-primary text-white">
           <div class="text-h4">News</div>
         </q-card-section>
@@ -65,7 +65,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="col-md-3 col-12">
+      <q-card class="col-md-4 col-12">
         <q-card-section class="bg-primary text-white">
           <div class="text-h4">Help</div>
         </q-card-section>
@@ -75,7 +75,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="col-md-3 col-12">
+      <q-card class="col-md-4 col-12">
         <q-card-section class="bg-primary text-white">
           <div class="text-h4">Contact</div>
         </q-card-section>
@@ -84,7 +84,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="col-md-3 col-12">
+      <q-card class="col-md-4 col-12">
         <q-card-section class="bg-primary text-white">
           <div class="text-h4">Forum</div>
         </q-card-section>
