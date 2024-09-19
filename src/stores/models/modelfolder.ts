@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Attr, Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, Bool, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 import CategoryModel from './categorymodel'
 import MomentModel from './momentmodel'
 
@@ -15,8 +15,14 @@ export default class ModelFolder extends Model {
 
   /* eslint-disable no-use-before-define */
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
-  @HasMany(() => CategoryModel, 'modelfolderId') declare categorymodels: CategoryModel[]
-  @HasMany(() => MomentModel, 'modelfolderId') declare momentmodels: MomentModel[]
+
+  @HasMany(() => CategoryModel, 'modelfolderId')
+  @OnDelete('cascade')
+  declare categorymodels: CategoryModel[]
+
+  @HasMany(() => MomentModel, 'modelfolderId')
+  @OnDelete('cascade')
+  declare momentmodels: MomentModel[]
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
