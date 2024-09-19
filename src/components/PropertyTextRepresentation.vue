@@ -89,6 +89,12 @@ function droppedSelection (selectionData: string) {
   .property-content {
     display: flex;
     flex-direction: row;
+    width: 90%;
+    padding-left: 5%;
+  }
+  .property-justification {
+    width: 90%;
+    padding-left: 8%;
   }
   .property-value {
       margin-left: 1em;
