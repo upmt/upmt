@@ -86,6 +86,7 @@
               <div>
                 <q-btn label="Create"
                        type="submit"
+                       :disabled="!canCreate"
                        color="primary"/>
                 <q-btn label="Cancel"
                        color="primary"
@@ -209,6 +210,8 @@
           tab.value = newInterview
       }
   })
+
+  const canCreate = computed(() => creatingName.value && creatingParticipant.value && creatingText.value)
 
   function onSubmit (event: Event) {
       if (event.target) {
