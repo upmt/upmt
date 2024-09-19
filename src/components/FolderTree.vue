@@ -254,22 +254,22 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
   function itemActions (node: QTreeNode): NamedActions {
       if (node.id.startsWith('modelfolders:')) {
           return [
-              [ `Rename ${node.label}`, () => renameFolder(node.id, node.label ?? '') ],
-              [ `Add a folder`, () => addModelFolder(node.id) ],
-              [ `Add a category`, () => addCategoryModel(node.id) ],
-              [ `Delete ${node.label}`, () => store.deleteModelFolder(node.id) ]
+              [ `Rename ${node.label}`, () => renameFolder(node.realId, node.label ?? '') ],
+              [ `Add a folder`, () => addModelFolder(node.realId) ],
+              [ `Add a category`, () => addCategoryModel(node.realId) ],
+              [ `Delete ${node.label}`, () => store.deleteModelFolder(node.realId) ]
           ]
-      } else if (node.id.startsWith('categorymodels:')) {
+      } else if (node.realId.startsWith('categorymodels:')) {
           return [
-              [ `Rename ${node.label}`, () => renameCategoryModel(node.id, node.label ?? '') ],
-              [ `Add a property`, () => addPropertyModel(node.id) ],
-              [ `Change color`, () => changeCategoryModelColor(node.id) ],
-              [ `Delete ${node.label}`, () => store.deleteCategoryModel(node.id) ]
+              [ `Rename ${node.label}`, () => renameCategoryModel(node.realId, node.label ?? '') ],
+              [ `Add a property`, () => addPropertyModel(node.realId) ],
+              [ `Change color`, () => changeCategoryModelColor(node.realId) ],
+              [ `Delete ${node.label}`, () => store.deleteCategoryModel(node.realId) ]
           ]
-      } else if (node.id.startsWith('propertymodels:')) {
+      } else if (node.realId.startsWith('propertymodels:')) {
           return [
-              [ `Rename ${node.label}`, () => renamePropertyModel(node.id, node.label ?? '') ],
-              [ `Delete ${node.label}`, () => store.deletePropertyModel(node.id) ]
+              [ `Rename ${node.label}`, () => renamePropertyModel(node.realId, node.label ?? '') ],
+              [ `Delete ${node.label}`, () => store.deletePropertyModel(node.realId) ]
           ]
       }
       return []
