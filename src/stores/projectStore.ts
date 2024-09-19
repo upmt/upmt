@@ -609,6 +609,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.PropertyModel.save({ categorymodelId: parentId, name })
   }
 
+  function deleteAnnotation (annotationId: string) {
+    repo.Annotation.where('id', annotationId).delete()
+  }
+
+  function deleteDescriptem (descriptemId: string) {
+    repo.Descriptem.where('id', descriptemId).delete()
+  }
+
   function deleteModelFolder (folderId: string) {
     // FIXME: should check that all descendants (categorymodel, propertymodel) do not have any instance
     repo.ModelFolder.where('id', folderId).delete()
@@ -622,6 +630,17 @@ export const useProjectStore = defineStore('projectStore', () => {
   function deletePropertyModel (pmId: string) {
     // FIXME: should check that it has no instance
     repo.PropertyModel.where('id', pmId).delete()
+  }
+
+  function duplicateDescriptem (descriptemId: string) {
+    // Duplicate a Descriptem with the same parent
+    const descriptem = getDescriptem(descriptemId)
+    if (descriptem) {
+      repo.Descriptem.save({
+        ...descriptem.toJSON(),
+        justificationId: descriptem.justificationId
+      })
+    }
   }
 
   function addTextSelectionToMoment (selectionData: TextSelection, momentId: string) {
@@ -697,9 +716,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
     createProject,
+    deleteAnnotation,
     deleteCategoryModel,
+    deleteDescriptem,
     deletePropertyModel,
     deleteModelFolder,
+    duplicateDescriptem,
     importProject,
     hydrateProject,
     getAllProjects,
