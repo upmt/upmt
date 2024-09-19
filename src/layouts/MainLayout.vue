@@ -32,7 +32,14 @@
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(item, index) in menuList" :key="index">
-            <q-item clickable v-ripple :to="item.link">
+
+            <q-item
+              clickable
+              v-ripple
+              :to="item.link"
+              :href="item.href"
+              :target="item.href ? 'web' : undefined"
+              >
               <q-item-section avatar v-if="item.icon">
                 <q-icon :name="item.icon" />
               </q-item-section>
@@ -40,6 +47,7 @@
                 {{ item.label }}
               </q-item-section>
             </q-item>
+
             <q-separator :key="'sep' + index" v-if="item.separator" />
           </template>
         </q-list>
@@ -75,9 +83,10 @@ defineOptions({
 interface MenuItem {
     label: string
     icon?: string
-    link: RouteLocationRaw
+    link?: RouteLocationRaw
     action?: object
     separator?: boolean
+    href?: string
 }
 
 const store = useProjectStore()
@@ -86,7 +95,8 @@ const menuList = computed<MenuItem[]>(() => [
     {
         label: 'Home',
         icon: 'mdi-home',
-        link: '/home'
+        link: '/home',
+        separator: true
     },
     ...store.getAllProjects().map(p => {
         return {
@@ -95,6 +105,21 @@ const menuList = computed<MenuItem[]>(() => [
             link: `/project/${p.id}`
         }
     }),
+    {
+        label: 'Documentation',
+        icon: 'mdi-help-circle-outline',
+        href: 'https://github.com/upmt/upmt/wiki'
+    },
+    {
+        label: 'Discussions',
+        icon: 'mdi-chat-question-outline',
+        href: 'https://github.com/upmt/upmt/discussions'
+    },
+    {
+        label: 'Github',
+        icon: 'mdi-github',
+        href: 'https://github.com/upmt/upmt'
+    },
     {
         label: 'Debug',
         icon: 'mdi-eye',
