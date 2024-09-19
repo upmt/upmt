@@ -88,11 +88,6 @@ const menuList = computed<MenuItem[]>(() => [
         icon: 'mdi-home',
         link: '/home'
     },
-    {
-        label: 'Example',
-        icon: 'mdi-semantic-web',
-        link: '/example'
-    },
     ...store.getAllProjects().map(p => {
         return {
             label: p.name,
