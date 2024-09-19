@@ -13,6 +13,7 @@
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-header">{{ descriptem.shorttext }}</span>
+
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
               v-if="context.property">
@@ -40,6 +41,34 @@
           <span class="moment-name">{{ context.moment.name }}</span>
         </span>
       </div>
+
+      <div v-else
+           class="descriptem-menu">
+        <q-space />
+        <q-btn
+          class="menu-icon"
+          size="xs"
+          @click.stop
+          flat
+          round
+          dense
+          icon="more_vert">
+          <q-menu
+            touch-position>
+            <q-list dense style="min-width: 100px">
+              <q-item
+                v-for="[label, action] in menuActions"
+                clickable
+                :key="label"
+                @click="action"
+                v-close-popup>
+                {{ label }}
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </div>
+
     </DragElement>
   </div>
 </template>
@@ -90,6 +119,12 @@ const context = computed((): Context => {
     }
   })
 
+type NamedActions = [ name: string, action: (element: any) => void][]
+const menuActions: NamedActions = [
+    [ "Modify", () => alert("Not implemented yet") ],
+    [ "Duplicate", () => store.duplicateDescriptem(props.descriptemId) ],
+    [ "Delete", () => store.deleteDescriptem(props.descriptemId) ]
+  ]
 </script>
 
 <style scoped>
