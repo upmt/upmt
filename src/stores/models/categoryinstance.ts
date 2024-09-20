@@ -44,10 +44,9 @@ export default class CategoryInstance extends Justifiable {
   toJSON (): any {
     // FIXME: it this.properties is null, then denormalization has not occurred - should refetch from repo with dependencies
     return {
-      id: this.id,
       categorymodelId: this.categorymodelId,
       momentId: this.momentId,
-      justification: this.justification?.toJSON(),
+      justification: this.justification.toJSON(),
       properties: this.properties.map(p => p.toJSON())
     }
   }
