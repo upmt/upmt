@@ -100,7 +100,7 @@ function droppedSelection (selectionData: string) {
       margin-left: 1em;
       flex: 1 1 0;
       text-align: right;
-      border: 1px;
+      border: 1px solid transparent;
   }
   .property-value:hover {
       border: 1px dashed grey;
