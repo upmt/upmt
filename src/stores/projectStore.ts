@@ -697,19 +697,26 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Descriptem.where('id', descriptemId).delete()
   }
 
-  function deleteModelFolder (folderId: string) {
-    // FIXME: should check that all descendants (categorymodel, propertymodel) do not have any instance
-    repo.ModelFolder.where('id', folderId).delete()
+  function deletePropertyModel (pmId: string) {
+    repo.Property.where('propertymodelId', pmId).delete()
+    repo.PropertyModel.where('id', pmId).delete()
   }
 
   function deleteCategoryModel (cmId: string) {
-    // FIXME: should check that all descendants (propertymodel) do not have any instance
+    repo.PropertyModel.where('categorymodelId', cmId).get().forEach(pm => deletePropertyModel(pm.id))
+    repo.CategoryInstance.where('categorymodelId', cmId).delete()
     repo.CategoryModel.where('id', cmId).delete()
   }
 
-  function deletePropertyModel (pmId: string) {
-    // FIXME: should check that it has no instance
-    repo.PropertyModel.where('id', pmId).delete()
+  function deleteMomentModel (mmId: string) {
+    repo.MomentModel.where('id', mmId).delete()
+  }
+
+  function deleteModelFolder (folderId: string) {
+    repo.ModelFolder.where('parentId', folderId).get().forEach(mf => deleteModelFolder(mf.id))
+    repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
+    repo.MomentModel.where('modelfolderId', folderId).get().forEach(mm => deleteMomentModel(mm.id))
+    repo.ModelFolder.where('id', folderId).delete()
   }
 
   function duplicateCategoryInstance (categoryinstanceId: string) {
