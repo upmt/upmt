@@ -48,7 +48,7 @@ export default class Property extends Justifiable {
   toJSON (): any {
     return {
       value: this.value,
-      modelId: this.model.id,
+      modelId: this.propertymodelId,
       justification: this.justification?.toJSON()
     }
   }
