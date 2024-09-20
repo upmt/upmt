@@ -152,9 +152,9 @@ function droppedSelection (selectionData: string) {
 // Dropped selections to create a moment. data is before or after
 function droppedCreatingDescriptem (descriptemId: string, data: string) {
     const descriptem = store.getDescriptem(descriptemId)
-    if (descriptem) {
+    if (descriptem && moment.value) {
         store.addMoment("NEW",
-                        props.momentId,
+                        moment.value.parentId,
                         data === 'before' ? 0 : 1,
                         descriptem.toJSON())
     }
@@ -162,9 +162,9 @@ function droppedCreatingDescriptem (descriptemId: string, data: string) {
 
 function droppedCreatingAnnotation (annotationId: string, data: string) {
     const annotation = store.getAnnotation(annotationId)
-    if (annotation) {
+    if (annotation && moment.value) {
         store.addMoment("NEW",
-                        props.momentId,
+                        moment.value.parentId,
                         data === 'before' ? 0 : 1,
                         annotation.toJSON())
     }
@@ -173,10 +173,12 @@ function droppedCreatingAnnotation (annotationId: string, data: string) {
 function droppedCreatingSelection (selectionData: string, data: string) {
     try {
         const selection = JSON.parse(selectionData)
-        store.addMoment("NEW",
-                        props.momentId,
-                        data === 'before' ? 0 : 1,
-                        selection)
+        if (moment.value) {
+            store.addMoment("NEW",
+                            moment.value.parentId,
+                            data === 'before' ? 0 : 1,
+                            selection)
+        }
     } catch (e) {
         console.log(`Cannot parse ${selectionData}: ${e}`)
     }
