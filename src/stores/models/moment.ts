@@ -1,4 +1,4 @@
-import { Attr, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
@@ -14,13 +14,17 @@ export default class Moment extends Justifiable {
   @Bool(false) declare isTransitional: boolean
 
   @Attr() analysisId!: string
-  @Attr() parentId!: string
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
+
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
+
   /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
+
+  @Attr() parentId!: string
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
+  @Num(0) declare childIndex: number
 
   static updating (model: any) {
     // See https://github.com/CodeDredd/pinia-orm/issues/468
@@ -49,6 +53,7 @@ export default class Moment extends Justifiable {
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
       categoryinstances: this.categoryinstances.map(c => c.toJSON()),
+      parentId: this.parentId,
       children: this.children.map(m => ({ id: m.id }))
     }
   }
