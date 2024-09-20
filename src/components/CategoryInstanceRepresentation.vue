@@ -49,14 +49,14 @@
     </div>
 
     <div class="categoryinstance-justification">
-      <JustificationTextRepresentation :justificationId="categoryinstance.justification.id">
-      </JustificationTextRepresentation>
+      <JustificationRepresentation :justificationId="categoryinstance.justification.id">
+      </JustificationRepresentation>
     </div>
 
     <div class="categoryinstance-properties">
       <div v-for="p in categoryinstance.properties" :key="p.id">
-        <PropertyTextRepresentation :propertyId="p.id">
-        </PropertyTextRepresentation>
+        <PropertyRepresentation :propertyId="p.id">
+        </PropertyRepresentation>
       </div>
     </div>
 
@@ -64,8 +64,8 @@
 </template>
 
 <script setup lang="ts">
-import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
-import PropertyTextRepresentation from './PropertyTextRepresentation.vue'
+import JustificationRepresentation from './JustificationRepresentation.vue'
+import PropertyRepresentation from './PropertyRepresentation.vue'
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import DragElement from './DragElement.vue'

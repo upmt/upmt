@@ -10,14 +10,14 @@
     </div>
 
     <div class="moment-justification">
-      <JustificationTextRepresentation :justification="moment.justification">
-      </JustificationTextRepresentation>
+      <JustificationRepresentation :justification="moment.justification">
+      </JustificationRepresentation>
     </div>
 
     <div class="moment-children">
       <li v-for="m in moment.children" :key="m.id">
-        <MomentTextRepresentation :moment="m">
-        </MomentTextRepresentation>
+        <MomentRepresentation :moment="m">
+        </MomentRepresentation>
       </li>
     </div>
 
@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import Moment from 'stores/models/moment'
-import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
-import MomentTextRepresentation from './MomentTextRepresentation.vue'
+import JustificationRepresentation from './JustificationRepresentation.vue'
+import MomentRepresentation from './MomentRepresentation.vue'
 
 defineProps({
     moment: { type: Moment, default: null }

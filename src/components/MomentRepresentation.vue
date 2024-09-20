@@ -49,13 +49,13 @@
           </template>
 
           <div class="moment-justification">
-            <JustificationTextRepresentation :justificationId="moment.justification?.id">
-            </JustificationTextRepresentation>
+            <JustificationRepresentation :justificationId="moment.justification?.id">
+            </JustificationRepresentation>
           </div>
 
           <div :class="[ 'moment-categoryinstances', layout ]">
             <div v-for="c in moment.categoryinstances" :key="c.id">
-              <CategoryInstanceTextRepresentation :categoryinstanceId="c.id" />
+              <CategoryInstanceRepresentation :categoryinstanceId="c.id" />
             </div>
           </div>
 
@@ -63,8 +63,8 @@
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="(m, index) in moment.children" :key="m.id">
-          <MomentTextRepresentation :momentId="m.id">
-          </MomentTextRepresentation>
+          <MomentRepresentation :momentId="m.id">
+          </MomentRepresentation>
         <DropZone :data="index.toString()"
                   class="empty_padding"
                   types="upmt/moment"
@@ -86,9 +86,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
-import CategoryInstanceTextRepresentation from './CategoryInstanceTextRepresentation.vue'
-import MomentTextRepresentation from './MomentTextRepresentation.vue'
+import JustificationRepresentation from './JustificationRepresentation.vue'
+import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
+import MomentRepresentation from './MomentRepresentation.vue'
 import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
 import { useProjectStore } from 'stores/projectStore'

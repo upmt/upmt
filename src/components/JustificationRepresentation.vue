@@ -7,15 +7,15 @@
     </div>
     <ul class="justification-descriptems">
       <li v-for="descriptem in justification?.descriptems" :key="descriptem.id">
-        <DescriptemTextRepresentation :descriptemId="descriptem.id">
-        </DescriptemTextRepresentation>
+        <DescriptemRepresentation :descriptemId="descriptem.id">
+        </DescriptemRepresentation>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import DescriptemTextRepresentation from './DescriptemTextRepresentation.vue'
+import DescriptemRepresentation from './DescriptemRepresentation.vue'
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 

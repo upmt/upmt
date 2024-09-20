@@ -16,11 +16,11 @@
                 ></q-slider>
     </div>
 
-    <AnalysisTextRepresentation
+    <AnalysisRepresentation
       class="scrollable"
       v-if="interview.analysis"
       :analysisId="interview.analysis.id">
-    </AnalysisTextRepresentation>
+    </AnalysisRepresentation>
 
   </div>
 </template>
@@ -29,7 +29,7 @@
 import { computed, ref } from 'vue'
 import type { Ref } from 'vue'
 import { useCssVar } from '@vueuse/core'
-import AnalysisTextRepresentation from './AnalysisTextRepresentation.vue'
+import AnalysisRepresentation from './AnalysisRepresentation.vue'
 import { useProjectStore } from 'stores/projectStore'
 
 const store = useProjectStore()

@@ -4,8 +4,8 @@
        :data-moment="analysisId">
     <div class="analysis-content moment-children">
       <div v-for="m in analysis.rootMoment.children" :key="m.id">
-        <MomentTextRepresentation :momentId="m.id">
-        </MomentTextRepresentation>
+        <MomentRepresentation :momentId="m.id">
+        </MomentRepresentation>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import MomentTextRepresentation from './MomentTextRepresentation.vue'
+  import MomentRepresentation from './MomentRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
   const store = useProjectStore()

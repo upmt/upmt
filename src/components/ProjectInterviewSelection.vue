@@ -53,10 +53,10 @@
               :limits="[5,95]">
 
               <template v-slot:before>
-                <InterviewTextRepresentation
+                <InterviewRepresentation
                   class="fit fullwindow-height"
                   :interviewId="interview.id">
-                </InterviewTextRepresentation>
+                </InterviewRepresentation>
               </template>
 
               <template v-slot:after>
@@ -89,7 +89,7 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch } from 'vue'
   import Interview from 'stores/models/interview'
-  import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
+  import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import FolderTree from 'components/FolderTree.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'

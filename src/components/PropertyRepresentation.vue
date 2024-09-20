@@ -23,8 +23,8 @@
       </div>
     </DropZone>
     <div class="property-justification">
-      <JustificationTextRepresentation :justificationId="property.justification.id">
-      </JustificationTextRepresentation>
+      <JustificationRepresentation :justificationId="property.justification.id">
+      </JustificationRepresentation>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
-import JustificationTextRepresentation from './JustificationTextRepresentation.vue'
+import JustificationRepresentation from './JustificationRepresentation.vue'
 import DropZone from './DropZone.vue'
 
 const store = useProjectStore()

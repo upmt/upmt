@@ -7,9 +7,9 @@
     <project-card
       :project="selectedProject">
     </project-card>
-    <ProjectTextRepresentation
+    <ProjectRepresentation
       :project="selectedProject">
-    </ProjectTextRepresentation>
+    </ProjectRepresentation>
   </q-page>
 </template>
 
@@ -17,7 +17,7 @@
 import { computed, ref } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import ProjectCard from 'components/ProjectCard.vue'
-import ProjectTextRepresentation from 'components/ProjectTextRepresentation.vue'
+import ProjectRepresentation from 'components/ProjectRepresentation.vue'
 
 defineOptions({
   name: 'IndexPage'

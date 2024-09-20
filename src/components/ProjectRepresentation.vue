@@ -5,8 +5,8 @@
     <h2>{{ project.interviews.length }} interviews</h2>
     <ul class="interview-list">
       <li v-for="interview in project.interviews" :key="interview.id">
-        <InterviewTextRepresentation :interview="interview">
-        </InterviewTextRepresentation>
+        <InterviewRepresentation :interview="interview">
+        </InterviewRepresentation>
       </li>
     </ul>
 
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import Project from 'stores/models/project'
-import InterviewTextRepresentation from 'components/InterviewTextRepresentation.vue'
+import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 
 defineProps({
     project: {
