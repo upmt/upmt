@@ -46,6 +46,7 @@ export default class CategoryInstance extends Justifiable {
     return {
       id: this.id,
       modelId: this.model.id,
+      momentId: this.momentId,
       justification: this.justification?.toJSON(),
       properties: this.properties.map(p => p.toJSON())
     }
