@@ -1,7 +1,7 @@
 <template>
   <div class="property"
        v-if="property"
-       :data-property="property.id"
+       :data-property="propertyId"
        :title="property.label">
     <DropZone types="upmt/descriptem upmt/annotation upmt/selection"
               @annotation="droppedAnnotation"
