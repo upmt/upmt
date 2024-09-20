@@ -588,18 +588,22 @@ export const useProjectStore = defineStore('projectStore', () => {
     referenceMomentId: string,
     where = "", // before, after, or anything else for inside
     textselection: TextSelection | null = null) {
+      console.log("addMoment", name, where, referenceMomentId, "with", textselection)
       const referenceMoment = getMoment(referenceMomentId)
       let destination = referenceMoment
       let childIndex = 0
 
-      if (referenceMoment && (where === 'before' || where === 'after')) {
+      if (where.startsWith('in:')) {
+        destination = getMoment(where.slice(3))
+      } else if (referenceMoment && (where === 'before' || where === 'after')) {
         // If we insert before or after the reference, then destination is really the parent
         // We re-fetch it so that we get children with indexes too
-        destination = getMoment(referenceMoment.parentId)
         if (where === 'before') {
+          destination = getMoment(referenceMoment.parentId)
           childIndex = referenceMoment.childIndex
-        } else {
+        } else if (where === 'after') {
           // after
+          destination = getMoment(referenceMoment.parentId)
           childIndex = referenceMoment.childIndex + 1
         }
       }
@@ -640,7 +644,9 @@ export const useProjectStore = defineStore('projectStore', () => {
       if (source && reference) {
         let childIndex = 0
 
-        if (where === 'before' && reference.parent) {
+        if (where.startsWith('in:')) {
+          parent = getMoment(where.slice(3))
+        } else if (where === 'before' && reference.parent) {
           parent = getMoment(reference.parentId)
           childIndex = reference.childIndex
         } else if (where === 'after' && reference.parent) {

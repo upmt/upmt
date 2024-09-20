@@ -66,17 +66,17 @@
         </q-expansion-item>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
-        <div v-for="(m, index) in moment.children" :key="m.id">
+        <div v-for="m in moment.children" :key="m.id">
           <MomentRepresentation :momentId="m.id">
           </MomentRepresentation>
-        <DropZone :data="index.toString()"
-                  class="empty_padding"
-                  types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
-                  @moment="droppedMoment"
-                  @annotation="droppedCreatingAnnotation"
-                  @selection="droppedCreatingSelection"
-                  @descriptem="droppedCreatingDescriptem">
-        </DropZone>
+          <DropZone :data="`in:${m.id}`"
+                    class="empty_padding"
+                    types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
+                    @moment="droppedMoment"
+                    @annotation="droppedCreatingAnnotation"
+                    @selection="droppedCreatingSelection"
+                    @descriptem="droppedCreatingDescriptem">
+          </DropZone>
         </div>
       </div>
 
