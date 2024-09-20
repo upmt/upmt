@@ -646,20 +646,22 @@ export const useProjectStore = defineStore('projectStore', () => {
 
         if (where.startsWith('in:')) {
           parent = getMoment(where.slice(3))
-        } else if (where === 'before' && reference.parent) {
+        } else if (where === 'before') {
           parent = getMoment(reference.parentId)
           childIndex = reference.childIndex
-        } else if (where === 'after' && reference.parent) {
+        } else if (where === 'after') {
           parent = getMoment(reference.parentId)
           childIndex = reference.childIndex + 1
         }
         if (parent) {
           const children = [ ...parent.children ]
-          repo.Moment.save({
+          const data = {
             ...source.toJSON(),
             parentId: parent.id,
             childIndex
-          })
+          }
+          console.log("Saving data ", data)
+          repo.Moment.save(data)
           // Items before childIndex are the same. Renumber following ones.
           children.slice(childIndex).forEach(moment => {
             updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
