@@ -387,7 +387,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       .with('justification', (query) => query.with('descriptems'))
       .with('categoryinstances', (query) => query
         .with('justification', (q) => q.with('descriptems'))
-        .with('properties', (q) => q.with('model')))
+        .with('properties', (q) => q.with('model').with('justification', (qj) => qj.with('descriptems'))))
       .find(id)
   }
 
