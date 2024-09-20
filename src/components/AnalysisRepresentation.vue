@@ -23,7 +23,6 @@
 
   const analysis = computed(() => {
       const result = store.getAnalysis(props.analysisId)
-      console.log("Analysis", result)
       return result
   })
 </script>
