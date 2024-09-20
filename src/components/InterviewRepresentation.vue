@@ -2,18 +2,29 @@
   <div class="interview"
        v-if="interview"
        :data-interview="interviewId">
-    <div class="interview-metadata">
+    <div class="interview-metadata row">
       <span class="interview-title"
             :style="{ backgroundColor: interview.color }">
         <span class="interview-participantName">{{ interview.participantName }}</span>
         &nbsp;(<span class="interview-date">{{ interview.date }}</span>)
       </span>
       <span class="interview-comment">{{ interview.comment }}</span>
+      <DragElement
+        type="moment"
+        data="">
+        <q-btn>
+          New moment
+          <q-tooltip>Drag this button to create a new moment"></q-tooltip>
+        </q-btn>
+      </DragElement>
       <q-slider v-model="zoom"
+                label-value="Zoom"
+                class="col-2 q-mx-md"
                 :min="0.1"
                 :max="2"
                 :step=".1"
-                ></q-slider>
+                >
+      </q-slider>
     </div>
 
     <AnalysisRepresentation
@@ -29,6 +40,7 @@
 import { computed, ref } from 'vue'
 import type { Ref } from 'vue'
 import { useCssVar } from '@vueuse/core'
+import DragElement from './DragElement.vue'
 import AnalysisRepresentation from './AnalysisRepresentation.vue'
 import { useProjectStore } from 'stores/projectStore'
 
