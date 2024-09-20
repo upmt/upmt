@@ -581,6 +581,26 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function addMoment (name: string, destinationMomentId: string, index: number, textselection: TextSelection | null = null) {
+    const destination = getMoment(destinationMomentId)
+    if (destination) {
+      const data = {
+        name,
+        parentId: destinationMomentId,
+        analysisId: destination.analysisId,
+        justification: {
+          descriptems: [
+            {
+              ...(textselection ?? {})
+            }
+          ]
+        }
+      }
+      console.log("Saving", data)
+      repo.Moment.save(data)
+    }
+  }
+
   function moveMoment (sourceMomentId: string, destinationMomentId: string, index: number) {
     console.log("Trying to move", sourceMomentId, " to ", destinationMomentId, " at index ", index)
     // FIXME: reparenting is not that simple. Clone the moment then link the new one/
@@ -726,6 +746,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   return {
     addCategoryModel,
     addModelFolder,
+    addMoment,
     addPropertyModel,
     addTextSelectionToMoment,
     addTextSelectionToCategoryInstance,
