@@ -3,8 +3,11 @@
 
     <DropZone data="before"
               class="empty_padding"
-              types="upmt/moment"
-              @moment="droppedMoment">
+              types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
+              @moment="droppedMoment"
+              @annotation="droppedCreatingAnnotation"
+              @selection="droppedCreatingSelection"
+              @descriptem="droppedCreatingDescriptem">
     </DropZone>
 
     <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
@@ -24,7 +27,7 @@
           >
 
           <template v-slot:header>
-            <DropZone data="before"
+            <DropZone data="header"
                       class="empty_padding"
                       types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
                       @categoryinstance="droppedCategoryInstance"
@@ -77,8 +80,11 @@
 
     <DropZone data="after"
               class="empty_padding"
-              types="upmt/moment"
-              @moment="droppedMoment">
+              types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
+              @moment="droppedMoment"
+              @annotation="droppedCreatingAnnotation"
+              @selection="droppedCreatingSelection"
+              @descriptem="droppedCreatingDescriptem">
     </DropZone>
 
   </div>
@@ -140,6 +146,39 @@ function droppedSelection (selectionData: string) {
         store.addTextSelectionToMoment(selection, props.momentId)
     } catch (e) {
         console.log(`Cannot parse ${selectionData}`)
+    }
+}
+
+// Dropped selections to create a moment. data is before or after
+function droppedCreatingDescriptem (descriptemId: string, data: string) {
+    const descriptem = store.getDescriptem(descriptemId)
+    if (descriptem) {
+        store.addMoment("NEW",
+                        props.momentId,
+                        data === 'before' ? 0 : 1,
+                        descriptem.toJSON())
+    }
+}
+
+function droppedCreatingAnnotation (annotationId: string, data: string) {
+    const annotation = store.getAnnotation(annotationId)
+    if (annotation) {
+        store.addMoment("NEW",
+                        props.momentId,
+                        data === 'before' ? 0 : 1,
+                        annotation.toJSON())
+    }
+}
+
+function droppedCreatingSelection (selectionData: string, data: string) {
+    try {
+        const selection = JSON.parse(selectionData)
+        store.addMoment("NEW",
+                        props.momentId,
+                        data === 'before' ? 0 : 1,
+                        selection)
+    } catch (e) {
+        console.log(`Cannot parse ${selectionData}: ${e}`)
     }
 }
 
