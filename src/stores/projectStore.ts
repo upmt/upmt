@@ -613,6 +613,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Annotation.where('id', annotationId).delete()
   }
 
+  function deleteCategoryInstance (categoryinstanceId: string) {
+    repo.CategoryInstance.where('id', categoryinstanceId).delete()
+  }
+
   function deleteDescriptem (descriptemId: string) {
     repo.Descriptem.where('id', descriptemId).delete()
   }
@@ -630,6 +634,17 @@ export const useProjectStore = defineStore('projectStore', () => {
   function deletePropertyModel (pmId: string) {
     // FIXME: should check that it has no instance
     repo.PropertyModel.where('id', pmId).delete()
+  }
+
+  function duplicateCategoryInstance (categoryinstanceId: string) {
+    // Duplicate a CategoryInstance with the same parent
+    const ci = getCategoryInstance(categoryinstanceId)
+    if (ci) {
+      console.log("Duplicating", ci.toJSON())
+      repo.CategoryInstance.save({
+        ...ci.toJSON()
+      })
+    }
   }
 
   function duplicateDescriptem (descriptemId: string) {
@@ -718,9 +733,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     createProject,
     deleteAnnotation,
     deleteCategoryModel,
+    deleteCategoryInstance,
     deleteDescriptem,
     deletePropertyModel,
     deleteModelFolder,
+    duplicateCategoryInstance,
     duplicateDescriptem,
     importProject,
     hydrateProject,

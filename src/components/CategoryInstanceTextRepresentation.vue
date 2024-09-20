@@ -10,6 +10,7 @@
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
         <DragElement
+          class="categoryinstance-header"
           type="categoryinstance"
           :data="categoryinstanceId">
           <q-icon
@@ -19,6 +20,30 @@
             @click.meta="debug"
             name="mdi-tag-outline"></q-icon>
           <span class="categoryinstance-name">{{ categoryinstance.name }}</span>
+          <q-space />
+          <q-btn
+            class="menu-icon"
+            size="xs"
+            @click.stop
+            flat
+            round
+            dense
+            icon="more_vert">
+            <q-menu
+              touch-position>
+              <q-list dense style="min-width: 100px">
+                <q-item
+                  v-for="[label, action] in menuActions"
+                  clickable
+                  :key="label"
+                  @click="action"
+                  v-close-popup>
+                  {{ label }}
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+
         </DragElement>
       </DropZone>
     </div>
@@ -81,7 +106,13 @@ function droppedSelection (selectionData: string) {
     } catch (e) {
         console.log(`Cannot parse ${selectionData}`)
     }
-}
+  }
+
+type NamedActions = [ name: string, action: (element: any) => void][]
+const menuActions: NamedActions = [
+    [ "Duplicate", () => store.duplicateCategoryInstance(props.categoryinstanceId) ],
+    [ "Delete", () => store.deleteCategoryInstance(props.categoryinstanceId) ]
+  ]
 </script>
 
 <style scoped>
@@ -90,6 +121,9 @@ function droppedSelection (selectionData: string) {
   }
   .categoryinstance-metadata {
     text-align: center;
+  }
+  .categoryinstance-header {
+      width: 100%;
   }
   .categoryinstance-children {
     list-style: none;

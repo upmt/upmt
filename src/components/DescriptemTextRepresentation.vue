@@ -5,6 +5,7 @@
        :title="descriptem.text">
     <DragElement
       type="descriptem"
+      class="descriptem-header"
       :data="descriptemId">
       <q-icon
         ref="handle"
@@ -12,7 +13,7 @@
         size="xs"
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
-      <span class="descriptem-header">{{ descriptem.shorttext }}</span>
+      <span class="descriptem-label">{{ descriptem.shorttext }}</span>
 
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
@@ -134,6 +135,9 @@ const menuActions: NamedActions = [
     height: 1.2em;
   }
   .descriptem-header {
+      width: 100%;
+  }
+  .descriptem-label {
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
