@@ -153,9 +153,9 @@ function droppedSelection (selectionData: string) {
     }
 }
 
-function droppedMoment (momentId: string, data: string) {
-    console.log("Dropped Moment", momentId, "data", data)
-    store.moveMoment(momentId, props.momentId, data)
+function droppedMoment (momentId: string, where: string) {
+    console.log("Dropped Moment", momentId, "where", where)
+    store.moveMoment(momentId, props.momentId, where)
 }
 
 // Dropped selections to create a moment. data is before or after
