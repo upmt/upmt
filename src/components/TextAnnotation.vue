@@ -59,7 +59,7 @@
             clickable
             row
             v-close-popup>
-            <DescriptemTextRepresentation
+            <DescriptemRepresentation
               :descriptemId="descriptem.id"
               withContext />
           </q-item>
@@ -88,7 +88,7 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import AnnotatedText from './AnnotatedText.vue'
-  import DescriptemTextRepresentation from './DescriptemTextRepresentation.vue'
+  import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import Annotation from 'stores/models/annotation'
   import Descriptem from 'stores/models/descriptem'
   import Interview from 'stores/models/interview'
