@@ -209,9 +209,10 @@ function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryIns
 }
 
 // Map an imported moment to a Moment
-function mapMoment (m: OldMoment, interview: Interview): Moment {
+function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
   return repo.Moment.make({
     name: m.name,
+    childIndex: index,
     color: fixColorName(m.color),
     comment: m.comment,
     isCollapsed: m.isCollapsed,
@@ -225,7 +226,7 @@ function mapMoment (m: OldMoment, interview: Interview): Moment {
         interviewId: interview.id
       }))
     }),
-    children: m.moment_list.map((c: OldMoment) => mapMoment(c, interview))
+    children: m.moment_list.map((c: OldMoment, index: number) => mapMoment(c, index, interview))
   })
 }
 
@@ -244,7 +245,7 @@ function mapInterview (i: OldInterview): Interview {
   })))
 
   interview.analysis = repo.Analysis.make({
-    rootMoment: mapMoment(i.rootMoment, interview)
+    rootMoment: mapMoment(i.rootMoment, 0, interview)
   })
   return interview
 }
@@ -343,7 +344,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     This also allows us to control the items that must be fetched along ("with").
      */
   function getAnalysis (id: string) {
-      return repo.Analysis.with('rootMoment', (query) => query.with('children')).find(id)
+    return repo.Analysis.with('rootMoment', (query) => query.with('children', (q) => q.orderBy('childIndex'))).find(id)
   }
 
   function getCategoryInstance (id: string) {
@@ -382,9 +383,11 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getMoment (id: string) {
     return repo.Moment
-      .with('children')
+      .with('children', (q) => q.orderBy('childIndex'))
       .with('justification', (query) => query.with('descriptems'))
-      .with('categoryinstances', (query) => query.with('properties'))
+      .with('categoryinstances', (query) => query
+        .with('justification', (q) => q.with('descriptems'))
+        .with('properties', (q) => q.with('model')))
       .find(id)
   }
 
@@ -581,39 +584,84 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addMoment (name: string, destinationMomentId: string, index: number, textselection: TextSelection | null = null) {
-    const destination = getMoment(destinationMomentId)
-    if (destination) {
-      const data = {
-        name,
-        parentId: destinationMomentId,
-        analysisId: destination.analysisId,
-        justification: {
-          descriptems: [
-            {
-              ...(textselection ?? {})
-            }
-          ]
+  function addMoment (name: string,
+    referenceMomentId: string,
+    where = "", // before, after, or anything else for inside
+    textselection: TextSelection | null = null) {
+      const referenceMoment = getMoment(referenceMomentId)
+      let destination = referenceMoment
+      let childIndex = 0
+
+      if (referenceMoment && (where === 'before' || where === 'after')) {
+        // If we insert before or after the reference, then destination is really the parent
+        // We re-fetch it so that we get children with indexes too
+        destination = getMoment(referenceMoment.parentId)
+        if (where === 'before') {
+          childIndex = referenceMoment.childIndex
+        } else {
+          // after
+          childIndex = referenceMoment.childIndex + 1
         }
       }
-      console.log("Saving", data)
-      repo.Moment.save(data)
+      if (referenceMoment && destination) {
+        const descriptems = textselection ? [ { ...textselection } ] : []
+        const data = {
+          name,
+          parentId: destination.id,
+          childIndex,
+          analysisId: referenceMoment.analysisId,
+          justification: {
+            descriptems
+          }
+        }
+        // In all cases, update child moment indexes
+        // Make a copy of children array
+        const children = [ ...destination.children ]
+        repo.Moment.save(data)
+        // Items before childIndex are the same. Renumber next ones.
+        children.slice(childIndex).forEach(moment => {
+          updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
+        })
     }
   }
 
-  function moveMoment (sourceMomentId: string, destinationMomentId: string, index: number) {
-    console.log("Trying to move", sourceMomentId, " to ", destinationMomentId, " at index ", index)
-    // FIXME: reparenting is not that simple. Clone the moment then link the new one/
-    // This does not work:
-    //    repo.Property.where('id', sourceMomentId).update({ parentId: destinationMomentId });
+  function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
+    console.log("Trying to move", sourceMomentId, where || "to", referenceMomentId)
+    // Empty sourceId. Can be from New Moment button to create a new moment.
+    if (!sourceMomentId) {
+      addMoment("New moment",
+        referenceMomentId,
+        where)
+    } else {
+      const source = getMoment(sourceMomentId)
+      const reference = getMoment(referenceMomentId)
+      let parent = reference
 
-    const source = getMoment(sourceMomentId)
-    if (source) {
-      console.log("Cloning", sourceMomentId, source.toJSON())
-      repo.Moment.save({
-        ...source.toJSON(),
-        parentId: destinationMomentId
-      })
+      if (source && reference) {
+        let childIndex = 0
+
+        if (where === 'before' && reference.parent) {
+          parent = getMoment(reference.parentId)
+          childIndex = reference.childIndex
+        } else if (where === 'after' && reference.parent) {
+          parent = getMoment(reference.parentId)
+          childIndex = reference.childIndex + 1
+        }
+        if (parent) {
+          const children = [ ...parent.children ]
+          repo.Moment.save({
+            ...source.toJSON(),
+            parentId: parent.id,
+            childIndex
+          })
+          // Items before childIndex are the same. Renumber following ones.
+          children.slice(childIndex).forEach(moment => {
+            updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
+          })
+        } else {
+          console.error("Strange error - parent", parent, " is null")
+        }
+      }
     }
   }
 
