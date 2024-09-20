@@ -46,10 +46,17 @@ export default class Property extends Justifiable {
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
-    return {
-      value: this.value,
-      modelId: this.propertymodelId,
-      justification: this.justification?.toJSON()
+    if (this.justification) {
+      return {
+        value: this.value,
+        propertymodelId: this.propertymodelId,
+        justification: this.justification.toJSON()
+      }
+    } else {
+      return {
+        value: this.value,
+        propertymodelId: this.propertymodelId
+      }
     }
   }
 }
