@@ -41,13 +41,14 @@
                 @click.meta="debug">
                 <q-icon
                   size="xs"
-                  name="mdi-note-outline"></q-icon>
-              </DragElement>
-              <span class="moment-name">{{ momentName }}
+                  name="mdi-note-outline">
+                </q-icon>
+                <span class="moment-name">{{ momentName }}
                 <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
                   <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-              </q-popup-edit>
+                </q-popup-edit>
               </span>
+              </DragElement>
             </DropZone>
           </template>
 
@@ -70,8 +71,11 @@
           </MomentRepresentation>
         <DropZone :data="index.toString()"
                   class="empty_padding"
-                  types="upmt/moment"
-                  @moment="droppedMoment">
+                  types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
+                  @moment="droppedMoment"
+                  @annotation="droppedCreatingAnnotation"
+                  @selection="droppedCreatingSelection"
+                  @descriptem="droppedCreatingDescriptem">
         </DropZone>
         </div>
       </div>
@@ -149,44 +153,44 @@ function droppedSelection (selectionData: string) {
     }
 }
 
+function droppedMoment (momentId: string, data: string) {
+    console.log("Dropped Moment", momentId, "data", data)
+    store.moveMoment(momentId, props.momentId, data)
+}
+
 // Dropped selections to create a moment. data is before or after
-function droppedCreatingDescriptem (descriptemId: string, data: string) {
+function droppedCreatingDescriptem (descriptemId: string, where: string) {
     const descriptem = store.getDescriptem(descriptemId)
     if (descriptem && moment.value) {
         store.addMoment("NEW",
-                        moment.value.parentId,
-                        data === 'before' ? 0 : 1,
+                        props.momentId,
+                        where,
                         descriptem.toJSON())
     }
 }
 
-function droppedCreatingAnnotation (annotationId: string, data: string) {
+function droppedCreatingAnnotation (annotationId: string, where: string) {
     const annotation = store.getAnnotation(annotationId)
     if (annotation && moment.value) {
         store.addMoment("NEW",
-                        moment.value.parentId,
-                        data === 'before' ? 0 : 1,
+                        props.momentId,
+                        where,
                         annotation.toJSON())
     }
 }
 
-function droppedCreatingSelection (selectionData: string, data: string) {
+function droppedCreatingSelection (selectionData: string, where: string) {
     try {
         const selection = JSON.parse(selectionData)
         if (moment.value) {
             store.addMoment("NEW",
-                            moment.value.parentId,
-                            data === 'before' ? 0 : 1,
+                            props.momentId,
+                            where,
                             selection)
         }
     } catch (e) {
         console.log(`Cannot parse ${selectionData}: ${e}`)
     }
-}
-
-function droppedMoment (momentId: string, data: string) {
-    console.log("Dropped Moment", momentId, "data", data)
-    store.moveMoment(momentId, props.momentId, Number(data))
 }
 
 const expand = computed({
