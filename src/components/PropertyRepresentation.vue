@@ -23,7 +23,9 @@
       </div>
     </DropZone>
     <div class="property-justification">
-      <JustificationRepresentation :justificationId="property.justification.id">
+      <JustificationRepresentation
+        v-if="property.justification"
+        :justificationId="property.justification.id">
       </JustificationRepresentation>
     </div>
   </div>
