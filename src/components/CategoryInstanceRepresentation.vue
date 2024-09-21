@@ -21,29 +21,8 @@
             name="mdi-tag-outline"></q-icon>
           <span class="categoryinstance-name">{{ categoryinstance.name }}</span>
           <q-space />
-          <q-btn
-            class="menu-icon"
-            size="xs"
-            @click.stop
-            flat
-            round
-            dense
-            icon="more_vert">
-            <q-menu
-              touch-position>
-              <q-list dense style="min-width: 100px">
-                <q-item
-                  v-for="[label, action] in menuActions"
-                  clickable
-                  :key="label"
-                  @click="action"
-                  v-close-popup>
-                  {{ label }}
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-
+          <ElementMenu
+            :actions="menuActions" />
         </DragElement>
       </DropZone>
     </div>
@@ -70,7 +49,7 @@ import { computed } from 'vue'
 import { useProjectStore } from 'stores/projectStore'
 import DragElement from './DragElement.vue'
 import DropZone from './DropZone.vue'
-
+import ElementMenu from './ElementMenu.vue'
 const store = useProjectStore()
 
 const props = defineProps({
@@ -108,7 +87,7 @@ function droppedSelection (selectionData: string) {
     }
   }
 
-type NamedActions = [ name: string, action: (element: any) => void][]
+type NamedActions = [ name: string, action: (element: any) => any][]
 const menuActions: NamedActions = [
     [ "Duplicate", () => store.duplicateCategoryInstance(props.categoryinstanceId) ],
     [ "Delete", () => store.deleteCategoryInstance(props.categoryinstanceId) ]
