@@ -267,6 +267,7 @@ const menuActions = [
   .moment-container {
       display: flex;
       flex-direction: row;
+      position: relative;
   }
   .moment {
       min-width: 200px;
@@ -282,6 +283,15 @@ const menuActions = [
       flex-grow: 1;
   }
   .transitional {
+      background-color: var(--transitional-color);
+  }
+  .transitional::after {
+      content: ' ';
+      position: absolute;
+      left: calc( 50% - var(--transitional-bar-width) / 2 );
+      top: 100%;
+      height: 80vh;
+      width: var(--transitional-bar-width);
       background-color: var(--transitional-color);
   }
   .moment-handle {

@@ -22,6 +22,7 @@
 <style>
   :root {
     --transitional-color: #bbb;
+    --transitional-bar-width: 12%;
     --header-height: 82px;
     --chart-zoom: 1;
   }
