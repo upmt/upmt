@@ -719,6 +719,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.ModelFolder.where('id', folderId).delete()
   }
 
+  function deleteMoment (momentId: string) {
+    // FIXME: check cascade deletion of justification/categoryinstances
+    repo.Moment.where('id', momentId).delete()
+  }
+
   function duplicateCategoryInstance (categoryinstanceId: string) {
     // Duplicate a CategoryInstance with the same parent
     const ci = getCategoryInstance(categoryinstanceId)
@@ -821,6 +826,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deleteDescriptem,
     deletePropertyModel,
     deleteModelFolder,
+    deleteMoment,
     duplicateCategoryInstance,
     duplicateDescriptem,
     importProject,

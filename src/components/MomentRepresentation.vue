@@ -44,11 +44,28 @@
                   name="mdi-note-outline">
                 </q-icon>
                 <span class="moment-name">{{ momentName }}
-                <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
-                  <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-                </q-popup-edit>
-              </span>
+                  <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
+                    <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                  </q-popup-edit>
+                  <q-btn
+                    class="on-name-hover"
+                    size="xs"
+                    dense flat round
+                    icon="colorize">
+                    <q-popup-proxy>
+                      <q-color
+                        no-header
+                        no-footer
+                        default-view="palette"
+                        v-model="momentColor"
+                        />
+                    </q-popup-proxy>
+                  </q-btn>
+                </span>
               </DragElement>
+              <q-space />
+              <ElementMenu
+                :actions="menuActions" />
             </DropZone>
           </template>
 
@@ -101,6 +118,7 @@ import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue
 import MomentRepresentation from './MomentRepresentation.vue'
 import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
+import ElementMenu from './ElementMenu.vue'
 import { useProjectStore } from 'stores/projectStore'
 
 const store = useProjectStore()
@@ -210,6 +228,26 @@ const momentName = computed({
         store.updateMoment(props.momentId, { name:value })
     }
 })
+
+const momentColor = computed({
+    get () {
+        return moment.value ? moment.value.color : ""
+    },
+    set (color: string) {
+        store.updateMoment(props.momentId, { color })
+    }
+})
+
+function toggleTransitional () {
+    if (moment.value) {
+        store.updateMoment(props.momentId, { isTransitional: !moment.value.isTransitional })
+    }
+}
+
+const menuActions = [
+    [ "Toggle transitional", toggleTransitional ],
+    [ "Delete", () => store.deleteMoment(props.momentId) ]
+  ]
 </script>
 
 <style>
@@ -252,5 +290,11 @@ const momentName = computed({
   }
   .moment-handle:hover {
       opacity: .8;
+  }
+  .on-name-hover {
+      opacity: 0;
+  }
+  .moment-name:hover .on-name-hover {
+      opacity: 1;
   }
 </style>
