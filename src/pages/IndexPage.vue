@@ -23,7 +23,7 @@
         <q-separator />
 
         <q-card-actions align="right">
-          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>View</q-btn>
+          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
           <q-btn @click="exportProject(project)" flat>Export</q-btn>
         </q-card-actions>
       </q-card>
