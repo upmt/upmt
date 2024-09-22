@@ -1,22 +1,26 @@
 <template>
-  <q-tree
+  <QTree
     v-if="folder"
+    ref="treeref"
     :nodes="nodes"
-    node-key="id"
+    node-key="key"
     dense
+    no-transition
     items-stretch
+    default-expand-all
+    v-model:expanded="expanded"
     @lazy-load="onLazyLoad">
 
     <template v-slot:default-header="prop">
       <div class="col-grow row items-stretch space-between menu-item">
         <DropZone types="upmt/descriptem upmt/categoryinstance upmt/moment"
-                  :data="prop.node.id"
+                  :data="prop.node.key"
                   @descriptem="droppedDescriptem"
                   @categoryinstance="droppedCategoryInstance"
                   @moment="droppedMoment">
           <DragElement
             :type="prop.node.dragType"
-            :data="prop.node.realId"
+            :data="prop.node.id"
             >
             <q-icon :name="prop.node.icon || 'share'" class="q-mr-sm" />
             <div class="text-primary">{{ prop.node.label }}</div>
@@ -38,7 +42,7 @@
                 v-for="[label, action] in itemActions(prop.node)"
                 clickable
                 :key="label"
-                @click="action"
+                @click="action($event)"
                 v-close-popup>
                 {{ label }}
               </q-item>
@@ -48,15 +52,15 @@
       </div>
     </template>
 
-  </q-tree>
+  </QTree>
 
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue'
+import { computed, ComputedRef, nextTick, ref } from 'vue'
 import ModelFolder from 'stores/models/modelfolder'
 import { useProjectStore } from 'stores/projectStore'
-import { useQuasar, QTreeLazyLoadParams, QTreeNode } from 'quasar'
+import { useQuasar, QTreeLazyLoadParams, QTreeNode, QTree } from 'quasar'
 import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
 
@@ -71,6 +75,10 @@ const props = defineProps({
     }
 })
 
+const treeref = ref<QTree | null>(null)
+
+const expanded = ref([ 'root' ])
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getKey = (element: any): string => {
       if (element.$modelEntity) {
@@ -82,9 +90,11 @@ const getKey = (element: any): string => {
 
 const nodes: ComputedRef<QTreeNode[]> = computed(() => {
     if (props.folder) {
+        const key = getKey(props.folder)
         return [
             {
-                id: getKey(props.folder),
+                key,
+                id: props.folder.id,
                 label: props.folder.name,
                 lazy: true
             }
@@ -95,10 +105,13 @@ const nodes: ComputedRef<QTreeNode[]> = computed(() => {
   })
 
 const onLazyLoad = function (params: QTreeLazyLoadParams) {
-    const { node, done } = params
+    const { node, key, done } = params
     // const { node, key, done, fail } = params;
-    // console.log("lazy load", node, key, done, fail)
-    const [entitytype, entityid] = node.id.split(':', 2)
+    console.log("lazy load", treeref.value, key, node);
+    // console.log("lazy load", treeref.value, key, node, treeref.value?.lazy);
+    (window as any).tree = treeref.value;
+    (window as any).expanded = expanded.value;
+    const [entitytype, entityid] = node.key.split(':', 2)
 
     if (entitytype === 'projects') {
         const project = store.getProject(entityid)
@@ -106,8 +119,8 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             done(project.interviews.map((i): QTreeNode => {
                 return {
                     label: i.label,
-                    id: getKey(i),
-                    realId: i.id,
+                    key: getKey(i),
+                    id: i.id,
                     icon: 'mdi-graph-outline',
                     lazy: true
                 }
@@ -115,7 +128,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
         } else {
             done([{
                     label: "No project",
-                    id: "no_project",
+                    key: "no_project",
                     realId: "no_project",
                     icon: 'mdi-graph-outline'
             }])
@@ -127,22 +140,22 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
         } else {
             const folders = (folder.folders ?? []).map(f => ({
                 label: f.name,
-                id: getKey(f),
-                realId: f.id,
+                key: getKey(f),
+                id: f.id,
                 icon: 'mdi-folder-outline',
                 lazy: true
             }));
             const categorymodels = (folder.categorymodels ?? []).map(cm => ({
                 label: cm.name,
-                id: getKey(cm),
-                realId: cm.id,
+                key: getKey(cm),
+                id: cm.id,
                 dragType: "categorymodel",
                 icon: 'mdi-tag-outline',
                 lazy: false,
                 children: cm.properties?.map(p => ({
                     label: p.name,
-                    id: getKey(p),
-                    realId: p.id,
+                    key: getKey(p),
+                    id: p.id,
                     dragType: 'property',
                     icon: 'mdi-note-text-outline',
                     lazy: false
@@ -150,8 +163,8 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
             }))
             const momentmodels = (folder.momentmodels ?? []).map(m => ({
                 label: m.name,
-                id: getKey(m),
-                realId: m.id,
+                key: getKey(m),
+                id: m.id,
                 dragType: "momentmodel",
                 icon: 'mdi-note-outline',
                 lazy: false,
@@ -162,8 +175,8 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                     children: c.properties?.map(p => ({
                         label: p.name,
                         dragType: 'property',
-                        id: getKey(p),
-                        realId: p.id,
+                        key: getKey(p),
+                        id: p.id,
                         lazy: false
                     }))
                 }))
@@ -174,6 +187,40 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
         // Catch-all entity
         return []
     }
+  }
+
+/*
+  // Unloading function, from https://github.com/quasarframework/quasar/issues/6950#issuecomment-623886061
+  function unloadKey (key: string) {
+      // Unload a key, so that the QTree component refetches its content
+      if (treeref.value) {
+          const baseNode = treeref.value.getNodeByKey(key)
+          if (baseNode !== void 0) {
+              const unload = (node: QTreeNode) => {
+                  delete treeref.value.lazy[node.label]
+                  if (node.children) {
+                      node.children.forEach(unloadKey)
+                  }
+              }
+              unloadKey(baseNode)
+              baseNode.children = []
+          }
+      }
+  }
+  */
+
+  function refresh (node: QTreeNode) {
+      // See
+      // https://stackoverflow.com/questions/77367253/how-to-programmatically-trigger-quasar-qtree-lazyload-event
+      const tree = treeref.value
+      if (tree) {
+          console.log("Refresh", { tree, node, children: node.children })
+          delete node.children
+          tree.setExpanded(node.key, false)
+          nextTick(() => {
+              tree.setExpanded(node.key, true)
+          })
+      }
   }
 
   function droppedMoment (momentId: string, data: string) {
@@ -203,73 +250,97 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
       })
   }
 
-  function renameFolder (folderId: string, name: string) {
-      getValue(name,
-               name => store.updateModelFolder(folderId, { name }))
+  function renameFolder (node: QTreeNode) {
+      getValue(node.label ?? '',
+               name => {
+                   store.updateModelFolder(node.id, { name })
+                   refresh(node.key)
+               })
   }
 
-  function renameCategoryModel (cmId: string, name: string) {
-      getValue(name,
-               name => store.updateCategoryModel(cmId, { name }))
+  function renameCategoryModel (node: QTreeNode) {
+      getValue(node.label ?? '',
+               name => {
+                   store.updateCategoryModel(node.id, { name })
+                   refresh(node.key)
+               })
   }
 
-  function renamePropertyModel (pmId: string, name: string) {
-      getValue(name,
-               name => store.updatePropertyModel(pmId, { name }))
+  function renamePropertyModel (node: QTreeNode) {
+      getValue(node.label ?? '',
+               name => {
+                   store.updatePropertyModel(node.id, { name })
+                   refresh(node.key)
+               })
   }
 
-  function addModelFolder (parentId: string) {
+  function addModelFolder (node: QTreeNode) {
       getValue('',
                name => {
-                   store.addModelFolder(parentId, name)
+                   store.addModelFolder(node.id, name)
                },
                'Enter the new folder name')
   }
 
-  function addCategoryModel (parentId: string) {
+  function addCategoryModel (node: QTreeNode) {
       getValue('',
                name => {
-                   store.addCategoryModel(parentId, name)
+                   store.addCategoryModel(node.id, name)
                },
                'Enter the new category name')
   }
 
-  function addPropertyModel (parentId: string) {
+  function addPropertyModel (node: QTreeNode) {
       getValue('',
                name => {
-                   store.addPropertyModel(parentId, name)
+                   store.addPropertyModel(node.id, name)
+                   refresh(node.key)
                },
                'Enter the new property name')
   }
 
-  function changeCategoryModelColor (cmId: string) {
+  function deleteModelFolder (node: QTreeNode) {
+      store.deleteModelFolder(node.id)
+  }
+
+  function deleteCategoryModel (node: QTreeNode) {
+      store.deleteCategoryModel(node.id)
+  }
+
+  function deletePropertyModel (node: QTreeNode) {
+      store.deletePropertyModel(node.id)
+  }
+
+  function changeCategoryModelColor (node: QTreeNode) {
       getValue('',
                color => {
-                   store.updateCategoryModel(cmId, { color })
+                   store.updateCategoryModel(node.id, { color })
+                   refresh(node.key)
                },
                'Enter the new color name (FIXME - color picker is coming)')
   }
 
   type NamedActions = [ name: string, action: (element: any) => void][]
   function itemActions (node: QTreeNode): NamedActions {
-      if (node.id.startsWith('modelfolders:')) {
+      if (node.key.startsWith('modelfolders:')) {
           return [
-              [ `Rename ${node.label}`, () => renameFolder(node.realId, node.label ?? '') ],
-              [ `Add a folder`, () => addModelFolder(node.realId) ],
-              [ `Add a category`, () => addCategoryModel(node.realId) ],
-              [ `Delete ${node.label}`, () => store.deleteModelFolder(node.realId) ]
+              [ `Refresh`, () => refresh(node) ],
+              [ `Rename ${node.label}`, () => renameFolder(node) ],
+              [ `Add a folder`, () => addModelFolder(node) ],
+              [ `Add a category`, () => addCategoryModel(node) ],
+              [ `Delete ${node.label}`, () => deleteModelFolder(node) ]
           ]
-      } else if (node.id.startsWith('categorymodels:')) {
+      } else if (node.key.startsWith('categorymodels:')) {
           return [
-              [ `Rename ${node.label}`, () => renameCategoryModel(node.realId, node.label ?? '') ],
-              [ `Add a property`, () => addPropertyModel(node.realId) ],
-              [ `Change color`, () => changeCategoryModelColor(node.realId) ],
-              [ `Delete ${node.label}`, () => store.deleteCategoryModel(node.realId) ]
+              [ `Rename ${node.label}`, () => renameCategoryModel(node) ],
+              [ `Add a property`, () => addPropertyModel(node) ],
+              [ `Change color`, () => changeCategoryModelColor(node) ],
+              [ `Delete ${node.label}`, () => deleteCategoryModel(node) ]
           ]
-      } else if (node.id.startsWith('propertymodels:')) {
+      } else if (node.key.startsWith('propertymodels:')) {
           return [
-              [ `Rename ${node.label}`, () => renamePropertyModel(node.realId, node.label ?? '') ],
-              [ `Delete ${node.label}`, () => store.deletePropertyModel(node.realId) ]
+              [ `Rename ${node.label}`, () => renamePropertyModel(node) ],
+              [ `Delete ${node.label}`, () => deletePropertyModel(node) ]
           ]
       }
       return []
