@@ -402,6 +402,11 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
+  function getPropertyModel (id: string) {
+    return repo.PropertyModel
+      .find(id)
+  }
+
   function getInterviewDescriptems (id: string) {
     // Return the descriptems defined on a specific interview
     return repo.Descriptem.where('interviewId', id).with('interview').all()
@@ -561,7 +566,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     const categoryModel = getCategoryModel(cmId)
     const moment = getMoment(destinationMomentId)
 
-    console.log("addCategoryModel", moment, categoryModel)
+    console.log("addCategoryModel", moment, cmId, categoryModel)
     if (moment && categoryModel) {
       console.log("Creating new categoryinstance ", categoryModel.name)
       // We create a new Category and attach it to the destinationMomentId
@@ -848,6 +853,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMoment,
     getMomentModel,
     getProperty,
+    getPropertyModel,
     loadProject,
     momentAddCategoryModel,
     moveMoment,

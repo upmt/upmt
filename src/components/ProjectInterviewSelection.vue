@@ -30,9 +30,9 @@
           </q-tabs>
 
           <q-separator />
-          <folder-tree
-            :folder="project.modelfolder">
-          </folder-tree>
+          <ModelFolderRepresentation
+            :modelfolderId="project.modelfolder.id">
+          </ModelFolderRepresentation>
         </div>
       </template>
 
@@ -90,7 +90,7 @@
   import { computed, ref, watch } from 'vue'
   import Interview from 'stores/models/interview'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
-  import FolderTree from 'components/FolderTree.vue'
+  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'
   import { useProjectStore } from 'stores/projectStore'
