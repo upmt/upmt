@@ -1,6 +1,7 @@
 <template>
-  <div class="categorymodel-container"
+  <div class="categorymodel-container row"
        v-if="categorymodel"
+       :style="{ backgroundColor: categorymodel.color }"
        :data-descriptem="categorymodel.id">
     <q-expansion-item
       class="categorymodel-body"
@@ -16,6 +17,7 @@
 
       <template v-slot:header>
         <DragElement
+          class="categorymodel-name"
           type="categorymodel"
           :data="categorymodelId">
           <q-icon
@@ -34,7 +36,7 @@
             class="on-name-hover"
             size="xs"
             dense flat round
-                    icon="colorize">
+            icon="colorize">
             <q-popup-proxy>
               <q-color
                 no-header
@@ -110,4 +112,8 @@
   .categorymodel-handle:hover {
       opacity: .7;
   }
+  .categorymodel-name:hover .on-name-hover {
+      opacity: 1;
+  }
+
 </style>
