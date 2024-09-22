@@ -137,6 +137,8 @@
   })
 
   const menuActions = [
+      [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
+      [ `Add a category`, () => store.addCategoryModel(props.modelfolderId, "newcategory") ],
       [ "Delete", () => store.deleteModelFolder(props.modelfolderId) ]
   ]
 </script>
