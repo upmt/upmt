@@ -7,6 +7,7 @@
       class="categorymodel-body"
       dense
       dense-toggle
+      :duration="0"
       expand-icon-toggle
       switch-toggle-side
       v-model="expand"
