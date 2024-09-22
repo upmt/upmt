@@ -12,7 +12,7 @@
       v-model="expand"
       header-class="header-class"
       :title="categorymodel.name"
-      :content-inset-level=".2"
+      :content-inset-level="1"
       >
 
       <template v-slot:header>
@@ -46,6 +46,9 @@
                 />
             </q-popup-proxy>
           </q-btn>
+          <q-space />
+          <ElementMenu
+            :actions="menuActions" />
         </DragElement>
       </template>
 
@@ -53,7 +56,7 @@
         <PropertyModelRepresentation
           v-for="pm in categorymodel.properties"
           :key="pm.id"
-          propertymodelId="pm.id"
+          :propertymodelId="pm.id"
           />
       </div>
     </q-expansion-item>
@@ -64,6 +67,7 @@
 
   import { computed } from 'vue'
   import DragElement from './DragElement.vue'
+  import ElementMenu from './ElementMenu.vue'
   import PropertyModelRepresentation from './PropertyModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
@@ -102,6 +106,10 @@
       }
   })
 
+  const menuActions = [
+      [ "Add a property", () => store.addPropertyModel(props.categorymodelId, "newprop") ],
+      [ "Delete", () => store.deleteModelFolder(props.categorymodelId) ]
+  ]
 </script>
 
 <style>

@@ -1,9 +1,10 @@
 <template>
   <div class="propertymodel-container"
-       v-if="propertymodel"
-       :data-property="propertymodelId"
-       :title="propertymodel.name">
-    <div class="propertymodel-header" row>
+       :data-property="propertymodelId">
+    <div
+      v-if="propertymodel"
+      class="propertymodel-header"
+      row>
       <q-icon
         ref="handle"
         class="propertymodel-handle"
@@ -15,6 +16,9 @@
           <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
         </q-popup-edit>
       </div>
+      <q-space />
+      <ElementMenu
+        :actions="menuActions" />
     </div>
   </div>
 </template>
@@ -22,6 +26,7 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
 
   const store = useProjectStore()
@@ -43,6 +48,11 @@
       (window as any).property = propertymodel.value
       console.log("PropertyModel", propertymodel.value?.toJSON())
   }
+
+  const menuActions = [
+      [ "Delete", () => store.deletePropertyModel(props.propertymodelId) ]
+  ]
+
 </script>
 
 <style>
