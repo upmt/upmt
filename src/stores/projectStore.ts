@@ -215,6 +215,7 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     childIndex: index,
     color: fixColorName(m.color),
     comment: m.comment,
+    interviewId: interview.id,
     isCollapsed: m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
@@ -618,7 +619,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           name,
           parentId: destination.id,
           childIndex,
-          analysisId: referenceMoment.analysisId,
+          interviewId: referenceMoment.interviewId,
           justification: {
             descriptems
           }

@@ -14,6 +14,7 @@ export default class Moment extends Justifiable {
   @Bool(false) declare isTransitional: boolean
 
   @Attr() analysisId!: string
+  @Attr() interviewId!: string
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
 
@@ -52,9 +53,11 @@ export default class Moment extends Justifiable {
       isCommentVisible: this.isCommentVisible,
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
-      categoryinstances: this.categoryinstances.map(c => c.toJSON()),
+      categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
       parentId: this.parentId,
-      children: this.children.map(m => ({ id: m.id }))
+      analysisId: this.analysisId,
+      interviewId: this.interviewId,
+      children: this.children?.map(m => ({ id: m.id }))
     }
   }
 }
