@@ -16,7 +16,8 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      momentmodelId: { type: String, default: null }
+      momentmodelId: { type: String, default: null },
+      currentInterviewId: { type: String, default: "" }
   })
 
   const momentmodel = computed(() => store.getMomentModel(props.momentmodelId))

@@ -59,15 +59,19 @@
 
       <div class="modelfolder-children">
         <div v-for="f in modelfolder.folders" :key="f.id">
-          <ModelFolderRepresentation :modelfolderId="f.id">
+          <ModelFolderRepresentation
+            :currentInterviewId="currentInterviewId"
+            :modelfolderId="f.id">
           </ModelFolderRepresentation>
         </div>
         <div v-for="cm in modelfolder.categorymodels" :key="cm.id">
           <CategoryModelRepresentation
+            :currentInterviewId="currentInterviewId"
             :categorymodelId="cm.id" />
         </div>
         <div v-for="mm in modelfolder.momentmodels" :key="mm.id">
           <MomentModelRepresentation
+            :currentInterviewId="currentInterviewId"
             :momentmodelId="mm.id" />
         </div>
       </div>
@@ -90,7 +94,8 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      modelfolderId: { type: String, default: "" }
+      modelfolderId: { type: String, default: "" },
+      currentInterviewId: { type: String, default: "" }
   })
 
   const modelfolder = computed(() => store.getFolder(props.modelfolderId))
@@ -149,29 +154,21 @@
       font-weight: bold;
       text-align: center;
   }
+  .modelfolder-container {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+  }
+  .modelfolder-body {
+      display: flex;
+      flex-grow: 1;
+  }
   .modelfolder-children {
       list-style: none;
       min-width: 200px;
       display: flex;
       flex-direction: column;
       border-left: 1px dotted black;
-  }
-  .modelfolder-container {
-      display: flex;
-      flex-direction: row;
-      position: relative;
-  }
-  .modelfolder {
-      min-width: 200px;
-      min-height: 40px;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid transparent;
-  }
-  .modelfolder-body {
-      display: flex;
-      flex-grow: 1;
   }
   .transitional {
       background-color: var(--transitional-color);

@@ -11,7 +11,7 @@
         <div class="fit fullwindow-height">
           <q-tabs
             dense
-            v-model="tab"
+            v-model="currentInterviewId"
             vertical
             >
             <strong>{{ project.label }}</strong>
@@ -31,14 +31,15 @@
 
           <q-separator />
           <ModelFolderRepresentation
-            :modelfolderId="project.modelfolder.id">
+            :modelfolderId="project.modelfolder.id"
+            :currentInterviewId="currentInterviewId">
           </ModelFolderRepresentation>
         </div>
       </template>
 
       <template v-slot:after>
         <q-tab-panels
-          v-model="tab"
+          v-model="currentInterviewId"
           animated
           vertical
           transition-prev="jump-up"
@@ -107,16 +108,16 @@
 
   const newInterview = "New interview"
 
-  const tab = ref("")
+  const currentInterviewId = ref("")
   const splitterModel = ref(10)
   const splitterTranscript = ref(90)
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
       if (project.value && project.value.interviews) {
-          tab.value = project.value.interviews[0].id
+          currentInterviewId.value = project.value.interviews[0].id
       } else {
-          tab.value = newInterview
+          currentInterviewId.value = newInterview
       }
   })
 
@@ -125,7 +126,7 @@
       setTimeout(() => {
           router.push({
               query: {
-                  tab: interview.name
+                  currentInterviewId: interview.id
               }
           })
       }, 300)

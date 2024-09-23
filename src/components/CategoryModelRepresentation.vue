@@ -18,6 +18,7 @@
       <template v-slot:header>
         <DragElement
           class="categorymodel-name"
+          @click="debug"
           type="categorymodel"
           :data="categorymodelId">
           <q-icon
@@ -28,7 +29,7 @@
             name="mdi-tag-outline" />
           <span
             class="categorymodel-label">
-            {{ categorymodelName }}
+            {{ categorymodelName }} ({{ currentMoments.length }} / {{ moments.length }})
             <q-popup-edit v-model="categorymodelName" auto-save v-slot="scope">
               <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
             </q-popup-edit>
@@ -75,10 +76,20 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      categorymodelId: { type: String, default: null }
+      categorymodelId: { type: String, default: null },
+      currentInterviewId: { type: String, default: "" }
   })
 
   const categorymodel = computed(() => store.getCategoryModel(props.categorymodelId))
+
+  function debug () {
+      (window as any).categorymodel = categorymodel.value
+      console.log("categorymodel", categorymodel.value)
+  }
+
+  const moments = computed(() => store.getCategoryModelMoments(props.categorymodelId))
+
+  const currentMoments = computed(() => moments.value.filter(m => m.interviewId === props.currentInterviewId))
 
   const categorymodelName = computed({
       get () {
