@@ -109,7 +109,7 @@
   const newInterview = "New interview"
 
   const currentInterviewId = ref("")
-  const splitterModel = ref(10)
+  const splitterModel = ref(20)
   const splitterTranscript = ref(90)
 
   watch(() => props.projectId, () => {
