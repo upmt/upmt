@@ -53,7 +53,7 @@
         </DragElement>
       </template>
 
-      <div class="propertymodel-list">
+      <div class="categorymodel-children">
         <PropertyModelRepresentation
           v-for="pm in categorymodel.properties"
           :key="pm.id"
@@ -113,7 +113,7 @@
   ]
 </script>
 
-<style>
+<style scoped>
   .categorymodel-handle {
       opacity: .5;
       cursor: pointer;
@@ -124,5 +124,12 @@
   .categorymodel-name:hover .on-name-hover {
       opacity: 1;
   }
-
+  .categorymodel-children {
+      border-left: 1px dotted black;
+  }
+  .q-list--dense > .q-item, .q-item--dense {
+    min-height: 18px;
+    padding: 0 2px !important;
+    line-height: 1;
+  }
 </style>

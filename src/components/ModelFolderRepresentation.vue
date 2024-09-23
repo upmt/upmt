@@ -57,7 +57,7 @@
         </DropZone>
       </template>
 
-      <div class="modelfolder-folders">
+      <div class="modelfolder-children">
         <div v-for="f in modelfolder.folders" :key="f.id">
           <ModelFolderRepresentation :modelfolderId="f.id">
           </ModelFolderRepresentation>
@@ -144,7 +144,7 @@
   ]
 </script>
 
-<style>
+<style scoped>
   .header-class {
       font-weight: bold;
       text-align: center;
@@ -154,9 +154,7 @@
       min-width: 200px;
       display: flex;
       flex-direction: column;
-  }
-  .modelfolder-children.horizontal {
-      flex-direction: row;
+      border-left: 1px dotted black;
   }
   .modelfolder-container {
       display: flex;
