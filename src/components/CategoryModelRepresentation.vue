@@ -1,7 +1,6 @@
 <template>
   <div class="categorymodel-container row"
        v-if="categorymodel"
-       :style="{ backgroundColor: categorymodel.color }"
        :data-descriptem="categorymodel.id">
     <q-expansion-item
       class="categorymodel-body"
@@ -22,6 +21,7 @@
           type="categorymodel"
           :data="categorymodelId">
           <q-icon
+            :style="{ backgroundColor: categorymodel.color }"
             ref="handle"
             class="categorymodel-handle"
             size="xs"
