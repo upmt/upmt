@@ -817,6 +817,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function getCategoryModelMoments (categorymodelId: string) {
+    // Given a categorymodel, return the moments where it is involved
+    const instances = repo.CategoryInstance.with('moment').where('categorymodelId', categorymodelId).get()
+    return instances.map(ci => ci.moment)
+  }
+
   return {
     addCategoryModel,
     addModelFolder,
@@ -846,6 +852,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getAnnotation,
     getCategoryInstance,
     getCategoryModel,
+    getCategoryModelMoments,
     getDescriptem,
     getInterview,
     getInterviewDescriptems,
