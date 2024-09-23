@@ -14,7 +14,7 @@
         data="">
         <q-btn>
           New moment
-          <q-tooltip>Drag this button to create a new moment"></q-tooltip>
+          <q-tooltip>Drag this button to create a new moment></q-tooltip>
         </q-btn>
       </DragElement>
       <q-slider v-model="zoom"

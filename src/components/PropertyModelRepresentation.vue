@@ -11,7 +11,7 @@
         size="xs"
         @click.meta="debug"
         name="mdi-note-text-outline"></q-icon>
-      <div class="property-name">{{ propertymodelName }}
+      <div class="propertymodel-name">{{ propertymodelName }}
         <q-popup-edit v-model="propertymodelName" auto-save v-slot="scope">
           <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
         </q-popup-edit>

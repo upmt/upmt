@@ -98,10 +98,13 @@ function droppedSelection (selectionData: string) {
     width: 90%;
     padding-left: 8%;
   }
+  .property-name::after {
+      content: " :";
+  }
   .property-value {
       margin-left: 1em;
       flex: 1 1 0;
-      text-align: right;
+      text-align: left;
       border: 1px solid transparent;
   }
   .property-value:hover {
