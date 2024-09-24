@@ -4,7 +4,9 @@
        :data-moment="analysisId">
     <div class="analysis-content moment-children">
       <div v-for="m in analysis.rootMoment.children" :key="m.id">
-        <MomentRepresentation :momentId="m.id">
+        <MomentRepresentation
+          :highlighted="highlighted"
+          :momentId="m.id">
         </MomentRepresentation>
       </div>
     </div>
@@ -18,8 +20,9 @@
 
   const store = useProjectStore()
   const props = defineProps({
-      analysisId: { type: String, default: "" }
-  });
+      analysisId: { type: String, default: "" },
+      highlighted: { type: String, default: "" }
+  })
 
   const analysis = computed(() => {
       const result = store.getAnalysis(props.analysisId)

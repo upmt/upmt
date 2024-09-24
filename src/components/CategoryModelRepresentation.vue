@@ -29,7 +29,20 @@
             name="mdi-tag-outline" />
           <span
             class="categorymodel-label">
-            {{ categorymodelName }} ({{ currentMoments.length }} / {{ moments.length }})
+            {{ categorymodelName }} (<q-btn
+                                       size="sm"
+                                       dense flat round>
+              <q-menu>
+                <q-btn v-for="moment in currentMoments"
+                       :title="moment.name"
+                       :key="moment.id"
+                       @click="highlightMoment(moment.id)"
+                       size="sm"
+                       :style="{ backgroundColor: moment.color }"
+                       icon="mdi-note-outline">
+                </q-btn>
+              </q-menu>
+              {{ currentMoments.length }}</q-btn> / {{ moments.length }})
             <q-popup-edit v-model="categorymodelName" auto-save v-slot="scope">
               <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
             </q-popup-edit>
@@ -68,10 +81,16 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import { storeToRefs } from 'pinia'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import PropertyModelRepresentation from './PropertyModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
+
+  const istore = useInterfaceStore()
+
+  const { highlighted } = storeToRefs(istore)
 
   const store = useProjectStore()
 
@@ -117,6 +136,14 @@
           store.updateCategoryModel(props.categorymodelId, { isExpanded })
       }
   })
+
+  function highlightMoment (momentId: string) {
+      if (highlighted.value === momentId) {
+          highlighted.value = ""
+      } else {
+          highlighted.value = momentId
+      }
+  }
 
   const menuActions = [
       [ "Add a property", () => store.addPropertyModel(props.categorymodelId, "newprop") ],

@@ -56,6 +56,7 @@
               <template v-slot:before>
                 <InterviewRepresentation
                   class="fit fullwindow-height"
+                  :highlighted="highlighted"
                   :interviewId="interview.id">
                 </InterviewRepresentation>
               </template>
@@ -88,6 +89,7 @@
 
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
+  import { storeToRefs } from 'pinia'
   import { computed, ref, watch } from 'vue'
   import Interview from 'stores/models/interview'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
@@ -95,6 +97,11 @@
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
+
+  const istore = useInterfaceStore()
+
+  const { highlighted } = storeToRefs(istore)
 
   const router = useRouter()
 
@@ -143,7 +150,6 @@
           })
       }
   }
-
 </script>
 
 <style scoped>

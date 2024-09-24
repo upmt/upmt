@@ -1,5 +1,6 @@
 <template>
-  <div class="moment-container">
+  <div ref="container"
+       :class="[ 'moment-container', { 'highlighted': momentId === highlighted } ]">
 
     <DropZone data="before"
               class="empty_padding"
@@ -85,7 +86,9 @@
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
-          <MomentRepresentation :momentId="m.id">
+          <MomentRepresentation
+            :highlighted="highlighted"
+            :momentId="m.id">
           </MomentRepresentation>
           <DropZone :data="`in:${m.id}`"
                     class="empty_padding"
@@ -126,7 +129,8 @@ const store = useProjectStore()
 
 const props = defineProps({
     momentId: { type: String, default: "" },
-    layout: { type: String, default: "vertical" }
+    layout: { type: String, default: "vertical" },
+    highlighted: { type: String, default: "" }
   })
 
 const moment = computed(() => store.getMoment(props.momentId))
@@ -277,6 +281,9 @@ const menuActions = [
       display: flex;
       flex-direction: column;
       border: 1px solid transparent;
+  }
+  .highlighted .moment {
+      border: 2px solid red;
   }
   .moment-body {
       border: 1px solid grey;
