@@ -139,6 +139,12 @@
                   }
               }
           })
+          const rootMoment = i.analysis?.rootMoment
+          if (rootMoment) {
+              // Fix interviewId for new moments
+              store.updateMoment(rootMoment.id, { interviewId: i.id })
+              store.updateMoment(rootMoment.children[0].id, { interviewId: i.id })
+          }
           emit("created", i)
       }
   }
