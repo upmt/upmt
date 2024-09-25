@@ -674,7 +674,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function addCategoryModel (parentId: string, name: string) {
-    return repo.CategoryModel.save({ parentId, name })
+    return repo.CategoryModel.save({ modelfolderId: parentId, name })
   }
 
   function addModelFolder (parentId: string, name: string) {
