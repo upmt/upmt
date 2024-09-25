@@ -33,7 +33,9 @@
             </q-icon>
             <span class="modelfolder-name">{{ modelfolderName }}
               <q-popup-edit v-model="modelfolderName" auto-save v-slot="scope">
-                <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                <q-input v-model="scope.value"
+                         @focus="($event.target as HTMLInputElement).select()"
+                         dense autofocus counter @keyup.enter="scope.set" />
               </q-popup-edit>
               <q-btn
                 class="on-name-hover"

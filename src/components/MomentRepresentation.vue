@@ -47,7 +47,12 @@
                 </q-icon>
                 <span class="moment-name">{{ momentName }}
                   <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
-                    <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    <q-input v-model="scope.value"
+                             @focus="($event.target as HTMLInputElement).select()"
+                             dense
+                             autofocus
+                             counter
+                             @keyup.enter="scope.set" />
                   </q-popup-edit>
                   <q-btn
                     class="on-name-hover"
