@@ -166,7 +166,7 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
                 key: getKey(m),
                 id: m.id,
                 dragType: "momentmodel",
-                icon: 'mdi-note-outline',
+                icon: 'mdi-alpha-m-box-outline',
                 lazy: false,
                 children: m.categorymodels?.map(c => ({
                     label: c.name,

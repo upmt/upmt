@@ -4,7 +4,7 @@
       ref="handle"
       class="momentmodel-handle"
       size="xs"
-      name="mdi-note-outline"></q-icon> {{ momentmodel.name }}
+      name="mdi-alpha-m-box-outline"></q-icon> {{ momentmodel.name }}
   </div>
 </template>
 

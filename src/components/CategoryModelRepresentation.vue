@@ -39,7 +39,7 @@
                        @click="highlightMoment(moment.id)"
                        size="sm"
                        :style="{ backgroundColor: moment.color }"
-                       icon="mdi-note-outline">
+                       icon="mdi-alpha-m-box-outline">
                 </q-btn>
               </q-menu>
               {{ currentMoments.length }}</q-btn> / {{ moments.length }})

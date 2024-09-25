@@ -38,7 +38,7 @@
           v-if="context.moment">
           <q-icon
             size="xs"
-            name="mdi-note-outline"></q-icon>
+            name="mdi-alpha-m-box-outline"></q-icon>
           <span class="moment-name">{{ context.moment.name }}</span>
         </span>
       </div>

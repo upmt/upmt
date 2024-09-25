@@ -43,7 +43,7 @@
                 @click.meta="debug">
                 <q-icon
                   size="xs"
-                  name="mdi-note-outline">
+                  name="mdi-alpha-m-box-outline">
                 </q-icon>
                 <span class="moment-name">{{ momentName }}
                   <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
@@ -135,6 +135,8 @@ const props = defineProps({
 
 const moment = computed(() => store.getMoment(props.momentId))
 
+let newMomentIndex = 1;
+
 function debug () {
     (window as any).moment = moment.value
     console.log("Moment", moment.value)
@@ -185,7 +187,7 @@ function droppedMoment (momentId: string, where: string) {
 function droppedCreatingDescriptem (descriptemId: string, where: string) {
     const descriptem = store.getDescriptem(descriptemId)
     if (descriptem && moment.value) {
-        store.addMoment("NEW",
+        store.addMoment(`New moment ${newMomentIndex++}`,
                         props.momentId,
                         where,
                         descriptem.toJSON())
@@ -195,7 +197,7 @@ function droppedCreatingDescriptem (descriptemId: string, where: string) {
 function droppedCreatingAnnotation (annotationId: string, where: string) {
     const annotation = store.getAnnotation(annotationId)
     if (annotation && moment.value) {
-        store.addMoment("NEW",
+        store.addMoment(`New moment ${newMomentIndex++}`,
                         props.momentId,
                         where,
                         annotation.toJSON())
@@ -206,7 +208,7 @@ function droppedCreatingSelection (selectionData: string, where: string) {
     try {
         const selection = JSON.parse(selectionData)
         if (moment.value) {
-            store.addMoment("NEW",
+            store.addMoment(`New moment ${newMomentIndex++}`,
                             props.momentId,
                             where,
                             selection)
