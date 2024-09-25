@@ -13,7 +13,7 @@
         size="xs"
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
-      <span class="descriptem-label">{{ descriptem.shorttext }}</span>
+      <span class="descriptem-label">{{ descriptem.text }}</span>
 
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
@@ -119,12 +119,13 @@ const menuActions: NamedActions = [
       width: 100%;
   }
   .descriptem-label {
-    display: inline-block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 100%;
-    height: 1.2em;
-    font-style: italic;
+      display: inline-block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      height: 1.2em;
+      font-style: italic;
   }
   .descriptem-handle {
       opacity: .5;
