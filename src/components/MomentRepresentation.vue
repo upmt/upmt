@@ -124,6 +124,9 @@ import DropZone from './DropZone.vue'
 import DragElement from './DragElement.vue'
 import ElementMenu from './ElementMenu.vue'
 import { useProjectStore } from 'stores/projectStore'
+import { useInterfaceStore } from 'stores/interface'
+
+const istore = useInterfaceStore()
 
 const store = useProjectStore()
 
@@ -134,8 +137,6 @@ const props = defineProps({
   })
 
 const moment = computed(() => store.getMoment(props.momentId))
-
-let newMomentIndex = 1;
 
 function debug () {
     (window as any).moment = moment.value
@@ -180,14 +181,20 @@ function droppedSelection (selectionData: string) {
 
 function droppedMoment (momentId: string, where: string) {
     console.log("Dropped Moment", momentId, "where", where)
-    store.moveMoment(momentId, props.momentId, where)
+    if (!momentId) {
+        store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+                        props.momentId,
+                        where)
+    } else {
+        store.moveMoment(momentId, props.momentId, where)
+    }
 }
 
 // Dropped selections to create a moment. data is before or after
 function droppedCreatingDescriptem (descriptemId: string, where: string) {
     const descriptem = store.getDescriptem(descriptemId)
     if (descriptem && moment.value) {
-        store.addMoment(`New moment ${newMomentIndex++}`,
+        store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
                         props.momentId,
                         where,
                         descriptem.toJSON())
@@ -197,7 +204,7 @@ function droppedCreatingDescriptem (descriptemId: string, where: string) {
 function droppedCreatingAnnotation (annotationId: string, where: string) {
     const annotation = store.getAnnotation(annotationId)
     if (annotation && moment.value) {
-        store.addMoment(`New moment ${newMomentIndex++}`,
+        store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
                         props.momentId,
                         where,
                         annotation.toJSON())
@@ -208,7 +215,7 @@ function droppedCreatingSelection (selectionData: string, where: string) {
     try {
         const selection = JSON.parse(selectionData)
         if (moment.value) {
-            store.addMoment(`New moment ${newMomentIndex++}`,
+            store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
                             props.momentId,
                             where,
                             selection)

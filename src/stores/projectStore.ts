@@ -638,43 +638,37 @@ export const useProjectStore = defineStore('projectStore', () => {
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
     console.log("Trying to move", sourceMomentId, where || "to", referenceMomentId)
     // Empty sourceId. Can be from New Moment button to create a new moment.
-    if (!sourceMomentId) {
-      addMoment("New moment",
-        referenceMomentId,
-        where)
-    } else {
-      const source = getMoment(sourceMomentId)
-      const reference = getMoment(referenceMomentId)
-      let parent = reference
+    const source = getMoment(sourceMomentId)
+    const reference = getMoment(referenceMomentId)
+    let parent = reference
 
-      if (source && reference) {
-        let childIndex = 0
+    if (source && reference) {
+      let childIndex = 0
 
-        if (where.startsWith('in:')) {
-          parent = getMoment(where.slice(3))
-        } else if (where === 'before') {
-          parent = getMoment(reference.parentId)
-          childIndex = reference.childIndex
-        } else if (where === 'after') {
-          parent = getMoment(reference.parentId)
-          childIndex = reference.childIndex + 1
+      if (where.startsWith('in:')) {
+        parent = getMoment(where.slice(3))
+      } else if (where === 'before') {
+        parent = getMoment(reference.parentId)
+        childIndex = reference.childIndex
+      } else if (where === 'after') {
+        parent = getMoment(reference.parentId)
+        childIndex = reference.childIndex + 1
+      }
+      if (parent) {
+        const children = [ ...parent.children ]
+        const data = {
+          ...source.toJSON(),
+          parentId: parent.id,
+          childIndex
         }
-        if (parent) {
-          const children = [ ...parent.children ]
-          const data = {
-            ...source.toJSON(),
-            parentId: parent.id,
-            childIndex
-          }
-          console.log("Saving data ", data)
-          repo.Moment.save(data)
-          // Items before childIndex are the same. Renumber following ones.
+        console.log("Saving data ", data)
+        repo.Moment.save(data)
+        // Items before childIndex are the same. Renumber following ones.
           children.slice(childIndex).forEach(moment => {
             updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
           })
-        } else {
+      } else {
           console.error("Strange error - parent", parent, " is null")
-        }
       }
     }
   }
