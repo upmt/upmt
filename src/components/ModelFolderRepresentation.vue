@@ -144,11 +144,20 @@
       }
   })
 
-  const menuActions = [
-      [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
-      [ `Add a category`, () => store.addCategoryModel(props.modelfolderId, "newcategory") ],
-      [ "Delete", () => store.deleteModelFolder(props.modelfolderId) ]
-  ]
+  type NamedActions = [ name: string, action: (element: any) => any][]
+
+  const menuActions = computed(() => {
+      const actions: NamedActions = [
+          [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
+          [ `Add a category`, () => store.addCategoryModel(props.modelfolderId, "newcategory") ]
+      ]
+
+      if (modelfolder.value && modelfolder.value.parentId) {
+          actions.push([ "Delete", () => store.deleteModelFolder(props.modelfolderId) ])
+      }
+      return actions
+  })
+
 </script>
 
 <style scoped>
