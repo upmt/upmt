@@ -4,7 +4,7 @@
 
 Access the latest version at https://upmt.github.io/upmt/
 
-Read documentation at: https://github.com/upmt/upmt/wiki
+Read [documentation](https://github.com/upmt/upmt/wiki/%CE%BCPMT-documentation).
 
 Ask questions and discuss with the community on the forum https://github.com/upmt/upmt/discussions
 
