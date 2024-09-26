@@ -3,11 +3,6 @@
        v-if="interview"
        :data-interview="interviewId">
     <div class="interview-metadata row">
-      <span class="interview-title"
-            :style="{ backgroundColor: interview.color }">
-        <span class="interview-participantName">{{ interview.participantName }}</span>
-        &nbsp;(<span class="interview-date">{{ interview.date }}</span>)
-      </span>
       <span class="interview-comment">{{ interview.comment }}</span>
       <DragElement
         type="moment"
@@ -79,9 +74,6 @@ const zoom = computed({
   }
   .interview-metadata > span {
       margin: 0 1em;
-  }
-  .interview-title {
-      font-weight: bold;
   }
   .scrollable {
       overflow: auto;

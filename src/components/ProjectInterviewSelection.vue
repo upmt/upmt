@@ -18,7 +18,6 @@
             v-model="currentInterviewId"
             vertical
             >
-            <strong>{{ project.label }}</strong>
             <q-route-tab v-for="interview in project.interviews"
                          :to="{ query: { tab: interview.label } }"
                          icon="mdi-chat-outline"
