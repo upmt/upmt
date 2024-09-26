@@ -24,7 +24,7 @@
 
         <q-card-actions align="right">
           <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
-          <q-btn @click="exportProject(project)" flat>Export</q-btn>
+          <q-btn @click="exportProject(project)" flat>Save</q-btn>
         </q-card-actions>
       </q-card>
 
