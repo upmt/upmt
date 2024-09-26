@@ -56,65 +56,66 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useProjectStore } from 'stores/projectStore'
-import DragElement from './DragElement.vue'
-import ElementMenu from './ElementMenu.vue'
-import Moment from 'stores/models/moment'
-import Property from 'stores/models/property'
-import CategoryInstance from 'stores/models/categoryinstance'
 
-const store = useProjectStore()
+  import { computed } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import DragElement from './DragElement.vue'
+  import ElementMenu from './ElementMenu.vue'
+  import Moment from 'stores/models/moment'
+  import Property from 'stores/models/property'
+  import CategoryInstance from 'stores/models/categoryinstance'
 
-const props = defineProps({
-    descriptemId: { type: String, default: "" },
-    withContext: { type: Boolean, default: false }
+  const store = useProjectStore()
+
+  const props = defineProps({
+      descriptemId: { type: String, default: "" },
+      withContext: { type: Boolean, default: false }
   })
 
-const descriptem = computed(() => store.getDescriptem(props.descriptemId))
+  const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 
-function debug () {
-    (window as any).descriptem = descriptem.value
-    console.log("Descriptem", descriptem.value?.toJSON())
-}
+  function debug () {
+      (window as any).descriptem = descriptem.value
+      console.log("Descriptem", descriptem.value?.toJSON())
+  }
 
-type Context = {
-    moment?: Moment,
-    categoryinstance?: CategoryInstance,
-    property?: Property
-}
+  type Context = {
+      moment?: Moment,
+      categoryinstance?: CategoryInstance,
+      property?: Property
+  }
 
-// context is an object with optional moment / categoryinstance / property values
-const context = computed((): Context => {
-    if (descriptem.value && descriptem.value.justification) {
-        const parent = store.getJustificationParent(descriptem.value.justification.parentId)
-        // Moment: ${moment.name}
-        // Category: ${category.moment.name} | ${category.name}
-        // Property: ${property.categoryinstance.moment.name} | ${property.categoryinstance.name} | ${property.name}: ${property.value}
-        if (parent) {
-            console.log("Context", parent, parent.asContext)
-            return parent.asContext
-        } else {
-            return { }
-        }
-    } else {
-        return { }
-    }
+  // context is an object with optional moment / categoryinstance / property values
+  const context = computed((): Context => {
+      if (descriptem.value && descriptem.value.justification) {
+          const parent = store.getJustificationParent(descriptem.value.justification.parentId)
+          // Moment: ${moment.name}
+          // Category: ${category.moment.name} | ${category.name}
+          // Property: ${property.categoryinstance.moment.name} | ${property.categoryinstance.name} | ${property.name}: ${property.value}
+          if (parent) {
+              console.log("Context", parent, parent.asContext)
+              return parent.asContext
+          } else {
+              return { }
+          }
+      } else {
+          return { }
+      }
   })
 
-type NamedActions = [ name: string, action: (element: any) => void][]
-const menuActions: NamedActions = [
-    [ "Modify", () => alert("Not implemented yet") ],
-    [ "Duplicate", () => store.duplicateDescriptem(props.descriptemId) ],
-    [ "Delete", () => store.deleteDescriptem(props.descriptemId) ]
+  type NamedActions = [ name: string, action: (element: any) => void][]
+  const menuActions: NamedActions = [
+      [ "Modify", () => alert("Not implemented yet") ],
+      [ "Duplicate", () => store.duplicateDescriptem(props.descriptemId) ],
+      [ "Delete", () => store.deleteDescriptem(props.descriptemId) ]
   ]
 </script>
 
 <style scoped>
   .descriptem {
-    display: flex;
-    flex-direction: row;
-    height: 1.2em;
+      display: flex;
+      flex-direction: row;
+      height: 1.2em;
   }
   .descriptem-header {
       width: 100%;

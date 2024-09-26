@@ -9,31 +9,31 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
-import { computed } from 'vue'
-import { useProjectStore } from 'stores/projectStore'
-import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from 'axios'
+    import { useQuasar } from 'quasar'
+  import { computed } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  import axios from 'axios'
 
-defineOptions({
-  name: 'ProjectPage'
-})
-const props = defineProps({
-    id: {
-        type: String,
-        default: null
-    }
-})
+  defineOptions({
+      name: 'ProjectPage'
+  })
+  const props = defineProps({
+      id: {
+          type: String,
+          default: null
+      }
+  })
 
-const $q = useQuasar()
+  const $q = useQuasar()
 
-const projectStore = useProjectStore()
-const project = computed(() => {
-    if (props.id) {
-        return projectStore.getProject(props.id)
-    } else {
-        return null
-    }
-})
+  const projectStore = useProjectStore()
+  const project = computed(() => {
+      if (props.id) {
+          return projectStore.getProject(props.id)
+      } else {
+          return null
+      }
+  })
 </script>

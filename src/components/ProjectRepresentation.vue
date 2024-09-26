@@ -14,15 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import Project from 'stores/models/project'
-import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 
-defineProps({
-    project: {
-        type: Project,
-        default: null
-    }
-})
+  import Project from 'stores/models/project'
+  import InterviewRepresentation from 'components/InterviewRepresentation.vue'
+
+  defineProps({
+      project: {
+          type: Project,
+          default: null
+      }
+  })
 </script>
 
 <style>

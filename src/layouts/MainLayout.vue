@@ -9,7 +9,7 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
-        />
+          />
 
         <q-toolbar-title
           class="app-title">
@@ -84,78 +84,79 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-import { RouteLocationRaw } from 'vue-router'
-import { useProjectStore } from 'stores/projectStore'
-import { useInterfaceStore } from 'stores/interface'
 
-const istore = useInterfaceStore()
+  import { ref, computed, onMounted } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import { RouteLocationRaw } from 'vue-router'
+  import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
 
-defineOptions({
-  name: 'MainLayout'
-})
+  const istore = useInterfaceStore()
 
-interface MenuItem {
-    label: string
-    icon?: string
-    link?: RouteLocationRaw
-    action?: object
-    separator?: boolean
-    href?: string
-}
+  defineOptions({
+      name: 'MainLayout'
+  })
 
-const store = useProjectStore()
+  interface MenuItem {
+      label: string
+      icon?: string
+      link?: RouteLocationRaw
+      action?: object
+      separator?: boolean
+      href?: string
+  }
 
-const { currentInterview, currentProject } = storeToRefs(istore)
+  const store = useProjectStore()
 
-const menuList = computed<MenuItem[]>(() => [
-    {
-        label: 'Home',
-        icon: 'mdi-home',
-        link: '/home',
-        separator: true
-    },
-    ...store.getAllProjects().map(p => {
-        return {
-            label: p.name,
-            icon: 'mdi-semantic-web',
-            link: `/project/${p.id}`
-        }
-    }),
-    {
-        label: 'Documentation',
-        icon: 'mdi-help-circle-outline',
-        href: 'https://github.com/upmt/upmt/wiki'
-    },
-    {
-        label: 'Discussions',
-        icon: 'mdi-chat-question-outline',
-        href: 'https://github.com/upmt/upmt/discussions'
-    },
-    {
-        label: 'Github',
-        icon: 'mdi-github',
-        href: 'https://github.com/upmt/upmt'
-    },
-    {
-        label: 'Debug',
-        icon: 'mdi-eye',
-        link: '/debug'
-    }
+  const { currentInterview, currentProject } = storeToRefs(istore)
+
+  const menuList = computed<MenuItem[]>(() => [
+      {
+          label: 'Home',
+          icon: 'mdi-home',
+          link: '/home',
+          separator: true
+      },
+      ...store.getAllProjects().map(p => {
+          return {
+              label: p.name,
+              icon: 'mdi-semantic-web',
+              link: `/project/${p.id}`
+          }
+      }),
+      {
+          label: 'Documentation',
+          icon: 'mdi-help-circle-outline',
+          href: 'https://github.com/upmt/upmt/wiki'
+      },
+      {
+          label: 'Discussions',
+          icon: 'mdi-chat-question-outline',
+          href: 'https://github.com/upmt/upmt/discussions'
+      },
+      {
+          label: 'Github',
+          icon: 'mdi-github',
+          href: 'https://github.com/upmt/upmt'
+      },
+      {
+          label: 'Debug',
+          icon: 'mdi-eye',
+          link: '/debug'
+      }
   ])
 
-const leftDrawerOpen = ref(false)
-const rightDrawerOpen = ref(false)
+  const leftDrawerOpen = ref(false)
+  const rightDrawerOpen = ref(false)
 
-function toggleLeftDrawer () {
-    leftDrawerOpen.value = !leftDrawerOpen.value
-}
-function toggleRightDrawer () {
-    rightDrawerOpen.value = !rightDrawerOpen.value
-}
-onMounted(() => {
-    leftDrawerOpen.value = false
-    rightDrawerOpen.value = false
-})
+  function toggleLeftDrawer () {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+  }
+  function toggleRightDrawer () {
+      rightDrawerOpen.value = !rightDrawerOpen.value
+  }
+  onMounted(() => {
+      leftDrawerOpen.value = false
+      rightDrawerOpen.value = false
+  })
 </script>

@@ -15,16 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import DescriptemRepresentation from './DescriptemRepresentation.vue'
-import { computed } from 'vue'
-import { useProjectStore } from 'stores/projectStore'
 
-const store = useProjectStore()
+  import DescriptemRepresentation from './DescriptemRepresentation.vue'
+  import { computed } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
 
-const props = defineProps({
-    justificationId: { type: String, default: "" }
-})
-const justification = computed(() => store.getJustification(props.justificationId))
+  const store = useProjectStore()
+
+  const props = defineProps({
+      justificationId: { type: String, default: "" }
+  })
+  const justification = computed(() => store.getJustification(props.justificationId))
 </script>
 
 <style>

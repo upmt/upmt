@@ -6,7 +6,7 @@
         <div class="text-h3">μ<span style="font-weight: 400">PMT</span> - micro Phenomenology Modelling Tool</div>
         <div>A tool to help researchers analyze micro-phenomenology interviews (<a href="https://github.com/upmt/upmt/wiki/">more info</a>)</div>
       </q-card-section>
-        <q-card-section class="bg-primary text-white">
+      <q-card-section class="bg-primary text-white">
         <div class="text-h4">Current projects</div>
       </q-card-section>
     </q-card>
@@ -32,22 +32,22 @@
           <q-card-actions align="right">
             <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
             <q-btn @click="exportProject(project)" flat>Save</q-btn>
-        </q-card-actions>
+          </q-card-actions>
         </q-card>
 
         <q-fab color="secondary" push icon="add" direction="right">
 
-        <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
-          <q-tooltip>
-            Create a new blank project
-          </q-tooltip>
-        </q-fab-action>
+          <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
+            <q-tooltip>
+              Create a new blank project
+            </q-tooltip>
+          </q-fab-action>
 
-        <q-fab-action color="primary" @click="loadProject" icon="mdi-upload-circle-outline">
-          <q-tooltip>
-            Load a local .upmt file
-          </q-tooltip>
-        </q-fab-action>
+          <q-fab-action color="primary" @click="loadProject" icon="mdi-upload-circle-outline">
+            <q-tooltip>
+              Load a local .upmt file
+            </q-tooltip>
+          </q-fab-action>
 
         </q-fab>
 
@@ -55,9 +55,9 @@
                 ref="filepicker"
                 class="hidden"
                 v-model="filename"
-              accept=".upmt"
+                accept=".upmt"
                 filled
-              @input="uploadFile"/>
+                @input="uploadFile"/>
 
       </div>
 
@@ -115,76 +115,77 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar, exportFile, QFile } from 'quasar'
-import { computed, ref, Ref } from 'vue'
-import { useProjectStore } from 'stores/projectStore'
-import Project from 'stores/models/project'
 
-defineOptions({
-  name: 'IndexPage'
-})
+  import { useQuasar, exportFile, QFile } from 'quasar'
+  import { computed, ref, Ref } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import Project from 'stores/models/project'
 
-const $q = useQuasar()
+  defineOptions({
+      name: 'IndexPage'
+  })
 
-const store = useProjectStore()
+  const $q = useQuasar()
 
-const filepicker: Ref<QFile | null> = ref(null)
+  const store = useProjectStore()
 
-const filename = ref(null)
+  const filepicker: Ref<QFile | null> = ref(null)
 
-const projects = computed(() => store.getAllProjects())
+  const filename = ref(null)
 
-function loadProject () {
-    console.log("loadProject", filepicker.value)
-    if (filepicker.value) {
-        filepicker.value.pickFiles()
-    }
-}
+  const projects = computed(() => store.getAllProjects())
 
-function uploadFile (event: Event) {
-    try {
-        // `event.target.files[0]` is the desired file object
-        const files = (event.target as HTMLInputElement).files
-        if (!files || files.length === 0) {
-            return
-        }
-        const sourceFile = files[0]
-        const reader = new FileReader()
+  function loadProject () {
+      console.log("loadProject", filepicker.value)
+      if (filepicker.value) {
+          filepicker.value.pickFiles()
+      }
+  }
 
-        reader.onload = () => {
-            // Parse file and extract data
-            let jsonData = null
-            try {
-                jsonData = JSON.parse(reader.result as string)
-            } catch (error) {
-                $q.notify({
-                    type: 'error',
-                    message: `Error loading file: ${error}`
-                })
-                jsonData = null
-            }
-            if (jsonData !== null) {
-                store.importProject(jsonData, sourceFile.name)
-            }
-        }
-        reader.onerror = () => {
-            console.error('Error reading file:', reader.error)
-            $q.notify({
-                type: 'error',
-                message: `Error reading file: ${reader.error}`
-            })
-        }
-        // Load data from file - the readAsText will
-        // trigger the load event that is handled just
-        // above.
-        reader.readAsText(sourceFile)
-    } catch (e) {
-        console.log(e)
-        $q.notify({
-            type: 'error',
-            message: `General exception: ${e}`
-        })
-    }
+  function uploadFile (event: Event) {
+      try {
+          // `event.target.files[0]` is the desired file object
+          const files = (event.target as HTMLInputElement).files
+          if (!files || files.length === 0) {
+              return
+          }
+          const sourceFile = files[0]
+          const reader = new FileReader()
+
+          reader.onload = () => {
+              // Parse file and extract data
+              let jsonData = null
+              try {
+                  jsonData = JSON.parse(reader.result as string)
+              } catch (error) {
+                  $q.notify({
+                      type: 'error',
+                      message: `Error loading file: ${error}`
+                  })
+                  jsonData = null
+              }
+              if (jsonData !== null) {
+                  store.importProject(jsonData, sourceFile.name)
+              }
+          }
+          reader.onerror = () => {
+              console.error('Error reading file:', reader.error)
+              $q.notify({
+                  type: 'error',
+                  message: `Error reading file: ${reader.error}`
+              })
+          }
+          // Load data from file - the readAsText will
+          // trigger the load event that is handled just
+          // above.
+          reader.readAsText(sourceFile)
+      } catch (e) {
+          console.log(e)
+          $q.notify({
+              type: 'error',
+              message: `General exception: ${e}`
+          })
+      }
   }
 
   function newProject () {
@@ -209,27 +210,27 @@ function uploadFile (event: Event) {
       })
   }
 
-function exportProject (project: Project) {
-    const data = useProjectStore().hydrateProject(project.id)
+  function exportProject (project: Project) {
+      const data = useProjectStore().hydrateProject(project.id)
 
-    const status = exportFile(project.filename ?? project.label,
-                              JSON.stringify(data, null, 2), {
-        encoding: 'utf-8',
-        mimeType: 'application/json'
-    })
+      const status = exportFile(project.filename ?? project.label,
+                                JSON.stringify(data, null, 2), {
+                                    encoding: 'utf-8',
+                                    mimeType: 'application/json'
+                                })
 
-    if (status === true) {
-        // browser allowed it
-    } else {
-        // browser denied it
-        console.error('Error: ' + status)
-    }
-}
+      if (status === true) {
+          // browser allowed it
+      } else {
+          // browser denied it
+          console.error('Error: ' + status)
+      }
+  }
 </script>
 
 <style scoped>
-.project-card {
+  .project-card {
     width: 100%;
     max-width: 250px;
-}
+  }
 </style>

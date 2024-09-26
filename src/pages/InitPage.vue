@@ -12,53 +12,54 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
-import { onMounted, ref, watch } from 'vue'
-import Project from 'stores/models/project'
-import { useProjectStore } from 'stores/projectStore'
-import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from 'axios'
 
-defineOptions({
-  name: 'InitPage'
-})
-const props = defineProps({
-    source: {
-        type: String,
-        default: null
-    }
-})
+  import { useQuasar } from 'quasar'
+  import { onMounted, ref, watch } from 'vue'
+  import Project from 'stores/models/project'
+  import { useProjectStore } from 'stores/projectStore'
+  import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  import axios from 'axios'
 
-const $q = useQuasar()
+  defineOptions({
+      name: 'InitPage'
+  })
+  const props = defineProps({
+      source: {
+          type: String,
+          default: null
+      }
+  })
 
-const store = useProjectStore()
+  const $q = useQuasar()
 
-const project = ref<Project>()
+  const store = useProjectStore()
 
-function loadSample (filename = './examples/example.upmt') {
-    $q.loading.show()
-    axios.get(filename).then((response) => {
-        const p = useProjectStore().importProject(response.data, filename)
-        project.value = p
-        $q.loading.hide()
-    })
-}
+  const project = ref<Project>()
 
-watch(() => props.source,
-      () => {
-          if (props.source) {
-              loadSample(props.source)
-          }
+  function loadSample (filename = './examples/example.upmt') {
+      $q.loading.show()
+      axios.get(filename).then((response) => {
+          const p = useProjectStore().importProject(response.data, filename)
+          project.value = p
+          $q.loading.hide()
+      })
+  }
+
+  watch(() => props.source,
+        () => {
+            if (props.source) {
+                loadSample(props.source)
+            }
         },
-      { once: true })
+        { once: true })
 
-onMounted(() => {
-    if (!project.value) {
-        loadSample();
-        (window as any).store = store;
-        (window as any).quasar = $q;
-        console.log("Debugging store", store, "quasar", $q);
-    }
-})
+  onMounted(() => {
+      if (!project.value) {
+          loadSample();
+          (window as any).store = store;
+          (window as any).quasar = $q;
+          console.log("Debugging store", store, "quasar", $q);
+      }
+  })
 </script>

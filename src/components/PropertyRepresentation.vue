@@ -34,53 +34,54 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useProjectStore } from 'stores/projectStore'
-import JustificationRepresentation from './JustificationRepresentation.vue'
-import DropZone from './DropZone.vue'
 
-const store = useProjectStore()
+  import { computed } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import JustificationRepresentation from './JustificationRepresentation.vue'
+  import DropZone from './DropZone.vue'
 
-const props = defineProps({
-    propertyId: { type: String, default: "" }
-})
+  const store = useProjectStore()
 
-const property = computed(() => store.getProperty(props.propertyId))
-const propertyValue = computed({
-    get: () => property.value ? property.value.value : "",
-    set: (value) => {
-        store.updateProperty(props.propertyId, { value })
-    }
-})
+  const props = defineProps({
+      propertyId: { type: String, default: "" }
+  })
 
-function debug () {
-    (window as any).property = property.value
-    console.log("Property", property.value?.toJSON())
-}
+  const property = computed(() => store.getProperty(props.propertyId))
+  const propertyValue = computed({
+      get: () => property.value ? property.value.value : "",
+      set: (value) => {
+          store.updateProperty(props.propertyId, { value })
+      }
+  })
 
-function droppedDescriptem (descriptemId: string) {
-    const descriptem = store.getDescriptem(descriptemId)
-    if (descriptem) {
-        store.addTextSelectionToProperty(descriptem.toJSON(), props.propertyId)
-    }
-}
+  function debug () {
+      (window as any).property = property.value
+      console.log("Property", property.value?.toJSON())
+  }
 
-function droppedAnnotation (annotationId: string) {
-    const annotation = store.getAnnotation(annotationId)
-    if (annotation) {
-        store.addTextSelectionToProperty(annotation.toJSON(), props.propertyId)
-    }
-}
+  function droppedDescriptem (descriptemId: string) {
+      const descriptem = store.getDescriptem(descriptemId)
+      if (descriptem) {
+          store.addTextSelectionToProperty(descriptem.toJSON(), props.propertyId)
+      }
+  }
 
-function droppedSelection (selectionData: string) {
-    try {
-        const selection = JSON.parse(selectionData)
-        // addTextSelectionToMoment will do the necessary key checks
-        store.addTextSelectionToProperty(selection, props.propertyId)
-    } catch (e) {
-        console.log(`Cannot parse ${selectionData}`)
-    }
-}
+  function droppedAnnotation (annotationId: string) {
+      const annotation = store.getAnnotation(annotationId)
+      if (annotation) {
+          store.addTextSelectionToProperty(annotation.toJSON(), props.propertyId)
+      }
+  }
+
+  function droppedSelection (selectionData: string) {
+      try {
+          const selection = JSON.parse(selectionData)
+          // addTextSelectionToMoment will do the necessary key checks
+          store.addTextSelectionToProperty(selection, props.propertyId)
+      } catch (e) {
+          console.log(`Cannot parse ${selectionData}`)
+      }
+  }
 
 </script>
 
@@ -91,14 +92,14 @@ function droppedSelection (selectionData: string) {
     min-height: 1.2em;
   }
   .property-content {
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    padding-left: 5%;
+      display: flex;
+      flex-direction: row;
+      width: 90%;
+      padding-left: 5%;
   }
   .property-justification {
-    width: 90%;
-    padding-left: 8%;
+      width: 90%;
+      padding-left: 8%;
   }
   .property-name::after {
       content: " :";

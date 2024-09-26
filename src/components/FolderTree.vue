@@ -57,155 +57,156 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, nextTick, ref } from 'vue'
-import ModelFolder from 'stores/models/modelfolder'
-import { useProjectStore } from 'stores/projectStore'
-import { useQuasar, QTreeLazyLoadParams, QTreeNode, QTree } from 'quasar'
-import DropZone from './DropZone.vue'
-import DragElement from './DragElement.vue'
 
-const $q = useQuasar()
+  import { computed, ComputedRef, nextTick, ref } from 'vue'
+  import ModelFolder from 'stores/models/modelfolder'
+  import { useProjectStore } from 'stores/projectStore'
+  import { useQuasar, QTreeLazyLoadParams, QTreeNode, QTree } from 'quasar'
+  import DropZone from './DropZone.vue'
+  import DragElement from './DragElement.vue'
 
-const store = useProjectStore()
+  const $q = useQuasar()
 
-const props = defineProps({
-    folder: {
-        type: ModelFolder,
-        default: null
-    }
-})
+  const store = useProjectStore()
 
-const treeref = ref<QTree | null>(null)
+  const props = defineProps({
+      folder: {
+          type: ModelFolder,
+          default: null
+      }
+  })
 
-const expanded = ref([ 'root' ])
+  const treeref = ref<QTree | null>(null)
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const getKey = (element: any): string => {
+  const expanded = ref([ 'root' ])
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const getKey = (element: any): string => {
       if (element.$modelEntity) {
           return `${element.$modelEntity()}:${element.id}`
       } else {
           return element.toString()
       }
-}
-
-const nodes: ComputedRef<QTreeNode[]> = computed(() => {
-    if (props.folder) {
-        const key = getKey(props.folder)
-        return [
-            {
-                key,
-                id: props.folder.id,
-                label: props.folder.name,
-                lazy: true
-            }
-        ]
-    } else {
-        return [{}]
-    }
-  })
-
-const onLazyLoad = function (params: QTreeLazyLoadParams) {
-    const { node, key, done } = params
-    // const { node, key, done, fail } = params;
-    console.log("lazy load", treeref.value, key, node);
-    // console.log("lazy load", treeref.value, key, node, treeref.value?.lazy);
-    (window as any).tree = treeref.value;
-    (window as any).expanded = expanded.value;
-    const [entitytype, entityid] = node.key.split(':', 2)
-
-    if (entitytype === 'projects') {
-        const project = store.getProject(entityid)
-        if (project) {
-            done(project.interviews.map((i): QTreeNode => {
-                return {
-                    label: i.label,
-                    key: getKey(i),
-                    id: i.id,
-                    icon: 'mdi-graph-outline',
-                    lazy: true
-                }
-            }))
-        } else {
-            done([{
-                    label: "No project",
-                    key: "no_project",
-                    realId: "no_project",
-                    icon: 'mdi-graph-outline'
-            }])
-        }
-    } else if (entitytype === 'modelfolders') {
-        const folder = store.getFolder(entityid)
-        if (!folder) {
-            done([])
-        } else {
-            const folders = (folder.folders ?? []).map(f => ({
-                label: f.name,
-                key: getKey(f),
-                id: f.id,
-                icon: 'mdi-folder-outline',
-                lazy: true
-            }));
-            const categorymodels = (folder.categorymodels ?? []).map(cm => ({
-                label: cm.name,
-                key: getKey(cm),
-                id: cm.id,
-                dragType: "categorymodel",
-                icon: 'mdi-tag-outline',
-                lazy: false,
-                children: cm.properties?.map(p => ({
-                    label: p.name,
-                    key: getKey(p),
-                    id: p.id,
-                    dragType: 'property',
-                    icon: 'mdi-note-text-outline',
-                    lazy: false
-                }))
-            }))
-            const momentmodels = (folder.momentmodels ?? []).map(m => ({
-                label: m.name,
-                key: getKey(m),
-                id: m.id,
-                dragType: "momentmodel",
-                icon: 'mdi-alpha-m-box-outline',
-                lazy: false,
-                children: m.categorymodels?.map(c => ({
-                    label: c.name,
-                    id: getKey(c),
-                    realId: c.id,
-                    children: c.properties?.map(p => ({
-                        label: p.name,
-                        dragType: 'property',
-                        key: getKey(p),
-                        id: p.id,
-                        lazy: false
-                    }))
-                }))
-            }))
-            done(folders.concat(categorymodels, momentmodels))
-        }
-    } else {
-        // Catch-all entity
-        return []
-    }
   }
 
-/*
+  const nodes: ComputedRef<QTreeNode[]> = computed(() => {
+      if (props.folder) {
+          const key = getKey(props.folder)
+          return [
+              {
+                  key,
+                  id: props.folder.id,
+                  label: props.folder.name,
+                  lazy: true
+              }
+          ]
+      } else {
+          return [{}]
+      }
+  })
+
+  const onLazyLoad = function (params: QTreeLazyLoadParams) {
+      const { node, key, done } = params
+      // const { node, key, done, fail } = params;
+      console.log("lazy load", treeref.value, key, node);
+      // console.log("lazy load", treeref.value, key, node, treeref.value?.lazy);
+      (window as any).tree = treeref.value;
+      (window as any).expanded = expanded.value;
+      const [entitytype, entityid] = node.key.split(':', 2)
+
+      if (entitytype === 'projects') {
+          const project = store.getProject(entityid)
+          if (project) {
+              done(project.interviews.map((i): QTreeNode => {
+                  return {
+                      label: i.label,
+                      key: getKey(i),
+                      id: i.id,
+                      icon: 'mdi-graph-outline',
+                      lazy: true
+                  }
+              }))
+          } else {
+              done([{
+                  label: "No project",
+                  key: "no_project",
+                  realId: "no_project",
+                  icon: 'mdi-graph-outline'
+              }])
+          }
+      } else if (entitytype === 'modelfolders') {
+          const folder = store.getFolder(entityid)
+          if (!folder) {
+              done([])
+          } else {
+              const folders = (folder.folders ?? []).map(f => ({
+                  label: f.name,
+                  key: getKey(f),
+                  id: f.id,
+                  icon: 'mdi-folder-outline',
+                  lazy: true
+              }));
+              const categorymodels = (folder.categorymodels ?? []).map(cm => ({
+                  label: cm.name,
+                  key: getKey(cm),
+                  id: cm.id,
+                  dragType: "categorymodel",
+                  icon: 'mdi-tag-outline',
+                  lazy: false,
+                  children: cm.properties?.map(p => ({
+                      label: p.name,
+                      key: getKey(p),
+                      id: p.id,
+                      dragType: 'property',
+                      icon: 'mdi-note-text-outline',
+                      lazy: false
+                  }))
+              }))
+              const momentmodels = (folder.momentmodels ?? []).map(m => ({
+                  label: m.name,
+                  key: getKey(m),
+                  id: m.id,
+                  dragType: "momentmodel",
+                  icon: 'mdi-alpha-m-box-outline',
+                  lazy: false,
+                  children: m.categorymodels?.map(c => ({
+                      label: c.name,
+                      id: getKey(c),
+                      realId: c.id,
+                      children: c.properties?.map(p => ({
+                          label: p.name,
+                          dragType: 'property',
+                          key: getKey(p),
+                          id: p.id,
+                          lazy: false
+                      }))
+                  }))
+              }))
+              done(folders.concat(categorymodels, momentmodels))
+          }
+      } else {
+          // Catch-all entity
+          return []
+      }
+  }
+
+  /*
   // Unloading function, from https://github.com/quasarframework/quasar/issues/6950#issuecomment-623886061
   function unloadKey (key: string) {
-      // Unload a key, so that the QTree component refetches its content
-      if (treeref.value) {
-          const baseNode = treeref.value.getNodeByKey(key)
-          if (baseNode !== void 0) {
-              const unload = (node: QTreeNode) => {
-                  delete treeref.value.lazy[node.label]
-                  if (node.children) {
-                      node.children.forEach(unloadKey)
-                  }
-              }
-              unloadKey(baseNode)
-              baseNode.children = []
-          }
-      }
+  // Unload a key, so that the QTree component refetches its content
+  if (treeref.value) {
+  const baseNode = treeref.value.getNodeByKey(key)
+  if (baseNode !== void 0) {
+  const unload = (node: QTreeNode) => {
+  delete treeref.value.lazy[node.label]
+  if (node.children) {
+  node.children.forEach(unloadKey)
+  }
+  }
+  unloadKey(baseNode)
+  baseNode.children = []
+  }
+  }
   }
   */
 
@@ -351,6 +352,6 @@ const onLazyLoad = function (params: QTreeLazyLoadParams) {
     opacity: 0;
   }
   .menu-item:hover .menu-icon {
-    opacity: 1;
+      opacity: 1;
   }
 </style>
