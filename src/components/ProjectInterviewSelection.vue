@@ -71,7 +71,7 @@
                 <!-- Replace with https://github.com/cyclecycle/vue-annotated-text -->
                 <TextAnnotation
                   class="fit fullwindow-height"
-                  :interview="interview">
+                  :interviewId="interview.id">
                 </TextAnnotation>
               </template>
             </q-splitter>
@@ -96,7 +96,7 @@
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
   import { storeToRefs } from 'pinia'
-  import { computed, ref, watch } from 'vue'
+  import { computed, ref, watch, onUnmounted } from 'vue'
   import Interview from 'stores/models/interview'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
@@ -117,7 +117,11 @@
       projectId: { type: String, required: true }
   })
 
-  const project = computed(() => store.getProject(props.projectId))
+  const project = computed(() => {
+      const p = store.getProject(props.projectId)
+      istore.setCurrentProject(p)
+      return p
+  })
 
   const newInterview = "New interview"
 
@@ -132,6 +136,11 @@
       } else {
           currentInterviewId.value = newInterview
       }
+  })
+
+  watch(currentInterviewId, () => {
+      console.log("Update interview", currentInterviewId)
+      istore.setCurrentInterview(store.getInterview(currentInterviewId.value))
   })
 
   function onInterviewCreated (interview: Interview) {
@@ -156,6 +165,11 @@
           })
       }
   }
+
+  onUnmounted(() => {
+      istore.setCurrentInterview(null)
+      istore.setCurrentProject(null)
+  })
 </script>
 
 <style>

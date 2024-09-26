@@ -11,8 +11,20 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title
+          class="app-title">
           μPMT
+
+          |
+
+          <span
+            v-if="currentProject"
+            class="context">
+            {{ currentProject.name }}
+            <span v-if="currentInterview">
+              - {{ currentInterview.label }}
+            </span>
+          </span>
         </q-toolbar-title>
 
         <q-btn
@@ -73,8 +85,12 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { RouteLocationRaw } from 'vue-router'
 import { useProjectStore } from 'stores/projectStore'
+import { useInterfaceStore } from 'stores/interface'
+
+const istore = useInterfaceStore()
 
 defineOptions({
   name: 'MainLayout'
@@ -90,6 +106,8 @@ interface MenuItem {
 }
 
 const store = useProjectStore()
+
+const { currentInterview, currentProject } = storeToRefs(istore)
 
 const menuList = computed<MenuItem[]>(() => [
     {
