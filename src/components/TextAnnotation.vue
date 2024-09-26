@@ -5,9 +5,10 @@
       <q-expansion-item
         dense
         dense-toggle
+        :duration="0"
         expand-icon-toggle
         label="Debug"
-          >
+        >
         <div>
           <strong>Active annotations </strong>
           <span ref="activeAnnotationInspector"></span>
@@ -38,6 +39,23 @@
         v-model="contextMenuVisible"
         >
         <q-list dense style="min-width: 100px">
+          <q-item
+            v-if="selectionShorttext"
+            key="setSelectionColor"
+            v-close-popup>
+            <q-space />
+            <q-list dense row text-right>
+              <q-btn v-for="color in ANNOTATION_COLORS"
+                     :key="color"
+                     round
+                     size="md"
+                     flat
+                     :style="{ color: color }"
+                     @click="setSelectionColor(color)"
+                     icon="colorize" />
+            </q-list>
+          </q-item>
+
           <q-item
             v-if="selectionShorttext"
             key="current"
@@ -95,6 +113,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { ellipsize } from 'stores/util'
   import DragElement from './DragElement.vue'
+  import { ANNOTATION_COLORS } from './util'
 
   // BaseAnnotation that is used to communicate with
   // AnnotatedText. Not to be confused with model Annotation
@@ -230,6 +249,15 @@
           event.dataTransfer.setData(`upmt/selection`, currentSelectionDataAsString.value)
       }
   }
+
+  function setSelectionColor (color: string) {
+      // create annotation with given color
+      console.log("setColor", color)
+      if (currentSelection.value) {
+          store.addAnnotation(currentSelection.value, color)
+      }
+  }
+
 </script>
 
 <style scoped>
