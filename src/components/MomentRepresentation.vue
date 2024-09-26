@@ -149,22 +149,30 @@ function debug () {
     console.log("Moment", moment.value)
 }
 
+function showContent () {
+    if (moment.value && !moment.value.isExpanded) {
+        store.updateMoment(props.momentId, { isExpanded: true })
+    }
+}
 function droppedCategoryInstance (categoryinstanceId: string, data: string) {
     console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
     const ci = store.getCategoryInstance(categoryinstanceId)
     if (ci) {
         store.momentAddCategoryModel(ci.model.id, props.momentId)
+        showContent()
     }
 }
 
 function droppedCategoryModel (cmId: string) {
     store.momentAddCategoryModel(cmId, props.momentId)
+    showContent()
 }
 
 function droppedDescriptem (descriptemId: string) {
     const descriptem = store.getDescriptem(descriptemId)
     if (descriptem) {
         store.addTextSelectionToMoment(descriptem.toJSON(), props.momentId)
+        showContent()
     }
 }
 
@@ -172,6 +180,7 @@ function droppedAnnotation (annotationId: string) {
     const annotation = store.getAnnotation(annotationId)
     if (annotation) {
         store.addTextSelectionToMoment(annotation.toJSON(), props.momentId)
+        showContent()
     }
 }
 
@@ -180,6 +189,7 @@ function droppedSelection (selectionData: string) {
         const selection = JSON.parse(selectionData)
         // addTextSelectionToMoment will do the necessary key checks
         store.addTextSelectionToMoment(selection, props.momentId)
+        showContent()
     } catch (e) {
         console.log(`Cannot parse ${selectionData}`)
     }
@@ -191,8 +201,10 @@ function droppedMoment (momentId: string, where: string) {
         store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
                         props.momentId,
                         where)
+        showContent()
     } else {
         store.moveMoment(momentId, props.momentId, where)
+        showContent()
     }
 }
 
@@ -204,6 +216,7 @@ function droppedCreatingDescriptem (descriptemId: string, where: string) {
                         props.momentId,
                         where,
                         descriptem.toJSON())
+        showContent()
     }
 }
 
@@ -214,6 +227,7 @@ function droppedCreatingAnnotation (annotationId: string, where: string) {
                         props.momentId,
                         where,
                         annotation.toJSON())
+        showContent()
     }
 }
 
@@ -225,6 +239,7 @@ function droppedCreatingSelection (selectionData: string, where: string) {
                             props.momentId,
                             where,
                             selection)
+            showContent()
         }
     } catch (e) {
         console.log(`Cannot parse ${selectionData}: ${e}`)
@@ -233,10 +248,10 @@ function droppedCreatingSelection (selectionData: string, where: string) {
 
 const expand = computed({
     get () {
-        return moment.value ? !moment.value.isCollapsed : true
+        return moment.value ? moment.value.isExpanded : true
     },
     set (value: boolean) {
-        store.updateMoment(props.momentId, { isCollapsed:!value })
+        store.updateMoment(props.momentId, { isExpanded: value })
     }
   })
 
