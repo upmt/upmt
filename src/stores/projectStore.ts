@@ -556,6 +556,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function recursiveUpdateMoment (identifier: string, values: object) {
+    updateMoment(identifier, values)
+    // Recursively call method on children
+    repo.Moment.where('parentId', identifier).get().forEach(moment => recursiveUpdateMoment(moment.id, values))
+  }
+
   function updateModelFolder (identifier: string, values: object) {
     repo.ModelFolder.where('id', identifier).update(values)
   }
@@ -873,6 +879,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     moveMoment,
     updateProperty,
     updateMoment,
+    recursiveUpdateMoment,
     updateModelFolder,
     updateCategoryModel,
     updatePropertyModel
