@@ -208,4 +208,10 @@
     min-height: 18px;
     padding: 0 2px;
   }
+  .q-item__section--avatar {
+      min-width: 2px;
+  }
+  .q-item__section--side {
+      padding: 0;
+  }
 </style>

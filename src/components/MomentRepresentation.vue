@@ -30,7 +30,6 @@
 
         <template v-slot:header>
           <DropZone data="header"
-                    class="empty_padding"
                     types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
                     @categoryinstance="droppedCategoryInstance"
                     @categorymodel="droppedCategoryModel"
@@ -323,6 +322,12 @@
       border: 1px solid grey;
       display: flex;
       flex-grow: 1;
+  }
+  .moment-body .q-item {
+      padding: 0;
+  }
+  .q-item__section--avatar {
+      min-width: 2px;
   }
   .transitional {
       background-color: var(--transitional-color);
