@@ -39,6 +39,7 @@
                       @descriptem="droppedDescriptem">
               <DragElement
                 type="moment"
+                class="moment-header"
                 :data="momentId"
                 @click.meta="debug">
                 <q-icon
@@ -297,7 +298,10 @@ const menuActions = [
       border: 1px solid transparent;
   }
   .highlighted .moment {
-      border: 2px solid red;
+      border: 2px solid yellow;
+  }
+  .highlighted .moment-header {
+      background-color: yellow;
   }
   .moment-body {
       border: 1px solid grey;
