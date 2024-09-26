@@ -15,6 +15,7 @@
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-label">{{ descriptem.text }}</span>
 
+      <q-space />
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
               v-if="context.property">
@@ -117,6 +118,8 @@ const menuActions: NamedActions = [
   }
   .descriptem-header {
       width: 100%;
+      display: flex;
+      align-content: space-between;
   }
   .descriptem-label {
       display: inline-block;
@@ -142,5 +145,9 @@ const menuActions: NamedActions = [
       display: flex;
       flex-direction: row;
       font-size: x-small;
+  }
+  .context-item + .context-item {
+      border-left: 1px solid black;
+      padding: 0 4px;
   }
 </style>

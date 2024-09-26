@@ -78,6 +78,7 @@
             row
             v-close-popup>
             <DescriptemRepresentation
+              class="full-width"
               :descriptemId="descriptem.id"
               withContext />
           </q-item>
