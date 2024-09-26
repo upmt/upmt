@@ -2,7 +2,9 @@
   <div class="interview"
        v-if="interview"
        :data-interview="interviewId">
-    <div class="interview-metadata row">
+
+    <q-toolbar class="interview-toolbar row">
+
       <q-icon
         size="md"
         name="mdi-comment-outline">
@@ -10,14 +12,25 @@
           <span class="interview-comment">{{ interview.comment }}</span>
         </q-tooltip>
       </q-icon>
+
       <DragElement
         type="moment"
         data="">
         <q-btn>
           New moment
-          <q-tooltip>Drag this button to create a new moment></q-tooltip>
+          <q-tooltip anchor="top middle"
+                     :offset="[0,30]">Drag this button to create a new moment></q-tooltip>
         </q-btn>
       </DragElement>
+
+      <q-btn
+        icon="mdi-chevron-down"
+        @click="expandAllMoments" />
+
+      <q-btn
+        icon="mdi-chevron-up"
+        @click="closeAllMoments" />
+
       <q-slider v-model="zoom"
                 label-value="Zoom"
                 class="col-2 q-mx-md"
@@ -26,7 +39,7 @@
                 :step=".1"
                 >
       </q-slider>
-    </div>
+    </q-toolbar>
 
     <AnalysisRepresentation
       class="scrollable"
@@ -55,14 +68,26 @@
   })
 
   const interview = computed(() => store.getInterview(props.interviewId))
+
   const el = ref(null)
+
   const zoomVar = useCssVar('--chart-zoom', el) as unknown as Ref<number>
-        // useCssVar returns a string, and QSlider expects a number. Convert it.
-        // Using it directly works but produces a warning.
+
+  // useCssVar returns a string, and QSlider expects a number. Convert it.
+  // Using it directly works but produces a warning.
   const zoom = computed({
       get: () => Number(zoomVar.value),
       set: (value) => { zoomVar.value = value }
   })
+
+  function expandAllMoments () {
+      store.getRepo().Moment.where('interviewId', props.interviewId).update({ isExpanded: true })
+  }
+
+  function closeAllMoments () {
+      store.getRepo().Moment.where('interviewId', props.interviewId).update({ isExpanded: false })
+  }
+
 </script>
 
 <style>
@@ -74,10 +99,6 @@
   .interview::-webkit-scrollbar:horizontal{} {
       background-color: red;
       width: 32px;
-  }
-  .interview-metadata {
-      display: flex;
-      flex-direction: row;
   }
   .interview-metadata > span {
       margin: 0 1em;
