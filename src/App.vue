@@ -14,6 +14,7 @@
 
   onMounted(() => {
       store.loadProject('./examples/example.upmt');
+      store.loadProject('./examples/ruptur-example.upmt');
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);
