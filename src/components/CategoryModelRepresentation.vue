@@ -35,6 +35,7 @@
               <q-menu class="column">
                 <q-btn v-for="moment in currentMoments"
                        :label="moment.name"
+                       align="left"
                        no-caps
                        :key="moment.id"
                        @click="highlightMoment(moment.id)"
@@ -49,6 +50,7 @@
                                        dense flat round>
               <q-menu class="column">
                 <q-btn v-for="[ name, count ] in byInterview(moments)"
+                       align="left"
                        :label="`${name} ${count}`"
                        no-caps
                        :key="name"
