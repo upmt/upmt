@@ -1,34 +1,41 @@
 <template>
   <q-page class="col fit">
+
     <q-card>
       <q-card-section>
         <div class="text-h3">μ<span style="font-weight: 400">PMT</span> - micro Phenomenology Modelling Tool</div>
+        <div>A tool to help researchers analyze micro-phenomenology interviews (<a href="https://github.com/upmt/upmt/wiki/">more info</a>)</div>
       </q-card-section>
         <q-card-section class="bg-primary text-white">
         <div class="text-h4">Current projects</div>
       </q-card-section>
     </q-card>
 
-    <div class="q-pa-md row items-end q-gutter-md">
+    <div id="content"
+         class="row q-pa-sm row q-gutter-sm">
 
-      <q-card
-        v-for="project in projects"
-        :key="project.id"
-        class="project-card">
-        <q-card-section class="bg-secondary text-white">
-          <div class="text-h6">{{ project.name }}</div>
-          <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
-        </q-card-section>
+      <div
+        id="project-list"
+        class="q-pa-md row items-end q-gutter-md col-7 justify-start content-start">
 
-        <q-separator />
+        <q-card
+          v-for="project in projects"
+          :key="project.id"
+          class="project-card">
+          <q-card-section class="bg-secondary text-white">
+            <div class="text-h6">{{ project.name }}</div>
+            <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
+          </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
-          <q-btn @click="exportProject(project)" flat>Save</q-btn>
+          <q-separator />
+
+          <q-card-actions align="right">
+            <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
+            <q-btn @click="exportProject(project)" flat>Save</q-btn>
         </q-card-actions>
-      </q-card>
+        </q-card>
 
-      <q-fab color="secondary" push icon="add" direction="right">
+        <q-fab color="secondary" push icon="add" direction="right">
 
         <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
           <q-tooltip>
@@ -42,57 +49,65 @@
           </q-tooltip>
         </q-fab-action>
 
-      </q-fab>
+        </q-fab>
 
-      <q-file label="Load File"
-              ref="filepicker"
-              class="hidden"
-              v-model="filename"
+        <q-file label="Load File"
+                ref="filepicker"
+                class="hidden"
+                v-model="filename"
               accept=".upmt"
-              filled
+                filled
               @input="uploadFile"/>
+
+      </div>
+
+      <div id="column-right"
+           class="col-5 q-pa-sm q-gutter-sm">
+
+        <q-card class="col-md-4 col-12">
+          <q-card-section class="bg-primary text-white">
+            <div class="text-h4">News</div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+          </q-card-section>
+        </q-card>
+
+        <q-card class="col-md-4 col-12">
+          <q-card-section class="bg-primary text-white">
+            <div class="text-h4">Forum</div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+            Ask questions and make suggestions on the <a href="https://github.com/upmt/upmt/discussions">discussions forum</a>.
+          </q-card-section>
+        </q-card>
+
+        <q-card class="col-md-3 col-12">
+          <q-card-section class="bg-primary text-white">
+            <div class="text-h4">Help</div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+            See the <a href="https://github.com/upmt/upmt/wiki">documentation wiki</a>
+          </q-card-section>
+        </q-card>
+
+        <q-card class="col-md-3 col-12">
+          <q-card-section class="bg-primary text-white">
+            <div class="text-h4">Contact</div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+          </q-card-section>
+        </q-card>
+
+      </div>
 
     </div>
 
-    <div class="q-pa-sm row q-gutter-sm">
-
-      <q-card class="col-md-4 col-12">
-        <q-card-section class="bg-primary text-white">
-          <div class="text-h4">News</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-        </q-card-section>
-      </q-card>
-
-      <q-card class="col-md-4 col-12">
-        <q-card-section class="bg-primary text-white">
-          <div class="text-h4">Help</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-          See the <a href="https://github.com/upmt/upmt/wiki">documentation wiki</a>
-        </q-card-section>
-      </q-card>
-
-      <q-card class="col-md-4 col-12">
-        <q-card-section class="bg-primary text-white">
-          <div class="text-h4">Contact</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-        </q-card-section>
-      </q-card>
-
-      <q-card class="col-md-4 col-12">
-        <q-card-section class="bg-primary text-white">
-          <div class="text-h4">Forum</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-          Ask questions and make suggestions on the <a href="https://github.com/upmt/upmt/discussions">discussions forum</a>.
-        </q-card-section>
-      </q-card>
+    <div id="bottom-row"
+         class="q-pa-sm row q-gutter-sm">
 
     </div>
 
