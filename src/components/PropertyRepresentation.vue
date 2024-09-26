@@ -84,7 +84,7 @@ function droppedSelection (selectionData: string) {
 
 </script>
 
-<style>
+<style scoped>
   .property {
     display: flex;
     flex-direction: column;
