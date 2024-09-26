@@ -216,7 +216,7 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     color: fixColorName(m.color),
     comment: m.comment,
     interviewId: interview.id,
-    isCollapsed: m.isCollapsed,
+    isExpanded: !m.isCollapsed,
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
     categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
