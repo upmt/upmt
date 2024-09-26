@@ -32,9 +32,10 @@
             {{ categorymodelName }} (<q-btn
                                        size="sm"
                                        dense flat round>
-              <q-menu>
+              <q-menu class="column">
                 <q-btn v-for="moment in currentMoments"
-                       :title="moment.name"
+                       :label="moment.name"
+                       no-caps
                        :key="moment.id"
                        @click="highlightMoment(moment.id)"
                        size="sm"
@@ -42,7 +43,18 @@
                        icon="mdi-alpha-m-box-outline">
                 </q-btn>
               </q-menu>
-              {{ currentMoments.length }}</q-btn> / {{ moments.length }})
+              {{ currentMoments.length }}</q-btn> /
+            <q-btn
+                                       size="sm"
+                                       dense flat round>
+              <q-menu class="column">
+                <q-btn v-for="[ name, count ] in byInterview(moments)"
+                       :label="`${name} ${count}`"
+                       no-caps
+                       :key="name"
+                       size="sm" />
+              </q-menu>
+              {{ moments.length }}</q-btn>)
             <q-popup-edit v-model="categorymodelName" auto-save v-slot="scope">
               <q-input v-model="scope.value"
                        @focus="($event.target as HTMLInputElement).select()"
@@ -87,8 +99,11 @@
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import PropertyModelRepresentation from './PropertyModelRepresentation.vue'
+  import Moment from 'stores/models/moment'
+  import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import { groupBy } from './util'
 
   const istore = useInterfaceStore()
 
@@ -145,6 +160,14 @@
       } else {
           highlighted.value = momentId
       }
+  }
+
+  function byInterview (moments: Array<Moment>) {
+      const repo = store.getRepo()
+      const names = Object.fromEntries(repo.Interview.get().map((i: Interview) => [ i.id, i.label ]))
+
+      return Object.entries(groupBy(moments, 'interviewId'))
+          .map(([id, arr]) => [ names[id], (arr as Array<any>).length ])
   }
 
   const menuActions = [

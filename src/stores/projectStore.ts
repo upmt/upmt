@@ -374,7 +374,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getInterview (id: string) {
       return repo.Interview.with('annotations').with('analysis').find(id)
-    }
+  }
 
   function getJustification (id: string) {
     return repo.Justification

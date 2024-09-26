@@ -15,7 +15,9 @@
   onMounted(() => {
       store.loadProject('./examples/example.upmt');
       (window as any).store = store;
-      console.log("Debugging store", store);
+      (window as any).repo = store.getRepo();
+      console.log("store = ", store);
+      console.log("repo = ");
   })
 </script>
 
