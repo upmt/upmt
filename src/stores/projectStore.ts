@@ -408,9 +408,14 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
-  function getInterviewDescriptems (id: string) {
+  function getInterviewDescriptems (interviewId: string) {
     // Return the descriptems defined on a specific interview
-    return repo.Descriptem.where('interviewId', id).with('interview').all()
+    return repo.Descriptem.where('interviewId', interviewId).with('interview').get()
+  }
+
+  function getInterviewAnnotations (interviewId: string) {
+    // Return the annotations defined on a specific interview
+    return repo.Annotation.where('interviewId', interviewId).with('interview').get()
   }
 
   function getJustificationParent (id: string) {
@@ -588,6 +593,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         model: categoryModel
       })
     }
+  }
+
+  function addAnnotation (textselection: TextSelection, color = '') {
+    console.log("addAnnotation", color, textselection)
+    repo.Annotation.save({ ...textselection, color })
   }
 
   function addMoment (name: string,
@@ -818,6 +828,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   return {
+    addAnnotation,
     addCategoryModel,
     addModelFolder,
     addMoment,
@@ -849,6 +860,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getCategoryModelMoments,
     getDescriptem,
     getInterview,
+    getInterviewAnnotations,
     getInterviewDescriptems,
     getJustification,
     getJustificationParent,

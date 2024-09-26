@@ -1,7 +1,6 @@
 <template>
   <div class="textAnnotationContainer">
     <div class="inspector">
-      <strong>Interview {{ interview.name }}</strong>
       <q-expansion-item
         dense
         dense-toggle
@@ -110,7 +109,6 @@
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import Annotation from 'stores/models/annotation'
   import Descriptem from 'stores/models/descriptem'
-  import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
   import { ellipsize } from 'stores/util'
   import DragElement from './DragElement.vue'
@@ -132,10 +130,13 @@
       interviewId: string
   }
 
-  const contextMenuVisible = ref(false)
+  const props = defineProps({
+      interviewId: { type: String, default: null }
+  })
 
   const store = useProjectStore()
 
+  const contextMenuVisible = ref(false)
   const activeAnnotationInspector = ref<HTMLDivElement | null>(null)
   const selectedAnnotationInspector = ref<HTMLDivElement | null>(null)
 
@@ -143,9 +144,7 @@
   const activeDescriptems = ref<Descriptem[]>([])
   const currentSelection = ref<TextSelection| null>(null)
 
-  const props = defineProps({
-      interview: { type: Interview, default: null }
-  })
+  const interview = computed(() => store.getInterview(props.interviewId))
 
   /*
     export const annotationsTest = [
@@ -167,8 +166,10 @@
   }
 
   const annotations = computed(() => {
-      const interviewAnnotations: BaseAnnotation[] = (props.interview.annotations ?? []).map(a => {
+      const interviewId = props.interviewId
+      const interviewAnnotations: BaseAnnotation[] = store.getInterviewAnnotations(interviewId).map(a => {
           return {
+              interviewId: a.interviewId,
               id: a.id,
               start: a.startIndex,
               length: a.endIndex - a.startIndex,
@@ -176,8 +177,9 @@
               class: annotation2class(a)
           }
       })
-      const interviewDescriptems: BaseAnnotation[] = store.getInterviewDescriptems(props.interview.id).map(d => {
+      const interviewDescriptems: BaseAnnotation[] = store.getInterviewDescriptems(interviewId).map(d => {
           return {
+              interviewId: d.interviewId,
               id: d.id,
               start: d.startIndex,
               length: d.endIndex - d.startIndex,
@@ -185,13 +187,14 @@
               class: 'descriptem'
           }
       })
+      console.log("annotations for", interviewId, interviewAnnotations, interviewDescriptems)
       return [ ...interviewAnnotations, ...interviewDescriptems ]
   })
 
   const selectionShorttext = computed(() => {
       if (currentSelection.value) {
-          const text = props.interview.text.slice(currentSelection.value.startIndex,
-                                                  currentSelection.value.endIndex)
+          const text = (interview.value?.text ?? "").slice(currentSelection.value.startIndex,
+                                                           currentSelection.value.endIndex)
           return ellipsize(text)
       } else {
           return ""
@@ -238,7 +241,7 @@
       currentSelection.value = {
           startIndex: data.begin,
           endIndex: data.end,
-          interviewId: props.interview.id
+          interviewId: props.interviewId
       }
   }
 
@@ -253,7 +256,7 @@
 
   function setSelectionColor (color: string) {
       // create annotation with given color
-      console.log("setColor", color)
+      console.log("setColor", color, currentSelection.value)
       if (currentSelection.value) {
           store.addAnnotation(currentSelection.value, color)
       }

@@ -16,11 +16,14 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   function setCurrentProject (project: Project | null) {
-    console.log("Setcurrentproject", project)
+    console.log("project = ", project);
+    (window as any).project = project
     currentProject.value = project
   }
 
   function setCurrentInterview (interview: Interview | null) {
+    console.log("interview = ", interview);
+    (window as any).interview = interview
     currentInterview.value = interview
   }
 
