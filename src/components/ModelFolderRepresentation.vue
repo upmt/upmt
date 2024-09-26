@@ -108,13 +108,11 @@
   }
 
   function droppedCategoryModel (cmId: string) {
-      // store.modelfolderAddCategoryModel(cmId, props.modelfolderId)
-      console.log("FIXME droppedCategoryModel", cmId)
+      store.updateCategoryModel(cmId, { modelfolderId: props.modelfolderId })
   }
 
-  function droppedModelFolder (modelfolderId: string, where: string) {
-      console.log("FIXME Dropped Modelfolder", modelfolderId, "where", where)
-      // store.moveModelfolder(modelfolderId, props.modelfolderId, where)
+  function droppedModelFolder (modelfolderId: string) {
+      store.updateModelFolder(modelfolderId, { parentId: props.modelfolderId })
   }
 
   const modelfolderName = computed({
