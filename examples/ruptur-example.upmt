@@ -1510,7 +1510,7 @@
                 "@version": 1,
                 "@id": 465744702
             },
-            "comment": "Examples interviews constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)\n",
+            "comment": "Example interview constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)\n",
             "@id": 1834969904,
             "participantName": "P2"
         },
@@ -2435,7 +2435,7 @@
                 "@version": 1,
                 "@id": 1524597736
             },
-            "comment": "Examples interviews constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)",
+            "comment": "Example interview constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)",
             "@id": 42486725,
             "participantName": "P3"
         },
@@ -3387,7 +3387,7 @@
                 "@version": 1,
                 "@id": 703533780
             },
-            "comment": "Examples interviews constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)",
+            "comment": "Example interview constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)",
             "@id": 424243500,
             "participantName": "P4"
         },
@@ -4518,7 +4518,7 @@
                 "@version": 1,
                 "@id": 1849153072
             },
-            "comment": "Examples interviews constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)\n",
+            "comment": "Example interview constructed from the RUPTUR project's data (2024 - LS2N - Nantes University)\n",
             "@id": 1062619192,
             "participantName": "P12"
         }
@@ -4530,14 +4530,14 @@
         "@id": 1834969904
     },
     "@version": 2,
-    "name": "RUPTUR-eng",
+    "name": "RUPTUR Example",
     "@id": 1507327827,
     "schemaTreeRoot": {
         "schemaMomentType_list": [],
         "expanded": true,
         "@model": "schemaTreeRoot",
         "@version": 1,
-        "name": "RUPTUR-eng",
+        "name": "RUPTUR Example",
         "schemaCategory_list": [
             {
                 "expanded": false,
