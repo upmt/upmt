@@ -3,7 +3,13 @@
        v-if="interview"
        :data-interview="interviewId">
     <div class="interview-metadata row">
-      <span class="interview-comment">{{ interview.comment }}</span>
+      <q-icon
+        size="md"
+        name="mdi-comment-outline">
+        <q-tooltip>
+          <span class="interview-comment">{{ interview.comment }}</span>
+        </q-tooltip>
+      </q-icon>
       <DragElement
         type="moment"
         data="">
