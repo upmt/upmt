@@ -11,18 +11,24 @@
         <div class="fit fullwindow-height">
           <q-tabs
             dense
+            active-class="active"
+            align="left"
+            no-caps
+            :inlineLabel="true"
             v-model="currentInterviewId"
             vertical
             >
             <strong>{{ project.label }}</strong>
             <q-route-tab v-for="interview in project.interviews"
                          :to="{ query: { tab: interview.label } }"
+                         icon="mdi-chat-outline"
                          :name="interview.id"
                          :key="interview.id"
                          :title="interview.comment"
                          :label="interview.label">
             </q-route-tab>
             <q-route-tab :to="{ query: { tab: newInterview } }"
+                         class="new-interview"
                          :name="newInterview"
                          :key="newInterview"
                          icon="add">
@@ -152,10 +158,31 @@
   }
 </script>
 
-<style scoped>
+<style>
   .fullwindow-height {
     min-height: calc(100vh - var(--header-height));
     max-height: calc(100vh - var(--header-height));
     overflow: auto;
+  }
+
+  .tab-label {
+      display: flex;
+      flex-direction: row !important;
+  }
+
+  .q-tab__label {
+      font-weight: 200;
+  }
+
+  .active .q-tab__label {
+      background-color: #eeeeee;
+      font-weight: bold;
+  }
+  .q-tab {
+      justify-content: flex-start;
+  }
+
+  .new-interview {
+      justify-content: flex-end;
   }
 </style>
