@@ -1,8 +1,8 @@
 <template>
-  <div class="categoryinstance"
+  <div :class="[ 'categoryinstance', `categoryinstance-${categoryinstanceId}` ]"
        :style="{ backgroundColor: categoryinstance.color }"
        v-if="categoryinstance"
-       :data-categoryinstance="categoryinstance.id">
+       :data-categoryinstance="categoryinstanceId">
 
     <div class="categoryinstance-metadata">
       <DropZone types="upmt/descriptem upmt/annotation upmt/selection"

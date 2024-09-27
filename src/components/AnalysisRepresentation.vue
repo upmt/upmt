@@ -14,7 +14,8 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue'
+
+  import { computed, watch } from 'vue'
   import MomentRepresentation from './MomentRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
@@ -27,6 +28,16 @@
   const analysis = computed(() => {
       const result = store.getAnalysis(props.analysisId)
       return result
+  })
+
+  watch(() => props.highlighted, () => {
+      if (props.highlighted) {
+          // Scroll element into view
+          const element = document.querySelector(`[data-moment=${props.highlighted}]`)
+          if (element) {
+              element.scrollIntoView()
+          }
+      }
   })
 </script>
 

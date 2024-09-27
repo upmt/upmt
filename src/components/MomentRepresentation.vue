@@ -1,6 +1,7 @@
 <template>
   <div ref="container"
-       :class="[ 'moment-container', { 'highlighted': momentId === highlighted } ]">
+       :class="[ 'moment-container', `moment-${momentId}`, { 'highlighted': momentId === highlighted } ]"
+       :data-moment="momentId">
 
     <DropZone data="before"
               class="empty_padding"
