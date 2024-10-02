@@ -32,6 +32,7 @@
         <template v-slot:header>
           <DropZone data="header"
                     types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
+                    class="row full-width justify-center"
                     @categoryinstance="droppedCategoryInstance"
                     @categorymodel="droppedCategoryModel"
                     @annotation="droppedAnnotation"
@@ -60,7 +61,6 @@
                   v-model="momentColor" />
               </span>
             </DragElement>
-            <q-space />
             <CommentIcon
               :comment="moment.comment" />
             <ElementMenu
