@@ -322,6 +322,24 @@
   .category4 {
       background-color: #7bcf7b;
   }
+  .category1.category2 {
+      background-color: orange;
+  }
+  .category1.category3 {
+      background-color: orange;
+  }
+  .category1.category4 {
+      background-color: orange;
+  }
+  .category2.category3 {
+      background-color: orange;
+  }
+  .category2.category4 {
+      background-color: orange;
+  }
+  .category3.category4 {
+      background-color: orange;
+  }
   /* For undefined categories */
   .category9 {
       background-color: yellow;
