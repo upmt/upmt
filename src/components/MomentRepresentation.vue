@@ -55,20 +55,9 @@
                            counter
                            @keyup.enter="scope.set" />
                 </q-popup-edit>
-                <q-btn
+                <ColorizeIcon
                   class="on-name-hover"
-                  size="xs"
-                  dense flat round
-                  icon="colorize">
-                  <q-popup-proxy>
-                    <q-color
-                      no-header
-                      no-footer
-                      default-view="palette"
-                      v-model="momentColor"
-                      />
-                  </q-popup-proxy>
-                </q-btn>
+                  v-model="momentColor" />
               </span>
             </DragElement>
             <q-space />
@@ -131,6 +120,7 @@
   import MomentRepresentation from './MomentRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
+  import ColorizeIcon from './ColorizeIcon.vue'
   import CommentIcon from './CommentIcon.vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'

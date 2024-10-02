@@ -49,12 +49,17 @@
                                        size="sm"
                                        dense flat round>
               <q-menu class="column">
-                <q-btn v-for="[ name, count ] in byInterview(moments)"
-                       align="left"
-                       :label="`${name} ${count}`"
-                       no-caps
-                       :key="name"
-                       size="sm" />
+                <div class="row items-left no-wrap"
+                     :key="name"
+                     v-for="[ name, count ] in byInterview(moments)">
+                  <q-btn class="full-width justify-content-between"
+                         align="left"
+                         no-caps
+                         size="sm">
+                    <span class="interview-name">{{name}}</span>
+                  </q-btn>
+                  <strong class="interview-moment-count">{{ count }}</strong>
+                </div>
               </q-menu>
               {{ moments.length }}</q-btn>)
             <q-popup-edit v-model="categorymodelName" auto-save v-slot="scope">
@@ -63,20 +68,9 @@
                        dense autofocus counter @keyup.enter="scope.set" />
             </q-popup-edit>
           </span>
-          <q-btn
-            class="on-name-hover"
-            size="xs"
-            dense flat round
-            icon="colorize">
-            <q-popup-proxy>
-              <q-color
-                no-header
-                no-footer
-                default-view="palette"
-                v-model="categorymodelColor"
-                />
-            </q-popup-proxy>
-          </q-btn>
+          <ColorizeIcon
+            v-model="categorymodelColor"
+            />
           <q-space />
           <ElementMenu
             :actions="menuActions" />
@@ -98,6 +92,7 @@
 
   import { computed } from 'vue'
   import { storeToRefs } from 'pinia'
+  import ColorizeIcon from './ColorizeIcon.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import PropertyModelRepresentation from './PropertyModelRepresentation.vue'
@@ -196,5 +191,8 @@
     min-height: 18px;
     padding: 0 2px !important;
     line-height: 1;
+  }
+  .interview-name {
+      font-weight: 200;
   }
 </style>

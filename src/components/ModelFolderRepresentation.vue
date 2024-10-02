@@ -37,20 +37,9 @@
                          @focus="($event.target as HTMLInputElement).select()"
                          dense autofocus counter @keyup.enter="scope.set" />
               </q-popup-edit>
-              <q-btn
-                class="on-name-hover"
-                size="xs"
-                dense flat round
-                icon="colorize">
-                <q-popup-proxy>
-                  <q-color
-                    no-header
-                    no-footer
-                    default-view="palette"
-                    v-model="modelfolderColor"
-                    />
-                </q-popup-proxy>
-              </q-btn>
+              <ColorizeIcon
+                v-model="modelfolderColor"
+                />
             </span>
           </DragElement>
           <q-space />
@@ -88,6 +77,7 @@
   import { computed } from 'vue'
   import CategoryModelRepresentation from './CategoryModelRepresentation.vue'
   import MomentModelRepresentation from './MomentModelRepresentation.vue'
+  import ColorizeIcon from './ColorizeIcon.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
