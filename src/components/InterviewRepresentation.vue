@@ -5,14 +5,6 @@
 
     <q-toolbar class="interview-toolbar row">
 
-      <q-icon
-        size="md"
-        name="mdi-comment-outline">
-        <q-tooltip>
-          <span class="interview-comment">{{ interview.comment }}</span>
-        </q-tooltip>
-      </q-icon>
-
       <DragElement
         type="moment"
         data="">
@@ -39,6 +31,12 @@
                 :step=".1"
                 >
       </q-slider>
+
+      <q-space />
+
+      <CommentIcon
+        :comment="interview.comment" />
+
     </q-toolbar>
 
     <AnalysisRepresentation
@@ -56,6 +54,7 @@
   import { computed, ref } from 'vue'
   import type { Ref } from 'vue'
   import { useCssVar } from '@vueuse/core'
+  import CommentIcon from './CommentIcon.vue'
   import DragElement from './DragElement.vue'
   import AnalysisRepresentation from './AnalysisRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'

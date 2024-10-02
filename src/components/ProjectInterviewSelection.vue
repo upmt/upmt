@@ -20,7 +20,7 @@
             >
             <q-route-tab v-for="interview in project.interviews"
                          :to="{ query: { tab: interview.label } }"
-                         icon="mdi-chat-outline"
+                         icon="mdi-comment-text-outline"
                          :name="interview.id"
                          :key="interview.id"
                          :title="interview.comment"

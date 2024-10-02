@@ -72,6 +72,8 @@
               </span>
             </DragElement>
             <q-space />
+            <CommentIcon
+              :comment="moment.comment" />
             <ElementMenu
               :actions="menuActions" />
           </DropZone>
@@ -129,6 +131,7 @@
   import MomentRepresentation from './MomentRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
+  import CommentIcon from './CommentIcon.vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
