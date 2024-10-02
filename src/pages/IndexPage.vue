@@ -7,7 +7,22 @@
         <div>A tool to help researchers analyze micro-phenomenology interviews (<a href="https://github.com/upmt/upmt/wiki/">more info</a>)</div>
       </q-card-section>
       <q-card-section class="bg-primary text-white">
-        <div class="text-h4">Current projects</div>
+        <div class="text-h4">Loaded projects <q-btn flat no-caps>(Where is my data?)
+            <q-tooltip>
+              <p>
+              No data is stored by the application or exchanged with a
+              server. The application runs on your computer, in your
+              browser.</p>
+
+              <p>
+              No data at all is automatically stored by the
+              application. You can open a file from your computer, and
+              save/download the modified data as a file. If you close
+              your browser without saving/downloading the data, your
+              changes will be lost.
+              </p>
+            </q-tooltip>
+          </q-btn></div>
       </q-card-section>
     </q-card>
 
