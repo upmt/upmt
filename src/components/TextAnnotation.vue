@@ -187,7 +187,6 @@
               class: 'descriptem'
           }
       })
-      console.log("annotations for", interviewId, interviewAnnotations, interviewDescriptems)
       return [ ...interviewAnnotations, ...interviewDescriptems ]
   })
 
@@ -262,7 +261,6 @@
 
   function setSelectionColor (color: string) {
       // create annotation with given color
-      console.log("setColor", color, currentSelection.value)
       if (currentSelection.value) {
           store.addAnnotation(currentSelection.value, color)
       }

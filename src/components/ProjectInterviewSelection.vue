@@ -138,7 +138,6 @@
   })
 
   watch(currentInterviewId, () => {
-      console.log("Update interview", currentInterviewId)
       istore.setCurrentInterview(store.getInterview(currentInterviewId.value))
   })
 
@@ -155,7 +154,6 @@
 
   function onInterviewCancel () {
       // If there is at least 1 interview, activate it
-      console.log("project ", project.value, project.value?.interviews)
       if (project.value && project.value.interviews) {
           router.push({
               query: {

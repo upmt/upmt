@@ -22,7 +22,6 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   function setCurrentInterview (interview: Interview | null) {
-    console.log("interview = ", interview);
     (window as any).interview = interview
     currentInterview.value = interview
   }
