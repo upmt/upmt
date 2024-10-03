@@ -202,8 +202,14 @@
   })
 
   function getSpanClasses (span: any) {
-      const classes = [ ...new Set(span.annotations.map((a: any) => a.class)) ]
-      return classes.join(" ")
+      const classes = span.annotations.map((a: any) => a.class)
+      const descriptemCount = classes.filter((c: string) => c === 'descriptem').length
+      if (descriptemCount >= 2) {
+          // Multiple descriptems
+          classes.push('descriptems')
+          classes.push(`descriptems${descriptemCount}`)
+      }
+      return [ ...new Set(classes) ].join(" ")
   }
 
   const spanEvents = {

@@ -347,4 +347,7 @@
   .descriptem {
       text-decoration: underline;
   }
+  .descriptem.descriptems {
+      font-weight: bold;
+  }
 </style>
