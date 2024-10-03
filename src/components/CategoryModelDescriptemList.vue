@@ -1,8 +1,12 @@
 <template>
   <div class="bg-white text-black">
-    <span class="categorymodel-name">Category <em>{{ categorymodel?.name }}</em></span>
+    <q-icon
+      size="xs"
+      name="mdi-tag-outline" />
+    <strong>{{ categorymodel?.name }}</strong>
 
-    <ul v-if="categorymodel">
+    <ul v-if="categorymodel"
+        class="moment-list">
       <li v-for="moment in moments"
           :key="moment.id">
         <q-icon
@@ -11,36 +15,34 @@
         </q-icon>
         {{ moment.name }}
         <br>
-        <ul v-if="moment.justification">
+        <ul v-if="moment.justification"
+            class="descriptem-list">
           <li v-for="descriptem in moment.justification.descriptems"
               :key="descriptem.id">
             <DescriptemRepresentation :descriptemId="descriptem.id" />
           </li>
         </ul>
-        <br>
-        <strong>Properties</strong>
         <div v-for="categoryinstance in moment.categoryinstances"
+             class="categoryinstance-list"
              :key="categoryinstance.id">
-          <q-icon
-            size="xs"
-            name="mdi-tag-outline" />
-          {{ categoryinstance.name }}
+          <div v-if="categoryinstance.model.id == categorymodelId">
+            <ul v-if="categoryinstance.justification"
+                class="descriptem-list">
+              <li v-for="descriptem in categoryinstance.justification.descriptems"
+                  :key="descriptem.id">
+                <DescriptemRepresentation :descriptemId="descriptem.id" />
+              </li>
+            </ul>
+          </div>
 
-          <ul v-if="categoryinstance.justification">
-            <li v-for="descriptem in categoryinstance.justification.descriptems"
-                :key="descriptem.id">
-              <DescriptemRepresentation :descriptemId="descriptem.id" />
-            </li>
-          </ul>
-
-          <ul v-if="categoryinstance.model.id == categorymodelId">
+          <ul class="property-list">
             <li v-for="property in categoryinstance.properties"
                 :key="property.id">
               <q-icon
                 size="xs"
                 name="mdi-note-text-outline"></q-icon>
               <span>{{ property.name }}</span> : <span>{{ property.value }}</span>
-              <ul>
+              <ul class="descriptem-list">
                 <li v-for="descriptem in property.justification.descriptems"
                     :key="descriptem.id">
                   <DescriptemRepresentation :descriptemId="descriptem.id" />
@@ -73,4 +75,12 @@
 </script>
 
 <style scoped>
+  .categoryinstance-list {
+    margin-left: 3em;
+  }
+  .descriptem-list,
+  .moment-list,
+  .property-list {
+    list-style: none;
+  }
 </style>
