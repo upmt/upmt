@@ -286,7 +286,6 @@
   }
   .moment-children {
       list-style: none;
-      min-width: 200px;
       display: flex;
       flex-direction: column;
   }
@@ -299,7 +298,7 @@
       position: relative;
   }
   .moment {
-      min-width: 200px;
+      min-width: var(--moment-minimum-width);
       min-height: 40px;
       margin: 0;
       display: flex;

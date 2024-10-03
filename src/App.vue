@@ -28,5 +28,6 @@
     --transitional-bar-width: 12%;
     --header-height: 82px;
     --chart-zoom: 1;
+    --moment-minimum-width: 200px;
   }
 </style>

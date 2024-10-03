@@ -128,7 +128,7 @@
       text-overflow: ellipsis;
       overflow: hidden;
       width: 100%;
-      max-width: 300px;
+      max-width: var(--moment-minimum-width);
       height: 1.2em;
       font-style: italic;
   }

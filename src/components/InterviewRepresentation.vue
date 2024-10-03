@@ -40,6 +40,17 @@
                 >
       </q-slider>
 
+      <q-slider v-model="minimumWidth"
+                label
+                markers
+                switch-label-side
+                class="col-2 q-mx-md"
+                :min="50"
+                :max="500"
+                :step="10"
+                >
+      </q-slider>
+
       <q-space />
 
       <CommentIcon
@@ -79,6 +90,13 @@
   const el = ref(null)
 
   const zoomVar = useCssVar('--chart-zoom', el) as unknown as Ref<number>
+
+  const momentMinimumWidthVar = useCssVar('--moment-minimum-width', el) as unknown as Ref<string>
+
+  const minimumWidth = computed({
+      get: () => parseFloat(momentMinimumWidthVar.value),
+      set: (value) => { momentMinimumWidthVar.value = `${value}px` }
+  })
 
   // useCssVar returns a string, and QSlider expects a number. Convert it.
   // Using it directly works but produces a warning.
