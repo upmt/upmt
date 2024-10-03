@@ -33,7 +33,7 @@
   watch(() => props.highlighted, () => {
       if (props.highlighted) {
           // Scroll element into view
-          const element = document.querySelector(`[data-moment=${props.highlighted}]`)
+          const element = document.querySelector(`[data-moment="${props.highlighted}"]`)
           if (element) {
               element.scrollIntoView()
           }
