@@ -31,14 +31,26 @@
         </q-tooltip>
       </q-btn>
 
+      <q-btn
+        icon="mdi-fit-to-page-outline"
+        @click="zoomToFit">
+      </q-btn>
+
       <q-slider v-model="zoom"
-                label-value="Zoom"
+                label
+                markers
+                switch-label-side
                 class="col-2 q-mx-md"
                 :min="0.1"
-                :max="2"
+                :max="4"
                 :step=".1"
                 >
       </q-slider>
+
+      <q-btn
+        icon="mdi-fit-to-screen-outline"
+        @click="zoomMoment">
+      </q-btn>
 
       <q-slider v-model="minimumWidth"
                 label
@@ -59,7 +71,8 @@
     </q-toolbar>
 
     <AnalysisRepresentation
-      class="scrollable"
+      ref="analysis"
+      class="scrollable analysis"
       v-if="interview.analysis"
       :highlighted="highlighted"
       :analysisId="interview.analysis.id">
@@ -113,6 +126,30 @@
       store.getRepo().Moment.where('interviewId', props.interviewId).update({ isExpanded: false })
   }
 
+  function zoomToWidth (width: number) {
+      const div = document.querySelector(".analysis")
+      if (div && div.parentElement) {
+          console.log("Setting zoom", zoom.value, width,
+                      'parent', div.parentElement.clientWidth, div.parentElement.scrollWidth,
+                      'div', div.clientWidth, div.scrollWidth)
+
+          const parentWidth = div.parentElement.clientWidth - 40
+          const newZoom = parentWidth / width
+          zoom.value = newZoom
+      }
+  }
+
+  function zoomToFit () {
+      const div = document.querySelector(".analysis")
+      if (div) {
+          zoomToWidth(div.scrollWidth * zoom.value)
+      }
+  }
+
+  function zoomMoment () {
+      // Use parseFloat to convert '200px' string to 200 number
+      zoomToWidth(3 * parseFloat(momentMinimumWidthVar.value))
+  }
 </script>
 
 <style>

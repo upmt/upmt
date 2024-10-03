@@ -30,4 +30,8 @@ function groupBy (arr: Array<any>, criteria: string| ((item: any) => any)) {
   }, {})
 }
 
-export { ANNOTATION_COLORS, groupBy }
+function clamp (number: number, min: number, max: number) {
+  return Math.max(min, Math.min(number, max));
+}
+
+export { ANNOTATION_COLORS, groupBy, clamp }

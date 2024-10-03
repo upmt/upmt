@@ -45,8 +45,6 @@
   .analysis-content {
     display: flex;
     flex-direction: row;
-  }
-  .analysis {
-      zoom: var(--chart-zoom);
+    zoom: var(--chart-zoom);
   }
 </style>

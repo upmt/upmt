@@ -574,6 +574,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.PropertyModel.where('id', identifier).update(values)
   }
 
+  function updateDescriptem (identifier: string, values: object) {
+    repo.Descriptem.where('id', identifier).update(values)
+  }
+
   function momentAddCategoryModel (cmId: string, destinationMomentId: string) {
     const categoryModel = getCategoryModel(cmId)
     const moment = getMoment(destinationMomentId)
@@ -887,6 +891,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     loadProject,
     momentAddCategoryModel,
     moveMoment,
+    updateDescriptem,
     updateProperty,
     updateMoment,
     recursiveUpdateMoment,

@@ -47,8 +47,8 @@
               </q-menu>
               {{ currentMoments.length }}</q-btn> /
             <q-btn
-                                       size="sm"
-                                       dense>
+              size="sm"
+              dense>
               <q-menu class="column">
                 <div class="row items-left no-wrap"
                      :key="name"
