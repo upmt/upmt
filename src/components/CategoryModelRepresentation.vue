@@ -26,12 +26,13 @@
             ref="handle"
             class="categorymodel-handle"
             size="xs"
+            @click="displayDescriptemList"
             name="mdi-tag-outline" />
           <span
             class="categorymodel-label">
             {{ categorymodelName }} (<q-btn
                                        size="sm"
-                                       dense flat round>
+                                       dense>
               <q-menu class="column">
                 <q-btn v-for="moment in currentMoments"
                        :label="moment.name"
@@ -47,7 +48,7 @@
               {{ currentMoments.length }}</q-btn> /
             <q-btn
                                        size="sm"
-                                       dense flat round>
+                                       dense>
               <q-menu class="column">
                 <div class="row items-left no-wrap"
                      :key="name"
@@ -85,13 +86,25 @@
           />
       </div>
     </q-expansion-item>
+    <q-dialog v-model="details">
+      <div>
+        <CategoryModelDescriptemList
+          class="bg-primary text-white"
+          :categorymodelId="categorymodelId" />
+        <q-btn flat
+               label="Close"
+               class="bg-white"
+               color="primary" v-close-popup />
+      </div>
+    </q-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
+  import CategoryModelDescriptemList from './CategoryModelDescriptemList.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
@@ -123,6 +136,8 @@
   const moments = computed(() => store.getCategoryModelMoments(props.categorymodelId))
 
   const currentMoments = computed(() => moments.value.filter(m => m.interviewId === props.currentInterviewId))
+
+  const details = ref(false)
 
   const categorymodelName = computed({
       get () {
@@ -165,6 +180,10 @@
 
       return Object.entries(groupBy(moments, 'interviewId'))
           .map(([id, arr]) => [ names[id], (arr as Array<any>).length ])
+  }
+
+  function displayDescriptemList () {
+      details.value = true
   }
 
   const menuActions = [

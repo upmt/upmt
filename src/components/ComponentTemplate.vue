@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <!--  -->
-  </div>
+  <div />
 </template>
 
 <script setup lang="ts">
-// STORES, IMPORTS, & COMPOSABLES
+/*
+  import { computed, ref } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
 
-// PROPS & EMITS
+  const store = useProjectStore()
+  const istore = useInterfaceStore()
 
-// REACTIVE VARIABLES
-
-// COMPUTED PROPERTIES
-
-// FUNCTIONS
-
-// LIFECYCLE HOOKS
+  const props = defineProps({
+      prop1: { type: String, default: "" }
+      })
+*/
 </script>
 
-<style scoped lang="postcss">
-/* styles go here */
+<style scoped>
 </style>
