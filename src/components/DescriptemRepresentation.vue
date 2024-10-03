@@ -14,7 +14,10 @@
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-label">{{ descriptem.text }}</span>
-
+      <q-popup-edit v-model="descriptem.text">
+        <DescriptemModificationDialog
+          :descriptemId="descriptemId" />
+      </q-popup-edit>
       <q-space />
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
@@ -59,6 +62,7 @@
 
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
+  import DescriptemModificationDialog from './DescriptemModificationDialog.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import Moment from 'stores/models/moment'
