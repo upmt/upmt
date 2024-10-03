@@ -16,12 +16,20 @@
       </DragElement>
 
       <q-btn
-        icon="mdi-chevron-down"
-        @click="expandAllMoments" />
+        icon="mdi-arrow-expand-down"
+        @click="expandAllMoments">
+        <q-tooltip anchor="top middle" :offset="[0,30]">
+          Expand all moments
+        </q-tooltip>
+      </q-btn>
 
       <q-btn
-        icon="mdi-chevron-up"
-        @click="closeAllMoments" />
+        icon="mdi-arrow-expand-up"
+        @click="closeAllMoments">
+        <q-tooltip anchor="top middle" :offset="[0,30]">
+          Close all moments
+        </q-tooltip>
+      </q-btn>
 
       <q-slider v-model="zoom"
                 label-value="Zoom"
