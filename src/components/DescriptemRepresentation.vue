@@ -13,16 +13,18 @@
         size="xs"
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
-      <span class="descriptem-label">{{ descriptem.text }}</span>
-      <q-popup-edit title="Select the appropriate text fragment"
-                    buttons
-                    v-model="descriptemJson"
-                    v-slot="scope">
+      <span>
+        <span class="descriptem-label">{{ descriptem.text }}</span>
+        <q-popup-edit title="Select the appropriate text fragment"
+                      buttons
+                      v-model="descriptemJson"
+                      v-slot="scope">
         <DescriptemModificationDialog
           v-model="scope.value"
           :initial="scope.initialValue"
           />
-      </q-popup-edit>
+        </q-popup-edit>
+      </span>
       <q-space />
       <div v-if="withContext" class="descriptem-context">
         <span class="context-item"
