@@ -116,7 +116,7 @@
 
   const istore = useInterfaceStore()
 
-  const { highlighted } = storeToRefs(istore)
+  const { highlightedMomentId } = storeToRefs(istore)
 
   const store = useProjectStore()
 
@@ -166,10 +166,10 @@
   })
 
   function highlightMoment (momentId: string) {
-      if (highlighted.value === momentId) {
-          highlighted.value = ""
+      if (highlightedMomentId.value === momentId) {
+          highlightedMomentId.value = ""
       } else {
-          highlighted.value = momentId
+          highlightedMomentId.value = momentId
       }
   }
 

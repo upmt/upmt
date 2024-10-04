@@ -74,7 +74,6 @@
       ref="analysis"
       class="scrollable analysis"
       v-if="interview.analysis"
-      :highlighted="highlighted"
       :analysisId="interview.analysis.id">
     </AnalysisRepresentation>
 
@@ -94,8 +93,7 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      interviewId: { type: String, default: "" },
-      highlighted: { type: String, default: "" }
+      interviewId: { type: String, default: "" }
   })
 
   const interview = computed(() => store.getInterview(props.interviewId))

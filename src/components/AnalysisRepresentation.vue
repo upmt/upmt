@@ -5,7 +5,6 @@
     <div class="analysis-content moment-children">
       <div v-for="m in analysis.rootMoment.children" :key="m.id">
         <MomentRepresentation
-          :highlighted="highlighted"
           :momentId="m.id">
         </MomentRepresentation>
       </div>
@@ -16,24 +15,30 @@
 <script setup lang="ts">
 
   import { computed, watch } from 'vue'
+  import { storeToRefs } from 'pinia'
   import MomentRepresentation from './MomentRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
 
   const store = useProjectStore()
+
+  const istore = useInterfaceStore()
+
   const props = defineProps({
-      analysisId: { type: String, default: "" },
-      highlighted: { type: String, default: "" }
+      analysisId: { type: String, default: "" }
   })
+
+  const { highlightedMomentId } = storeToRefs(istore)
 
   const analysis = computed(() => {
       const result = store.getAnalysis(props.analysisId)
       return result
   })
 
-  watch(() => props.highlighted, () => {
-      if (props.highlighted) {
+  watch(highlightedMomentId, () => {
+      if (highlightedMomentId.value) {
           // Scroll element into view
-          const element = document.querySelector(`[data-moment="${props.highlighted}"]`)
+          const element = document.querySelector(`[data-moment="${highlightedMomentId.value}"]`)
           if (element) {
               element.scrollIntoView()
           }

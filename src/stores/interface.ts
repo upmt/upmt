@@ -4,8 +4,8 @@ import Interview from 'stores/models/interview'
 import Project from 'stores/models/project'
 
 export const useInterfaceStore = defineStore('interface', () => {
-  // Highlighted moment id
-  const highlighted = ref("")
+  const highlightedMomentId = ref("")
+  const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
 
   const currentProject: Ref<Project | null> = ref(null)
@@ -29,7 +29,8 @@ export const useInterfaceStore = defineStore('interface', () => {
   return {
     currentInterview,
     currentProject,
-    highlighted,
+    highlightedMomentId,
+    highlightedDescriptemId,
     newMomentIndexIncrement,
     setCurrentInterview,
     setCurrentProject

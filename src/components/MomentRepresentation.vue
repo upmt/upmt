@@ -1,6 +1,6 @@
 <template>
   <div ref="container"
-       :class="[ 'moment-container', `moment-${momentId}`, { 'highlighted': momentId === highlighted } ]"
+       :class="[ 'moment-container', `moment-${momentId}`, { 'highlighted': momentId === highlightedMomentId } ]"
        :data-moment="momentId">
 
     <DropZone data="before"
@@ -84,7 +84,6 @@
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
           <MomentRepresentation
-            :highlighted="highlighted"
             :momentId="m.id">
           </MomentRepresentation>
           <DropZone :data="`in:${m.id}`"
@@ -115,6 +114,7 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import { storeToRefs } from 'pinia'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
   import MomentRepresentation from './MomentRepresentation.vue'
@@ -132,9 +132,10 @@
 
   const props = defineProps({
       momentId: { type: String, default: "" },
-      layout: { type: String, default: "vertical" },
-      highlighted: { type: String, default: "" }
+      layout: { type: String, default: "vertical" }
   })
+
+  const { highlightedMomentId } = storeToRefs(istore)
 
   const moment = computed(() => store.getMoment(props.momentId))
 
