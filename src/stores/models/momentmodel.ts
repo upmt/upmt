@@ -8,6 +8,7 @@ export default class MomentModel extends Model {
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string
+  @Str('') declare comment: string
   @Bool(false) declare isTransitional: boolean
 
   @BelongsToMany(() => CategoryModel, () => CategoryMomentModel, 'momentmodelId', 'categorymodelId') declare categorymodels: CategoryModel[]

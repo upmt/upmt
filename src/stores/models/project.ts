@@ -9,6 +9,7 @@ export default class Project extends Model {
   @Uid() declare id: string
   @Str('') declare filename: string
   @Str('') declare name: string
+  @Str('') declare comment: string
   @HasOne(() => ModelFolder, 'projectId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'projectId') declare interviews: Interview[]
 

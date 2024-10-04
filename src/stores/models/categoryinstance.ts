@@ -1,4 +1,4 @@
-import { Attr, BelongsTo, Uid, HasOne, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Str, Uid, HasOne, HasMany } from 'pinia-orm/dist/decorators'
 import Justification from './justification'
 import Moment from './moment'
 import Property from './property'
@@ -8,6 +8,7 @@ import Justifiable from './justifiable'
 export default class CategoryInstance extends Justifiable {
   static entity = 'categoryinstances'
   @Uid() declare id: string
+  @Str('') declare comment: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
   @HasMany(() => Property, 'categoryinstanceId') declare properties: Property[]
 

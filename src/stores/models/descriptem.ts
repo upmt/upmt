@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Attr, BelongsTo, Num, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Num, Str, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
 import Justification from './justification'
 import { ellipsize } from 'stores/util'
@@ -9,6 +9,7 @@ export default class Descriptem extends Model {
   @Uid() declare id: string
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
+  @Str('') declare comment: string
 
   @Attr() justificationId!: string
   @BelongsTo(() => Justification, 'justificationId') declare justification: Justification | null

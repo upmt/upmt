@@ -8,6 +8,7 @@ export default class Property extends Justifiable {
   static entity = 'properties'
   @Uid() declare id: string
   @Str('') declare value: string
+  @Str('') declare comment: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
 
   @Attr() declare propertymodelId: string

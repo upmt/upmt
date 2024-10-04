@@ -8,6 +8,7 @@ export default class ModelFolder extends Model {
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string
+  @Str('') declare comment: string
   @Bool(true) declare isExpanded: boolean
 
   @Attr() projectId!: string

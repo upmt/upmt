@@ -8,6 +8,7 @@ export default class CategoryModel extends Model {
   @Str('') declare name: string
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
+  @Str('') declare comment: string
   @HasMany(() => PropertyModel, 'categorymodelId') declare properties: PropertyModel[]
 
   @Attr() modelfolderId!: string

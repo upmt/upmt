@@ -6,6 +6,7 @@ export default class PropertyModel extends Model {
   @Uid() declare id: string
   @Str('') declare name: string
   @Str('') declare color: string
+  @Str('') declare comment: string
 
   @Attr() categorymodelId!: string
 

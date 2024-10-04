@@ -9,6 +9,7 @@ export default class Annotation extends Model {
   @Str('') declare color: string
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
+  @Str('') declare comment: string
 
   @Attr() interviewId!: string
   @BelongsTo(() => Interview, 'interviewId') declare interview: Interview
