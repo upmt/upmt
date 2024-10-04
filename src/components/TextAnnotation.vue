@@ -104,12 +104,15 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+
+  import { ref, computed, watch } from 'vue'
+  import { storeToRefs } from 'pinia'
   import AnnotatedText from './AnnotatedText.vue'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import Annotation from 'stores/models/annotation'
   import Descriptem from 'stores/models/descriptem'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
   import { ellipsize } from 'stores/util'
   import DragElement from './DragElement.vue'
   import { ANNOTATION_COLORS } from './util'
@@ -131,6 +134,8 @@
 
   const store = useProjectStore()
 
+  const istore = useInterfaceStore()
+
   const contextMenuVisible = ref(false)
   const activeAnnotationInspector = ref<HTMLDivElement | null>(null)
   const selectedAnnotationInspector = ref<HTMLDivElement | null>(null)
@@ -139,17 +144,10 @@
   const activeDescriptems = ref<Descriptem[]>([])
   const currentSelection = ref<TextSelection| null>(null)
 
+  const { highlightedDescriptemId } = storeToRefs(istore)
+
   const interview = computed(() => store.getInterview(props.interviewId))
 
-  /*
-    export const annotationsTest = [
-{
-    start: 0,
-    length: 7,
-    id: 1,
-    class: "process"
-}
-  */
   const annotation2class = (a: Annotation) => {
       const mapping: Record<string, string> = {
           '#7084b0': '2',
@@ -261,6 +259,19 @@
       }
   }
 
+  watch(highlightedDescriptemId, () => {
+      if (highlightedDescriptemId.value) {
+          // Scroll element into view
+          document.querySelectorAll('[data-annotation-ids].highlighted').forEach(element => element.classList.remove('highlighted'))
+          const elements = document.querySelectorAll(`[data-annotation-ids*="${highlightedDescriptemId.value}"]`)
+          elements.forEach(element => element.classList.add('highlighted'))
+          if (elements.length) {
+              elements[0].scrollIntoView()
+          }
+      } else {
+          document.querySelectorAll('[data-annotation-ids].highlighted').forEach(element => element.classList.remove('highlighted'))
+      }
+  })
 </script>
 
 <style scoped>

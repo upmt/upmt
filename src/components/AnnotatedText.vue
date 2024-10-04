@@ -360,4 +360,12 @@
   .extractHighlight {
       font-weight: bold;
   }
+  .highlighted,
+  .descriptem.highlighted,
+  .category1.highlighted,
+  .category2.highlighted,
+  .category3.highlighted,
+  .category4.highlighted {
+      background-color: yellow !important;
+  }
 </style>

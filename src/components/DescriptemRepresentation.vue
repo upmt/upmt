@@ -12,6 +12,7 @@
         class="descriptem-handle"
         size="xs"
         @click.meta="debug"
+        @click="setHighlighted"
         name="mdi-format-quote-close-outline"></q-icon>
       <span>
         <span class="descriptem-label">{{ descriptem.text }}</span>
@@ -68,7 +69,9 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import { storeToRefs } from 'pinia'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
   import DescriptemModificationDialog from './DescriptemModificationDialog.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
@@ -77,6 +80,7 @@
   import CategoryInstance from 'stores/models/categoryinstance'
 
   const store = useProjectStore()
+  const istore = useInterfaceStore()
 
   const props = defineProps({
       descriptemId: { type: String, default: "" },
@@ -85,9 +89,19 @@
 
   const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 
+  const { highlightedDescriptemId } = storeToRefs(istore)
+
   function debug () {
       (window as any).descriptem = descriptem.value
       console.log("Descriptem", descriptem.value?.toJSON())
+  }
+
+  function setHighlighted () {
+      if (highlightedDescriptemId.value === props.descriptemId) {
+          highlightedDescriptemId.value = ""
+      } else {
+          highlightedDescriptemId.value = props.descriptemId
+      }
   }
 
   type Context = {
