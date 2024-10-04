@@ -355,7 +355,7 @@
       text-decoration: underline;
   }
   .descriptem.descriptems {
-      font-weight: bold;
+      text-decoration-style: double;
   }
   .extractHighlight {
       font-weight: bold;
