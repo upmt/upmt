@@ -67,6 +67,7 @@ function droppedDescriptem (descriptemId: string) {
     const descriptem = store.getDescriptem(descriptemId)
     if (descriptem) {
         store.addTextSelectionToCategoryInstance(descriptem.toJSON(), props.categoryinstanceId)
+        store.deleteDescriptem(descriptemId)
     }
 }
 

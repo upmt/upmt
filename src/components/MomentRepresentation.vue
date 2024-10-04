@@ -160,7 +160,9 @@
       console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
       const ci = store.getCategoryInstance(categoryinstanceId)
       if (ci) {
-          store.momentAddCategoryModel(ci.model.id, props.momentId)
+          // store.momentAddCategoryModel(ci.model.id, props.momentId)
+          // store.deleteCategoryInstance(categoryinstanceId)
+          store.momentMoveCategoryInstance(categoryinstanceId, props.momentId)
           showContent()
       }
   }
@@ -174,6 +176,7 @@
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem) {
           store.addTextSelectionToMoment(descriptem.toJSON(), props.momentId)
+          store.deleteDescriptem(descriptemId)
           showContent()
       }
   }

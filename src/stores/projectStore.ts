@@ -566,6 +566,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.ModelFolder.where('id', identifier).update(values)
   }
 
+  function updateCategoryInstance (identifier: string, values: object) {
+    repo.CategoryInstance.where('id', identifier).update(values)
+  }
+
   function updateCategoryModel (identifier: string, values: object) {
     repo.CategoryModel.where('id', identifier).update(values)
   }
@@ -576,6 +580,15 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function updateDescriptem (identifier: string, values: object) {
     repo.Descriptem.where('id', identifier).update(values)
+  }
+
+  function momentMoveCategoryInstance (ciId: string, destinationMomentId: string) {
+    const categoryinstance = getCategoryInstance(ciId)
+    const moment = getMoment(destinationMomentId)
+
+    if (moment && categoryinstance) {
+      updateCategoryInstance(ciId, { momentId: destinationMomentId })
+    }
   }
 
   function momentAddCategoryModel (cmId: string, destinationMomentId: string) {
@@ -890,6 +903,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getPropertyModel,
     loadProject,
     momentAddCategoryModel,
+    momentMoveCategoryInstance,
     moveMoment,
     updateDescriptem,
     updateProperty,
@@ -897,6 +911,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     recursiveUpdateMoment,
     updateModelFolder,
     updateCategoryModel,
+    updateCategoryInstance,
     updatePropertyModel
   }
 })
