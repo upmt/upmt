@@ -40,7 +40,7 @@
       </q-btn>
 
       <div class="q-pa-no col-2 q-mx-md">
-        <q-badge color="secondary">
+        <q-badge color="info">
           Zoom: {{ zoom }}
         </q-badge>
 
@@ -69,7 +69,7 @@
       </q-btn>
 
       <div class="col-2 q-mx-md q-pa-no">
-        <q-badge color="secondary">
+        <q-badge color="info">
           Moment width: {{ minimumWidth }}
         </q-badge>
 
