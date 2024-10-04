@@ -56,6 +56,7 @@
       // - highlighted one (descriptem)
       // - hidden start
       // - hidden end
+      const out = []
       if (model.value && props.initial) {
           const interviewId = model.value.interviewId
           const maxIndex = interview.value?.text.length ?? 0
@@ -64,36 +65,43 @@
                                      0, maxIndex)
           const extractEnd = clamp(props.initial.endIndex + initialLength.value + 1,
                                    0, maxIndex)
-          return [
-              {
+          console.log({
+              extractStart,
+              extractEnd,
+              initialLength: initialLength.value,
+              startIndex: model.value.startIndex,
+              length
+          })
+          if (extractStart) {
+              out.push({
                   interviewId,
                   id: 'hidden_start',
                   start: 0,
                   length: extractStart,
                   class: 'hidden extractStart'
-              },
-              {
-                  interviewId,
-                  id: 'current_extract',
-                  start: model.value.startIndex,
-                  length,
-                  class: 'extractHighlight'
-              },
-              {
+              })
+          }
+          out.push({
+              interviewId,
+              id: 'current_extract',
+              start: model.value.startIndex,
+              length,
+              class: 'extractHighlight'
+          })
+          if (extractEnd < maxIndex) {
+              out.push({
                   interviewId,
                   id: 'hidden_end',
-                  start: props.initial.endIndex,
+                  start: extractEnd,
                   length: maxIndex - extractEnd,
                   class: 'hidden extractEnd'
-              }
-          ]
-      } else {
-          return []
+              })
+          }
       }
+      return out
   })
 
   function textSelection (data: any) {
-      console.log("textselection", data)
       if (model.value) {
           model.value.startIndex = data.begin
           model.value.endIndex = data.end
