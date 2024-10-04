@@ -236,10 +236,13 @@
   })
 
   function textSelection (data: any) {
-      currentSelection.value = {
-          startIndex: data.begin,
-          endIndex: data.end,
-          interviewId: props.interviewId
+      if (interview.value) {
+          currentSelection.value = {
+              startIndex: data.begin,
+              endIndex: data.end,
+              interviewId: props.interviewId,
+              text: interview.value.fragment(data.begin, data.end)
+          }
       }
   }
 

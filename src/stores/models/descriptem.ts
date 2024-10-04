@@ -36,7 +36,8 @@ export default class Descriptem extends Model {
     return {
       interviewId: this.interviewId,
       startIndex: this.startIndex,
-      endIndex: this.endIndex
+      endIndex: this.endIndex,
+      text: this.text
     }
   }
 }

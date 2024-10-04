@@ -20,6 +20,10 @@ export default class Interview extends Model {
   @Attr() projectId!: string
   @BelongsTo(() => Project, 'projectId') declare project: Project | null
 
+  fragment (startIndex: number, endIndex: number): string {
+    return this.text.slice(startIndex, endIndex)
+  }
+
   get label (): string {
     if (this.name) {
       return this.name

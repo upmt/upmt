@@ -31,7 +31,8 @@ export default class Annotation extends Model {
       color: this.color,
       startIndex: this.startIndex,
       endIndex: this.endIndex,
-      interviewId: this.interviewId
+      interviewId: this.interviewId,
+      text: this.text
     }
   }
 }

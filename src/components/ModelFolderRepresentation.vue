@@ -20,7 +20,10 @@
       <template v-slot:header>
         <DropZone data="header"
                   class="empty_padding"
-                  types="upmt/categorymodel upmt/modelfolder"
+                  types="upmt/categorymodel upmt/modelfolder upmt/annotation upmt/descriptem upmt/selection"
+                  @annotation="droppedAnnotation"
+                  @selection="droppedSelection"
+                  @descriptem="droppedDescriptem"
                   @categorymodel="droppedCategoryModel"
                   @modelfolder="droppedModelFolder">
           <DragElement
@@ -82,6 +85,7 @@
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
+  import type { TextSelection } from './util'
 
   const store = useProjectStore()
 
@@ -97,6 +101,32 @@
       console.log("Modelfolder", modelfolder.value)
   }
 
+  function createCategoryModelFromSelection (selection: TextSelection) {
+      store.addCategoryModel(props.modelfolderId, selection.text ?? "New category")
+  }
+
+  function droppedAnnotation (annotationId: string) {
+      const annotation = store.getAnnotation(annotationId)
+      if (annotation) {
+          createCategoryModelFromSelection(annotation.toJSON())
+      }
+  }
+
+  function droppedDescriptem (descriptemId: string) {
+      const descriptem = store.getDescriptem(descriptemId)
+      if (descriptem) {
+          createCategoryModelFromSelection(descriptem.toJSON())
+      }
+  }
+
+  function droppedSelection (selectionData: string) {
+      try {
+          const selection = JSON.parse(selectionData)
+          createCategoryModelFromSelection(selection)
+      } catch (e) {
+          console.log(`Cannot parse ${selectionData}`)
+      }
+  }
   function droppedCategoryModel (cmId: string) {
       store.updateCategoryModel(cmId, { modelfolderId: props.modelfolderId })
   }

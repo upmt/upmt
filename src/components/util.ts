@@ -37,7 +37,8 @@ function clamp (number: number, min: number, max: number) {
 export type TextSelection = {
   startIndex: number,
   endIndex: number,
-  interviewId: string
+  interviewId: string,
+  text?: string
 }
 
 export { ANNOTATION_COLORS, groupBy, clamp }
