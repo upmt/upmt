@@ -14,9 +14,14 @@
         @click.meta="debug"
         name="mdi-format-quote-close-outline"></q-icon>
       <span class="descriptem-label">{{ descriptem.text }}</span>
-      <q-popup-edit v-model="descriptem.text">
+      <q-popup-edit title="Select the appropriate text fragment"
+                    buttons
+                    v-model="descriptemJson"
+                    v-slot="scope">
         <DescriptemModificationDialog
-          :descriptemId="descriptemId" />
+          v-model="scope.value"
+          :initial="scope.initialValue"
+          />
       </q-popup-edit>
       <q-space />
       <div v-if="withContext" class="descriptem-context">
@@ -104,6 +109,16 @@
           }
       } else {
           return { }
+      }
+  })
+
+  const descriptemJson = computed({
+      get: () => descriptem.value?.toJSON() ?? {},
+      set: (value) => {
+          store.updateDescriptem(props.descriptemId, {
+              startIndex: value.startIndex,
+              endIndex: value.endIndex
+          })
       }
   })
 

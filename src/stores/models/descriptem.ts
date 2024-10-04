@@ -27,6 +27,10 @@ export default class Descriptem extends Model {
     return ellipsize(this.text)
   }
 
+  get length (): number {
+    return this.endIndex - this.startIndex
+  }
+
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
     return {

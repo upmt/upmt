@@ -34,4 +34,10 @@ function clamp (number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
 }
 
+export type TextSelection = {
+  startIndex: number,
+  endIndex: number,
+  interviewId: string
+}
+
 export { ANNOTATION_COLORS, groupBy, clamp }

@@ -172,6 +172,10 @@
                   return []
               }
           },
+          clearSelection: {
+              type: Boolean,
+              deefault: false
+          },
           getAnnotationColor: {
               type: Function,
               /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -294,6 +298,9 @@
                           text: this.text.slice(begin, end)
                       }
                   }
+                  if (this.clearSelection) {
+                      selection.removeAllRanges()
+                  }
               }
               return null
           },
@@ -348,6 +355,9 @@
       text-decoration: underline;
   }
   .descriptem.descriptems {
+      font-weight: bold;
+  }
+  .extractHighlight {
       font-weight: bold;
   }
 </style>

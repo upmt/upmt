@@ -113,6 +113,7 @@
   import { ellipsize } from 'stores/util'
   import DragElement from './DragElement.vue'
   import { ANNOTATION_COLORS } from './util'
+  import type { TextSelection } from './util'
 
   // BaseAnnotation that is used to communicate with
   // AnnotatedText. Not to be confused with model Annotation
@@ -122,12 +123,6 @@
       length: number,
       color: string | null,
       class: string
-  }
-
-  type TextSelection = {
-      startIndex: number,
-      endIndex: number,
-      interviewId: string
   }
 
   const props = defineProps({
