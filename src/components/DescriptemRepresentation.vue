@@ -47,6 +47,7 @@
         </span>
         <span
           class="context-item"
+          @click.stop="jumpToMoment(context.moment.id)"
           v-if="context.moment">
           <q-icon
             size="xs"
@@ -89,7 +90,10 @@
 
   const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 
-  const { highlightedDescriptemId } = storeToRefs(istore)
+  const {
+      highlightedDescriptemId,
+      highlightedMomentId
+  } = storeToRefs(istore)
 
   function debug () {
       (window as any).descriptem = descriptem.value
@@ -137,6 +141,10 @@
           })
       }
   })
+
+  function jumpToMoment (identifier: string) {
+      highlightedMomentId.value = identifier
+  }
 
   type NamedActions = [ name: string, action: (element: any) => void][]
   const menuActions: NamedActions = [
