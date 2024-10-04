@@ -45,6 +45,7 @@
               @click.meta="debug">
               <q-icon
                 size="xs"
+                @click="unhighlight"
                 name="mdi-alpha-m-box-outline">
               </q-icon>
               <span class="moment-name">{{ momentName }}
@@ -142,6 +143,12 @@
   function debug () {
       (window as any).moment = moment.value
       console.log("Moment", moment.value)
+  }
+
+  function unhighlight () {
+      if (highlightedMomentId.value) {
+          highlightedMomentId.value = ""
+      }
   }
 
   function showContent () {
