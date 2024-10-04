@@ -34,34 +34,52 @@
       <q-btn
         icon="mdi-fit-to-page-outline"
         @click="zoomToFit">
+        <q-tooltip anchor="top middle" :offset="[0,30]">
+          Fit whole analysis
+        </q-tooltip>
       </q-btn>
 
-      <q-slider v-model="zoom"
-                label
-                markers
-                switch-label-side
-                class="col-2 q-mx-md"
-                :min="0.1"
-                :max="4"
-                :step=".1"
-                >
-      </q-slider>
+      <div class="q-pa-no col-2 q-mx-md">
+        <q-badge color="secondary">
+          Zoom: {{ zoom }}
+        </q-badge>
+
+        <q-slider v-model="zoom"
+                  :min="0.1"
+                  :max="4"
+                  :step=".1"
+                  >
+        </q-slider>
+      </div>
+
+      <q-btn
+        icon="mdi-numeric-1-box-outline"
+        @click="zoomReset">
+        <q-tooltip anchor="top middle" :offset="[0,30]">
+          Reset zoom to original level
+        </q-tooltip>
+      </q-btn>
 
       <q-btn
         icon="mdi-fit-to-screen-outline"
         @click="zoomMoment">
+        <q-tooltip anchor="top middle" :offset="[0,30]">
+          Zoom to moment level
+        </q-tooltip>
       </q-btn>
 
-      <q-slider v-model="minimumWidth"
-                label
-                markers
-                switch-label-side
-                class="col-2 q-mx-md"
-                :min="50"
-                :max="500"
-                :step="10"
-                >
-      </q-slider>
+      <div class="col-2 q-mx-md q-pa-no">
+        <q-badge color="secondary">
+          Moment width: {{ minimumWidth }}
+        </q-badge>
+
+        <q-slider v-model="minimumWidth"
+                  :min="50"
+                  :max="500"
+                  :step="10"
+                  >
+        </q-slider>
+      </div>
 
       <q-space />
 
@@ -131,22 +149,26 @@
                       'parent', div.parentElement.clientWidth, div.parentElement.scrollWidth,
                       'div', div.clientWidth, div.scrollWidth)
 
-          const parentWidth = div.parentElement.clientWidth - 40
+          const parentWidth = div.parentElement.clientWidth - 60
           const newZoom = parentWidth / width
-          zoom.value = newZoom
+          zoom.value = +newZoom.toFixed(2)
       }
   }
 
   function zoomToFit () {
       const div = document.querySelector(".analysis")
       if (div) {
-          zoomToWidth(div.scrollWidth * zoom.value)
+          zoomToWidth(div.scrollWidth / zoom.value)
       }
   }
 
   function zoomMoment () {
       // Use parseFloat to convert '200px' string to 200 number
       zoomToWidth(3 * parseFloat(momentMinimumWidthVar.value))
+  }
+
+  function zoomReset () {
+      zoom.value = 1
   }
 </script>
 
