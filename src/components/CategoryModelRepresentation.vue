@@ -86,14 +86,13 @@
           />
       </div>
     </q-expansion-item>
-    <q-dialog v-model="details">
-      <div>
+    <q-dialog
+      v-model="details">
+      <div class="q-pa-lg bg-white">
         <CategoryModelDescriptemList
-          class="bg-primary text-white"
           :categorymodelId="categorymodelId" />
         <q-btn flat
                label="Close"
-               class="bg-white"
                color="primary" v-close-popup />
       </div>
     </q-dialog>
