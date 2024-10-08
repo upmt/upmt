@@ -647,13 +647,22 @@ export const useProjectStore = defineStore('projectStore', () => {
         }
       }
       if (referenceMoment && destination) {
-        const descriptems = textselection ? [ { ...textselection } ] : []
+        // textselection can have the "text" attribute, which is not
+        // part of the Descriptem fields. Explicitly select
+        // adequate fields.
+        const descriptems = textselection ? [ {
+          startIndex: textselection.startIndex,
+          endIndex: textselection.endIndex,
+          interviewId: textselection.interviewId
+        } ] : []
         const data = {
           name,
           parentId: destination.id,
           childIndex,
           interviewId: referenceMoment.interviewId,
+          isExpanded: true,
           justification: {
+            name: "",
             descriptems
           }
         }
