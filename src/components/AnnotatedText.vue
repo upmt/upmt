@@ -292,14 +292,14 @@
                       // startContainer/endContainer should be text element whose parent is a span
                       const begin = Number(range.startContainer.parentElement.dataset.textOffset) + range.startOffset
                       const end = Number(range.endContainer.parentElement.dataset.textOffset) + range.endOffset
+                      if (this.clearSelection) {
+                          selection.removeAllRanges()
+                      }
                       return {
                           begin,
                           end,
                           text: this.text.slice(begin, end)
                       }
-                  }
-                  if (this.clearSelection) {
-                      selection.removeAllRanges()
                   }
               }
               return null
@@ -359,6 +359,9 @@
   }
   .extractHighlight {
       font-weight: bold;
+  }
+  .extractOriginal {
+      text-decoration: underline;
   }
   .highlighted,
   .descriptem.highlighted,

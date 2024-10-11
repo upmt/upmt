@@ -1,6 +1,7 @@
 <template>
   <div class="descriptem-modification"
        v-if="model">
+    <span class="text-italic">The original descriptem is underlined, the new selection is bold</span>
     <AnnotatedText
       class="textAnnotationComponent"
       :text="contextText"
@@ -65,13 +66,6 @@
                                      0, maxIndex)
           const extractEnd = clamp(props.initial.endIndex + initialLength.value + 1,
                                    0, maxIndex)
-          console.log({
-              extractStart,
-              extractEnd,
-              initialLength: initialLength.value,
-              startIndex: model.value.startIndex,
-              length
-          })
           if (extractStart) {
               out.push({
                   interviewId,
@@ -84,6 +78,13 @@
           out.push({
               interviewId,
               id: 'current_extract',
+              start: props.initial.startIndex,
+              length: props.initial.endIndex - props.initial.startIndex,
+              class: 'extractOriginal'
+          })
+          out.push({
+              interviewId,
+              id: 'new_selection',
               start: model.value.startIndex,
               length,
               class: 'extractHighlight'
@@ -111,4 +112,7 @@
 </script>
 
 <style scoped>
+  .textAnnotationComponent {
+    border: 1px solid black;
+  }
 </style>
