@@ -30,23 +30,6 @@
         <q-list dense style="min-width: 100px">
           <q-item
             v-if="selectionShorttext"
-            key="setSelectionColor"
-            v-close-popup>
-            <q-space />
-            <q-list dense row text-right>
-              <q-btn v-for="color in ANNOTATION_COLORS"
-                     :key="color"
-                     round
-                     size="md"
-                     flat
-                     :style="{ color: color }"
-                     @click="setSelectionColor(color)"
-                     icon="colorize" />
-            </q-list>
-          </q-item>
-
-          <q-item
-            v-if="selectionShorttext"
             key="current"
             clickable
             v-close-popup>
@@ -247,13 +230,6 @@
   function onDragStart (event: DragEvent) {
       if (event.dataTransfer) {
           event.dataTransfer.setData(`upmt/selection`, currentSelectionDataAsString.value)
-      }
-  }
-
-  function setSelectionColor (color: string) {
-      // create annotation with given color
-      if (currentSelection.value) {
-          store.addAnnotation(currentSelection.value, color)
       }
   }
 
