@@ -1,17 +1,15 @@
 <template>
   <div class="textAnnotationContainer">
     <q-toolbar  class="row justify-end">
-      <q-button-group>
-        <q-btn
-          v-for="color in ANNOTATION_COLORS"
-          :key="color"
-          icon="mdi-marker"
-          @click="selectionColor = color"
-          :flat="color != selectionColor"
-          dense
-          :style="{ color: color }"
-          />
-      </q-button-group>
+      <q-btn
+        v-for="color in ANNOTATION_COLORS"
+        :key="color"
+        icon="mdi-marker"
+        @click="selectionColor = color"
+        :flat="color != selectionColor"
+        dense
+        :style="{ color: color }"
+        />
     </q-toolbar>
     <AnnotatedText
       class="textAnnotationComponent"
@@ -89,6 +87,13 @@
                 name="mdi-comment-quote-outline"></q-icon>
               <span class="extract">{{ annotation.shorttext }}</span>
             </DragElement>
+            <q-space />
+            <q-btn
+              size="xs"
+              flat
+              dense
+              icon="mdi-delete-outline"
+              @click="annotationDelete(annotation.id)" />
           </q-item>
         </q-list>
       </q-menu>
@@ -250,6 +255,10 @@
       if (currentSelection.value) {
           store.addAnnotation(currentSelection.value, color)
       }
+  }
+
+  function annotationDelete (identifier: string) {
+      store.deleteAnnotation(identifier)
   }
 
   watch(highlightedDescriptemId, () => {
