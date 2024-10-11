@@ -1,27 +1,7 @@
 <template>
   <div class="textAnnotationContainer">
-    <div class="inspector">
-      <q-expansion-item
-        dense
-        dense-toggle
-        :duration="0"
-        expand-icon-toggle
-        label="Debug"
-        >
-        <div>
-          <strong>Active annotations </strong>
-          <span ref="activeAnnotationInspector"></span>
-        </div>
-        <div>
-          <strong>Selected annotations </strong>
-          <span ref="selectedAnnotationInspector"></span>
-        </div>
-        <div>
-          <strong>Selected text </strong>
-          <span>{{ selectionShorttext }}</span>
-        </div>
-      </q-expansion-item>
-    </div>
+    <q-toolbar>
+    </q-toolbar>
     <AnnotatedText
       class="textAnnotationComponent"
       v-if="interview"
@@ -138,8 +118,6 @@
   const istore = useInterfaceStore()
 
   const contextMenuVisible = ref(false)
-  const activeAnnotationInspector = ref<HTMLDivElement | null>(null)
-  const selectedAnnotationInspector = ref<HTMLDivElement | null>(null)
 
   const activeAnnotations = ref<Annotation[]>([])
   const activeDescriptems = ref<Descriptem[]>([])
@@ -206,24 +184,19 @@
   }
 
   const spanEvents = {
+      /*
       click: (event: Event, annotations: BaseAnnotation[]) => {
           // annotations can contain descriptems or annotations
           if (selectedAnnotationInspector.value) {
               const message = annotations.map(a => `${a.start}:${a.start + a.length} ${a.class}`).join(" ")
               selectedAnnotationInspector.value.textContent = message
           }
-      },
+          },
+          */
       // Do not activate mouseover/leave for the moment, it has a small performance cost
       mouseover: (event: Event, annotations: BaseAnnotation[]) => {
           activeDescriptems.value = (annotations.filter(a => a.class === 'descriptem').map(a => store.getDescriptem(a.id))) as Descriptem[]
           activeAnnotations.value = (annotations.filter(a => a.class !== 'descriptem').map(a => store.getAnnotation(a.id))) as Annotation[]
-          if (activeAnnotationInspector.value) {
-              let message = "No annotations or descriptems"
-              if (activeDescriptems.value.length || activeAnnotations.value.length) {
-                  message = `${activeAnnotations.value.length} annotations - ${activeDescriptems.value.length} descriptems`
-              }
-              activeAnnotationInspector.value.textContent = message
-          }
       }
       // mouseleave: (event: Event, annotations: Array<unknown>) => console.log("Mouseleave", event, annotations)
   }
@@ -280,8 +253,6 @@
 
 <style scoped>
   .textAnnotationContainer {
-  }
-  .inspector {
   }
   .textAnnotationComponent {
   }
