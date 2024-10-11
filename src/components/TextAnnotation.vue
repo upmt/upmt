@@ -79,7 +79,8 @@
             <DescriptemRepresentation
               class="full-width"
               :descriptemId="descriptem.id"
-              withContext />
+              withContext
+              :withMenu="false" />
           </q-item>
           <q-separator />
           <q-item

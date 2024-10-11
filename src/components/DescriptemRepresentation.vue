@@ -27,7 +27,8 @@
         </q-popup-edit>
       </span>
       <q-space />
-      <div v-if="withContext" class="descriptem-context">
+      <div v-if="withContext"
+           class="descriptem-context">
         <span class="context-item"
               v-if="context.property">
           <q-icon
@@ -56,7 +57,7 @@
         </span>
       </div>
 
-      <div v-else
+      <div v-if="withMenu"
            class="descriptem-menu">
         <q-space />
         <ElementMenu
@@ -85,7 +86,8 @@
 
   const props = defineProps({
       descriptemId: { type: String, default: "" },
-      withContext: { type: Boolean, default: false }
+      withContext: { type: Boolean, default: false },
+      withMenu: { type: Boolean, default: true }
   })
 
   const descriptem = computed(() => store.getDescriptem(props.descriptemId))
