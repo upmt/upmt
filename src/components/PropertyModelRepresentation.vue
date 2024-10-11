@@ -12,7 +12,11 @@
         @click.meta="debug"
         name="mdi-note-text-outline"></q-icon>
       <div class="propertymodel-name">{{ propertymodelName }}
-        <q-popup-edit v-model="propertymodelName" auto-save v-slot="scope">
+        <q-popup-edit
+          ref="popupEdit"
+          v-model="propertymodelName"
+          auto-save
+          v-slot="scope">
           <q-input v-model="scope.value"
                    @focus="($event.target as HTMLInputElement).select()"
                    dense autofocus counter @keyup.enter="scope.set" />
@@ -27,7 +31,7 @@
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
 
@@ -38,6 +42,8 @@
   })
 
   const propertymodel = computed(() => store.getPropertyModel(props.propertymodelId))
+
+  const popupEdit = ref(null)
 
   const propertymodelName = computed({
       get: () => propertymodel.value ? propertymodel.value.name : "",
@@ -52,6 +58,7 @@
   }
 
   const menuActions = [
+      [ "Rename", () => popupEdit.value && (popupEdit.value as any).show() ],
       [ "Delete", () => store.deletePropertyModel(props.propertymodelId) ]
   ]
 

@@ -63,7 +63,11 @@
                 </div>
               </q-menu>
               {{ moments.length }}</q-btn>)
-            <q-popup-edit v-model="categorymodelName" auto-save v-slot="scope">
+            <q-popup-edit
+              ref="popupEdit"
+              v-model="categorymodelName"
+              auto-save
+              v-slot="scope">
               <q-input v-model="scope.value"
                        @focus="($event.target as HTMLInputElement).select()"
                        dense autofocus counter @keyup.enter="scope.set" />
@@ -127,6 +131,8 @@
 
   const categorymodel = computed(() => store.getCategoryModel(props.categorymodelId))
 
+  const popupEdit = ref(null)
+
   function debug () {
       (window as any).categorymodel = categorymodel.value
       console.log("categorymodel", categorymodel.value)
@@ -186,6 +192,7 @@
   }
 
   const menuActions = [
+      [ "Rename", () => popupEdit.value && (popupEdit.value as any).show() ],
       [ "Add a property", () => store.addPropertyModel(props.categorymodelId, "newprop") ],
       [ "Delete", () => store.deleteModelFolder(props.categorymodelId) ]
   ]
