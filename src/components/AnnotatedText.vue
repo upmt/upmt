@@ -306,7 +306,7 @@
           },
           emitSelection: function () {
               const textSelection = this.getSelection()
-              if (textSelection) {
+              if (textSelection && textSelection.begin !== textSelection.end) {
                   this.$emit("selection", textSelection)
               }
           }
