@@ -33,6 +33,7 @@
 
       <q-btn
         icon="mdi-fit-to-page-outline"
+        size="sm"
         @click="zoomToFit">
         <q-tooltip anchor="top middle" :offset="[0,30]">
           Fit whole analysis
@@ -54,17 +55,10 @@
 
       <q-btn
         icon="mdi-numeric-1-box-outline"
+        size="sm"
         @click="zoomReset">
         <q-tooltip anchor="top middle" :offset="[0,30]">
           Reset zoom to original level
-        </q-tooltip>
-      </q-btn>
-
-      <q-btn
-        icon="mdi-fit-to-screen-outline"
-        @click="zoomMoment">
-        <q-tooltip anchor="top middle" :offset="[0,30]">
-          Zoom to moment level
         </q-tooltip>
       </q-btn>
 
@@ -160,11 +154,6 @@
       if (div) {
           zoomToWidth(div.scrollWidth / zoom.value)
       }
-  }
-
-  function zoomMoment () {
-      // Use parseFloat to convert '200px' string to 200 number
-      zoomToWidth(3 * parseFloat(momentMinimumWidthVar.value))
   }
 
   function zoomReset () {
