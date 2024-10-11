@@ -1,6 +1,17 @@
 <template>
   <div class="textAnnotationContainer">
-    <q-toolbar>
+    <q-toolbar  class="row justify-end">
+      <q-button-group>
+        <q-btn
+          v-for="color in ANNOTATION_COLORS"
+          :key="color"
+          icon="mdi-marker"
+          @click="selectionColor = color"
+          :flat="color != selectionColor"
+          dense
+          :style="{ color: color }"
+          />
+      </q-button-group>
     </q-toolbar>
     <AnnotatedText
       class="textAnnotationComponent"
@@ -11,6 +22,7 @@
       :spanEvents="spanEvents"
       @dragstart="onDragStart($event)"
       @selection="textSelection"
+      clearSelection
       >
       <q-menu
         touch-position
@@ -123,6 +135,8 @@
   const activeDescriptems = ref<Descriptem[]>([])
   const currentSelection = ref<TextSelection| null>(null)
 
+  const selectionColor = ref(ANNOTATION_COLORS[0])
+
   const { highlightedDescriptemId } = storeToRefs(istore)
 
   const interview = computed(() => store.getInterview(props.interviewId))
@@ -217,6 +231,8 @@
               interviewId: props.interviewId,
               text: interview.value.fragment(data.begin, data.end)
           }
+          // Create an annotation
+          store.addAnnotation(currentSelection.value, selectionColor.value)
       }
   }
 
