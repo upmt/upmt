@@ -1,6 +1,12 @@
 <template>
   <div class="textAnnotationContainer">
-    <q-toolbar  class="row justify-end">
+    <q-toolbar class="row justify-end">
+      <q-btn
+        icon="mdi-cursor-text"
+        @click="selectionColor = ''"
+        :flat="selectionColor != ''"
+        dense
+        />
       <q-btn
         v-for="color in ANNOTATION_COLORS"
         :key="color"
@@ -20,7 +26,6 @@
       :spanEvents="spanEvents"
       @dragstart="onDragStart($event)"
       @selection="textSelection"
-      clearSelection
       >
       <q-menu
         touch-position
@@ -123,7 +128,9 @@
   const activeDescriptems = ref<Descriptem[]>([])
   const currentSelection = ref<TextSelection| null>(null)
 
-  const selectionColor = ref(ANNOTATION_COLORS[0])
+  // selectionColor is the marker color. If empty, we just want to
+  // select the text.
+  const selectionColor = ref("")
 
   const { highlightedDescriptemId } = storeToRefs(istore)
 
@@ -219,8 +226,10 @@
               interviewId: props.interviewId,
               text: interview.value.fragment(data.begin, data.end)
           }
-          // Create an annotation
-          store.addAnnotation(currentSelection.value, selectionColor.value)
+          // Create an annotation if a marker color is selected
+          if (selectionColor.value) {
+              store.addAnnotation(currentSelection.value, selectionColor.value)
+          }
       }
   }
 
