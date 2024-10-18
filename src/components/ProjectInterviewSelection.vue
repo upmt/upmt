@@ -66,7 +66,6 @@
               </template>
 
               <template v-slot:after>
-                <!-- Replace with https://github.com/cyclecycle/vue-annotated-text -->
                 <TextAnnotation
                   class="fit fullwindow-height"
                   :interviewId="interview.id">
