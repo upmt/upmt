@@ -1,15 +1,16 @@
 <template>
-  <q-icon
+  <q-btn
     size="xs"
     flat
     round
     :class="commentClass"
-    name="mdi-chat-outline">
+    icon="mdi-chat-outline">
     <q-tooltip
+      class="bg-blue text-body2"
       v-if="comment">
       <span class="moment-comment">{{ comment }}</span>
     </q-tooltip>
-  </q-icon>
+  </q-btn>
 </template>
 
 <script setup lang="ts">
