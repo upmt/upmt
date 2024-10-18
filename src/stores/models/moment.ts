@@ -6,6 +6,11 @@ import Justifiable from './justifiable'
 export default class Moment extends Justifiable {
   static entity = 'moments'
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+  @Str('') declare projectId: string
+
   @Str('') declare name: string
   @Str('') declare color: string
   @Str('') declare comment: string

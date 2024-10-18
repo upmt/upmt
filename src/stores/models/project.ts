@@ -1,12 +1,16 @@
-import { Model } from 'pinia-orm'
+import BaseModel from './basemodel'
 import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
 import ModelFolder from './modelfolder'
 
-export default class Project extends Model {
+export default class Project extends BaseModel {
   static entity = 'projects'
 
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+
   @Str('') declare filename: string
   @Str('') declare name: string
   @Str('') declare comment: string

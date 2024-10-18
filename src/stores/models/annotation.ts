@@ -1,11 +1,16 @@
-import { Model } from 'pinia-orm'
+import BaseModel from './basemodel'
 import { Attr, BelongsTo, Str, Num, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
 import { ellipsize } from 'stores/util'
 
-export default class Annotation extends Model {
+export default class Annotation extends BaseModel {
   static entity = 'annotations'
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+  @Str('') declare projectId: string
+
   @Str('') declare color: string
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number

@@ -8,6 +8,11 @@ import Justifiable from './justifiable'
 export default class CategoryInstance extends Justifiable {
   static entity = 'categoryinstances'
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+  @Str('') declare projectId: string
+
   @Str('') declare comment: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
   @HasMany(() => Property, 'categoryinstanceId') declare properties: Property[]

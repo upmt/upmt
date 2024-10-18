@@ -1,5 +1,5 @@
-import { Model } from 'pinia-orm'
+import BaseModel from './basemodel'
 
-export default class Justifiable extends Model {
+export default class Justifiable extends BaseModel {
   static entity = 'justifiable'
 }

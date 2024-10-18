@@ -1,12 +1,18 @@
-import { Model } from 'pinia-orm'
+import BaseModel from './basemodel'
 import { Attr, BelongsTo, Num, Str, Uid } from 'pinia-orm/dist/decorators'
 import Interview from './interview'
 import Justification from './justification'
 import { ellipsize } from 'stores/util'
 
-export default class Descriptem extends Model {
+export default class Descriptem extends BaseModel {
   static entity = 'descriptems'
+
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+  @Str('') declare projectId: string
+
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
   @Str('') declare comment: string

@@ -1,17 +1,22 @@
-import { Model } from 'pinia-orm'
+import BaseModel from './basemodel'
 import { Attr, Str, Uid, Bool, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 import CategoryModel from './categorymodel'
 import MomentModel from './momentmodel'
 
-export default class ModelFolder extends Model {
+export default class ModelFolder extends BaseModel {
   static entity = 'modelfolders'
+
   @Uid() declare id: string
+
+  @Str('') declare creator: string
+  @Str('') declare contributor: string
+  @Str('') declare projectId: string
+
   @Str('') declare name: string
   @Str('') declare color: string
   @Str('') declare comment: string
   @Bool(true) declare isExpanded: boolean
 
-  @Attr() projectId!: string
   @Attr() parentId!: string
 
   /* eslint-disable no-use-before-define */
