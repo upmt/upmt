@@ -1,6 +1,6 @@
 <template>
   <div class="textAnnotationContainer">
-    <q-toolbar class="row justify-end">
+    <q-toolbar class="row justify-end absolute-top bg-white">
       <q-btn
         icon="mdi-cursor-text"
         @click="selectionColor = ''"
@@ -18,7 +18,7 @@
         />
     </q-toolbar>
     <AnnotatedText
-      class="textAnnotationComponent"
+      class="textAnnotationComponent q-pt-lg"
       v-if="interview"
       :text="interview.text"
       :annotations="annotations"
