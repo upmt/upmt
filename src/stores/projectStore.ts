@@ -14,6 +14,7 @@ import MomentModel from './models/momentmodel'
 import Project from './models/project'
 import Property from './models/property'
 import PropertyModel from './models/propertymodel'
+import { basename, timestampStrip } from './util'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
  * This should be put in some common module.
@@ -438,9 +439,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Project.save(projectData)
   }
 
-  function importProject (data: any, filename: string) {
+  function importProject (data: any, url: string) {
     // Load schema first so that idCache is properly initialized
-    const id = filename.replace('.upmt', '').replace(/[^A-Za-z0-9_-]/g, '_')
+    // Strip possible timestamp from beginning of filename
+    const filename = basename(url)
+    const id = timestampStrip(filename.replace('.upmt', ''))
     let out
     let schema
     if ('modelfolder' in data) {
