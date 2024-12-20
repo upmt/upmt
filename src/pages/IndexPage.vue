@@ -46,7 +46,9 @@
 
           <q-card-actions align="right">
             <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
+            <q-btn :to="{ name: 'spreadsheet', params: { id: project.id } }" flat>Compare</q-btn>
             <q-btn @click="exportProject(project)" flat>Save</q-btn>
+            <q-btn @click="storeProject(project)" flat>Store</q-btn>
           </q-card-actions>
         </q-card>
 
@@ -74,6 +76,7 @@
                 filled
                 @input="uploadFile"/>
 
+        <StorageList dir="/projects" />
       </div>
 
       <div id="column-right"
@@ -133,7 +136,10 @@
 
   import { useQuasar, exportFile, QFile } from 'quasar'
   import { computed, ref, Ref } from 'vue'
+  import { fs } from '@zenfs/core'
+  import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
+  import StorageList from 'components/StorageList.vue'
   import Project from 'stores/models/project'
 
   defineOptions({
@@ -240,6 +246,17 @@
           // browser denied it
           console.error('Error: ' + status)
       }
+  }
+
+  function storeProject (project: Project) {
+      const data = useProjectStore().hydrateProject(project.id)
+
+      const base = timestampAdd(project.filename.replace('.upmt', '') ?? project.label)
+      const filename = `/projects/${base}.upmt`
+      if (!fs.existsSync('/projects')) {
+          fs.mkdirSync('/projects')
+      }
+      fs.writeFileSync(filename, JSON.stringify(data))
   }
 </script>
 
