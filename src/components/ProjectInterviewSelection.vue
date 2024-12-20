@@ -113,7 +113,6 @@
 
   const project = computed(() => {
       const p = store.getProject(props.projectId)
-      istore.setCurrentProject(p)
       return p
   })
 
@@ -160,7 +159,7 @@
 
   onUnmounted(() => {
       istore.setCurrentInterview(null)
-      istore.setCurrentProject(null)
+      // istore.setCurrentProject(null)
   })
 </script>
 

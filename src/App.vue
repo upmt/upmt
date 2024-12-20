@@ -5,14 +5,24 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
+  import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
+
+  const istore = useInterfaceStore()
 
   defineOptions({
       name: 'App'
   })
 
   onMounted(() => {
+      BaseModel.context = {
+          getUsername: istore.getUsername,
+          getProjectId: istore.getProjectId
+      }
+      // Load username
+      istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
       store.loadProject('./examples/example.upmt');
       store.loadProject('./examples/ruptur-example.upmt');
       (window as any).store = store;

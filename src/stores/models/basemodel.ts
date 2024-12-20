@@ -19,26 +19,26 @@ export default class BaseModel extends Model {
   }
 
   static creating (model: BaseModel) {
-    console.log("creating")
-
     if (!this.context) {
       return true
     }
 
     if (this.context?.getUsername) {
-      model.creator = this.context.getUsername();
-      model.contributor = model.creator;
+      if (!model.creator) {
+        model.creator = this.context.getUsername()
+      }
+      if (!model.contributor) {
+        model.contributor = model.creator
+      }
     }
-    if (this.context?.getProjectId) {
-      model.projectId = this.context.getProjectId();
+    if (!model.projectId && this.context?.getProjectId) {
+      model.projectId = this.context.getProjectId()
     }
     // return false to prevent from saving
     return true
-    }
+  }
 
   static updating (model: BaseModel) {
-    console.log("updating")
-
     if (this.context?.getUsername) {
       model.contributor = this.context.getUsername()
     }

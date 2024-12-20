@@ -12,6 +12,7 @@
     import { useQuasar } from 'quasar'
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
   import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
   /* eslint-disable @typescript-eslint/no-unused-vars */
   import axios from 'axios'
@@ -28,10 +29,14 @@
 
   const $q = useQuasar()
 
-  const projectStore = useProjectStore()
+  const store = useProjectStore()
+  const istore = useInterfaceStore()
+
   const project = computed(() => {
       if (props.id) {
-          return projectStore.getProject(props.id)
+          const p = store.getProject(props.id)
+          istore.setCurrentProject(p)
+          return p
       } else {
           return null
       }

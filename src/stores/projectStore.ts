@@ -3,6 +3,7 @@ import { useRepo } from 'pinia-orm'
 import axios from 'axios'
 import Analysis from './models/analysis'
 import Annotation from './models/annotation'
+import BaseModel from './models/basemodel'
 import CategoryInstance from './models/categoryinstance'
 import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
@@ -318,7 +319,16 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Project
       .with('modelfolder')
       .with('interviews',
-        query => query.with('annotations').with('analysis'))
+        query => query
+          .with('annotations')
+          .with('analysis',
+            qa => qa.with('rootMoment',
+              qrm => qrm.with('children',
+                qm => qm.orderBy('childIndex')
+              )
+            )
+          )
+      )
       .find(id)
   }
 
@@ -583,6 +593,10 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function updateDescriptem (identifier: string, values: object) {
     repo.Descriptem.where('id', identifier).update(values)
+  }
+
+  function updateElement (element: BaseModel, values: object) {
+    console.log("updateElement", element, values)
   }
 
   function momentMoveCategoryInstance (ciId: string, destinationMomentId: string) {
@@ -920,6 +934,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     momentMoveCategoryInstance,
     moveMoment,
     updateDescriptem,
+    updateElement,
     updateProperty,
     updateMoment,
     recursiveUpdateMoment,
