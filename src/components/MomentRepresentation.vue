@@ -63,7 +63,7 @@
               </span>
             </DragElement>
             <CommentIcon
-              :comment="moment.comment" />
+              :element="moment" />
             <ElementMenu
               :actions="menuActions" />
           </DropZone>

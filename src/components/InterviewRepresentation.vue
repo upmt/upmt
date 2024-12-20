@@ -78,7 +78,7 @@
       <q-space />
 
       <CommentIcon
-        :comment="interview.comment" />
+        :element="interview" />
 
     </q-toolbar>
 
