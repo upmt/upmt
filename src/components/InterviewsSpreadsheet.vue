@@ -4,7 +4,7 @@
 
     <div v-for="interview in project.interviews"
          :key="interview.id">
-      {{ interview.label }}
+      <q-btn :to="{ name: 'project', params: { id: interview.parentId },  query: { tab: interview.label } }">{{ interview.label }}</q-btn>
       <div v-for="moment in interview?.analysis?.rootMoment?.children"
            class="row"
            :key="moment.id">
