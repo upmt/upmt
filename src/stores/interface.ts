@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref, Ref } from 'vue'
+import { computed, ref, Ref } from 'vue'
 import Interview from 'stores/models/interview'
 import Project from 'stores/models/project'
 
 export const useInterfaceStore = defineStore('interface', () => {
+  const _username = ref("")
   const highlightedMomentId = ref("")
   const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
@@ -26,13 +27,37 @@ export const useInterfaceStore = defineStore('interface', () => {
     currentInterview.value = interview
   }
 
+  // To make the store act as ContextProvider
+  function setUsername (value: string) {
+    _username.value = value
+    localStorage.setItem('upmtUsername', value)
+  }
+
+  // To make the store act as ContextProvider
+  function getUsername () {
+    return _username.value
+  }
+
+  const username = computed({
+    get: getUsername,
+    set: setUsername
+  })
+
+  function getProjectId () {
+    return currentProject?.value?.id ?? ""
+  }
+
   return {
     currentInterview,
     currentProject,
+    getUsername,
+    getProjectId,
     highlightedMomentId,
     highlightedDescriptemId,
     newMomentIndexIncrement,
     setCurrentInterview,
-    setCurrentProject
+    setCurrentProject,
+    setUsername,
+    username
     }
 })
