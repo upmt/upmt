@@ -31,8 +31,16 @@
           dense
           flat
           round
-          icon="mdi-account"
-          @click="toggleRightDrawer" />
+          icon="mdi-account">
+          <q-popup-edit
+            v-model="username"
+            auto-save
+            v-slot="scope">
+            <q-input v-model="scope.value"
+                     @focus="($event.target as HTMLInputElement).select()"
+                     dense autofocus @keyup.enter="scope.set" />
+          </q-popup-edit>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -72,7 +80,10 @@
       side="right"
       >
       <q-scroll-area class="fit">
-        Right drawer content
+        <q-form>
+          <q-input v-model="username"
+                   autofocus />
+        </q-form>
       </q-scroll-area>
     </q-drawer>
 
@@ -88,10 +99,7 @@
   import { ref, computed, onMounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import { RouteLocationRaw } from 'vue-router'
-  import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-
-  const istore = useInterfaceStore()
 
   defineOptions({
       name: 'MainLayout'
@@ -106,54 +114,61 @@
       href?: string
   }
 
-  const store = useProjectStore()
+  const istore = useInterfaceStore()
 
-  const { currentInterview, currentProject } = storeToRefs(istore)
+  const { currentInterview, currentProject, username } = storeToRefs(istore)
 
-  const menuList = computed<MenuItem[]>(() => [
-      {
-          label: 'Home',
-          icon: 'mdi-home',
-          link: '/home',
-          separator: true
-      },
-      ...store.getAllProjects().map(p => {
-          return {
-              label: p.name,
-              icon: 'mdi-semantic-web',
-              link: `/project/${p.id}`
+  const menuList = computed<MenuItem[]>(() => {
+      let menu: MenuItem[] = [
+          {
+              label: 'Home',
+              icon: 'mdi-home',
+              link: '/home'
           }
-      }),
-      {
-          label: 'Documentation',
-          icon: 'mdi-help-circle-outline',
-          href: 'https://github.com/upmt/upmt/wiki'
-      },
-      {
-          label: 'Discussions',
-          icon: 'mdi-chat-question-outline',
-          href: 'https://github.com/upmt/upmt/discussions'
-      },
-      {
-          label: 'Github',
-          icon: 'mdi-github',
-          href: 'https://github.com/upmt/upmt'
-      },
-      {
-          label: 'Debug',
-          icon: 'mdi-eye',
-          link: '/debug'
+      ]
+
+      if (currentProject.value) {
+          menu.push({
+              label: currentProject.value.name,
+              icon: 'mdi-semantic-web',
+              link: `/project/${currentProject.value.id}`
+          })
+          menu.push({
+              label: currentProject.value.name,
+              icon: 'mdi-table',
+              link: `/spreadsheet/${currentProject.value.id}`
+          })
       }
-  ])
+      menu = menu.concat([
+          {
+              label: 'Documentation',
+              icon: 'mdi-help-circle-outline',
+              href: 'https://github.com/upmt/upmt/wiki'
+          },
+          {
+              label: 'Discussions',
+              icon: 'mdi-chat-question-outline',
+              href: 'https://github.com/upmt/upmt/discussions'
+          },
+          {
+              label: 'Github',
+              icon: 'mdi-github',
+              href: 'https://github.com/upmt/upmt'
+          },
+          {
+              label: 'Debug',
+              icon: 'mdi-eye',
+              link: '/debug'
+          }
+      ])
+      return menu
+  })
 
   const leftDrawerOpen = ref(false)
   const rightDrawerOpen = ref(false)
 
   function toggleLeftDrawer () {
       leftDrawerOpen.value = !leftDrawerOpen.value
-  }
-  function toggleRightDrawer () {
-      rightDrawerOpen.value = !rightDrawerOpen.value
   }
   onMounted(() => {
       leftDrawerOpen.value = false
