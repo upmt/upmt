@@ -11,6 +11,7 @@ export default class Interview extends BaseModel {
 
   @Str('') declare creator: string
   @Str('') declare contributor: string
+  @Str('') declare projectId: string
 
   @Str('') declare name: string
   @Str('') declare color: string
@@ -20,10 +21,10 @@ export default class Interview extends BaseModel {
   @Str('') declare participantName: string
 
   @HasMany(() => Annotation, 'interviewId') declare annotations: Annotation[]
-  @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis | undefined
+  @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis
 
-  @Attr() projectId!: string
-  @BelongsTo(() => Project, 'projectId') declare project: Project | null
+  @Attr() parentId!: string
+  @BelongsTo(() => Project, 'parentId') declare project: Project | null
 
   fragment (startIndex: number, endIndex: number): string {
     return this.text.slice(startIndex, endIndex)

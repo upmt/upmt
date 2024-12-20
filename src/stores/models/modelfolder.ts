@@ -17,8 +17,10 @@ export default class ModelFolder extends BaseModel {
   @Str('') declare comment: string
   @Bool(true) declare isExpanded: boolean
 
-  @Attr() parentId!: string
+  // ownerId is the parent project for toplevel modelfolders
+  @Attr() ownerId!: string
 
+  @Attr() parentId!: string
   /* eslint-disable no-use-before-define */
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
 
@@ -36,9 +38,9 @@ export default class ModelFolder extends BaseModel {
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,
-      folders: this.folders.map(f => f.toJSON()),
-      categorymodels: this.categorymodels.map(c => c.toJSON()),
-      momentmodels: this.momentmodels.map(m => m.toJSON())
+      folders: this.folders?.map(f => f.toJSON()),
+      categorymodels: this.categorymodels?.map(c => c.toJSON()),
+      momentmodels: this.momentmodels?.map(m => m.toJSON())
     }
   }
 }

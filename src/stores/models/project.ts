@@ -14,8 +14,8 @@ export default class Project extends BaseModel {
   @Str('') declare filename: string
   @Str('') declare name: string
   @Str('') declare comment: string
-  @HasOne(() => ModelFolder, 'projectId') declare modelfolder: ModelFolder
-  @HasMany(() => Interview, 'projectId') declare interviews: Interview[]
+  @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
+  @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
 
   get label (): string {
     if (this.name) {
@@ -29,8 +29,8 @@ export default class Project extends BaseModel {
   toJSON (): any {
     return {
       name: this.name,
-      modelfolder: this.modelfolder.toJSON(),
-      interviews: this.interviews.map(i => i.toJSON())
+      modelfolder: this.modelfolder?.toJSON(),
+      interviews: this.interviews?.map(i => i.toJSON())
     }
   }
 }
