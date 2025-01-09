@@ -1,5 +1,5 @@
 <template>
-  <div class="momentmodel-container" :data-descriptem="momentmodel.id">
+  <div class="momentmodel-container" :data-momentmodel="momentmodel.id">
     <q-icon
       ref="handle"
       class="momentmodel-handle"
