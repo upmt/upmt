@@ -15,6 +15,8 @@ import MomentModel from './models/momentmodel'
 import Project from './models/project'
 import Property from './models/property'
 import PropertyModel from './models/propertymodel'
+import SynchronicSpecificCategory from './models/synchronicspecificcategory'
+import SynchronicSpecificModel from './models/synchronicspecificmodel'
 import { basename, timestampStrip } from './util'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
@@ -58,7 +60,9 @@ const repo = {
   MomentModel:      useRepo(MomentModel),
   Project:          useRepo(Project),
   Property:         useRepo(Property),
-  PropertyModel:    useRepo(PropertyModel)
+  PropertyModel:    useRepo(PropertyModel),
+  SynchronicSpecificCategory: useRepo(SynchronicSpecificCategory),
+  SynchronicSpecificModel: useRepo(SynchronicSpecificModel)
 }
 
 type TextSelection = {
@@ -407,6 +411,19 @@ export const useProjectStore = defineStore('projectStore', () => {
       return repo.MomentModel.with('categorymodels').find(id) as MomentModel
     }
 
+  function getSynchronicSpecificCategory (id: string) {
+    return repo.SynchronicSpecificCategory
+      .with('children')
+      .with('moment')
+      .find(id)
+  }
+
+  function getSynchronicSpecificModel (id: string) {
+    return repo.SynchronicSpecificModel
+      .with('categories', (q) => q.with('children').with('moment'))
+      .find(id)
+  }
+
   function getProperty (id: string) {
     return repo.Property
       .with('model')
@@ -569,6 +586,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function updateSynchronicSpecificCategory (identifier: string, values: object) {
+    repo.SynchronicSpecificCategory.where('id', identifier).update(values)
+  }
+
   function recursiveUpdateMoment (identifier: string, values: object) {
     updateMoment(identifier, values)
     // Recursively call method on children
@@ -642,7 +663,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function addMoment (name: string,
     referenceMomentId: string,
-    where = "", // before, after, or anything else for inside
+    where = "", // before, after, or in:<moment-id> for inside
     textselection: TextSelection | null = null) {
       console.log("addMoment", name, where, referenceMomentId, "with", textselection)
       const referenceMoment = getMoment(referenceMomentId)
@@ -732,6 +753,59 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function addSynchronicSpecificCategory (name: string,
+    referenceSSCId: string,
+    where = "", // before, after, or in:<ssc-id> for inside
+    textselection: TextSelection | null = null) {
+      console.log("addSSC", name, where, referenceSSCId, "with", textselection)
+      const referenceCategory = getSynchronicSpecificCategory(referenceSSCId)
+      let destination = referenceCategory
+      let childIndex = 0
+
+      if (where.startsWith('in:')) {
+        destination = getSynchronicSpecificCategory(where.slice(3))
+      } else if (referenceCategory && (where === 'before' || where === 'after')) {
+        // If we insert before or after the reference, then destination is really the parent
+        // We re-fetch it so that we get children with indexes too
+        if (where === 'before') {
+          destination = getSynchronicSpecificCategory(referenceCategory.parentId)
+          childIndex = referenceCategory.childIndex
+        } else if (where === 'after') {
+          // after
+          destination = getSynchronicSpecificCategory(referenceCategory.parentId)
+          childIndex = referenceCategory.childIndex + 1
+        }
+      }
+      if (referenceCategory && destination) {
+        // textselection can have the "text" attribute, which is not
+        // part of the Descriptem fields. Explicitly select
+        // adequate fields.
+        const descriptems = textselection ? [ {
+          startIndex: textselection.startIndex,
+          endIndex: textselection.endIndex,
+          interviewId: textselection.interviewId
+        } ] : []
+        const data = {
+          name,
+          parentId: destination.id,
+          momentId: referenceCategory.momentId,
+          childIndex,
+          justification: {
+            name: "",
+            descriptems
+          }
+        }
+        // In all cases, update child moment indexes
+        // Make a copy of children array
+        const children = [ ...destination.children ]
+        repo.SynchronicSpecificCategory.save(data)
+        // Items before childIndex are the same. Renumber next ones.
+        children.slice(childIndex).forEach(category => {
+          updateSynchronicSpecificCategory(category.id, { childIndex: category.childIndex + 1 })
+        })
+      }
+    }
+
   function addCategoryModel (parentId: string, name: string) {
     return repo.CategoryModel.save({ modelfolderId: parentId, name })
   }
@@ -781,6 +855,10 @@ export const useProjectStore = defineStore('projectStore', () => {
   function deleteMoment (momentId: string) {
     // FIXME: check cascade deletion of justification/categoryinstances
     repo.Moment.where('id', momentId).delete()
+  }
+
+  function deleteSynchronicSpecificCategory (categoryId: string) {
+    repo.SynchronicSpecificCategory.where('id', categoryId).delete()
   }
 
   function duplicateCategoryInstance (categoryinstanceId: string) {
@@ -848,6 +926,27 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function addTextSelectionToSynchronicSpecificCategory (selectionData: TextSelection, categoryId: string) {
+    // Add JSON representation of text selection (Annotation or Descriptem) to SynchronicSpecificCategory
+    const ssc = getSynchronicSpecificCategory(categoryId)
+    if (ssc) {
+      if (!ssc.justification) {
+        // Create justification + descriptem
+        repo.Justification.save({
+          parentId: ssc.id,
+          descriptems: [
+            selectionData
+          ]
+        })
+      } else {
+        repo.Descriptem.save({
+          ...selectionData,
+          justificationId: ssc.justification.id
+        })
+      }
+    }
+  }
+
   function addTextSelectionToProperty (selectionData: TextSelection, propertyId: string) {
     // Add JSON representation of text selection (Annotation or Descriptem) to property
     const property = getProperty(propertyId)
@@ -894,9 +993,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     addModelFolder,
     addMoment,
     addPropertyModel,
+    addSynchronicSpecificCategory,
     addTextSelectionToMoment,
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
+    addTextSelectionToSynchronicSpecificCategory,
     createProject,
     deleteAnnotation,
     deleteCategoryModel,
@@ -905,6 +1006,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deletePropertyModel,
     deleteModelFolder,
     deleteMoment,
+    deleteSynchronicSpecificCategory,
     duplicateCategoryInstance,
     duplicateDescriptem,
     importProject,
@@ -929,6 +1031,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMomentModel,
     getProperty,
     getPropertyModel,
+    getSynchronicSpecificCategory,
+    getSynchronicSpecificModel,
     loadProject,
     momentAddCategoryModel,
     momentMoveCategoryInstance,
@@ -941,6 +1045,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateModelFolder,
     updateCategoryModel,
     updateCategoryInstance,
-    updatePropertyModel
+    updatePropertyModel,
+    updateSynchronicSpecificCategory
   }
 })

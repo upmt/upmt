@@ -1,8 +1,10 @@
 import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
-import Justification from './justification'
 import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
+import Justification from './justification'
+import SynchronicSpecificModel from './synchronicspecificmodel'
 
+// Moment is synonym for DiachronicSpecificCategory
 export default class Moment extends Justifiable {
   static entity = 'moments'
   @Uid() declare id: string
@@ -22,6 +24,9 @@ export default class Moment extends Justifiable {
   @Attr() interviewId!: string
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
+
+  @HasOne(() => SynchronicSpecificModel, 'synchronicSpecificModelId') declare synchronicspecificmodel: SynchronicSpecificModel | null
+  @Attr() synchronicSpecificModel!: string
 
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
 

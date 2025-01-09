@@ -156,6 +156,7 @@
           store.updateMoment(props.momentId, { isExpanded: true })
       }
   }
+
   function droppedCategoryInstance (categoryinstanceId: string, data: string) {
       console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
       const ci = store.getCategoryInstance(categoryinstanceId)
