@@ -584,6 +584,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     return project
   }
 
+  function updateElement (element: BaseModel, values: object) {
+    (repo as Record<string, any>)[element.constructor.name].where('id', (element.id as any)).update(values)
+  }
+
   function updateProperty (identifier: string, values: object) {
     repo.Property.where('id', identifier).update(values)
   }
@@ -620,10 +624,6 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function updateDescriptem (identifier: string, values: object) {
     repo.Descriptem.where('id', identifier).update(values)
-  }
-
-  function updateElement (element: BaseModel, values: object) {
-    console.log("updateElement", element, values)
   }
 
   function momentMoveCategoryInstance (ciId: string, destinationMomentId: string) {

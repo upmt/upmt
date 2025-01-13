@@ -28,9 +28,13 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import { useProjectStore } from 'stores/projectStore'
+  import BaseModel from 'stores/models/basemodel'
+
+  const store = useProjectStore()
 
   const props = defineProps({
-      element: { type: Object, default: null },
+      element: { type: BaseModel, default: null },
       elementType: { type: String, default: "" }
   })
 
@@ -40,7 +44,7 @@
       },
       set: (value) => {
           if (props.element) {
-              console.log("set", props.element.id, value)
+              store.updateElement(props.element, { comment: value })
           }
       }
   })

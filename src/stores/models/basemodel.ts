@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import { Str } from 'pinia-orm/dist/decorators'
+import { Str, Uid } from 'pinia-orm/dist/decorators'
 
 type ContextProvider = {
   getUsername?: () => string,
@@ -10,9 +10,11 @@ export default class BaseModel extends Model {
   static entity = 'basemodel'
   static context: ContextProvider | null = null
 
+  @Uid() declare id: string
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare comment: string
 
   static config = {
     withMeta: true
