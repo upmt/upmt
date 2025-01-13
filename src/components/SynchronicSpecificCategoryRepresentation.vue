@@ -12,68 +12,52 @@
               @descriptem="droppedCreatingDescriptem">
     </DropZone>
 
-    <div :class="[ 'synchronicSpecificCategory' ]"
+    <div :class="[ 'synchronicspecificcategory' ]"
          :style="{ backgroundColor: category.color }"
          v-if="category"
          :data-synchronicspecificcategory="categoryId">
 
-      <q-expansion-item
-        class="synchronicspecificcategory-body"
-        dense
-        dense-toggle
-        default-opened
-        :duration="0"
-        expand-icon-toggle
-        switch-toggle-side
-        header-class="header-class"
-        :title="category.name"
-        >
+      <div class="synchronicspecificcategory-justification">
+        <JustificationRepresentation :justificationId="category.justification?.id">
+        </JustificationRepresentation>
+      </div>
 
-        <template v-slot:header>
-          <DropZone data="header"
-                    types="upmt/descriptem upmt/annotation upmt/selection"
-                    class="row full-width justify-center"
-                    disabled-categoryinstance="droppedCategoryInstance"
-                    disabled-categorymodel="droppedCategoryModel"
-                    @annotation="droppedAnnotation"
+      <DropZone data="header"
+                types="upmt/descriptem upmt/annotation upmt/selection"
+                class="row full-width justify-center"
+                disabled-categoryinstance="droppedCategoryInstance"
+                disabled-categorymodel="droppedCategoryModel"
+                @annotation="droppedAnnotation"
                     @selection="droppedSelection"
-                    @descriptem="droppedDescriptem">
-            <DragElement
-              type="synchronicspecificcategory"
-              class="synchronicspecificcategory-header"
-              :data="categoryId"
-              @click.meta="debug">
-              <q-icon
-                size="xs"
-                name="mdi-source-fork">
-              </q-icon>
-              <span class="synchronicspecificcategory-name">{{ categoryName }}
-                <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
-                  <q-input v-model="scope.value"
-                           @focus="($event.target as HTMLInputElement).select()"
-                           dense
-                           autofocus
-                           counter
-                           @keyup.enter="scope.set" />
-                </q-popup-edit>
-                <ColorizeIcon
-                  class="on-name-hover"
-                  v-model="categoryColor" />
-              </span>
-            </DragElement>
-            <CommentIcon
-              :element="category" />
-            <ElementMenu
-              :actions="menuActions" />
-          </DropZone>
-        </template>
-
-        <div class="synchronicspecificcategory-justification">
-          <JustificationRepresentation :justificationId="category.justification?.id">
-          </JustificationRepresentation>
-        </div>
-
-      </q-expansion-item>
+                @descriptem="droppedDescriptem">
+        <DragElement
+          type="synchronicspecificcategory"
+          class="synchronicspecificcategory-header"
+          :data="categoryId"
+          @click.meta="debug">
+          <q-icon
+            size="xs"
+            name="mdi-source-fork">
+          </q-icon>
+          <span class="synchronicspecificcategory-name">{{ categoryName }}
+            <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
+              <q-input v-model="scope.value"
+                       @focus="($event.target as HTMLInputElement).select()"
+                       dense
+                       autofocus
+                       counter
+                       @keyup.enter="scope.set" />
+            </q-popup-edit>
+            <ColorizeIcon
+              class="on-name-hover"
+              v-model="categoryColor" />
+          </span>
+        </DragElement>
+        <CommentIcon
+          :element="category" />
+        <ElementMenu
+          :actions="menuActions" />
+      </DropZone>
 
       <div :class="[ 'synchronicspecificcategory-children', 'horizontal' ]">
         <div v-for="c in category.children" :key="c.id">
@@ -234,7 +218,7 @@
       min-height: 40px;
       margin: 0;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       border: 1px solid transparent;
   }
   .highlighted .synchronicspecificcategory {
@@ -242,6 +226,9 @@
   }
   .highlighted .synchronicspecificcategory-header {
       background-color: yellow;
+  }
+  .synchronicspecificcategory-header {
+      border-bottom: 1px solid black;
   }
   .synchronicspecificcategory-body {
       border: 1px solid grey;
