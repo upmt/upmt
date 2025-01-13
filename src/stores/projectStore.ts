@@ -420,6 +420,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getSynchronicSpecificCategory (id: string) {
     return repo.SynchronicSpecificCategory
       .with('children')
+      .with('justification', (query) => query.with('descriptems'))
       .with('model')
       .find(id)
   }
