@@ -44,7 +44,7 @@
               @click.meta="debug">
               <q-icon
                 size="xs"
-                name="mdi-alpha-m-box-outline">
+                name="mdi-source-fork">
               </q-icon>
               <span class="synchronicspecificcategory-name">{{ categoryName }}
                 <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
