@@ -21,6 +21,7 @@
         class="synchronicspecificcategory-body"
         dense
         dense-toggle
+        default-opened
         :duration="0"
         expand-icon-toggle
         switch-toggle-side
@@ -112,8 +113,8 @@
   const category = computed(() => store.getSynchronicSpecificCategory(props.categoryId))
 
   function debug () {
-      (window as any).category = category.value
-      console.log("SynchronicSpecificCategory", { category })
+      (window as any).category = category.value;
+      console.log("SynchronicSpecificCategory", { category: category.value })
   }
 
   function showContent () {
