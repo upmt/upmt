@@ -16,7 +16,7 @@ export default class SynchronicSpecificModel extends BaseModel {
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
   @Str('') declare comment: string
-  @HasMany(() => SynchronicSpecificCategory, 'specificCategoryId') declare categories: SynchronicSpecificCategory[]
+  @HasMany(() => SynchronicSpecificCategory, 'synchronicspecificmodelId') declare categories: SynchronicSpecificCategory[]
 
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string

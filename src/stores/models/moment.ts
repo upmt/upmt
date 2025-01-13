@@ -25,8 +25,7 @@ export default class Moment extends Justifiable {
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
 
-  @HasOne(() => SynchronicSpecificModel, 'synchronicSpecificModelId') declare synchronicspecificmodel: SynchronicSpecificModel | null
-  @Attr() synchronicSpecificModel!: string
+  @HasOne(() => SynchronicSpecificModel, 'momentId') declare synchronicspecificmodel: SynchronicSpecificModel | null
 
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
 

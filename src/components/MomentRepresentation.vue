@@ -74,6 +74,11 @@
           </JustificationRepresentation>
         </div>
 
+        <div class="moment-synchronic-specific-category">
+          <SynchronicSpecificModelRepresentation
+            :modelId="moment.synchronicspecificmodel?.id" />
+        </div>
+
         <div :class="[ 'moment-categoryinstances', layout ]">
           <div v-for="c in moment.categoryinstances" :key="c.id">
             <CategoryInstanceRepresentation :categoryinstanceId="c.id" />
@@ -119,6 +124,7 @@
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
   import MomentRepresentation from './MomentRepresentation.vue'
+  import SynchronicSpecificModelRepresentation from './SynchronicSpecificModelRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ColorizeIcon from './ColorizeIcon.vue'

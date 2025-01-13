@@ -1,6 +1,6 @@
 import Justifiable from './justifiable'
 import Justification from './justification'
-import Moment from './moment'
+import SynchronicSpecificModel from './synchronicspecificmodel'
 import { Attr, BelongsTo, Num, Str, Uid, HasMany, HasOne } from 'pinia-orm/dist/decorators'
 
 export default class SynchronicSpecificCategory extends Justifiable {
@@ -26,8 +26,8 @@ export default class SynchronicSpecificCategory extends Justifiable {
   @Attr() parentId!: string
   @Num(0) declare childIndex: number
 
-  @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
-  @Attr() momentId!: string
+  @BelongsTo(() => SynchronicSpecificModel, 'synchronicspecificmodelId') declare model: SynchronicSpecificModel | null
+  @Attr() synchronicspecificmodelId!: string
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {

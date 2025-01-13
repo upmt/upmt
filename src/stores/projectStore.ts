@@ -216,7 +216,7 @@ function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryIns
 
 // Map an imported moment to a Moment
 function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
-  return repo.Moment.make({
+  const moment = repo.Moment.make({
     name: m.name,
     childIndex: index,
     color: fixColorName(m.color),
@@ -226,6 +226,10 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
     categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
+    synchronicspecificmodel: repo.SynchronicSpecificModel.make({
+      name: "Initial",
+      categories: []
+    }),
     justification: repo.Justification.make({
       descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
@@ -235,6 +239,7 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     }),
     children: m.moment_list.map((c: OldMoment, index: number) => mapMoment(c, index, interview))
   })
+  return moment
 }
 
 function mapInterview (i: OldInterview): Interview {
@@ -401,6 +406,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment
       .with('children', (q) => q.orderBy('childIndex'))
       .with('justification', (query) => query.with('descriptems'))
+      .with('synchronicspecificmodel', (query) => query.with('categories'))
       .with('categoryinstances', (query) => query
         .with('justification', (q) => q.with('descriptems'))
         .with('properties', (q) => q.with('model').with('justification', (qj) => qj.with('descriptems'))))
@@ -414,13 +420,13 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getSynchronicSpecificCategory (id: string) {
     return repo.SynchronicSpecificCategory
       .with('children')
-      .with('moment')
+      .with('model')
       .find(id)
   }
 
   function getSynchronicSpecificModel (id: string) {
     return repo.SynchronicSpecificModel
-      .with('categories', (q) => q.with('children').with('moment'))
+      .with('categories', (q) => q.with('children'))
       .find(id)
   }
 
@@ -699,6 +705,10 @@ export const useProjectStore = defineStore('projectStore', () => {
           childIndex,
           interviewId: referenceMoment.interviewId,
           isExpanded: true,
+          synchronicspecificmodel: repo.SynchronicSpecificModel.make({
+            name: "Initial",
+            categories: []
+          }),
           justification: {
             name: "",
             descriptems
@@ -754,32 +764,23 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function addSynchronicSpecificCategory (name: string,
-    referenceSSCId: string,
+    synchronicspecificmodelId: string,
     where = "", // before, after, or in:<ssc-id> for inside
     textselection: TextSelection | null = null) {
-      console.log("addSSC", name, where, referenceSSCId, "with", textselection)
-      const referenceCategory = getSynchronicSpecificCategory(referenceSSCId)
-      let destination = referenceCategory
+      console.log("addSSC", name, where, synchronicspecificmodelId, "with", textselection)
+      const model = getSynchronicSpecificModel(synchronicspecificmodelId)
+      let destination = model
       let childIndex = 0
 
+      // FIXME: inmodel: / in: (category)
       if (where.startsWith('in:')) {
-        destination = getSynchronicSpecificCategory(where.slice(3))
-      } else if (referenceCategory && (where === 'before' || where === 'after')) {
-        // If we insert before or after the reference, then destination is really the parent
-        // We re-fetch it so that we get children with indexes too
-        if (where === 'before') {
-          destination = getSynchronicSpecificCategory(referenceCategory.parentId)
-          childIndex = referenceCategory.childIndex
-        } else if (where === 'after') {
-          // after
-          destination = getSynchronicSpecificCategory(referenceCategory.parentId)
-          childIndex = referenceCategory.childIndex + 1
-        }
-      }
-      if (referenceCategory && destination) {
+        destination = getSynchronicSpecificModel(where.slice(3))
+      } // FIXME: other cases - to implement
+      if (model && destination) {
         // textselection can have the "text" attribute, which is not
         // part of the Descriptem fields. Explicitly select
         // adequate fields.
+        childIndex = 0
         const descriptems = textselection ? [ {
           startIndex: textselection.startIndex,
           endIndex: textselection.endIndex,
@@ -787,8 +788,8 @@ export const useProjectStore = defineStore('projectStore', () => {
         } ] : []
         const data = {
           name,
-          parentId: destination.id,
-          momentId: referenceCategory.momentId,
+          children: [],
+          synchronicspecificmodelId,
           childIndex,
           justification: {
             name: "",
@@ -797,7 +798,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         }
         // In all cases, update child moment indexes
         // Make a copy of children array
-        const children = [ ...destination.children ]
+        const children = [ ...destination.categories ]
         repo.SynchronicSpecificCategory.save(data)
         // Items before childIndex are the same. Renumber next ones.
         children.slice(childIndex).forEach(category => {
