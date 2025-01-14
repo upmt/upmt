@@ -28,11 +28,11 @@
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
-        <DragElement
-          type="synchronicspecificcategory"
-          :data="categoryId"
-          @click.meta="debug">
-          <div class="synchronicspecificcategory-header">
+        <div class="synchronicspecificcategory-header">
+          <DragElement
+            type="synchronicspecificcategory"
+            :data="categoryId"
+            @click.meta="debug">
             <q-icon
               size="xs"
               name="mdi-source-fork">
@@ -47,16 +47,24 @@
                          @keyup.enter="scope.set" />
               </q-popup-edit>
             </span>
-          </div>
-        </DragElement>
-        <div class="element-toolbar on-name-hover">
+          </DragElement>
+          <div class="element-toolbar on-name-hover">
           <ColorizeIcon
             v-model="categoryColor" />
           <CommentIcon
             :element="category" />
           <ElementMenu
             :actions="menuActions" />
+          </div>
         </div>
+      </DropZone>
+
+      <DropZone :data="`in:${categoryId}`"
+                types="upmt/descriptem upmt/annotation upmt/selection"
+                class="empty_padding"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
       </DropZone>
 
       <div :class="[ 'synchronicspecificcategory-children' ]">
@@ -66,14 +74,6 @@
           </SynchronicSpecificCategoryRepresentation>
         </div>
       </div>
-      <DropZone :data="`in:${categoryId}`"
-                types="upmt/descriptem upmt/annotation upmt/selection"
-                class="empty_padding"
-                @annotation="droppedCreatingAnnotation"
-                @selection="droppedCreatingSelection"
-                @descriptem="droppedCreatingDescriptem">
-        +
-      </DropZone>
 
     </div>
 
@@ -236,7 +236,6 @@
       background-color: yellow;
   }
   .synchronicspecificcategory-header {
-      border-bottom: 1px solid black;
   }
   .synchronicspecificcategory-body {
       border: 1px solid grey;
@@ -259,8 +258,11 @@
   .on-name-hover {
       opacity: 0;
   }
+  .synchronicspecificcategory-justification {
+      align-self: center;
+  }
   .synchronicspecificcategory-header {
-      align-items: center;
+      align-self: center;
   }
   .synchronicspecificcategory-header:hover .on-name-hover {
       opacity: 1;
