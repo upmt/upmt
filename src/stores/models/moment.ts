@@ -63,10 +63,11 @@ export default class Moment extends Justifiable {
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
       categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
+      synchronicspecificmodel: this.synchronicspecificmodel?.toJSON(),
       parentId: this.parentId,
       analysisId: this.analysisId,
       interviewId: this.interviewId,
-      children: this.children?.map(m => ({ id: m.id }))
+      children: this.children?.map(m => m.toJSON())
     }
   }
 }

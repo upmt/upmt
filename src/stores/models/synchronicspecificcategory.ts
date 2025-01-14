@@ -33,9 +33,15 @@ export default class SynchronicSpecificCategory extends Justifiable {
   toJSON (): any {
     return {
       name: this.name,
+      created: this._meta?.createdAt,
+      modified: this._meta?.updatedAt,
+      creator: this.creator,
+      contributor: this.contributor,
       color: this.color,
       comment: this.comment,
-      criterion: this.criterion
+      criterion: this.criterion,
+      justification: this.justification?.toJSON(),
+      children: this.children.map(c => c.toJSON())
     }
   }
 }

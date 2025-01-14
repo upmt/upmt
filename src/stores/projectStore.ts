@@ -406,7 +406,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment
       .with('children', (q) => q.orderBy('childIndex'))
       .with('justification', (query) => query.with('descriptems'))
-      .with('synchronicspecificmodel', (query) => query.with('categories'))
+      .with('synchronicspecificmodel', (query) => query.with('categories',
+        (qc) => qc.with('justification',
+          (qj) => qj.with('descriptems')
+        )))
       .with('categoryinstances', (query) => query
         .with('justification', (q) => q.with('descriptems'))
         .with('properties', (q) => q.with('model').with('justification', (qj) => qj.with('descriptems'))))
@@ -421,13 +424,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.SynchronicSpecificCategory
       .with('children')
       .with('justification', (query) => query.with('descriptems'))
-      .with('model')
       .find(id)
   }
 
   function getSynchronicSpecificModel (id: string) {
     return repo.SynchronicSpecificModel
-      .with('categories', (q) => q.with('children'))
+      .with('categories', (qc) => qc.with('children')
+        .with('justification',
+          (qj) => qj.with('descriptems')))
       .find(id)
   }
 
@@ -577,11 +581,36 @@ export const useProjectStore = defineStore('projectStore', () => {
         folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
         folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
       }
-        return folder
+      return folder
+    }
+    const hydrateSynchronicSpecificCategory = (id: string) => {
+      const ssc = getSynchronicSpecificCategory(id)
+      // justification is already hydrate by the getSynchronicSpecificCategory method
+      if (ssc) {
+        ssc.children = ssc.children.map(c => hydrateSynchronicSpecificCategory(c.id) as SynchronicSpecificCategory)
+      }
+      return ssc
+    }
+    const hydrateMoment = (id: string) => {
+      const moment = getMoment(id)
+      if (moment) {
+        moment.children = moment.children.map(m => hydrateMoment(m.id) as Moment)
+        const model = moment.synchronicspecificmodel
+        if (model) {
+          model.categories = model.categories.map(c => hydrateSynchronicSpecificCategory(c.id) as SynchronicSpecificCategory)
+        }
+      }
+      return moment
     }
     if (project.modelfolder) {
       project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
     }
+    project.interviews?.forEach((interview: Interview) => {
+      const analysis = interview.analysis
+      if (analysis) {
+        analysis.rootMoment = hydrateMoment(interview.analysis.rootMoment.id) as Moment
+      }
+    })
     return project
   }
 

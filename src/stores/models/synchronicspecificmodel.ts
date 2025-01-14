@@ -25,6 +25,11 @@ export default class SynchronicSpecificModel extends BaseModel {
   toJSON (): any {
     return {
       name: this.name,
+      created: this._meta?.createdAt,
+      modified: this._meta?.updatedAt,
+      creator: this.creator,
+      contributor: this.contributor,
+      comment: this.comment,
       color: this.color,
       isExpanded: this.isExpanded,
       categories: this.categories.map(c => c.toJSON())
