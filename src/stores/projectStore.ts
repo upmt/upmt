@@ -769,43 +769,66 @@ export const useProjectStore = defineStore('projectStore', () => {
     where = "", // before, after, or in:<ssc-id> for inside
     textselection: TextSelection | null = null) {
       console.log("addSSC", name, where, synchronicspecificmodelId, "with", textselection)
-      const model = getSynchronicSpecificModel(synchronicspecificmodelId)
-      let destination = model
+      let destination = null // if it remains null, then it will be added to the model itself.
       let childIndex = 0
 
-      // FIXME: inmodel: / in: (category)
-      if (where.startsWith('in:')) {
-        destination = getSynchronicSpecificModel(where.slice(3))
-      } // FIXME: other cases - to implement
-      if (model && destination) {
-        // textselection can have the "text" attribute, which is not
-        // part of the Descriptem fields. Explicitly select
-        // adequate fields.
-        childIndex = 0
-        const descriptems = textselection ? [ {
-          startIndex: textselection.startIndex,
-          endIndex: textselection.endIndex,
-          interviewId: textselection.interviewId
-        } ] : []
-        const data = {
-          name,
-          children: [],
-          synchronicspecificmodelId,
-          childIndex,
+      // textselection can have the "text" attribute, which is not
+      // part of the Descriptem fields. Explicitly select
+      // adequate fields.
+      const descriptems = textselection ? [ {
+        startIndex: textselection.startIndex,
+        endIndex: textselection.endIndex,
+        interviewId: textselection.interviewId
+      } ] : []
+      // Create a new SSCategory
+      const data = {
+        name,
+        children: [],
+        synchronicspecificmodelId,
+        childIndex,
+        parentId: null as string | null,
           justification: {
             name: "",
             descriptems
           }
+      }
+      let children = []
+      if (where.startsWith('inmodel:')) {
+        data.synchronicspecificmodelId = where.slice(8)
+        const model = getSynchronicSpecificModel(data.synchronicspecificmodelId)
+        // Make a copy of previous children info
+        if (model) {
+          children = [ ...model.categories ]
+          data.childIndex = children.length
+          // parentId remains null, since we are at the top.
+          repo.SynchronicSpecificCategory.save(data)
+        } else {
+          console.error("Invalid id for destination SSModel: ", data.synchronicspecificmodelId)
         }
+      } else if (where.startsWith('in:')) {
+        // Create a new Category in an existing Category
+        destination = getSynchronicSpecificCategory(where.slice(3))
+        if (destination) {
+          // Make a copy of previous children info
+          children = [ ...destination.children ]
+          childIndex = children.length
+          data.synchronicspecificmodelId = destination.id
+          data.parentId = destination.id
+          repo.SynchronicSpecificCategory.save(data)
+        } else {
+          console.error("Invalid id for destination SSCategory: ", where.slice(3))
+        }
+      } // FIXME: other cases (before/after) - to implement
+
+      /*
+      if (false) {
         // In all cases, update child moment indexes
-        // Make a copy of children array
-        const children = [ ...destination.categories ]
-        repo.SynchronicSpecificCategory.save(data)
         // Items before childIndex are the same. Renumber next ones.
         children.slice(childIndex).forEach(category => {
           updateSynchronicSpecificCategory(category.id, { childIndex: category.childIndex + 1 })
         })
       }
+       */
     }
 
   function addCategoryModel (parentId: string, name: string) {
