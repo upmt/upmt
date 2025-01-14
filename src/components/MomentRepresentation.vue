@@ -32,7 +32,7 @@
         <template v-slot:header>
           <DropZone data="header"
                     types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
-                    class="row full-width justify-center"
+                    class="row full-width justify-center moment-header"
                     @categoryinstance="droppedCategoryInstance"
                     @categorymodel="droppedCategoryModel"
                     @annotation="droppedAnnotation"
@@ -40,7 +40,6 @@
                     @descriptem="droppedDescriptem">
             <DragElement
               type="moment"
-              class="moment-header"
               :data="momentId"
               @click.meta="debug">
               <q-icon
@@ -57,15 +56,17 @@
                            counter
                            @keyup.enter="scope.set" />
                 </q-popup-edit>
-                <ColorizeIcon
-                  class="on-name-hover"
-                  v-model="momentColor" />
               </span>
             </DragElement>
-            <CommentIcon
-              :element="moment" />
-            <ElementMenu
-              :actions="menuActions" />
+            <div class="element-toolbar on-name-hover">
+              <ColorizeIcon
+                class="on-name-hover"
+                v-model="momentColor" />
+              <CommentIcon
+                :element="moment" />
+              <ElementMenu
+                :actions="menuActions" />
+            </div>
           </DropZone>
         </template>
 
@@ -362,7 +363,7 @@
   .on-name-hover {
       opacity: 0;
   }
-  .moment-name:hover .on-name-hover {
+  .moment-header:hover .on-name-hover {
       opacity: 1;
   }
 </style>

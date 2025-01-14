@@ -20,10 +20,10 @@
                       buttons
                       v-model="descriptemJson"
                       v-slot="scope">
-        <DescriptemModificationDialog
-          v-model="scope.value"
-          :initial="scope.initialValue"
-          />
+          <DescriptemModificationDialog
+            v-model="scope.value"
+            :initial="scope.initialValue"
+            />
         </q-popup-edit>
       </span>
       <q-space />
@@ -196,5 +196,11 @@
   .context-item + .context-item {
       border-left: 1px solid black;
       padding: 0 4px;
+  }
+  .descriptem-menu {
+      opacity: 0;
+  }
+  .descriptem-header:hover .descriptem-menu {
+      opacity: 1;
   }
 </style>

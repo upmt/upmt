@@ -22,50 +22,58 @@
         </JustificationRepresentation>
       </div>
 
-      <DropZone data="header"
+      <DropZone data="add"
                 types="upmt/descriptem upmt/annotation upmt/selection"
                 class="row full-width justify-center"
-                disabled-categoryinstance="droppedCategoryInstance"
-                disabled-categorymodel="droppedCategoryModel"
                 @annotation="droppedAnnotation"
-                    @selection="droppedSelection"
+                @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
         <DragElement
           type="synchronicspecificcategory"
-          class="synchronicspecificcategory-header"
           :data="categoryId"
           @click.meta="debug">
-          <q-icon
-            size="xs"
-            name="mdi-source-fork">
-          </q-icon>
-          <span class="synchronicspecificcategory-name">{{ categoryName }}
-            <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
-              <q-input v-model="scope.value"
-                       @focus="($event.target as HTMLInputElement).select()"
-                       dense
-                       autofocus
-                       counter
-                       @keyup.enter="scope.set" />
-            </q-popup-edit>
-            <ColorizeIcon
-              class="on-name-hover"
-              v-model="categoryColor" />
-          </span>
+          <div class="synchronicspecificcategory-header">
+            <q-icon
+              size="xs"
+              name="mdi-source-fork">
+            </q-icon>
+            <span class="synchronicspecificcategory-name">{{ categoryName }} ({{ category.children.length }})
+              <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
+                <q-input v-model="scope.value"
+                         @focus="($event.target as HTMLInputElement).select()"
+                         dense
+                         autofocus
+                         counter
+                         @keyup.enter="scope.set" />
+              </q-popup-edit>
+            </span>
+          </div>
         </DragElement>
-        <CommentIcon
-          :element="category" />
-        <ElementMenu
-          :actions="menuActions" />
+        <div class="element-toolbar on-name-hover">
+          <ColorizeIcon
+            v-model="categoryColor" />
+          <CommentIcon
+            :element="category" />
+          <ElementMenu
+            :actions="menuActions" />
+        </div>
       </DropZone>
 
-      <div :class="[ 'synchronicspecificcategory-children', 'horizontal' ]">
+      <div :class="[ 'synchronicspecificcategory-children' ]">
         <div v-for="c in category.children" :key="c.id">
           <SynchronicSpecificCategoryRepresentation
             :categoryId="c.id">
           </SynchronicSpecificCategoryRepresentation>
         </div>
       </div>
+      <DropZone :data="`in:${categoryId}`"
+                types="upmt/descriptem upmt/annotation upmt/selection"
+                class="empty_padding"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+        +
+      </DropZone>
 
     </div>
 
@@ -139,7 +147,7 @@
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && category.value) {
           store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
-                                              props.categoryId,
+                                              category.value.synchronicspecificmodelId,
                                               where,
                                               descriptem.toJSON())
           showContent()
@@ -150,7 +158,7 @@
       const annotation = store.getAnnotation(annotationId)
       if (annotation && category.value) {
           store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
-                                              props.categoryId,
+                                              category.value.synchronicspecificmodelId,
                                               where,
                                               annotation.toJSON())
           showContent()
@@ -162,7 +170,7 @@
           const selection = JSON.parse(selectionData)
           if (selection && category.value) {
               store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
-                                                  props.categoryId,
+                                                  category.value.synchronicspecificmodelId,
                                                   where,
                                                   selection)
               showContent()
@@ -251,7 +259,13 @@
   .on-name-hover {
       opacity: 0;
   }
-  .synchronicspecificcategory-name:hover .on-name-hover {
+  .synchronicspecificcategory-header {
+      align-items: center;
+  }
+  .synchronicspecificcategory-header:hover .on-name-hover {
       opacity: 1;
+  }
+  .element-toolbar {
+      height: 24px;
   }
 </style>

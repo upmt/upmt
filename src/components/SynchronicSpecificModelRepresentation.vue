@@ -2,27 +2,26 @@
   <div class="synchronicspecificmodel-container"
        v-if="model"
        :data-synchronicspecificmodel="modelId">
-    <div class="synchronicspecificmodel-title">
-      <q-icon
-        ref="handle"
-        class="synchronicspecificmodel-handle"
-        size="xs"
-        @click.meta="debug"
-        name="mdi-graph-outline"></q-icon> {{ model.name }}
-    </div>
+    <DropZone :data="`inmodel:${modelId}`"
+              types="upmt/selection upmt/descriptem upmt/annotation"
+              @annotation="droppedCreatingAnnotation"
+              @selection="droppedCreatingSelection"
+              @descriptem="droppedCreatingDescriptem">
+      <div class="synchronicspecificmodel-title">
+        <q-icon
+          ref="handle"
+          class="synchronicspecificmodel-handle"
+          size="xs"
+          @click.meta="debug"
+          name="mdi-graph-outline"></q-icon> {{ model.name }}
+      </div>
+    </DropZone>
     <div class="synchronicspecificmodel-categories">
       <SynchronicSpecificCategoryRepresentation
         v-for="c in model.categories"
         :key="c.id"
         :categoryId="c.id" />
     </div>
-    <DropZone :data="`in:${model.id}`"
-              class="empty_padding"
-              types="upmt/selection upmt/descriptem upmt/annotation"
-              @annotation="droppedCreatingAnnotation"
-              @selection="droppedCreatingSelection"
-              @descriptem="droppedCreatingDescriptem">
-    </DropZone>
   </div>
 </template>
 
