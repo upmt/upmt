@@ -82,7 +82,7 @@
               store.addSynchronicSpecificCategory(`New category ${istore.newSSCIndexIncrement()}`,
                                                   props.modelId,
                                                   where,
-                                                  selection.toJSON())
+                                                  selection)
               showContent()
           }
       } catch (e) {
