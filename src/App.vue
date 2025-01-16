@@ -39,5 +39,7 @@
     --header-height: 82px;
     --chart-zoom: 1;
     --moment-minimum-width: 200px;
+    --synchronic-category-header-width: 200px;
+    --synchronic-category-descriptem-width: 250px;
   }
 </style>

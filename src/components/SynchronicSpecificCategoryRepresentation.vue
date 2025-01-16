@@ -3,28 +3,43 @@
        :class="[ 'synchronicspecificcategory-container', `synchronicspecificcategory-${categoryId}` ]"
        :data-synchronicspecificcategory="categoryId">
 
-    <DropZone data="before"
-              class="empty_padding"
-              types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
-              @synchronicspecificcategory="droppedSynchronicSpecificCategory"
-              @annotation="droppedCreatingAnnotation"
-              @selection="droppedCreatingSelection"
-              @descriptem="droppedCreatingDescriptem">
-    </DropZone>
-
     <div :class="[ 'synchronicspecificcategory' ]"
          :style="{ backgroundColor: category.color }"
          v-if="category"
          :data-synchronicspecificcategory="categoryId">
 
-      <div class="synchronicspecificcategory-justification">
+      <div :class="[ 'synchronicspecificcategory-children' ]">
+        <div v-for="c in category.children" :key="c.id">
+          <SynchronicSpecificCategoryRepresentation
+            :categoryId="c.id">
+          </SynchronicSpecificCategoryRepresentation>
+        </div>
+      </div>
+
+      <div class="synchronicspecificcategory-justification"
+           v-if="isLeaf">
         <JustificationRepresentation :justificationId="category.justification?.id">
         </JustificationRepresentation>
       </div>
 
+      <div class="synchronicspecificcategory-relation"
+           v-if="!isLeaf">
+        <SynchronicSpecificCategoryRelation
+          :childrenCount="category.children.length" />
+      </div>
+
+      <DropZone :data="`in:${categoryId}`"
+                types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
+                class="empty_padding"
+                @synchronicspecificcategory="droppedSynchronicSpecificCategory"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+      </DropZone>
+
       <DropZone data="add"
                 types="upmt/descriptem upmt/annotation upmt/selection"
-                class="row full-width justify-center"
+                class="row justify-center"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
@@ -59,22 +74,6 @@
         </div>
       </DropZone>
 
-      <DropZone :data="`in:${categoryId}`"
-                types="upmt/descriptem upmt/annotation upmt/selection"
-                class="empty_padding"
-                @annotation="droppedCreatingAnnotation"
-                @selection="droppedCreatingSelection"
-                @descriptem="droppedCreatingDescriptem">
-      </DropZone>
-
-      <div :class="[ 'synchronicspecificcategory-children' ]">
-        <div v-for="c in category.children" :key="c.id">
-          <SynchronicSpecificCategoryRepresentation
-            :categoryId="c.id">
-          </SynchronicSpecificCategoryRepresentation>
-        </div>
-      </div>
-
     </div>
 
   </div>
@@ -90,6 +89,7 @@
   import ColorizeIcon from './ColorizeIcon.vue'
   import CommentIcon from './CommentIcon.vue'
   import ElementMenu from './ElementMenu.vue'
+  import SynchronicSpecificCategoryRelation from './SynchronicSpecificCategoryRelation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
@@ -103,6 +103,10 @@
   })
 
   const category = computed(() => store.getSynchronicSpecificCategory(props.categoryId))
+
+  const isLeaf = computed(() => {
+      return !category.value?.children.length
+  })
 
   function debug () {
       (window as any).category = category.value;
@@ -235,7 +239,15 @@
   .highlighted .synchronicspecificcategory-header {
       background-color: yellow;
   }
+  .synchronicspecificcategory-justification {
+      width: var(--synchronic-category-descriptem-width);
+  }
   .synchronicspecificcategory-header {
+      width: var(--synchronic-category-header-width);
+  }
+  .synchronicspecificcategory-justification,
+  .synchronicspecificcategory-header {
+      border: 1px solid grey;
   }
   .synchronicspecificcategory-body {
       border: 1px solid grey;
@@ -263,6 +275,12 @@
   }
   .synchronicspecificcategory-header {
       align-self: center;
+  }
+  .synchronicspecificcategory-relation {
+      width: calc(var(--synchronic-category-header-width) / 2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
   .synchronicspecificcategory-header:hover .on-name-hover {
       opacity: 1;

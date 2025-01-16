@@ -13,7 +13,8 @@
           class="synchronicspecificmodel-handle"
           size="xs"
           @click.meta="debug"
-          name="mdi-graph-outline"></q-icon> {{ model.name }}
+          name="mdi-graph-outline"></q-icon>
+        <i title="Drop a descriptem here to create a new category">New category</i>
       </div>
     </DropZone>
     <div class="synchronicspecificmodel-categories">
