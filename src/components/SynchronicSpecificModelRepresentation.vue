@@ -57,7 +57,7 @@
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && model.value) {
-          store.addSynchronicSpecificCategory(`New category ${istore.newSSCIndexIncrement()}`,
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               props.modelId,
                                               where,
                                               descriptem.toJSON())
@@ -68,7 +68,7 @@
   function droppedCreatingAnnotation (annotationId: string, where: string) {
       const annotation = store.getAnnotation(annotationId)
       if (annotation && model.value) {
-          store.addSynchronicSpecificCategory(`New category ${istore.newSSCIndexIncrement()}`,
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               props.modelId,
                                               where,
                                               annotation.toJSON())
@@ -80,7 +80,7 @@
       try {
           const selection = JSON.parse(selectionData)
           if (model.value) {
-              store.addSynchronicSpecificCategory(`New category ${istore.newSSCIndexIncrement()}`,
+              store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                                   props.modelId,
                                                   where,
                                                   selection)

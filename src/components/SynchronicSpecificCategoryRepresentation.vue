@@ -150,7 +150,7 @@
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && category.value) {
-          store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               category.value.synchronicspecificmodelId,
                                               where,
                                               descriptem.toJSON())
@@ -161,7 +161,7 @@
   function droppedCreatingAnnotation (annotationId: string, where: string) {
       const annotation = store.getAnnotation(annotationId)
       if (annotation && category.value) {
-          store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               category.value.synchronicspecificmodelId,
                                               where,
                                               annotation.toJSON())
@@ -173,7 +173,7 @@
       try {
           const selection = JSON.parse(selectionData)
           if (selection && category.value) {
-              store.addSynchronicSpecificCategory(`New SSC ${istore.newSSCIndexIncrement()}`,
+              store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                                   category.value.synchronicspecificmodelId,
                                                   where,
                                                   selection)
