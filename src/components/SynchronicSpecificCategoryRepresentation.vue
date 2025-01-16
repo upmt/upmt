@@ -216,6 +216,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
+      align-self: center;
   }
   .synchronicspecificcategory-children.horizontal {
       flex-direction: row;
