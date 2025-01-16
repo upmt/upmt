@@ -33,6 +33,24 @@
         stroke="black"
         :stroke-width="strokeWidth"
         />
+      <path
+        v-if="isAggregation"
+        :d="`M${parentPosition.x} ${parentPosition.y} l -8 -2 l -8 2 l 8 2 Z`"
+        fill="white"
+        stroke="black"
+        :stroke-width="strokeWidth" />
+      <path
+        v-if="isSpecialization"
+        :d="`M${parentPosition.x} ${parentPosition.y} l -8 -3 l 0 6 Z`"
+        fill="white"
+        stroke="black"
+        :stroke-width="strokeWidth" />
+      <path
+        v-if="isProperty"
+        :d="`M${parentPosition.x - 6} ${parentPosition.y - 3} l 6 3 l -6 3`"
+        fill="none"
+        stroke="black"
+        :stroke-width="strokeWidth" />
     </svg>
   </div>
 </template>
@@ -42,7 +60,8 @@
   import { ref, reactive, computed } from 'vue'
 
   const props = defineProps({
-      childrenCount: { type: Number, default: 1 }
+      childrenCount: { type: Number, default: 1 },
+      type: { type: String, default: "" }
   })
 
   const container = ref(null)
@@ -56,6 +75,10 @@
   const childrenArray = computed(() => {
       return [ ...Array(props.childrenCount).keys()]
   })
+
+  const isAggregation = computed(() => props.type === 'aggregation')
+  const isSpecialization = computed(() => props.type === 'specialization')
+  const isProperty = computed(() => props.childrenCount === 0)
 
   const nodePositions = computed(() => {
       const gap = dimensions.height / props.childrenCount
