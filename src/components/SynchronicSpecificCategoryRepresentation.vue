@@ -246,7 +246,10 @@
   .synchronicspecificcategory-header {
       width: var(--synchronic-category-header-width);
   }
-  .synchronicspecificcategory-justification,
+  .synchronicspecificcategory-justification {
+      border: 1px dashed grey;
+  }
+
   .synchronicspecificcategory-header {
       border: 1px solid grey;
   }
