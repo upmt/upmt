@@ -74,6 +74,13 @@
         </div>
       </DropZone>
 
+      <div
+        v-if="category.parentId"
+        class="synchronicspecificcategory-filler"
+        >
+      <SynchronicSpecificCategoryRelation :childrenCount="1" />
+      </div>
+
     </div>
 
   </div>
@@ -233,6 +240,7 @@
       display: flex;
       flex-direction: row;
       border: 1px solid transparent;
+      flex: 1;
   }
   .highlighted .synchronicspecificcategory {
       border: 2px solid yellow;
@@ -291,5 +299,14 @@
   }
   .element-toolbar {
       height: 24px;
+  }
+  .synchronicspecificcategory-filler {
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      flex: 1;
   }
 </style>
