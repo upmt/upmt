@@ -17,13 +17,13 @@
       </div>
 
       <div class="synchronicspecificcategory-justification"
-           v-if="isLeaf">
+           v-if="isJustificationVisible">
         <JustificationRepresentation :justificationId="category.justification?.id">
         </JustificationRepresentation>
       </div>
 
       <div class="synchronicspecificcategory-relation"
-           v-if="!isLeaf">
+           v-if="!isJustificationVisible">
         <SynchronicSpecificCategoryRelation
           :childrenCount="category.children.length" />
       </div>
@@ -52,7 +52,7 @@
               size="xs"
               name="mdi-source-fork">
             </q-icon>
-            <span class="synchronicspecificcategory-name">{{ categoryName }} ({{ category.children.length }})
+            <span class="synchronicspecificcategory-name">{{ categoryName }}
               <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
                 <q-input v-model="scope.value"
                          @focus="($event.target as HTMLInputElement).select()"
@@ -62,6 +62,13 @@
                          @keyup.enter="scope.set" />
               </q-popup-edit>
             </span>
+            <q-badge
+              v-if="!isLeaf"
+              @click="displayJustification = !displayJustification"
+              class="descriptems-badge"
+              color="secondary"
+              :title="`${descriptemCount} descriptems`"
+              rounded>{{ descriptemCount }}</q-badge>
           </DragElement>
           <div class="element-toolbar on-name-hover">
           <ColorizeIcon
@@ -88,7 +95,7 @@
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
 //  import { storeToRefs } from 'pinia'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
@@ -111,9 +118,17 @@
 
   const category = computed(() => store.getSynchronicSpecificCategory(props.categoryId))
 
+  const displayJustification = ref(false)
+
   const isLeaf = computed(() => {
       return !category.value?.children.length
   })
+
+  const isJustificationVisible = computed(() => {
+      return isLeaf.value || displayJustification.value
+  })
+
+  const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
 
   function debug () {
       (window as any).category = category.value;
@@ -308,5 +323,11 @@
       justify-content: center;
       height: 24px;
       flex: 1;
+  }
+  .descriptems-badge {
+      opacity: .6;
+  }
+  .descriptems-badge:hover {
+      opacity: 1;
   }
 </style>
