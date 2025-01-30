@@ -7,50 +7,56 @@
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg">
-      <line
-        v-for="index in childrenArray"
-        :key="index"
-        :x1="nodePositions[index].x"
-        :y1="nodePositions[index].y"
-        :x2="barPosition.x"
-        :y2="nodePositions[index].y"
-        stroke="black"
-        :stroke-width="strokeWidth"
-        />
-      <line
-        :x1="barPosition.x"
-        :y1="barPosition.y"
-        :x2="barPosition.x"
-        :y2="dimensions.height - barPosition.y"
-        stroke="black"
-        :stroke-width="strokeWidth"
-        />
-      <line
-        :x1="barPosition.x"
-        :y1="parentPosition.y"
-        :x2="parentPosition.x"
-        :y2="parentPosition.y"
-        stroke="black"
-        :stroke-width="strokeWidth"
-        />
-      <path
-        v-if="isAggregation"
-        :d="`M${parentPosition.x} ${parentPosition.y} l -8 -2 l -8 2 l 8 2 Z`"
-        fill="white"
-        stroke="black"
-        :stroke-width="strokeWidth" />
-      <path
-        v-if="isSpecialization"
-        :d="`M${parentPosition.x} ${parentPosition.y} l -8 -3 l 0 6 Z`"
-        fill="white"
-        stroke="black"
-        :stroke-width="strokeWidth" />
-      <path
-        v-if="isProperty"
-        :d="`M${parentPosition.x - 6} ${parentPosition.y - 3} l 6 3 l -6 3`"
-        fill="none"
-        stroke="black"
-        :stroke-width="strokeWidth" />
+      <g>
+        <line
+          v-for="index in childrenArray"
+          vector-effect="non-scaling-stroke"
+          :key="index"
+          :x1="nodePositions[index].x"
+          :y1="nodePositions[index].y"
+          :x2="barPosition.x"
+          :y2="nodePositions[index].y"
+          stroke="black"
+          :stroke-width="strokeWidth"
+          />
+        <line
+          vector-effect="non-scaling-stroke"
+          :x1="barPosition.x"
+          :y1="barPosition.y"
+          :x2="barPosition.x"
+          :y2="dimensions.height - barPosition.y"
+          stroke="black"
+          :stroke-width="strokeWidth"
+          />
+        <line
+          vector-effect="non-scaling-stroke"
+          :x1="barPosition.x"
+          :y1="parentPosition.y"
+          :x2="parentPosition.x"
+          :y2="parentPosition.y"
+          stroke="black"
+          :stroke-width="strokeWidth"
+          />
+        <path
+          vector-effect="non-scaling-stroke"
+          v-if="isAggregation"
+          :d="`M${parentPosition.x} ${parentPosition.y} l -8 -2 l -8 2 l 8 2 Z`"
+          fill="white"
+          stroke="black"
+          :stroke-width="strokeWidth" />
+        <path
+          v-if="isSpecialization"
+          :d="`M${parentPosition.x} ${parentPosition.y} l -8 -3 l 0 6 Z`"
+          fill="white"
+          stroke="black"
+          :stroke-width="strokeWidth" />
+        <path
+          v-if="isProperty"
+          :d="`M${parentPosition.x - 6} ${parentPosition.y - 3} l 6 3 l -6 3`"
+          fill="none"
+          stroke="black"
+          :stroke-width="strokeWidth" />
+      </g>
     </svg>
   </div>
 </template>
