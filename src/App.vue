@@ -25,6 +25,7 @@
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
       store.loadProject('./examples/example.upmt');
       store.loadProject('./examples/ruptur-example.upmt');
+      store.loadProject('./examples/ruptur2-example.upmt');
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);
