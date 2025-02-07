@@ -95,6 +95,22 @@
         </div>
       </DropZone>
 
+      <DropZone :data="`in:${categoryId}`"
+                v-if="category.synchronicspecificmodelId"
+                types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
+                class="empty_padding newssc-dropzone"
+                @synchronicspecificcategory="droppedSynchronicSpecificCategory"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+        <q-btn
+          @click="createSynchronicSpecificCategory(`before:${categoryId}`)"
+          dense
+          class="newssc-button"
+          icon="mdi-menu-right">
+        </q-btn>
+      </DropZone>
+
       <div
         v-if="category.parentId"
         class="synchronicspecificcategory-filler"

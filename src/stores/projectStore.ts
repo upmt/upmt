@@ -816,10 +816,10 @@ export const useProjectStore = defineStore('projectStore', () => {
         synchronicspecificmodelId,
         childIndex,
         parentId: null as string | null,
-          justification: {
-            name: "",
-            descriptems
-          }
+        justification: {
+          name: "",
+          descriptems
+        }
       }
       let children = []
       if (where.startsWith('inmodel:')) {
@@ -841,9 +841,28 @@ export const useProjectStore = defineStore('projectStore', () => {
           // Make a copy of previous children info
           children = [ ...destination.children ]
           childIndex = children.length
-          data.synchronicspecificmodelId = destination.id
+          // data.synchronicspecificmodelId = destination.synchronicspecificmodelId
           data.parentId = destination.id
           repo.SynchronicSpecificCategory.save(data)
+        }
+      } else if (where.startsWith('before:')) {
+        // Create a new Category as parent of an existing Category
+        const child = getSynchronicSpecificCategory(where.slice(7))
+        if (child) {
+          // Make a copy of previous children info
+          // FIXME: check if child.parentId is null?
+          if (child.parentId) {
+            // There is already a parent - cannot update
+            console.error(`Cannot create a new SSC - ${child.id} already has a parent`)
+            return
+          }
+          (data.children as any) = [ { id: child.id } ]
+          data.synchronicspecificmodelId = child.synchronicspecificmodelId
+          // Remove the child from the list of children of the model
+          updateSynchronicSpecificCategory(child.id, { synchronicspecificmodelId: null })
+          const ssc = repo.SynchronicSpecificCategory.save(data)
+          console.log("New ssc", ssc)
+          // updateSynchronicSpecificCategory(child.id, { parentId: ssc.id })
         } else {
           console.error("Invalid id for destination SSCategory: ", where.slice(3))
         }
