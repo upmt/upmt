@@ -75,20 +75,22 @@
                          @keyup.enter="scope.set" />
               </q-popup-edit>
             </span>
+          </DragElement>
+          <div class="element-toolbar">
             <q-badge
               @click="displayJustification = !displayJustification"
               class="descriptems-badge"
               color="grey-6"
               :title="`${descriptemCount} descriptems`"
               rounded>{{ descriptemCount }}</q-badge>
-          </DragElement>
-          <div class="element-toolbar on-name-hover">
-          <ColorizeIcon
-            v-model="categoryColor" />
-          <CommentIcon
-            :element="category" />
-          <ElementMenu
-            :actions="menuActions" />
+            <CommentIcon
+              :element="category" />
+            <div class="element-toolbar-secondary on-name-hover">
+              <ColorizeIcon
+                v-model="categoryColor" />
+              <ElementMenu
+                :actions="menuActions" />
+            </div>
           </div>
         </div>
       </DropZone>
@@ -338,6 +340,8 @@
   }
   .element-toolbar {
       height: 24px;
+      display: flex;
+      flex-direction: row;
   }
   .synchronicspecificcategory-filler {
       margin: auto;
