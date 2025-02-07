@@ -304,7 +304,7 @@
       align-self: center;
   }
   .synchronicspecificcategory-relation {
-      width: calc(var(--synchronic-category-header-width) / 2);
+      width: 20px;
       display: flex;
       align-items: center;
       justify-content: center;

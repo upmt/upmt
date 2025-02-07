@@ -9,28 +9,17 @@
       xmlns="http://www.w3.org/2000/svg">
       <g>
         <line
-          v-for="index in childrenArray"
           vector-effect="non-scaling-stroke"
-          :key="index"
-          :x1="nodePositions[index].x"
-          :y1="nodePositions[index].y"
-          :x2="barPosition.x"
-          :y2="nodePositions[index].y"
-          stroke="black"
-          :stroke-width="strokeWidth"
-          />
-        <line
-          vector-effect="non-scaling-stroke"
-          :x1="barPosition.x"
+          :x1="0"
           :y1="barPosition.y"
-          :x2="barPosition.x"
+          :x2="0"
           :y2="dimensions.height - barPosition.y"
           stroke="black"
           :stroke-width="strokeWidth"
           />
         <line
           vector-effect="non-scaling-stroke"
-          :x1="barPosition.x"
+          :x1="0"
           :y1="parentPosition.y"
           :x2="parentPosition.x"
           :y2="parentPosition.y"
@@ -78,21 +67,9 @@
 
   const strokeWidth = ref(0.5)
 
-  const childrenArray = computed(() => {
-      return [ ...Array(props.childrenCount).keys()]
-  })
-
   const isAggregation = computed(() => props.type === 'aggregation')
   const isSpecialization = computed(() => props.type === 'specialization')
   const isProperty = computed(() => props.childrenCount === 0)
-
-  const nodePositions = computed(() => {
-      const gap = dimensions.height / props.childrenCount
-      return childrenArray.value.map((index) => ({
-          x: 0,
-          y: gap * index + gap / 2
-      }))
-  })
 
   const parentPosition = computed(() => ({
       x: dimensions.width,
