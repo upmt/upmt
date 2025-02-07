@@ -31,11 +31,18 @@
         </q-btn>
       </DropZone>
 
-      <div class="synchronicspecificcategory-justification"
-           v-if="isJustificationVisible">
-        <JustificationRepresentation :justificationId="category.justification?.id">
-        </JustificationRepresentation>
-      </div>
+      <DropZone data="add"
+                types="upmt/descriptem upmt/annotation upmt/selection"
+                class="row justify-center"
+                @annotation="droppedAnnotation"
+                @selection="droppedSelection"
+                @descriptem="droppedDescriptem">
+        <div class="synchronicspecificcategory-justification"
+             v-if="isJustificationVisible">
+          <JustificationRepresentation :justificationId="category.justification?.id">
+          </JustificationRepresentation>
+        </div>
+      </DropZone>
 
       <div class="synchronicspecificcategory-relation"
            v-if="!isJustificationVisible">
