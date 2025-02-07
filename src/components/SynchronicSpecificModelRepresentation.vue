@@ -14,7 +14,14 @@
           size="xs"
           @click.meta="debug"
           name="mdi-graph-outline"></q-icon>
-        <i title="Drop a descriptem here to create a new category">New category</i>
+        <q-btn
+          dense
+          flat
+          no-caps
+          @click="createSynchronicSpecificCategory(`inmodel:${modelId}`)"
+          title="Drop a descriptem here to create a new category">
+          New category
+        </q-btn>
       </div>
     </DropZone>
     <div class="synchronicspecificmodel-categories">
@@ -91,6 +98,15 @@
       }
   }
 
+  function createSynchronicSpecificCategory (where: string) {
+      if (model.value) {
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+                                              props.modelId,
+                                              where,
+                                              null)
+          showContent()
+      }
+  }
 </script>
 
 <style>
