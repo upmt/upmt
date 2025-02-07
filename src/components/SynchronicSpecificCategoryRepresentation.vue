@@ -16,6 +16,21 @@
         </div>
       </div>
 
+      <DropZone :data="`in:${categoryId}`"
+                types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
+                class="empty_padding newssc-dropzone"
+                @synchronicspecificcategory="droppedSynchronicSpecificCategory"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+        <q-btn
+          @click="createSynchronicSpecificCategory(`in:${categoryId}`)"
+          dense
+          class="newssc-button"
+          icon="mdi-plus">
+        </q-btn>
+      </DropZone>
+
       <div class="synchronicspecificcategory-justification"
            v-if="isJustificationVisible">
         <JustificationRepresentation :justificationId="category.justification?.id">
@@ -27,15 +42,6 @@
         <SynchronicSpecificCategoryRelation
           :childrenCount="category.children.length" />
       </div>
-
-      <DropZone :data="`in:${categoryId}`"
-                types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
-                class="empty_padding"
-                @synchronicspecificcategory="droppedSynchronicSpecificCategory"
-                @annotation="droppedCreatingAnnotation"
-                @selection="droppedCreatingSelection"
-                @descriptem="droppedCreatingDescriptem">
-      </DropZone>
 
       <DropZone data="add"
                 types="upmt/descriptem upmt/annotation upmt/selection"
@@ -206,6 +212,16 @@
       }
   }
 
+  function createSynchronicSpecificCategory (where: string) {
+      if (category.value) {
+          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+                                              category.value.synchronicspecificmodelId,
+                                              where,
+                                              null)
+          showContent()
+      }
+  }
+
   const categoryName = computed({
       get () {
           return category.value ? category.value.name : ""
@@ -299,6 +315,7 @@
   }
   .synchronicspecificcategory-justification {
       align-self: center;
+      min-height: 16px;
   }
   .synchronicspecificcategory-header {
       align-self: center;
@@ -329,5 +346,9 @@
   }
   .descriptems-badge:hover {
       opacity: 1;
+  }
+  .newssc-button {
+      width: 8px;
+      opacity: .5;
   }
 </style>
