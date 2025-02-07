@@ -76,10 +76,9 @@
               </q-popup-edit>
             </span>
             <q-badge
-              v-if="!isLeaf"
               @click="displayJustification = !displayJustification"
               class="descriptems-badge"
-              color="secondary"
+              color="grey-6"
               :title="`${descriptemCount} descriptems`"
               rounded>{{ descriptemCount }}</q-badge>
           </DragElement>
@@ -326,6 +325,7 @@
   }
   .synchronicspecificcategory-header {
       align-self: center;
+      overflow: hidden;
   }
   .synchronicspecificcategory-relation {
       width: 20px;
