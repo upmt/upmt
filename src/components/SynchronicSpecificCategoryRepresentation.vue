@@ -340,6 +340,13 @@
   .synchronicspecificcategory-justification {
       align-self: center;
       min-height: 16px;
+      opacity: 1.0;
+      transition: opacity 1.5s ease;
+  }
+  @starting-style {
+      .synchronicspecificcategory-justification {
+          opacity: 0;
+      }
   }
   .synchronicspecificcategory-header {
       align-self: center;
