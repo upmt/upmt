@@ -13,12 +13,10 @@ export default class BaseModel extends Model {
   @Uid() declare id: string
   @Str('') declare creator: string
   @Str('') declare contributor: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
   @Str('') declare projectId: string
   @Str('') declare comment: string
-
-  static config = {
-    withMeta: true
-  }
 
   static creating (model: BaseModel) {
     if (!this.context) {
@@ -29,8 +27,14 @@ export default class BaseModel extends Model {
       if (!model.creator) {
         model.creator = this.context.getUsername()
       }
+      if (!model.created) {
+        model.created = (new Date()).toISOString()
+      }
       if (!model.contributor) {
         model.contributor = model.creator
+      }
+      if (!model.modified) {
+        model.modified = (new Date()).toISOString()
       }
     }
     if (!model.projectId && this.context?.getProjectId) {
@@ -41,8 +45,10 @@ export default class BaseModel extends Model {
   }
 
   static updating (model: BaseModel) {
+    model.modified = (new Date()).toISOString()
     if (this.context?.getUsername) {
       model.contributor = this.context.getUsername()
     }
+    return true
   }
 }

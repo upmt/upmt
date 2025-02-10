@@ -12,6 +12,8 @@ export default class Descriptem extends BaseModel {
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number

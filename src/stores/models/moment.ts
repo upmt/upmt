@@ -12,6 +12,8 @@ export default class Moment extends Justifiable {
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Str('') declare name: string
   @Str('') declare color: string
@@ -35,11 +37,6 @@ export default class Moment extends Justifiable {
   @Attr() parentId!: string
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
   @Num(0) declare childIndex: number
-
-  static updating (model: any) {
-    // See https://github.com/CodeDredd/pinia-orm/issues/468
-    console.log("Updating moment", model)
-  }
 
   get descriptionLabel () {
     return this.name

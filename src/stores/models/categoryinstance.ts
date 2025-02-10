@@ -12,6 +12,8 @@ export default class CategoryInstance extends Justifiable {
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Str('') declare comment: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification

@@ -10,6 +10,8 @@ export default class Project extends BaseModel {
 
   @Str('') declare creator: string
   @Str('') declare contributor: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Str('') declare filename: string
   @Str('') declare name: string

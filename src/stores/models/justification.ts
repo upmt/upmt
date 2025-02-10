@@ -11,6 +11,8 @@ export default class Justification extends BaseModel {
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Str('') declare name: string
 
