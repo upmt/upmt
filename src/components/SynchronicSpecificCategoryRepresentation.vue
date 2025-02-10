@@ -28,6 +28,9 @@
           dense
           class="newssc-button"
           icon="mdi-plus">
+          <q-tooltip>
+            Create a new child category
+          </q-tooltip>
         </q-btn>
       </DropZone>
 
