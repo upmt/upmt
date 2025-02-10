@@ -51,8 +51,9 @@
       </div>
 
       <DropZone data="add"
-                types="upmt/descriptem upmt/annotation upmt/selection"
+                types="upmt/synchronicspecificcategory upmt/selection upmt/descriptem upmt/annotation"
                 class="row justify-center"
+                @synchronicspecificcategory="droppedSynchronicSpecificCategory"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
@@ -171,7 +172,16 @@
   }
 
   function droppedSynchronicSpecificCategory (categoryId: string) {
-      console.log("droppedSynchronicSpecificCategory", categoryId)
+      // DND on a category to reparent
+      const source = store.getSynchronicSpecificCategory(categoryId)
+      if (categoryId !== props.categoryId && source) {
+          // It was maybe a root category. Remove it from the root
+          // categories and reparent.
+          store.updateSynchronicSpecificCategory(categoryId, {
+              synchronicspecificmodelId: null,
+              parentId: props.categoryId
+          })
+      }
   }
 
   function droppedDescriptem (descriptemId: string) {
