@@ -841,8 +841,9 @@ export const useProjectStore = defineStore('projectStore', () => {
           // Make a copy of previous children info
           children = [ ...destination.children ]
           childIndex = children.length
-          // data.synchronicspecificmodelId = destination.synchronicspecificmodelId
           data.parentId = destination.id
+          // It is not at the root of the model since it has a parent
+          data.synchronicspecificmodelId = ""
           repo.SynchronicSpecificCategory.save(data)
         }
       } else if (where.startsWith('before:')) {
