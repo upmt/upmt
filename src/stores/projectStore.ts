@@ -932,7 +932,16 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function deleteSynchronicSpecificCategory (categoryId: string) {
-    repo.SynchronicSpecificCategory.where('id', categoryId).delete()
+    const category = getSynchronicSpecificCategory(categoryId)
+    if (category) {
+      category.children.forEach(child => {
+        updateSynchronicSpecificCategory(child.id, {
+          parentId: category.parentId,
+          synchronicspecificmodelId: category.synchronicspecificmodelId
+        })
+      })
+      repo.SynchronicSpecificCategory.where('id', categoryId).delete()
+    }
   }
 
   function duplicateCategoryInstance (categoryinstanceId: string) {
