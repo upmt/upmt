@@ -427,12 +427,17 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
-  function getSynchronicSpecificModel (id: string) {
-    return repo.SynchronicSpecificModel
-      .with('categories', (qc) => qc.with('children')
-        .with('justification',
-          (qj) => qj.with('descriptems')))
-      .find(id)
+  function getSynchronicSpecificModel (id: string | null) {
+    if (id) {
+      return repo.SynchronicSpecificModel
+        .with('categories', (qc) => qc.with('children')
+          .with('justification',
+            (qj) => qj.with('descriptems')))
+        .with('moment')
+        .find(id)
+    } else {
+      return null
+    }
   }
 
   function getProperty (id: string) {

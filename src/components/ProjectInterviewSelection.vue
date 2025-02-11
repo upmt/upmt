@@ -74,7 +74,9 @@
                   </template>
 
                   <template v-slot:after>
-                    <div class="edited-model-container">
+                    <div class="edited-model-container flex column"
+                         v-if="editedSynchronicSpecificModel">
+                      <span class="text-center">Editing <strong>{{ editedSynchronicSpecificModel.moment?.descriptionLabel }}</strong></span>
                       <SynchronicSpecificModelRepresentation
                         v-if="editedSynchronicspecificmodelId"
                         :modelId="editedSynchronicspecificmodelId" />
@@ -145,6 +147,10 @@
   const splitterModel = ref(20)
   const splitterTranscript = ref(90)
   const splitterInterview = ref(500)
+
+  const editedSynchronicSpecificModel = computed(() => {
+      return store.getSynchronicSpecificModel(editedSynchronicspecificmodelId.value)
+  })
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
