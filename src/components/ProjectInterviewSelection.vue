@@ -55,14 +55,32 @@
                        :key="interview.id">
 
             <q-splitter
+              class="fit fullwindow-height"
               v-model="splitterTranscript"
               :limits="[5,95]">
 
               <template v-slot:before>
-                <InterviewRepresentation
-                  class="fit fullwindow-height"
-                  :interviewId="interview.id">
-                </InterviewRepresentation>
+                <q-splitter
+                  class="fit fullwindow-height flex"
+                  unit="px"
+                  horizontal
+                  v-model="splitterInterview"
+                  >
+
+                  <template v-slot:before>
+                    <InterviewRepresentation
+                      :interviewId="interview.id">
+                    </InterviewRepresentation>
+                  </template>
+
+                  <template v-slot:after>
+                    <div class="edited-model-container">
+                      <SynchronicSpecificModelRepresentation
+                        v-if="editedSynchronicspecificmodelId"
+                        :modelId="editedSynchronicspecificmodelId" />
+                    </div>
+                  </template>
+                </q-splitter>
               </template>
 
               <template v-slot:after>
@@ -93,11 +111,13 @@
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
+  import { storeToRefs } from 'pinia'
   import Interview from 'stores/models/interview'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'
+  import SynchronicSpecificModelRepresentation from './SynchronicSpecificModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
@@ -117,10 +137,14 @@
   })
 
   const newInterview = "New interview"
+  const {
+      editedSynchronicspecificmodelId
+  } = storeToRefs(istore)
 
   const currentInterviewId = ref("")
   const splitterModel = ref(20)
   const splitterTranscript = ref(90)
+  const splitterInterview = ref(500)
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
@@ -133,6 +157,7 @@
 
   watch(currentInterviewId, () => {
       istore.setCurrentInterview(store.getInterview(currentInterviewId.value))
+      istore.setEditedSynchronicspecificmodelId("")
   })
 
   function onInterviewCreated (interview: Interview) {
@@ -159,6 +184,7 @@
 
   onUnmounted(() => {
       istore.setCurrentInterview(null)
+      istore.setEditedSynchronicspecificmodelId("")
       // istore.setCurrentProject(null)
   })
 </script>
@@ -189,5 +215,12 @@
 
   .new-interview {
       justify-content: flex-end;
+  }
+
+  div.edited-model-container {
+      display: flex;
+  }
+
+  .interview-splitter {
   }
 </style>

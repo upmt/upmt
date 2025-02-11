@@ -76,8 +76,11 @@
         </div>
 
         <div class="moment-synchronic-specific-category">
-          <SynchronicSpecificModelRepresentation
-            :modelId="moment.synchronicspecificmodel?.id" />
+          <q-btn
+            @click="editModel(moment.synchronicspecificmodel?.id || '')"
+            >
+            Edit Model
+          </q-btn>
         </div>
 
         <div :class="[ 'moment-categoryinstances', layout ]">
@@ -125,7 +128,6 @@
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
   import MomentRepresentation from './MomentRepresentation.vue'
-  import SynchronicSpecificModelRepresentation from './SynchronicSpecificModelRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
@@ -292,6 +294,9 @@
       }
   }
 
+  function editModel (ssmId: string) {
+      istore.setEditedSynchronicspecificmodelId(ssmId)
+  }
   const menuActions = [
       [ "Toggle transitional", toggleTransitional ],
       [ "Delete", () => store.deleteMoment(props.momentId) ]
