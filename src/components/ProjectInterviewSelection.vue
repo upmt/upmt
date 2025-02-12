@@ -76,7 +76,20 @@
                   <template v-slot:after>
                     <div class="edited-model-container flex column"
                          v-if="editedSynchronicSpecificModel">
-                      <span class="text-center">Editing <strong>{{ editedSynchronicSpecificModel.moment?.descriptionLabel }}</strong></span>
+                      <q-toolbar class="row">
+                        <q-toolbar-title>
+                          Editing <strong>{{ editedSynchronicSpecificModel.moment?.descriptionLabel }}</strong>
+                        </q-toolbar-title>
+                        <q-btn
+                          icon="mdi-close"
+                          flat
+                          round
+                          dense
+                          size="md"
+                          class="float-right"
+                          @click="closeEditedModel">
+                        </q-btn>
+                      </q-toolbar>
                       <SynchronicSpecificModelRepresentation
                         v-if="editedSynchronicspecificmodelId"
                         :modelId="editedSynchronicspecificmodelId" />
@@ -186,6 +199,10 @@
               }
           })
       }
+  }
+
+  function closeEditedModel () {
+      istore.setEditedSynchronicspecificmodelId("")
   }
 
   onUnmounted(() => {
