@@ -129,12 +129,12 @@
 
       if (currentProject.value) {
           menu.push({
-              label: currentProject.value.name,
+              label: "Specific models",
               icon: 'mdi-semantic-web',
               link: `/project/${currentProject.value.id}`
           })
           menu.push({
-              label: currentProject.value.name,
+              label: "Generic Model",
               icon: 'mdi-table',
               link: `/spreadsheet/${currentProject.value.id}`
           })
