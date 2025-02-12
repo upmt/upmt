@@ -23,7 +23,7 @@
   const momentmodel = computed(() => store.getMomentModel(props.momentmodelId))
 </script>
 
-<style>
+<style scoped>
   .momentmodel-handle {
       opacity: .5;
       cursor: pointer;

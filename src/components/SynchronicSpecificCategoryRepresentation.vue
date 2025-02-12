@@ -282,7 +282,7 @@
   ]
 </script>
 
-<style>
+<style scoped>
   .header-class {
       font-weight: bold;
       text-align: center;

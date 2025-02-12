@@ -212,7 +212,7 @@
   })
 </script>
 
-<style>
+<style scoped>
   .fullwindow-height {
     min-height: calc(100vh - var(--header-height));
     max-height: calc(100vh - var(--header-height));

@@ -64,7 +64,7 @@
 
 </script>
 
-<style>
+<style scoped>
   .propertymodel-container {
     display: flex;
     flex-direction: column;

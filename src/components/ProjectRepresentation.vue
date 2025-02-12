@@ -26,7 +26,7 @@
   })
 </script>
 
-<style>
+<style scoped>
   .interview-list {
     list-style: none;
   }

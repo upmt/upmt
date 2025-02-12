@@ -27,7 +27,7 @@
       }
   }
 </script>
-<style>
+<style scoped>
   .dragelement {
     cursor: pointer;
     display: flex;

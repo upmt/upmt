@@ -28,7 +28,7 @@
   const justification = computed(() => store.getJustification(props.justificationId))
 </script>
 
-<style>
+<style scoped>
   .justification-descriptems {
     list-style: none;
     display: flex;
