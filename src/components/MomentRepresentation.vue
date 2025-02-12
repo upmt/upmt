@@ -10,6 +10,16 @@
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
+      <q-btn
+        flat
+        dense
+        size="xs"
+        class="new-moment-button"
+        icon="mdi-plus"
+        @click="droppedCreatingSelection('{}', 'before')"
+        >
+        <q-tooltip>Create a new moment here</q-tooltip>
+      </q-btn>
     </DropZone>
 
     <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
@@ -123,6 +133,16 @@
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
+      <q-btn
+        flat
+        dense
+        size="xs"
+        class="new-moment-button"
+        icon="mdi-plus"
+        @click="droppedCreatingSelection('{}', 'after')"
+        >
+        <q-tooltip>Create a new moment here</q-tooltip>
+      </q-btn>
     </DropZone>
 
   </div>
@@ -379,5 +399,12 @@
   }
   .moment-header:hover .on-name-hover {
       opacity: 1;
+  }
+  .new-moment-button {
+      width: 8px;
+      opacity: 0;
+  }
+  .new-moment-button:hover {
+      opacity: .8;
   }
 </style>

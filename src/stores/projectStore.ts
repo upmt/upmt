@@ -729,7 +729,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         // textselection can have the "text" attribute, which is not
         // part of the Descriptem fields. Explicitly select
         // adequate fields.
-        const descriptems = textselection ? [ {
+        const descriptems = textselection?.interviewId ? [ {
           startIndex: textselection.startIndex,
           endIndex: textselection.endIndex,
           interviewId: textselection.interviewId
