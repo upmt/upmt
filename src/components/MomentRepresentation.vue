@@ -78,6 +78,8 @@
         <div class="moment-synchronic-specific-category">
           <q-btn
             @click="editModel(moment.synchronicspecificmodel?.id || '')"
+            icon="edit"
+            no-caps
             >
             Edit Model
           </q-btn>
