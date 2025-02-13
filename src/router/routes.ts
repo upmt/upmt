@@ -1,5 +1,4 @@
 import { RouteRecordRaw } from 'vue-router'
-import DebugPage from 'pages/DebugPage.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,7 +11,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'project/:id', name: 'project', component: () => import('pages/ProjectPage.vue'), props: true },
       { path: 'init', name: 'init', component: () => import('pages/InitPage.vue'), props: { source: './OPEVA-G1.upmt' } },
       { path: 'example', name: 'example', component: () => import('pages/InitPage.vue'), props: { source: './assets/example.upmt' } },
-      { path: 'debug', name: 'debug', component: DebugPage }
+      { path: 'debug', name: 'debug', component: import('pages/DebugPage.vue') }
     ]
   },
 
