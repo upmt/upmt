@@ -92,7 +92,7 @@
           <q-btn
             flat
             dense
-            size="md"
+            size="xs"
             class="absolute-bottom-right"
             @click="editModel(moment.synchronicspecificmodel?.id || '')"
             icon="edit"
