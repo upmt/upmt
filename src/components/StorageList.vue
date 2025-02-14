@@ -1,5 +1,6 @@
 <template>
   <q-list class="storage">
+    <strong>STORAGE {{ dir }}</strong>
     <q-item
       class="column"
       v-for="filename in filenames"

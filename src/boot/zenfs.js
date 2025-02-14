@@ -1,14 +1,18 @@
 import { defineBoot } from '#q-app/wrappers'
-import { configureSingle, fs } from '@zenfs/core'
+import { configure, fs } from '@zenfs/core'
 // import { exists, writeFile } from '@zenfs/core/promises'
 import { IndexedDB } from '@zenfs/dom'
-
-await configureSingle({ backend: IndexedDB })
 
 export default defineBoot(async ({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
-    console.log("zenfs boot")
+
+    await configure({
+        mounts: {
+		    '/': IndexedDB,
+	    }
+    })
+    console.log("zenfs boot configured", fs.mounts)
     window.fs = fs
     app.config.globalProperties.$fs = fs
     // ^ ^ ^ this will allow you to use this.$fs (for Vue Options API form)
