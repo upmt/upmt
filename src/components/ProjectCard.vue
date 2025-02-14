@@ -64,7 +64,7 @@
       })
   }
 
-  async function loadSample () {
+  function loadSample () {
       const filename = './OPEVA-G1.upmt'
       axios.get(filename).then((response) => {
           pstore.importProject(response.data, filename)
@@ -76,7 +76,7 @@
       })
   }
 
-  async function uploadFile (event: Event) {
+  function uploadFile (event: Event) {
       try {
           // `event.target.files[0]` is the desired file object
           const files = (event.target as HTMLInputElement).files
@@ -98,7 +98,7 @@
                   })
                   jsonData = null
               }
-              if (jsonData !== null) {
+              if (jsonData !== null && sourceFile?.name) {
                   pstore.importProject(jsonData, sourceFile.name)
               }
           }
@@ -106,13 +106,15 @@
               console.error('Error reading file:', reader.error)
               $q.notify({
                   type: 'error',
-                  message: `Error reading file: ${reader.error}`
+                  message: `Error reading file: ${reader.error?.message}`
               })
           }
           // Load data from file - the readAsText will
           // trigger the load event that is handled just
           // above.
-          reader.readAsText(sourceFile)
+          if (sourceFile) {
+              reader.readAsText(sourceFile as Blob)
+          }
       } catch (e) {
           console.log(e)
           $q.notify({

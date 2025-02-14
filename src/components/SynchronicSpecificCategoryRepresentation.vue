@@ -42,7 +42,7 @@
                 @descriptem="droppedDescriptem">
         <div class="synchronicspecificcategory-justification"
              v-if="isJustificationVisible">
-          <JustificationRepresentation :justificationId="category.justification?.id">
+          <JustificationRepresentation :justificationId="category.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
       </DropZone>
@@ -207,7 +207,7 @@
           const selection = JSON.parse(selectionData)
           store.addTextSelectionToSynchronicSpecificCategory(selection, props.categoryId)
       } catch (e) {
-          console.log(`Cannot parse ${selectionData}`)
+          console.log(`Cannot parse ${selectionData}: ${e}`)
       }
   }
 

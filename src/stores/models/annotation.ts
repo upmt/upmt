@@ -4,7 +4,7 @@ import Interview from './interview'
 import { ellipsize } from 'stores/util'
 
 export default class Annotation extends BaseModel {
-  static entity = 'annotations'
+  static override entity = 'annotations'
   @Uid() declare id: string
 
   @Str('') declare creator: string
@@ -33,7 +33,7 @@ export default class Annotation extends BaseModel {
     return ellipsize(this.text)
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       color: this.color,

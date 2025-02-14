@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
 
 export default class Justifiable extends BaseModel {
-  static entity = 'justifiable'
+  static override entity = 'justifiable'
 }

@@ -185,7 +185,7 @@
                   })
                   jsonData = null
               }
-              if (jsonData !== null) {
+              if (jsonData !== null && sourceFile?.name) {
                   store.importProject(jsonData, sourceFile.name)
               }
           }
@@ -193,13 +193,13 @@
               console.error('Error reading file:', reader.error)
               $q.notify({
                   type: 'error',
-                  message: `Error reading file: ${reader.error}`
+                  message: `Error reading file: ${reader.error?.message}`
               })
           }
           // Load data from file - the readAsText will
           // trigger the load event that is handled just
           // above.
-          reader.readAsText(sourceFile)
+          reader.readAsText(sourceFile as Blob)
       } catch (e) {
           console.log(e)
           $q.notify({
@@ -244,7 +244,7 @@
           // browser allowed it
       } else {
           // browser denied it
-          console.error('Error: ' + status)
+          console.error(`Error: ${status}`)
       }
   }
 

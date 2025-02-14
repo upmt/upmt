@@ -5,7 +5,7 @@ import Justification from './justification'
 import { ellipsize } from 'stores/util'
 
 export default class Descriptem extends BaseModel {
-  static entity = 'descriptems'
+  static override entity = 'descriptems'
 
   @Uid() declare id: string
 
@@ -40,7 +40,7 @@ export default class Descriptem extends BaseModel {
     return this.endIndex - this.startIndex
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       interviewId: this.interviewId,

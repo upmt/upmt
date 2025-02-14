@@ -81,13 +81,13 @@
         </template>
 
         <div class="moment-justification">
-          <JustificationRepresentation :justificationId="moment.justification?.id">
+          <JustificationRepresentation :justificationId="moment.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
 
         <div class="moment-synchronic-specific-model flex row">
           <SynchronicSpecificModelOverview
-            :modelId="moment?.synchronicspecificmodel?.id">
+            :modelId="moment?.synchronicspecificmodel?.id ?? ''">
           </SynchronicSpecificModelOverview>
           <q-btn
             flat
@@ -234,7 +234,7 @@
           store.addTextSelectionToMoment(selection, props.momentId)
           showContent()
       } catch (e) {
-          console.log(`Cannot parse ${selectionData}`)
+          console.log(`Cannot parse ${selectionData}: ${e}`)
       }
   }
 

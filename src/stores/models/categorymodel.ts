@@ -3,7 +3,7 @@ import { Attr, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 import PropertyModel from './propertymodel'
 
 export default class CategoryModel extends BaseModel {
-  static entity = 'categorymodels'
+  static override entity = 'categorymodels'
 
   @Uid() declare id: string
 
@@ -21,7 +21,7 @@ export default class CategoryModel extends BaseModel {
 
   @Attr() modelfolderId!: string
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,

@@ -23,7 +23,6 @@
       }
   })
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   const getKey = (element: any): string => {
       return `${element.$modelEntity()}-${element.id}`
   }

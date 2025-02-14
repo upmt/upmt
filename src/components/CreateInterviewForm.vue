@@ -31,7 +31,7 @@
           label="Participant name *"
           lazy-rules
           class="col-4"
-          :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+          :rules="[ (val: string) => val && val.length > 0 || 'It  must be filled']"
           />
 
         <q-input
@@ -49,7 +49,7 @@
           label="Interview name/id *"
           lazy-rules
           class="col-4"
-          :rules="[ val => val && val.length > 0 || 'It  must be filled']"
+          :rules="[ (val: string) => val && val.length > 0 || 'It  must be filled']"
           />
 
       </div>
@@ -143,7 +143,9 @@
           if (rootMoment) {
               // Fix interviewId for new moments
               store.updateMoment(rootMoment.id, { interviewId: i.id })
-              store.updateMoment(rootMoment.children[0].id, { interviewId: i.id })
+              if (rootMoment.children.length && rootMoment.children[0]) {
+                  store.updateMoment(rootMoment.children[0].id, { interviewId: i.id })
+              }
           }
           emit("created", i)
       }
@@ -171,7 +173,7 @@
           console.error('Error reading file:', reader.error)
           $q.notify({
               type: 'error',
-              message: `Error reading file: ${reader.error}`
+              message: `Error reading file: ${reader.error?.message}`
           })
       }
 

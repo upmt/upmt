@@ -84,7 +84,7 @@ function droppedSelection (selectionData: string) {
         // addTextSelectionToMoment will do the necessary key checks
         store.addTextSelectionToCategoryInstance(selection, props.categoryinstanceId)
     } catch (e) {
-        console.log(`Cannot parse ${selectionData}`)
+        console.log(`Cannot parse ${selectionData}: ${e}`)
     }
   }
 

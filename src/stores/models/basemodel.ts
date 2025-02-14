@@ -7,7 +7,7 @@ type ContextProvider = {
 }
 
 export default class BaseModel extends Model {
-  static entity = 'basemodel'
+  static override entity = 'basemodel'
   static context: ContextProvider | null = null
 
   @Uid() declare id: string
@@ -18,7 +18,7 @@ export default class BaseModel extends Model {
   @Str('') declare projectId: string
   @Str('') declare comment: string
 
-  static creating (model: BaseModel) {
+  static override creating (model: BaseModel) {
     if (!this.context) {
       return true
     }
@@ -44,7 +44,7 @@ export default class BaseModel extends Model {
     return true
   }
 
-  static updating (model: BaseModel) {
+  static override updating (model: BaseModel) {
     model.modified = (new Date()).toISOString()
     if (this.context?.getUsername) {
       model.contributor = this.context.getUsername()

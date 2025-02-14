@@ -6,7 +6,7 @@ import SynchronicSpecificModel from './synchronicspecificmodel'
 
 // Moment is synonym for DiachronicSpecificCategory
 export default class Moment extends Justifiable {
-  static entity = 'moments'
+  static override entity = 'moments'
   @Uid() declare id: string
 
   @Str('') declare creator: string
@@ -31,7 +31,6 @@ export default class Moment extends Justifiable {
 
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
 
-  /* eslint-disable no-use-before-define */
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
 
   @Attr() parentId!: string
@@ -46,7 +45,7 @@ export default class Moment extends Justifiable {
     return { moment: this }
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     if (this.categoryinstances === null || this.children === null) {
       console.error("Query error for ", this, " - should fetch its relations")

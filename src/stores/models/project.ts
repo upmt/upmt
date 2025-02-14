@@ -4,7 +4,7 @@ import Interview from './interview'
 import ModelFolder from './modelfolder'
 
 export default class Project extends BaseModel {
-  static entity = 'projects'
+  static override entity = 'projects'
 
   @Uid() declare id: string
 
@@ -27,7 +27,7 @@ export default class Project extends BaseModel {
     }
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,

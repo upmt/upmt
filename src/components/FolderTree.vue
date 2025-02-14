@@ -80,7 +80,6 @@
 
   const expanded = ref([ 'root' ])
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   const getKey = (element: any): string => {
       if (element.$modelEntity) {
           return `${element.$modelEntity()}:${element.id}`
@@ -218,7 +217,7 @@
           console.log("Refresh", { tree, node, children: node.children })
           delete node.children
           tree.setExpanded(node.key, false)
-          nextTick(() => {
+          void nextTick(() => {
               tree.setExpanded(node.key, true)
           })
       }
@@ -246,7 +245,7 @@
           },
           cancel: true,
           persistent: true
-      }).onOk(name => {
+      }).onOk((name: string) => {
           callback(name)
       })
   }

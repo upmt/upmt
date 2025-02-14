@@ -79,7 +79,7 @@
           // addTextSelectionToMoment will do the necessary key checks
           store.addTextSelectionToProperty(selection, props.propertyId)
       } catch (e) {
-          console.log(`Cannot parse ${selectionData}`)
+          console.log(`Cannot parse ${selectionData}: ${e}`)
       }
   }
 

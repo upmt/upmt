@@ -5,7 +5,7 @@ import Annotation from './annotation'
 import Project from './project'
 
 export default class Interview extends BaseModel {
-  static entity = 'interviews'
+  static override entity = 'interviews'
 
   @Uid() declare id: string
 
@@ -42,7 +42,7 @@ export default class Interview extends BaseModel {
     }
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       id: this.id,

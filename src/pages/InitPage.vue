@@ -18,7 +18,6 @@
   import Project from 'stores/models/project'
   import { useProjectStore } from 'stores/projectStore'
   import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   import axios from 'axios'
 
   defineOptions({
@@ -43,6 +42,8 @@
           const p = useProjectStore().importProject(response.data, filename)
           project.value = p
           $q.loading.hide()
+      }).catch(e => {
+         console.log(`Error ${e}`)
       })
   }
 

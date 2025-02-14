@@ -5,7 +5,7 @@ import Justification from './justification'
 import PropertyModel from './propertymodel'
 
 export default class Property extends Justifiable {
-  static entity = 'properties'
+  static override entity = 'properties'
 
   @Uid() declare id: string
 
@@ -51,7 +51,7 @@ export default class Property extends Justifiable {
     }
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     if (this.justification) {
       return {

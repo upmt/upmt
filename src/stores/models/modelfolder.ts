@@ -4,7 +4,7 @@ import CategoryModel from './categorymodel'
 import MomentModel from './momentmodel'
 
 export default class ModelFolder extends BaseModel {
-  static entity = 'modelfolders'
+  static override entity = 'modelfolders'
 
   @Uid() declare id: string
 
@@ -23,7 +23,6 @@ export default class ModelFolder extends BaseModel {
   @Attr() ownerId!: string
 
   @Attr() parentId!: string
-  /* eslint-disable no-use-before-define */
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
 
   @HasMany(() => CategoryModel, 'modelfolderId')
@@ -34,7 +33,7 @@ export default class ModelFolder extends BaseModel {
   @OnDelete('cascade')
   declare momentmodels: MomentModel[]
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,

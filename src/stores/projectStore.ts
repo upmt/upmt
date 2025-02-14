@@ -62,8 +62,19 @@ const repo = {
   Property:         useRepo(Property),
   PropertyModel:    useRepo(PropertyModel),
   SynchronicSpecificCategory: useRepo(SynchronicSpecificCategory),
-  SynchronicSpecificModel: useRepo(SynchronicSpecificModel)
+  SynchronicSpecificModel: useRepo(SynchronicSpecificModel),
 }
+// For updateElement, only the entity name seems to be easily available.
+// Augment the repo object with entity name for every entity
+const repoValues = Object.values(repo).map(r => {
+        const model = r.getModel && r.getModel()
+        if (model) {
+             const entity: string = model.$entity()
+             return [entity, r] as [ string, any ]
+        }
+        return null
+    }).filter(v => v !== null)
+const repoByEntity = Object.fromEntries(repoValues)
 
 type TextSelection = {
   startIndex: number,
@@ -143,7 +154,6 @@ interface OldInterview {
    color: string
    comment: string
    participantName: string
-    /* eslint-disable @typescript-eslint/no-explicit-any */
    interviewText: any
    rootMoment: OldMoment
 }
@@ -171,17 +181,19 @@ function getReferenceId (e: OldReference): string {
   return `${e['@model']}-${e['@id']}`
 }
 
-function mapSchemaCategoryReference (sc: OldReference): CategoryModel {
+function mapSchemaCategoryReference (sc: OldReference): CategoryModel | null {
   const key = getReferenceId(sc)
+  if (!idCache.CategoryModel) return null
   const model = idCache.CategoryModel[key] as CategoryModel
   if (!model) {
     console.error(`Missing ${key}`)
   }
-  return model
+  return model ?? null
 }
 
-function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
+function mapConcreteProperty (p: OldProperty, interview: Interview): Property | null {
   const key = getReferenceId(p.schemaProperty)
+  if (!idCache.PropertyModel) return null
   const model = idCache.PropertyModel[key] as PropertyModel
   if (!model) {
     console.error(`Missing ${key}`)
@@ -202,7 +214,7 @@ function mapConcreteProperty (p: OldProperty, interview: Interview): Property {
 function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryInstance {
   const model = mapSchemaCategoryReference(c.schemaCategory)
   return repo.CategoryInstance.make({
-    categorymodelId: model.id,
+    categorymodelId: model?.id,
     justification: repo.Justification.make({
       descriptems: c.justification?.descripteme_list.map(d => repo.Descriptem.make({
         startIndex: d.startIndex,
@@ -262,8 +274,9 @@ function mapInterview (i: OldInterview): Interview {
   return interview
 }
 
-function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel {
+function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel | null {
   const key = getReferenceId(sp)
+  if (!idCache.PropertyModel) return null
   let model = idCache.PropertyModel[key] as PropertyModel
   if (!model) {
     model = repo.PropertyModel.make({
@@ -274,8 +287,9 @@ function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel {
   return model
 }
 
-function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
+function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel | null {
   const key = getReferenceId(sc)
+  if (!idCache.CategoryModel) return null
   let model = idCache.CategoryModel[key] as CategoryModel
   if (!model) {
     model = repo.CategoryModel.make({
@@ -289,8 +303,9 @@ function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel {
   return model
 }
 
-function mapMomentType (mt: OldMomentType): MomentModel {
+function mapMomentType (mt: OldMomentType): MomentModel | null {
   const key = getReferenceId(mt)
+  if (!idCache.MomentModel) return null
   let model = idCache.MomentModel[key] as MomentModel
   if (!model) {
     model = repo.MomentModel.make({
@@ -620,7 +635,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function updateElement (element: BaseModel, values: object) {
-    (repo as Record<string, any>)[element.constructor.name].where('id', (element.id as any)).update(values)
+    repoByEntity[element.$entity()].where('id', (element.id as any)).update(values)
   }
 
   function updateProperty (identifier: string, values: object) {

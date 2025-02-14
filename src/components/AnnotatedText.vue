@@ -18,7 +18,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  // @ts-nocheck
   const OVERLAPPING_COLOR = "#deadbabe"
 
   // Adapted from https://github.com/derhuerst/flatten-overlapping-ranges/
@@ -134,7 +135,7 @@
       let sectionTextStart = 0
       let spanId = 0
       const spans = sections.map(section => {
-          const length = section[0]
+          const length = Number(section[0])
           let annotationIds = section[1]
           annotationIds = annotationIds.filter(annotationId => {
               return annotationId !== 'baseText'
@@ -195,7 +196,6 @@
           getSpanClasses: {
               type: Function,
               default: function (span) {
-                  /* eslint-disable @typescript-eslint/no-empty-function */
                   return () => {}
               }
           },

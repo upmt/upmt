@@ -4,7 +4,7 @@ import SynchronicSpecificCategory from './synchronicspecificcategory'
 import { Attr, BelongsTo, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 
 export default class SynchronicSpecificModel extends BaseModel {
-  static entity = 'synchronicspecificmodel'
+  static override entity = 'synchronicspecificmodel'
 
   @Uid() declare id: string
 
@@ -23,7 +23,7 @@ export default class SynchronicSpecificModel extends BaseModel {
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,

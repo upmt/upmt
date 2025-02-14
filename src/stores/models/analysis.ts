@@ -4,7 +4,7 @@ import Moment from './moment'
 
 // Indirection for rootMoment in umpt1
 export default class Analysis extends BaseModel {
-  static entity = 'analyses'
+  static override entity = 'analyses'
 
   @Uid() declare id: string
 
@@ -19,7 +19,6 @@ export default class Analysis extends BaseModel {
 
   @Attr() interviewId!: string
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   toJSON (): any {
     return {
       name: this.name,

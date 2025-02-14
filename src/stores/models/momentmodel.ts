@@ -4,7 +4,7 @@ import CategoryModel from './categorymodel'
 import CategoryMomentModel from './categorymomentmodel'
 
 export default class MomentModel extends BaseModel {
-  static entity = 'momentmodels'
+  static override entity = 'momentmodels'
 
   @Uid() declare id: string
 
@@ -22,7 +22,7 @@ export default class MomentModel extends BaseModel {
   @BelongsToMany(() => CategoryModel, () => CategoryMomentModel, 'momentmodelId', 'categorymodelId') declare categorymodels: CategoryModel[]
   @Attr() modelfolderId!: string
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,

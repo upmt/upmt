@@ -124,7 +124,7 @@
           const selection = JSON.parse(selectionData)
           createCategoryModelFromSelection(selection)
       } catch (e) {
-          console.log(`Cannot parse ${selectionData}`)
+          console.log(`Cannot parse ${selectionData}: ${e}`)
       }
   }
   function droppedCategoryModel (cmId: string) {

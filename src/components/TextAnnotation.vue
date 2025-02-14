@@ -252,7 +252,7 @@
           document.querySelectorAll('[data-annotation-ids].highlighted').forEach(element => element.classList.remove('highlighted'))
           const elements = document.querySelectorAll(`[data-annotation-ids*="${highlightedDescriptemId.value}"]`)
           elements.forEach(element => element.classList.add('highlighted'))
-          if (elements.length) {
+          if (elements.length && elements[0]) {
               elements[0].scrollIntoView()
           }
       } else {

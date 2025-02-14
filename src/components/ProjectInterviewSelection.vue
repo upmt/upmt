@@ -167,7 +167,7 @@
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
-      if (project.value && project.value.interviews) {
+      if (project.value && project.value.interviews[0]) {
           currentInterviewId.value = project.value.interviews[0].id
       } else {
           currentInterviewId.value = newInterview
@@ -186,17 +186,21 @@
               query: {
                   currentInterviewId: interview.id
               }
+          }).catch(e => {
+             console.log(`Error when switching view: ${e}`)
           })
       }, 300)
   }
 
   function onInterviewCancel () {
       // If there is at least 1 interview, activate it
-      if (project.value && project.value.interviews) {
+      if (project.value && project.value.interviews[0]) {
           router.push({
               query: {
                   tab: project.value.interviews[0].name
               }
+          }).catch(e => {
+             console.log(`Error when switching view: ${e}`)
           })
       }
   }

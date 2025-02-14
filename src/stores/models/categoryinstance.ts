@@ -6,7 +6,7 @@ import CategoryModel from './categorymodel'
 import Justifiable from './justifiable'
 
 export default class CategoryInstance extends Justifiable {
-  static entity = 'categoryinstances'
+  static override entity = 'categoryinstances'
   @Uid() declare id: string
 
   @Str('') declare creator: string
@@ -48,7 +48,7 @@ export default class CategoryInstance extends Justifiable {
     }
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     // FIXME: it this.properties is null, then denormalization has not occurred - should refetch from repo with dependencies
     return {

@@ -4,7 +4,7 @@ import Descriptem from './descriptem'
 import Justifiable from './justifiable'
 
 export default class Justification extends BaseModel {
-  static entity = 'justifications'
+  static override entity = 'justifications'
 
   @Uid() declare id: string
 
@@ -22,7 +22,7 @@ export default class Justification extends BaseModel {
   @Attr() parentId!: string
   @BelongsTo(() => Justifiable, 'parentId') declare parent: Justifiable | null
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   toJSON (): any {
     return {
       name: this.name,
