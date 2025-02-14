@@ -1,11 +1,11 @@
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { configureSingle, fs } from '@zenfs/core'
 // import { exists, writeFile } from '@zenfs/core/promises'
 import { IndexedDB } from '@zenfs/dom'
 
 await configureSingle({ backend: IndexedDB })
 
-export default boot(async ({ app }) => {
+export default defineBoot(async ({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
     console.log("zenfs boot")

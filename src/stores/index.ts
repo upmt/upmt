@@ -1,4 +1,4 @@
-import { store } from 'quasar/wrappers'
+import { defineStore } from '#q-app/wrappers'
 import { createPinia } from 'pinia'
 import { createORM } from 'pinia-orm'
 import { Router } from 'vue-router'
@@ -24,7 +24,7 @@ declare module 'pinia' {
  * with the Store instance.
  */
 
-export default store((/* { ssrContext } */) => {
+export default defineStore((/* { ssrContext } */) => {
   const pinia = createPinia()
   pinia.use(createORM({ model: { withMeta: true } }))
   return pinia
