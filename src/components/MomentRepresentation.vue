@@ -113,17 +113,17 @@
           <MomentRepresentation
             :momentId="m.id">
           </MomentRepresentation>
-          <DropZone :data="`in:${m.id}`"
-                    class="empty_padding"
-                    types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
-                    @moment="droppedMoment"
-                    @annotation="droppedCreatingAnnotation"
-                    @selection="droppedCreatingSelection"
-                    @descriptem="droppedCreatingDescriptem">
-          </DropZone>
         </div>
       </div>
 
+      <DropZone :data="`in:${momentId}`"
+                class="empty_padding"
+                types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
+                @moment="droppedMoment"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+      </DropZone>
     </div>
 
     <DropZone data="after"
