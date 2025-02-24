@@ -1,13 +1,13 @@
 <template>
-  <div class="synchronicspecificmodel-overview"
+  <div class="specificsynchronicmodel-overview"
        v-if="model"
-       :data-synchronicspecificmodel="modelId">
-    <div class="synchronicspecificmodel-categories">
-      <SynchronicSpecificCategoryOverview
+       :data-specificsynchronicmodel="modelId">
+    <div class="specificsynchronicmodel-categories">
+      <SpecificSynchronicCategoryOverview
         v-for="c in model.categories"
         :key="c.id"
         :categoryId="c.id">
-      </SynchronicSpecificCategoryOverview>
+      </SpecificSynchronicCategoryOverview>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
-  import SynchronicSpecificCategoryOverview from './SynchronicSpecificCategoryOverview.vue'
+  import SpecificSynchronicCategoryOverview from './SpecificSynchronicCategoryOverview.vue'
 
   const store = useProjectStore()
 
@@ -24,7 +24,7 @@
       modelId: { type: String, default: null }
   })
 
-  const model = computed(() => store.getSynchronicSpecificModel(props.modelId))
+  const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
 
 </script>
 

@@ -1,10 +1,10 @@
 import Justifiable from './justifiable'
 import Justification from './justification'
-import SynchronicSpecificModel from './synchronicspecificmodel'
+import SpecificSynchronicModel from './specificsynchronicmodel'
 import { Attr, BelongsTo, Num, Str, Uid, HasMany, HasOne } from 'pinia-orm/dist/decorators'
 
-export default class SynchronicSpecificCategory extends Justifiable {
-  static override entity = 'synchronicspecificcategories'
+export default class SpecificSynchronicCategory extends Justifiable {
+  static override entity = 'specificsynchroniccategories'
 
   @Uid() declare id: string
 
@@ -23,12 +23,12 @@ export default class SynchronicSpecificCategory extends Justifiable {
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
 
-  @HasMany(() => SynchronicSpecificCategory, 'parentId') declare children: SynchronicSpecificCategory[]
+  @HasMany(() => SpecificSynchronicCategory, 'parentId') declare children: SpecificSynchronicCategory[]
   @Attr() parentId!: string
   @Num(0) declare childIndex: number
 
-  @BelongsTo(() => SynchronicSpecificModel, 'synchronicspecificmodelId') declare model: SynchronicSpecificModel | null
-  @Attr() synchronicspecificmodelId!: string
+  @BelongsTo(() => SpecificSynchronicModel, 'specificsynchronicmodelId') declare model: SpecificSynchronicModel | null
+  @Attr() specificsynchronicmodelId!: string
 
 
   toJSON (): any {

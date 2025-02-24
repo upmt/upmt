@@ -75,10 +75,10 @@
 
                   <template v-slot:after>
                     <div class="edited-model-container flex column"
-                         v-if="editedSynchronicSpecificModel">
+                         v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row">
                         <q-toolbar-title>
-                          Editing <strong>{{ editedSynchronicSpecificModel.moment?.descriptionLabel }}</strong>
+                          Editing <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel }}</strong>
                         </q-toolbar-title>
                         <q-btn
                           icon="mdi-close"
@@ -90,9 +90,9 @@
                           @click="closeEditedModel">
                         </q-btn>
                       </q-toolbar>
-                      <SynchronicSpecificModelRepresentation
-                        v-if="editedSynchronicspecificmodelId"
-                        :modelId="editedSynchronicspecificmodelId" />
+                      <SpecificSynchronicModelRepresentation
+                        v-if="editedSpecificSynchronicModelId"
+                        :modelId="editedSpecificSynchronicModelId" />
                     </div>
                   </template>
                 </q-splitter>
@@ -132,7 +132,7 @@
   import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'
-  import SynchronicSpecificModelRepresentation from './SynchronicSpecificModelRepresentation.vue'
+  import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
@@ -153,7 +153,7 @@
 
   const newInterview = "New interview"
   const {
-      editedSynchronicspecificmodelId
+      editedSpecificSynchronicModelId
   } = storeToRefs(istore)
 
   const currentInterviewId = ref("")
@@ -161,8 +161,8 @@
   const splitterTranscript = ref(90)
   const splitterInterview = ref(500)
 
-  const editedSynchronicSpecificModel = computed(() => {
-      return store.getSynchronicSpecificModel(editedSynchronicspecificmodelId.value)
+  const editedSpecificSynchronicModel = computed(() => {
+      return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
   })
 
   watch(() => props.projectId, () => {
@@ -176,7 +176,7 @@
 
   watch(currentInterviewId, () => {
       istore.setCurrentInterview(store.getInterview(currentInterviewId.value))
-      istore.setEditedSynchronicspecificmodelId("")
+      istore.setEditedSpecificSynchronicModelId("")
   })
 
   function onInterviewCreated (interview: Interview) {
@@ -206,12 +206,12 @@
   }
 
   function closeEditedModel () {
-      istore.setEditedSynchronicspecificmodelId("")
+      istore.setEditedSpecificSynchronicModelId("")
   }
 
   onUnmounted(() => {
       istore.setCurrentInterview(null)
-      istore.setEditedSynchronicspecificmodelId("")
+      istore.setEditedSpecificSynchronicModelId("")
       // istore.setCurrentProject(null)
   })
 </script>

@@ -86,15 +86,15 @@
         </div>
 
         <div class="moment-synchronic-specific-model flex row">
-          <SynchronicSpecificModelOverview
-            :modelId="moment?.synchronicspecificmodel?.id ?? ''">
-          </SynchronicSpecificModelOverview>
+          <SpecificSynchronicModelOverview
+            :modelId="moment?.specificsynchronicmodel?.id ?? ''">
+          </SpecificSynchronicModelOverview>
           <q-btn
             flat
             dense
             size="xs"
             class="absolute-bottom-right"
-            @click="editModel(moment.synchronicspecificmodel?.id || '')"
+            @click="editModel(moment.specificsynchronicmodel?.id || '')"
             icon="edit"
             no-caps>
           </q-btn>
@@ -155,7 +155,7 @@
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
   import MomentRepresentation from './MomentRepresentation.vue'
-  import SynchronicSpecificModelOverview from './SynchronicSpecificModelOverview.vue'
+  import SpecificSynchronicModelOverview from './SpecificSynchronicModelOverview.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
@@ -323,7 +323,7 @@
   }
 
   function editModel (ssmId: string) {
-      istore.setEditedSynchronicspecificmodelId(ssmId)
+      istore.setEditedSpecificSynchronicModelId(ssmId)
   }
 
   const menuActions = [

@@ -15,8 +15,8 @@ import MomentModel from './models/momentmodel'
 import Project from './models/project'
 import Property from './models/property'
 import PropertyModel from './models/propertymodel'
-import SynchronicSpecificCategory from './models/synchronicspecificcategory'
-import SynchronicSpecificModel from './models/synchronicspecificmodel'
+import SpecificSynchronicCategory from './models/specificsynchroniccategory'
+import SpecificSynchronicModel from './models/specificsynchronicmodel'
 import { basename, timestampStrip } from './util'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
@@ -61,8 +61,8 @@ const repo = {
   Project:          useRepo(Project),
   Property:         useRepo(Property),
   PropertyModel:    useRepo(PropertyModel),
-  SynchronicSpecificCategory: useRepo(SynchronicSpecificCategory),
-  SynchronicSpecificModel: useRepo(SynchronicSpecificModel),
+  SpecificSynchronicCategory: useRepo(SpecificSynchronicCategory),
+  SpecificSynchronicModel: useRepo(SpecificSynchronicModel),
 }
 // For updateElement, only the entity name seems to be easily available.
 // Augment the repo object with entity name for every entity
@@ -238,7 +238,7 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
     categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
-    synchronicspecificmodel: repo.SynchronicSpecificModel.make({
+    specificsynchronicmodel: repo.SpecificSynchronicModel.make({
       name: "Initial",
       categories: []
     }),
@@ -421,7 +421,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment
       .with('children', (q) => q.orderBy('childIndex'))
       .with('justification', (query) => query.with('descriptems'))
-      .with('synchronicspecificmodel', (query) => query.with('categories',
+      .with('specificsynchronicmodel', (query) => query.with('categories',
         (qc) => qc.with('justification',
           (qj) => qj.with('descriptems')
         )))
@@ -435,16 +435,16 @@ export const useProjectStore = defineStore('projectStore', () => {
       return repo.MomentModel.with('categorymodels').find(id) as MomentModel
     }
 
-  function getSynchronicSpecificCategory (id: string) {
-    return repo.SynchronicSpecificCategory
+  function getSpecificSynchronicCategory (id: string) {
+    return repo.SpecificSynchronicCategory
       .with('children')
       .with('justification', (query) => query.with('descriptems'))
       .find(id)
   }
 
-  function getSynchronicSpecificModel (id: string | null) {
+  function getSpecificSynchronicModel (id: string | null) {
     if (id) {
-      return repo.SynchronicSpecificModel
+      return repo.SpecificSynchronicModel
         .with('categories', (qc) => qc.with('children')
           .with('justification',
             (qj) => qj.with('descriptems')))
@@ -603,11 +603,11 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       return folder
     }
-    const hydrateSynchronicSpecificCategory = (id: string) => {
-      const ssc = getSynchronicSpecificCategory(id)
-      // justification is already hydrate by the getSynchronicSpecificCategory method
+    const hydrateSpecificSynchronicCategory = (id: string) => {
+      const ssc = getSpecificSynchronicCategory(id)
+      // justification is already hydrate by the getSpecificSynchronicCategory method
       if (ssc) {
-        ssc.children = ssc.children.map(c => hydrateSynchronicSpecificCategory(c.id) as SynchronicSpecificCategory)
+        ssc.children = ssc.children.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
       }
       return ssc
     }
@@ -615,9 +615,9 @@ export const useProjectStore = defineStore('projectStore', () => {
       const moment = getMoment(id)
       if (moment) {
         moment.children = moment.children.map(m => hydrateMoment(m.id) as Moment)
-        const model = moment.synchronicspecificmodel
+        const model = moment.specificsynchronicmodel
         if (model) {
-          model.categories = model.categories.map(c => hydrateSynchronicSpecificCategory(c.id) as SynchronicSpecificCategory)
+          model.categories = model.categories.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
         }
       }
       return moment
@@ -646,8 +646,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
-  function updateSynchronicSpecificCategory (identifier: string, values: object) {
-    repo.SynchronicSpecificCategory.where('id', identifier).update(values)
+  function updateSpecificSynchronicCategory (identifier: string, values: object) {
+    repo.SpecificSynchronicCategory.where('id', identifier).update(values)
   }
 
   function recursiveUpdateMoment (identifier: string, values: object) {
@@ -755,7 +755,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           childIndex,
           interviewId: referenceMoment.interviewId,
           isExpanded: true,
-          synchronicspecificmodel: repo.SynchronicSpecificModel.make({
+          specificsynchronicmodel: repo.SpecificSynchronicModel.make({
             name: "Initial",
             categories: []
           }),
@@ -813,11 +813,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addSynchronicSpecificCategory (name: string,
-    synchronicspecificmodelId: string,
+  function addSpecificSynchronicCategory (name: string,
+    specificsynchronicmodelId: string,
     where = "", // before, after, or in:<ssc-id> for inside
     textselection: TextSelection | null = null) {
-      console.log("addSSC", name, where, synchronicspecificmodelId, "with", textselection)
+      console.log("addSSC", name, where, specificsynchronicmodelId, "with", textselection)
       let destination = null // if it remains null, then it will be added to the model itself.
       let childIndex = 0
 
@@ -833,7 +833,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       const data = {
         name,
         children: [],
-        synchronicspecificmodelId,
+        specificsynchronicmodelId,
         childIndex,
         parentId: null as string | null,
         justification: {
@@ -843,32 +843,32 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       let children = []
       if (where.startsWith('inmodel:')) {
-        data.synchronicspecificmodelId = where.slice(8)
-        const model = getSynchronicSpecificModel(data.synchronicspecificmodelId)
+        data.specificsynchronicmodelId = where.slice(8)
+        const model = getSpecificSynchronicModel(data.specificsynchronicmodelId)
         // Make a copy of previous children info
         if (model) {
           children = [ ...model.categories ]
           data.childIndex = children.length
           // parentId remains null, since we are at the top.
-          repo.SynchronicSpecificCategory.save(data)
+          repo.SpecificSynchronicCategory.save(data)
         } else {
-          console.error("Invalid id for destination SSModel: ", data.synchronicspecificmodelId)
+          console.error("Invalid id for destination SSModel: ", data.specificsynchronicmodelId)
         }
       } else if (where.startsWith('in:')) {
         // Create a new Category in an existing Category
-        destination = getSynchronicSpecificCategory(where.slice(3))
+        destination = getSpecificSynchronicCategory(where.slice(3))
         if (destination) {
           // Make a copy of previous children info
           children = [ ...destination.children ]
           childIndex = children.length
           data.parentId = destination.id
           // It is not at the root of the model since it has a parent
-          data.synchronicspecificmodelId = ""
-          repo.SynchronicSpecificCategory.save(data)
+          data.specificsynchronicmodelId = ""
+          repo.SpecificSynchronicCategory.save(data)
         }
       } else if (where.startsWith('before:')) {
         // Create a new Category as parent of an existing Category
-        const child = getSynchronicSpecificCategory(where.slice(7))
+        const child = getSpecificSynchronicCategory(where.slice(7))
         if (child) {
           // Make a copy of previous children info
           // FIXME: check if child.parentId is null?
@@ -878,12 +878,12 @@ export const useProjectStore = defineStore('projectStore', () => {
             return
           }
           (data.children as any) = [ { id: child.id } ]
-          data.synchronicspecificmodelId = child.synchronicspecificmodelId
+          data.specificsynchronicmodelId = child.specificsynchronicmodelId
           // Remove the child from the list of children of the model
-          updateSynchronicSpecificCategory(child.id, { synchronicspecificmodelId: null })
-          const ssc = repo.SynchronicSpecificCategory.save(data)
+          updateSpecificSynchronicCategory(child.id, { specificsynchronicmodelId: null })
+          const ssc = repo.SpecificSynchronicCategory.save(data)
           console.log("New ssc", ssc)
-          // updateSynchronicSpecificCategory(child.id, { parentId: ssc.id })
+          // updateSpecificSynchronicCategory(child.id, { parentId: ssc.id })
         } else {
           console.error("Invalid id for destination SSCategory: ", where.slice(3))
         }
@@ -894,7 +894,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         // In all cases, update child moment indexes
         // Items before childIndex are the same. Renumber next ones.
         children.slice(childIndex).forEach(category => {
-          updateSynchronicSpecificCategory(category.id, { childIndex: category.childIndex + 1 })
+          updateSpecificSynchronicCategory(category.id, { childIndex: category.childIndex + 1 })
         })
       }
        */
@@ -951,16 +951,16 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', momentId).delete()
   }
 
-  function deleteSynchronicSpecificCategory (categoryId: string) {
-    const category = getSynchronicSpecificCategory(categoryId)
+  function deleteSpecificSynchronicCategory (categoryId: string) {
+    const category = getSpecificSynchronicCategory(categoryId)
     if (category) {
       category.children.forEach(child => {
-        updateSynchronicSpecificCategory(child.id, {
+        updateSpecificSynchronicCategory(child.id, {
           parentId: category.parentId,
-          synchronicspecificmodelId: category.synchronicspecificmodelId
+          specificsynchronicmodelId: category.specificsynchronicmodelId
         })
       })
-      repo.SynchronicSpecificCategory.where('id', categoryId).delete()
+      repo.SpecificSynchronicCategory.where('id', categoryId).delete()
     }
   }
 
@@ -1029,9 +1029,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addTextSelectionToSynchronicSpecificCategory (selectionData: TextSelection, categoryId: string) {
-    // Add JSON representation of text selection (Annotation or Descriptem) to SynchronicSpecificCategory
-    const ssc = getSynchronicSpecificCategory(categoryId)
+  function addTextSelectionToSpecificSynchronicCategory (selectionData: TextSelection, categoryId: string) {
+    // Add JSON representation of text selection (Annotation or Descriptem) to SpecificSynchronicCategory
+    const ssc = getSpecificSynchronicCategory(categoryId)
     if (ssc) {
       if (!ssc.justification) {
         // Create justification + descriptem
@@ -1096,11 +1096,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     addModelFolder,
     addMoment,
     addPropertyModel,
-    addSynchronicSpecificCategory,
+    addSpecificSynchronicCategory,
     addTextSelectionToMoment,
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
-    addTextSelectionToSynchronicSpecificCategory,
+    addTextSelectionToSpecificSynchronicCategory,
     createProject,
     deleteAnnotation,
     deleteCategoryModel,
@@ -1109,7 +1109,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deletePropertyModel,
     deleteModelFolder,
     deleteMoment,
-    deleteSynchronicSpecificCategory,
+    deleteSpecificSynchronicCategory,
     duplicateCategoryInstance,
     duplicateDescriptem,
     importProject,
@@ -1134,8 +1134,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMomentModel,
     getProperty,
     getPropertyModel,
-    getSynchronicSpecificCategory,
-    getSynchronicSpecificModel,
+    getSpecificSynchronicCategory,
+    getSpecificSynchronicModel,
     loadProject,
     momentAddCategoryModel,
     momentMoveCategoryInstance,
@@ -1149,6 +1149,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateCategoryModel,
     updateCategoryInstance,
     updatePropertyModel,
-    updateSynchronicSpecificCategory
+    updateSpecificSynchronicCategory
   }
 })

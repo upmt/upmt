@@ -1,37 +1,37 @@
 <template>
   <div ref="container"
-       :class="[ 'synchronicspecificcategory-container', `synchronicspecificcategory-${categoryId}` ]"
-       :data-synchronicspecificcategory="categoryId">
+       :class="[ 'specificsynchroniccategory-container', `specificsynchroniccategory-${categoryId}` ]"
+       :data-specificsynchroniccategory="categoryId">
 
-    <div class="synchronicspecificcategory"
+    <div class="specificsynchroniccategory"
          :style="{ backgroundColor: category.color }"
          v-if="category"
-         :data-synchronicspecificcategory="categoryId">
+         :data-specificsynchroniccategory="categoryId">
 
-      <div class="synchronicspecificcategory-children">
+      <div class="specificsynchroniccategory-children">
         <div v-for="c in category.children" :key="c.id">
-          <SynchronicSpecificCategoryOverview
+          <SpecificSynchronicCategoryOverview
             :categoryId="c.id">
-          </SynchronicSpecificCategoryOverview>
+          </SpecificSynchronicCategoryOverview>
         </div>
       </div>
 
-      <div class="synchronicspecificcategory-relation">
-           <SynchronicSpecificCategoryRelation
+      <div class="specificsynchroniccategory-relation">
+           <SpecificSynchronicCategoryRelation
              :childrenCount="category.children.length">
-           </SynchronicSpecificCategoryRelation>
+           </SpecificSynchronicCategoryRelation>
       </div>
 
-      <div class="synchronicspecificcategory-header">
-        <span class="synchronicspecificcategory-name">{{ category.name }}
+      <div class="specificsynchroniccategory-header">
+        <span class="specificsynchroniccategory-name">{{ category.name }}
         </span>
       </div>
 
       <div
         v-if="category.parentId"
-        class="synchronicspecificcategory-filler"
+        class="specificsynchroniccategory-filler"
         >
-      <SynchronicSpecificCategoryRelation :childrenCount="1" />
+      <SpecificSynchronicCategoryRelation :childrenCount="1" />
       </div>
     </div>
 
@@ -41,7 +41,7 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import SynchronicSpecificCategoryRelation from './SynchronicSpecificCategoryRelation.vue'
+  import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
   const store = useProjectStore()
@@ -51,11 +51,11 @@
       layout: { type: String, default: "vertical" }
   })
 
-  const category = computed(() => store.getSynchronicSpecificCategory(props.categoryId))
+  const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
 </script>
 
 <style scoped>
-  .synchronicspecificcategory {
+  .specificsynchroniccategory {
        margin: 0;
        padding: 0;
        display: flex;
@@ -63,18 +63,18 @@
        flex: 1;
        height: 100%;
   }
-  .synchronicspecificcategory-children {
+  .specificsynchroniccategory-children {
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-self: center;
   }
-  .synchronicspecificcategory-container {
+  .specificsynchroniccategory-container {
       display: flex;
       flex-direction: row;
   }
-  .synchronicspecificcategory-header {
+  .specificsynchroniccategory-header {
       border: 1px solid black;
       overflow: hidden;
       font-size: 8px;
@@ -82,8 +82,8 @@
       height: 12px !important;
       align-self: center;
   }
-  .synchronicspecificcategory-relation,
-  .synchronicspecificcategory-filler {
+  .specificsynchroniccategory-relation,
+  .specificsynchroniccategory-filler {
       margin: 0;
       padding: 0;
       width: 10px;

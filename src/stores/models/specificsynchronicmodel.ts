@@ -1,10 +1,10 @@
 import BaseModel from './basemodel'
 import Moment from './moment'
-import SynchronicSpecificCategory from './synchronicspecificcategory'
+import SpecificSynchronicCategory from './specificsynchroniccategory'
 import { Attr, BelongsTo, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 
-export default class SynchronicSpecificModel extends BaseModel {
-  static override entity = 'synchronicspecificmodel'
+export default class SpecificSynchronicModel extends BaseModel {
+  static override entity = 'specificsynchronicmodel'
 
   @Uid() declare id: string
 
@@ -18,7 +18,7 @@ export default class SynchronicSpecificModel extends BaseModel {
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
   @Str('') declare comment: string
-  @HasMany(() => SynchronicSpecificCategory, 'synchronicspecificmodelId') declare categories: SynchronicSpecificCategory[]
+  @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') declare categories: SpecificSynchronicCategory[]
 
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string

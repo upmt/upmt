@@ -18,7 +18,7 @@ export default class Justification extends BaseModel {
 
   @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
 
-  // parent is a Justifiable: either a Moment/Property/CategoryInstance/SynchronicSpecificCategory
+  // parent is a Justifiable: either a Moment/Property/CategoryInstance/SpecificSynchronicCategory
   @Attr() parentId!: string
   @BelongsTo(() => Justifiable, 'parentId') declare parent: Justifiable | null
 

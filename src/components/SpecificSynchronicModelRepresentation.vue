@@ -1,16 +1,16 @@
 <template>
-  <div class="synchronicspecificmodel-container"
+  <div class="specificsynchronicmodel-container"
        v-if="model"
-       :data-synchronicspecificmodel="modelId">
+       :data-specificsynchronicmodel="modelId">
     <DropZone :data="`inmodel:${modelId}`"
               types="upmt/selection upmt/descriptem upmt/annotation"
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
-      <div class="synchronicspecificmodel-title">
+      <div class="specificsynchronicmodel-title">
         <q-icon
           ref="handle"
-          class="synchronicspecificmodel-handle"
+          class="specificsynchronicmodel-handle"
           size="xs"
           @click.meta="debug"
           name="mdi-graph-outline"></q-icon>
@@ -18,14 +18,14 @@
           dense
           flat
           no-caps
-          @click="createSynchronicSpecificCategory(`inmodel:${modelId}`)"
+          @click="createSpecificSynchronicCategory(`inmodel:${modelId}`)"
           title="Drop a descriptem here to create a new category">
           New category
         </q-btn>
       </div>
     </DropZone>
-    <div class="synchronicspecificmodel-categories">
-      <SynchronicSpecificCategoryRepresentation
+    <div class="specificsynchronicmodel-categories">
+      <SpecificSynchronicCategoryRepresentation
         v-for="c in model.categories"
         :key="c.id"
         :categoryId="c.id" />
@@ -39,7 +39,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
   import DropZone from './DropZone.vue'
-  import SynchronicSpecificCategoryRepresentation from './SynchronicSpecificCategoryRepresentation.vue'
+  import SpecificSynchronicCategoryRepresentation from './SpecificSynchronicCategoryRepresentation.vue'
 
   const istore = useInterfaceStore()
   const store = useProjectStore()
@@ -48,7 +48,7 @@
       modelId: { type: String, default: null }
   })
 
-  const model = computed(() => store.getSynchronicSpecificModel(props.modelId))
+  const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
 
   function showContent () {
       // Make sure the Model/Category is displayed
@@ -56,15 +56,15 @@
   }
 
   function debug () {
-      (window as any).synchronicspecificmodel = model.value
-      console.log("synchronicspecificmodel", model.value)
+      (window as any).specificsynchronicmodel = model.value
+      console.log("specificsynchronicmodel", model.value)
   }
 
-  // Dropped selection to create a SynchronicSpecificModel. where is before or after or in:
+  // Dropped selection to create a SpecificSynchronicModel. where is before or after or in:
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && model.value) {
-          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               props.modelId,
                                               where,
                                               descriptem.toJSON())
@@ -75,7 +75,7 @@
   function droppedCreatingAnnotation (annotationId: string, where: string) {
       const annotation = store.getAnnotation(annotationId)
       if (annotation && model.value) {
-          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               props.modelId,
                                               where,
                                               annotation.toJSON())
@@ -87,7 +87,7 @@
       try {
           const selection = JSON.parse(selectionData)
           if (model.value) {
-              store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+              store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                                   props.modelId,
                                                   where,
                                                   selection)
@@ -98,9 +98,9 @@
       }
   }
 
-  function createSynchronicSpecificCategory (where: string) {
+  function createSpecificSynchronicCategory (where: string) {
       if (model.value) {
-          store.addSynchronicSpecificCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
                                               props.modelId,
                                               where,
                                               null)

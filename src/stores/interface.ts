@@ -12,7 +12,7 @@ export const useInterfaceStore = defineStore('interface', () => {
 
   const currentProject: Ref<Project | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
-  const editedSynchronicspecificmodelId: Ref<string | null> = ref(null)
+  const editedSpecificSynchronicModelId: Ref<string | null> = ref(null)
 
   function newMomentIndexIncrement () {
     return newMomentIndex.value++
@@ -33,8 +33,8 @@ export const useInterfaceStore = defineStore('interface', () => {
     currentInterview.value = interview
   }
 
-  function setEditedSynchronicspecificmodelId (ssmId: string | null) {
-    editedSynchronicspecificmodelId.value = ssmId
+  function setEditedSpecificSynchronicModelId (ssmId: string | null) {
+    editedSpecificSynchronicModelId.value = ssmId
   }
 
   // To make the store act as ContextProvider
@@ -62,14 +62,14 @@ export const useInterfaceStore = defineStore('interface', () => {
     currentProject,
     getUsername,
     getProjectId,
-    editedSynchronicspecificmodelId,
+    editedSpecificSynchronicModelId,
     highlightedMomentId,
     highlightedDescriptemId,
     newMomentIndexIncrement,
     newSSCIndexIncrement,
     setCurrentInterview,
     setCurrentProject,
-    setEditedSynchronicspecificmodelId,
+    setEditedSpecificSynchronicModelId,
     setUsername,
     username
     }

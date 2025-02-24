@@ -2,7 +2,7 @@ import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm
 import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
 import Justification from './justification'
-import SynchronicSpecificModel from './synchronicspecificmodel'
+import SpecificSynchronicModel from './specificsynchronicmodel'
 
 // Moment is synonym for DiachronicSpecificCategory
 export default class Moment extends Justifiable {
@@ -27,7 +27,7 @@ export default class Moment extends Justifiable {
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
 
-  @HasOne(() => SynchronicSpecificModel, 'momentId') declare synchronicspecificmodel: SynchronicSpecificModel | null
+  @HasOne(() => SpecificSynchronicModel, 'momentId') declare specificsynchronicmodel: SpecificSynchronicModel | null
 
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
 
@@ -59,7 +59,7 @@ export default class Moment extends Justifiable {
       isTransitional: this.isTransitional,
       justification: this.justification?.toJSON(),
       categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
-      synchronicspecificmodel: this.synchronicspecificmodel?.toJSON(),
+      specificsynchronicmodel: this.specificsynchronicmodel?.toJSON(),
       parentId: this.parentId,
       analysisId: this.analysisId,
       interviewId: this.interviewId,
