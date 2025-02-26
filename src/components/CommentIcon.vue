@@ -18,9 +18,9 @@
         autofocus />
     </q-popup-edit>
     <q-tooltip
-      class="bg-blue text-body2"
+      class="bg-blue-grey-2 text-black"
       v-if="comment">
-      <span class="moment-comment">{{ comment }}</span>
+      <pre class="comment-tooltip">{{ comment }}</pre>
     </q-tooltip>
   </q-btn>
 </template>
@@ -57,5 +57,11 @@
 <style scoped>
   .comment-is-empty {
       opacity: .3;
+  }
+  .text-pre-line {
+      white-space: pre-line;
+  }
+  .comment-tooltip {
+      font-family: sans;
   }
 </style>
