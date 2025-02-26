@@ -41,13 +41,14 @@
 
         <template v-slot:header>
           <DropZone data="header"
-                    types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection"
+                    types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection upmt/color"
                     class="row full-width justify-center moment-header"
                     @categoryinstance="droppedCategoryInstance"
                     @categorymodel="droppedCategoryModel"
                     @annotation="droppedAnnotation"
                     @selection="droppedSelection"
-                    @descriptem="droppedDescriptem">
+                    @descriptem="droppedDescriptem"
+                    @color="droppedColor">
             <DragElement
               type="moment"
               :data="momentId"
@@ -249,6 +250,10 @@
           store.moveMoment(momentId, props.momentId, where)
           showContent()
       }
+  }
+
+  function droppedColor (color: string) {
+      store.updateMoment(props.momentId, { color: color })
   }
 
   // Dropped selections to create a moment. data is before or after

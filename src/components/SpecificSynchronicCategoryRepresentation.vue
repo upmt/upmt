@@ -54,12 +54,13 @@
       </div>
 
       <DropZone data="add"
-                types="upmt/specificsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
+                types="upmt/specificsynchroniccategory upmt/selection upmt/descriptem upmt/annotation upmt/color"
                 class="row justify-center"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
-                @descriptem="droppedDescriptem">
+                @descriptem="droppedDescriptem"
+                @color="droppedColor">
         <div class="specificsynchroniccategory-header">
           <DragElement
             type="specificsynchroniccategory"
@@ -209,6 +210,10 @@
       } catch (e) {
           console.log(`Cannot parse ${selectionData}: ${e}`)
       }
+  }
+
+  function droppedColor (color: string) {
+      store.updateSpecificSynchronicCategory(props.categoryId, { color: color })
   }
 
   // Dropped selections to create a SSCategory. data is before or after

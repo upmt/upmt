@@ -12,6 +12,7 @@
   import { computed } from 'vue'
 
   const emit = defineEmits([ 'annotation', 'descriptem', 'selection',
+                             'color',
                              'categoryinstance', 'moment', 'property',
                              'specificsynchroniccategory',
                              'categorymodel', 'momentmodel' ])

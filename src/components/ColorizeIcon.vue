@@ -1,22 +1,28 @@
 <template>
-  <q-btn
-    size="xs"
-    dense flat round
-    icon="colorize">
-    <q-popup-proxy>
-      <q-color
-        :style="{width: '240px'}"
-        no-header
-        no-footer
-        :palette="standardColorArray"
-        default-view="palette"
-        v-model="color"
-        />
-    </q-popup-proxy>
-  </q-btn>
+  <DragElement
+    type="color"
+    :data="color ?? ''">
+    <q-btn
+      size="xs"
+      dense flat round
+      icon="colorize">
+      <q-popup-proxy>
+        <q-color
+          :style="{width: '240px'}"
+          no-header
+          no-footer
+          :palette="standardColorArray"
+          default-view="palette"
+          v-model="color"
+          />
+      </q-popup-proxy>
+    </q-btn>
+  </DragElement>
 </template>
 
 <script setup lang="ts">
+
+  import DragElement from './DragElement.vue'
 
   const color = defineModel<string | null>()
 
