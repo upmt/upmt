@@ -64,6 +64,8 @@
                   class="fit fullwindow-height flex"
                   unit="px"
                   horizontal
+                  separator-class="bg-grey-4"
+                  separator-style="height: 3px"
                   v-model="splitterInterview"
                   >
 
