@@ -31,6 +31,10 @@
         </q-btn-dropdown>
         <q-btn
           size="xs"
+          icon="mdi-download"
+          @click="doDownload(filename)" />
+        <q-btn
+          size="xs"
           icon="mdi-open-in-app"
           @click="doOpen(filename)" />
       </span>
@@ -40,12 +44,9 @@
 
 <script setup lang="ts">
 
-  import { useQuasar } from 'quasar'
+  import { useQuasar, exportFile } from 'quasar'
   import { computed } from 'vue'
   import { fs } from '@zenfs/core'
-  // import { useProjectStore } from 'stores/projectStore'
-
-  // const store = useProjectStore()
 
   const $q = useQuasar()
 
@@ -63,6 +64,14 @@
 
   function absolute (filename: string) {
       return `${props.dir}/${filename}`
+  }
+
+  function doDownload (filename: string) {
+      const status = exportFile(filename, fs.readFileSync(absolute(filename)))
+      if (status !== true) {
+          // browser denied it
+          console.error(`Error: ${status}`)
+      }
   }
 
   function doDelete (filename: string) {
