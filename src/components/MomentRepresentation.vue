@@ -28,21 +28,22 @@
          :data-moment="moment.id">
 
       <q-expansion-item
-        class="moment-body"
+        class="moment-body pa-md-xs"
         dense
         dense-toggle
         :duration="0"
         expand-icon-toggle
         switch-toggle-side
         v-model="expand"
-        header-class="header-class"
+        header-class="header-class q-pa-xs"
+        expand-icon-class="icon-class q-pa-xs"
         :title="moment.comment"
         >
 
         <template v-slot:header>
           <DropZone data="header"
                     types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection upmt/color"
-                    class="row full-width justify-center moment-header"
+                    class="row full-width justify-center moment-header q-pa-xs"
                     @categoryinstance="droppedCategoryInstance"
                     @categorymodel="droppedCategoryModel"
                     @annotation="droppedAnnotation"
@@ -341,6 +342,13 @@
   .header-class {
       font-weight: bold;
       text-align: center;
+  }
+  .icon-class {
+      height: 24px;
+  }
+  .element-toolbar {
+      display: flex;
+      flex-direction: row;
   }
   .moment-children {
       list-style: none;

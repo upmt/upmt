@@ -292,6 +292,10 @@
       font-weight: bold;
       text-align: center;
   }
+  .element-toolbar, .element-toolbar-secondary {
+      display: flex;
+      flex-direction: row;
+  }
   .specificsynchroniccategory-children {
       list-style: none;
       display: flex;
