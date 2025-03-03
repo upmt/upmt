@@ -1,6 +1,10 @@
 <template>
   <q-list class="storage">
-    <strong>STORAGE {{ dir }}</strong>
+    <strong>Local storage {{ dir }}</strong><q-btn
+                                              @click="doRefresh"
+                                              size="xs"
+                                              title="Refresh"
+                                              icon="mdi-refresh"/>
     <q-item
       class="column"
       v-for="filename in filenames"
@@ -8,12 +12,14 @@
       <span>
         <q-icon
           size="xs"
+          title
           name="mdi-semantic-web" />
         {{ filename }}
       </span>
       <span align="right">
         <q-btn-dropdown
           size="xs"
+          title="Delete"
           dropdown-icon="none"
           icon="mdi-delete">
           <span>Delete {{ filename }}?</span>
@@ -31,10 +37,12 @@
         </q-btn-dropdown>
         <q-btn
           size="xs"
+          title="Download"
           icon="mdi-download"
           @click="doDownload(filename)" />
         <q-btn
           size="xs"
+          title="Restore"
           icon="mdi-open-in-app"
           @click="doOpen(filename)" />
       </span>
@@ -45,7 +53,7 @@
 <script setup lang="ts">
 
   import { useQuasar, exportFile } from 'quasar'
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import { fs } from '@zenfs/core'
 
   const $q = useQuasar()
@@ -54,13 +62,20 @@
       dir: { type: String, default: "/" }
   })
 
+  const refreshKey = ref(1)
+
   const filenames = computed(() => {
+      console.assert(refreshKey.value)
       if (fs.existsSync(props.dir)) {
           return fs.readdirSync(props.dir)
       } else {
           return []
       }
   })
+
+  function doRefresh () {
+      refreshKey.value++;
+  }
 
   function absolute (filename: string) {
       return `${props.dir}/${filename}`
@@ -78,6 +93,7 @@
       console.log("Delete", filename)
       const absolutePath = absolute(filename)
       fs.unlinkSync(absolutePath)
+      doRefresh()
       $q.notify({
           type: 'info',
           message: `Deleted file ${absolutePath}`
