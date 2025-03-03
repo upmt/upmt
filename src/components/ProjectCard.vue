@@ -1,127 +1,74 @@
 <template>
-  <q-card>
-    <p>{{ projects.length }} loaded projects.</p>
-    <div v-if="isLocalhost()">
-      <q-btn @click="addProject">Add project</q-btn>
-      <q-btn @click="loadSample">Load sample</q-btn>
-    </div>
-    <q-file label="Load File"
-            v-model="filename"
-            accept=".upmt"
-            filled @input="uploadFile"/>
+  <q-card
+    v-if="project"
+    class="project-card">
+    <q-card-section class="bg-secondary text-white">
+      <div class="text-h6">{{ project.name }}</div>
+      <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
+    </q-card-section>
+
+    <q-separator />
+
+    <q-card-actions align="right">
+      <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
+      <q-btn :to="{ name: 'spreadsheet', params: { id: project.id } }" flat>Compare</q-btn>
+      <q-btn @click="exportProject(project)" flat>Save</q-btn>
+      <q-btn @click="storeProject(project)" flat>Store</q-btn>
+    </q-card-actions>
   </q-card>
 </template>
 
 <script setup lang="ts">
 
-  import { ref, computed } from 'vue'
-  import axios from 'axios'
+  import { computed } from 'vue'
+  import { fs } from '@zenfs/core'
+  import { exportFile } from 'quasar'
+
+  import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
-  import { useQuasar } from 'quasar'
 
-  const $q = useQuasar()
-  const filename = ref(null)
+  import Project from 'stores/models/project'
 
-  const pstore = useProjectStore()
-  const projects = computed(() => pstore.getAllProjects())
+  const store = useProjectStore()
 
-  function isLocalhost () {
-      return document.location.hostname === 'localhost'
-  }
-
-  let counter = 1
-  const addProject = () => {
-      pstore.createProject({
-          name: `Test project${counter++}`,
-          interviews: [
-              {
-                  name: `interview${counter++}`,
-                  color: "black",
-                  comment: "",
-                  text: `Bla bla bli ${counter}`,
-                  participantName: "she",
-                  analysis: {
-                      rootMoment: {
-                          name: `Moment ${counter}`,
-                          color: "blue",
-                          children: [
-                              {
-                                  name: `Child moment ${counter}`,
-                                  color: "red"
-                              }
-                          ]
-                      }
-                  }
-              },
-              {
-                  name: `interview${counter++}`,
-                  color: "red",
-                  comment: "comm",
-                  text: `Bla bla bli ${counter}`,
-                  participantName: "she"
-              }
-          ]
+  const props = defineProps({
+      projectId: { type: String, default: "" }
       })
-  }
 
-  function loadSample () {
-      const filename = './OPEVA-G1.upmt'
-      axios.get(filename).then((response) => {
-          pstore.importProject(response.data, filename)
-      }).catch(error => {
-          $q.notify({
-              type: 'error',
-              message: `Error loading file: ${error}`
-          })
-      })
-  }
-
-  function uploadFile (event: Event) {
-      try {
-          // `event.target.files[0]` is the desired file object
-          const files = (event.target as HTMLInputElement).files
-          if (!files || files.length === 0) {
-              return
-          }
-          const sourceFile = files[0]
-          const reader = new FileReader()
-
-          reader.onload = () => {
-              // Parse file and extract data
-              let jsonData = null
-              try {
-                  jsonData = JSON.parse(reader.result as string)
-              } catch (error) {
-                  $q.notify({
-                      type: 'error',
-                      message: `Error loading file: ${error}`
-                  })
-                  jsonData = null
-              }
-              if (jsonData !== null && sourceFile?.name) {
-                  pstore.importProject(jsonData, sourceFile.name)
-              }
-          }
-          reader.onerror = () => {
-              console.error('Error reading file:', reader.error)
-              $q.notify({
-                  type: 'error',
-                  message: `Error reading file: ${reader.error?.message}`
-              })
-          }
-          // Load data from file - the readAsText will
-          // trigger the load event that is handled just
-          // above.
-          if (sourceFile) {
-              reader.readAsText(sourceFile as Blob)
-          }
-      } catch (e) {
-          console.log(e)
-          $q.notify({
-              type: 'error',
-              message: `General exception: ${e}`
-          })
+  const project = computed(() => {
+      if (props.projectId) {
+          return store.getProject(props.projectId)
+      } else {
+          return null
       }
+  })
+
+  function exportProject (project: Project) {
+      const data = useProjectStore().hydrateProject(project.id)
+
+      const status = exportFile(project.filename ?? project.label,
+                                JSON.stringify(data, null, 2), {
+                                    encoding: 'utf-8',
+                                    mimeType: 'application/json'
+                                })
+
+      if (status === true) {
+          // browser allowed it
+      } else {
+          // browser denied it
+          console.error(`Error: ${status}`)
+      }
+  }
+
+  function storeProject (project: Project) {
+      const data = useProjectStore().hydrateProject(project.id)
+
+      const base = timestampAdd(project.filename.replace('.upmt', '') ?? project.label)
+      const filename = `/projects/${base}.upmt`
+      if (!fs.existsSync('/projects')) {
+          fs.mkdirSync('/projects')
+      }
+      fs.writeFileSync(filename, JSON.stringify(data))
   }
 
 </script>

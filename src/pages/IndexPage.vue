@@ -33,24 +33,10 @@
         id="project-list"
         class="q-pa-md row items-end q-gutter-md col-7 justify-start content-start">
 
-        <q-card
+        <ProjectCard
           v-for="project in projects"
           :key="project.id"
-          class="project-card">
-          <q-card-section class="bg-secondary text-white">
-            <div class="text-h6">{{ project.name }}</div>
-            <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions align="right">
-            <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
-            <q-btn :to="{ name: 'spreadsheet', params: { id: project.id } }" flat>Compare</q-btn>
-            <q-btn @click="exportProject(project)" flat>Save</q-btn>
-            <q-btn @click="storeProject(project)" flat>Store</q-btn>
-          </q-card-actions>
-        </q-card>
+          :projectId="project.id" />
 
         <q-fab color="secondary" push icon="add" direction="right">
 
@@ -134,13 +120,11 @@
 
 <script setup lang="ts">
 
-  import { useQuasar, exportFile, QFile } from 'quasar'
+  import { useQuasar, QFile } from 'quasar'
   import { computed, ref, Ref } from 'vue'
-  import { fs } from '@zenfs/core'
-  import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
   import StorageList from 'components/StorageList.vue'
-  import Project from 'stores/models/project'
+  import ProjectCard from 'components/ProjectCard.vue'
 
   defineOptions({
       name: 'IndexPage'
@@ -231,33 +215,6 @@
       })
   }
 
-  function exportProject (project: Project) {
-      const data = useProjectStore().hydrateProject(project.id)
-
-      const status = exportFile(project.filename ?? project.label,
-                                JSON.stringify(data, null, 2), {
-                                    encoding: 'utf-8',
-                                    mimeType: 'application/json'
-                                })
-
-      if (status === true) {
-          // browser allowed it
-      } else {
-          // browser denied it
-          console.error(`Error: ${status}`)
-      }
-  }
-
-  function storeProject (project: Project) {
-      const data = useProjectStore().hydrateProject(project.id)
-
-      const base = timestampAdd(project.filename.replace('.upmt', '') ?? project.label)
-      const filename = `/projects/${base}.upmt`
-      if (!fs.existsSync('/projects')) {
-          fs.mkdirSync('/projects')
-      }
-      fs.writeFileSync(filename, JSON.stringify(data))
-  }
 </script>
 
 <style scoped>
