@@ -107,7 +107,7 @@ const menuActions: NamedActions = [
   }
   .categoryinstance-children {
     list-style: none;
-    min-width: 200px;
+    min-width: var(--moment-minimum-width);
     display: flex;
     flex-direction: column;
   }
@@ -115,7 +115,7 @@ const menuActions: NamedActions = [
       flex-direction: row;
   }
   .categoryinstance {
-      min-width: 200px;
+      min-width: var(--moment-minimum-width);
       min-height: 40px;
       margin: 2px;
       display: flex;
