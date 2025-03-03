@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, Ref } from 'vue'
 import Interview from 'stores/models/interview'
-import Project from 'stores/models/project'
 
 export const useInterfaceStore = defineStore('interface', () => {
   const _username = ref("")
@@ -10,7 +9,7 @@ export const useInterfaceStore = defineStore('interface', () => {
   const newMomentIndex = ref(1)
   const newSSCIndex = ref(1)
 
-  const currentProject: Ref<Project | null> = ref(null)
+  const currentProjectId: Ref<string | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
   const editedSpecificSynchronicModelId: Ref<string | null> = ref(null)
 
@@ -22,10 +21,10 @@ export const useInterfaceStore = defineStore('interface', () => {
     return newSSCIndex.value++
   }
 
-  function setCurrentProject (project: Project | null) {
-    console.log("project = ", project);
-    (window as any).project = project
-    currentProject.value = project
+  function setCurrentProjectId (projectId: string | null) {
+    console.log("projectId = ", projectId);
+    (window as any).projectId = projectId
+    currentProjectId.value = projectId
   }
 
   function setCurrentInterview (interview: Interview | null) {
@@ -54,12 +53,12 @@ export const useInterfaceStore = defineStore('interface', () => {
   })
 
   function getProjectId () {
-    return currentProject?.value?.id ?? ""
+    return currentProjectId.value ?? ""
   }
 
   return {
     currentInterview,
-    currentProject,
+    currentProjectId,
     getUsername,
     getProjectId,
     editedSpecificSynchronicModelId,
@@ -68,7 +67,7 @@ export const useInterfaceStore = defineStore('interface', () => {
     newMomentIndexIncrement,
     newSSCIndexIncrement,
     setCurrentInterview,
-    setCurrentProject,
+    setCurrentProjectId,
     setEditedSpecificSynchronicModelId,
     setUsername,
     username

@@ -99,6 +99,7 @@
   import { ref, computed, onMounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import { RouteLocationRaw } from 'vue-router'
+  import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
   defineOptions({
@@ -114,9 +115,19 @@
       href?: string
   }
 
+  const store = useProjectStore()
+
   const istore = useInterfaceStore()
 
-  const { currentInterview, currentProject, username } = storeToRefs(istore)
+  const { currentInterview, currentProjectId, username } = storeToRefs(istore)
+
+  const currentProject = computed(() => {
+      if (currentProjectId.value) {
+          return store.getProject(currentProjectId.value)
+      } else {
+          return null
+      }
+  })
 
   const menuList = computed<MenuItem[]>(() => {
       let menu: MenuItem[] = [
@@ -127,16 +138,16 @@
           }
       ]
 
-      if (currentProject.value) {
+      if (currentProjectId.value) {
           menu.push({
               label: "Specific models",
               icon: 'mdi-semantic-web',
-              link: `/project/${currentProject.value.id}`
+              link: `/project/${currentProjectId.value}`
           })
           menu.push({
               label: "Generic Model",
               icon: 'mdi-table',
-              link: `/spreadsheet/${currentProject.value.id}`
+              link: `/spreadsheet/${currentProjectId.value}`
           })
       }
       menu = menu.concat([
