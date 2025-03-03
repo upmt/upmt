@@ -21,6 +21,8 @@
             v-if="currentProject"
             class="context">
             {{ currentProject.name }}
+            <CommentIcon
+              :element="currentProject" />
             <span v-if="currentInterview">
               - {{ currentInterview.label }}
             </span>
@@ -101,6 +103,7 @@
   import { RouteLocationRaw } from 'vue-router'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import CommentIcon from 'components/CommentIcon.vue'
 
   defineOptions({
       name: 'MainLayout'
