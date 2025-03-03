@@ -65,7 +65,7 @@
       height: 100
   })
 
-  const strokeWidth = ref(1)
+  const strokeWidth = ref(1.5)
 
   const isAggregation = computed(() => props.type === 'aggregation')
   const isSpecialization = computed(() => props.type === 'specialization')
