@@ -18,6 +18,7 @@ import PropertyModel from './models/propertymodel'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
 import { basename, timestampStrip } from './util'
+import { useInterfaceStore } from 'stores/interface'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
  * This should be put in some common module.
@@ -498,22 +499,32 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function importProject (data: any, url: string) {
-    // Load schema first so that idCache is properly initialized
-    // Strip possible timestamp from beginning of filename
-    const filename = basename(url)
-    const id = timestampStrip(filename.replace('.upmt', ''))
     let out
     let schema
     if ('modelfolder' in data) {
       // New style
+
+      // Configure pinia-orm context so that projectId is correctly set.
+      const istore = useInterfaceStore()
+      istore.setCurrentProjectId(data.id)
+
       out = repo.Project.save(data as Project)
       schema = out.modelfolder
       // We must remap models
     } else {
       // Old upmt files
+      // Load schema first so that idCache is properly initialized
+      // Strip possible timestamp from beginning of filename
+      const filename = basename(url)
+      const projectId = timestampStrip(filename.replace('.upmt', ''))
       schema = mapOldFolder(data.schemaTreeRoot)
+
+      // Configure pinia-orm context so that projectId is correctly set.
+      const istore = useInterfaceStore()
+      istore.setCurrentProjectId(projectId)
+
       out = repo.Project.save({
-        id,
+        id: projectId,
         filename,
         name: data.name,
         interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
