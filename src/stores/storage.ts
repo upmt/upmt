@@ -5,6 +5,9 @@ import { useProjectStore } from 'stores/projectStore'
 const BASEDIR = '/projects'
 
 function id2path (id: string) {
+  if (!fs.existsSync(BASEDIR)) {
+    fs.mkdirSync(BASEDIR)
+  }
   return `${BASEDIR}/${id}`
 }
 
@@ -13,6 +16,10 @@ function id2path (id: string) {
  * @returns {Array} List of stored project ids
  */
 function listStoredProjects () {
+  if (!fs.existsSync(BASEDIR)) {
+    fs.mkdirSync(BASEDIR)
+    return []
+  }
   return fs.readdirSync(BASEDIR)
 }
 
@@ -48,15 +55,11 @@ function getStoredProject(id: string)  {
  * @returns string: the filename
  */
 function storeProject (projectId: string) {
-  const baseDir = '/projects'
-  const projectDir = `${baseDir}/${projectId}`
+  const projectDir = id2path(projectId)
   const data = useProjectStore().hydrateProject(projectId)
   const basename = timestampAdd(projectId)
 
   // Structure: /projects/{project.id}/{timestamp}-{projectId}.upmt
-  if (!fs.existsSync(baseDir)) {
-    fs.mkdirSync(baseDir)
-  }
   if (!fs.existsSync(projectDir)) {
     fs.mkdirSync(projectDir)
   }
