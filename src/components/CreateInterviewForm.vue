@@ -122,7 +122,7 @@
               comment: creatingComment.value,
               date: creatingDate.value,
               text: creatingText.value,
-              projectId: props.projectId,
+              parentId: props.projectId,
               annotations: [
               ],
               analysis: {
@@ -133,7 +133,15 @@
                       name: "Root moment",
                       children: [
                           {
-                              name: "Moment 1"
+                              name: "Moment 1",
+                              specificsynchronicmodel: {
+                                  name: "Initial",
+                                  categories: []
+                              },
+                              justification: {
+                                  name: "",
+                                  descriptems: []
+                              }
                           }
                       ]
                   }
