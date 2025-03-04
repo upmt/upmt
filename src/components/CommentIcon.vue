@@ -13,6 +13,8 @@
         label="Comment"
         type="textarea"
         v-model="scope.value"
+        @keyup.ctrl.enter="scope.set"
+        @keyup.esc="scope.cancel"
         dense
         autogrow
         autofocus />
