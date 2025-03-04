@@ -28,7 +28,9 @@ function getStoredProject(id: string)  {
     const versions = fs.readdirSync(projectPath).sort().reverse()
     if (versions.length) {
       const projectFilename = versions[0]
-      const data = JSON.parse(fs.readFileSync(`${projectPath}/${projectFilename}`).toString())
+      const filename = `${projectPath}/${projectFilename}`
+      const data = JSON.parse(fs.readFileSync(filename).toString())
+      data.filename = projectFilename
       return data
     }
     console.log("No version for project", id)

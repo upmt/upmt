@@ -3,7 +3,9 @@
     v-if="project"
     class="project-card">
     <q-card-section class="bg-secondary text-white">
-      <div class="text-h6">{{ project.name }}</div>
+      <div
+        :title="`Loaded from ${project.filename}`"
+        class="text-h6">{{ project.name }}</div>
       <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
     </q-card-section>
 
