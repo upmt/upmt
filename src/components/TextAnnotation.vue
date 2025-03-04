@@ -2,12 +2,14 @@
   <div class="textAnnotationContainer">
     <q-toolbar class="row justify-end absolute-top bg-white">
       <q-btn
+        size="sm"
         icon="mdi-cursor-text"
         @click="selectionColor = ''"
         :flat="selectionColor != ''"
         dense
         />
       <q-btn
+        size="sm"
         v-for="color in ANNOTATION_COLORS"
         :key="color"
         icon="mdi-marker"
@@ -265,6 +267,7 @@
   .textAnnotationContainer {
   }
   .textAnnotationComponent {
+      margin-top: 50px;
   }
   .extract {
       font-style: italic;
