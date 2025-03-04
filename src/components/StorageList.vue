@@ -1,10 +1,11 @@
 <template>
   <q-list class="storage">
-    <strong>Local storage {{ dir }}</strong><q-btn
-                                              @click="doRefresh"
-                                              size="xs"
-                                              title="Refresh"
-                                              icon="mdi-refresh"/>
+    <strong>{{ dir }}</strong>
+    <q-btn
+      @click="doRefresh"
+      size="xs"
+      title="Refresh"
+      icon="mdi-refresh"/>
     <q-item
       class="column"
       v-for="filename in filenames"

@@ -31,14 +31,17 @@
 
       <div
         id="project-list"
-        class="q-pa-md row items-end q-gutter-md col-7 justify-start content-start">
+        class="q-pa-md row q-gutter-md col-7 justify-start content-start">
 
         <ProjectCard
           v-for="project in projects"
           :key="project.id"
           :projectId="project.id" />
 
-        <q-fab color="secondary" push icon="add" direction="right">
+        <q-fab class="self-center"
+               color="secondary"
+               push icon="add"
+               direction="right">
 
           <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
             <q-tooltip>
@@ -62,7 +65,6 @@
                 filled
                 @input="uploadFile"/>
 
-        <StorageList dir="/projects" />
       </div>
 
       <div id="column-right"
@@ -123,7 +125,6 @@
   import { useQuasar, QFile } from 'quasar'
   import { computed, ref, Ref } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
-  import StorageList from 'components/StorageList.vue'
   import ProjectCard from 'components/ProjectCard.vue'
 
   defineOptions({

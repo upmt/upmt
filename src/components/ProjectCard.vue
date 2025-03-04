@@ -9,12 +9,25 @@
 
     <q-separator />
 
+    <p>{{ project.comment }}</p>
+
     <q-card-actions align="right">
       <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
       <q-btn :to="{ name: 'spreadsheet', params: { id: project.id } }" flat>Compare</q-btn>
       <q-btn @click="exportProject(project)" flat>Save</q-btn>
       <q-btn @click="storeProject(project)" flat>Store</q-btn>
     </q-card-actions>
+
+    <q-expansion-item
+      class="pa-md-xs"
+      label="Versions"
+      header-class="text-caption"
+      dense
+      dense-toggle>
+      <StorageList
+        :dir="storageDir" />
+    </q-expansion-item>
+
   </q-card>
 </template>
 
@@ -26,6 +39,7 @@
 
   import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
+  import StorageList from 'components/StorageList.vue'
 
   import Project from 'stores/models/project'
 
@@ -41,6 +55,10 @@
       } else {
           return null
       }
+  })
+
+  const storageDir = computed(() => {
+      return `/projects/${props.projectId}`
   })
 
   function exportProject (project: Project) {
@@ -61,14 +79,22 @@
   }
 
   function storeProject (project: Project) {
+      const baseDir = '/projects'
+      const projectDir = `${baseDir}/${project.id}`
+
       const data = useProjectStore().hydrateProject(project.id)
 
-      const base = timestampAdd(project.filename.replace('.upmt', '') ?? project.label)
-      const filename = `/projects/${base}.upmt`
-      if (!fs.existsSync('/projects')) {
-          fs.mkdirSync('/projects')
+      const basename = timestampAdd(project.id ?? project.label)
+
+      // Structure: /projects/{project.id}/{timestamp}-{project.id}.upmt
+      if (!fs.existsSync(baseDir)) {
+          fs.mkdirSync(baseDir)
       }
-      fs.writeFileSync(filename, JSON.stringify(data))
+      if (!fs.existsSync(projectDir)) {
+          fs.mkdirSync(projectDir)
+      }
+
+      fs.writeFileSync(`${projectDir}/${basename}.upmt`, JSON.stringify(data, null, 2))
   }
 
 </script>
