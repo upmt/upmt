@@ -80,6 +80,17 @@
                 :actions="menuActions" />
             </div>
           </DropZone>
+          <q-btn
+            flat
+            dense
+            v-if="moment"
+            size="xs"
+            title="Edit specific synchronic model"
+            class="absolute-bottom-right"
+            @click="editModel(moment.specificsynchronicmodel?.id || '')"
+            icon="edit"
+            no-caps>
+          </q-btn>
         </template>
 
         <div class="moment-justification">
@@ -91,15 +102,6 @@
           <SpecificSynchronicModelOverview
             :modelId="moment?.specificsynchronicmodel?.id ?? ''">
           </SpecificSynchronicModelOverview>
-          <q-btn
-            flat
-            dense
-            size="xs"
-            class="absolute-bottom-right"
-            @click="editModel(moment.specificsynchronicmodel?.id || '')"
-            icon="edit"
-            no-caps>
-          </q-btn>
         </div>
 
         <div :class="[ 'moment-categoryinstances', layout ]">
@@ -370,6 +372,7 @@
       display: flex;
       flex-direction: column;
       border: 1px solid transparent;
+      position: relative;
   }
   .highlighted .moment {
       border: 2px solid yellow;
