@@ -12,6 +12,8 @@ export default class Property extends Justifiable {
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare projectId: string
+  @Str('') declare created: string
+  @Str('') declare modified: string
 
   @Str('') declare value: string
   @Str('') declare comment: string
@@ -51,19 +53,20 @@ export default class Property extends Justifiable {
     }
   }
 
-
   toJSON (): any {
-    if (this.justification) {
-      return {
-        value: this.value,
-        propertymodelId: this.propertymodelId,
-        justification: this.justification.toJSON()
-      }
-    } else {
-      return {
-        value: this.value,
-        propertymodelId: this.propertymodelId
-      }
+    const base = {
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
+      value: this.value,
+      propertymodelId: this.propertymodelId,
+      justification: undefined
     }
+    if (this.justification) {
+      base.justification = this.justification.toJSON()
+    }
+    return base
   }
 }

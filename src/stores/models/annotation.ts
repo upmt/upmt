@@ -36,6 +36,12 @@ export default class Annotation extends BaseModel {
 
   toJSON (): any {
     return {
+      id: this.id,
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
       color: this.color,
       startIndex: this.startIndex,
       endIndex: this.endIndex,

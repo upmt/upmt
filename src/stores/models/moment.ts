@@ -51,9 +51,13 @@ export default class Moment extends Justifiable {
       console.error("Query error for ", this, " - should fetch its relations")
     }
     return {
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
       name: this.name,
       color: this.color,
-      comment: this.comment,
       isExpanded: this.isExpanded,
       isCommentVisible: this.isCommentVisible,
       isTransitional: this.isTransitional,

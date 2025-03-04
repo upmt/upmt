@@ -43,6 +43,11 @@ export default class Descriptem extends BaseModel {
 
   toJSON (): any {
     return {
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
       interviewId: this.interviewId,
       startIndex: this.startIndex,
       endIndex: this.endIndex,

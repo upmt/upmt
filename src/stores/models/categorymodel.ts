@@ -24,7 +24,12 @@ export default class CategoryModel extends BaseModel {
 
   toJSON (): any {
     return {
+      id: this.id,
+      creator: this.creator,
+      created: this.created,
+      modified: this.modified,
       name: this.name,
+      comment: this.comment,
       color: this.color,
       isExpanded: this.isExpanded,
       properties: this.properties.map(p => p.toJSON())

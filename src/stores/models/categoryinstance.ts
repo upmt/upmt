@@ -52,6 +52,11 @@ export default class CategoryInstance extends Justifiable {
   toJSON (): any {
     // FIXME: it this.properties is null, then denormalization has not occurred - should refetch from repo with dependencies
     return {
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
       categorymodelId: this.categorymodelId,
       categorymodelName: this.model?.name,
       momentId: this.momentId,

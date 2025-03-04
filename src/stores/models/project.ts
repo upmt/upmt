@@ -30,6 +30,12 @@ export default class Project extends BaseModel {
 
   toJSON (): any {
     return {
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
+      filename: this.filename,
       name: this.name,
       modelfolder: this.modelfolder?.toJSON(),
       interviews: this.interviews?.map(i => i.toJSON())

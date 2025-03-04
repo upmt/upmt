@@ -21,6 +21,12 @@ export default class Analysis extends BaseModel {
 
   toJSON (): any {
     return {
+      id: this.id,
+      creator: this.creator,
+      contributor: this.contributor,
+      created: this.created,
+      modified: this.modified,
+      comment: this.comment,
       name: this.name,
       rootMoment: this.rootMoment?.toJSON()
     }
