@@ -8,7 +8,8 @@
       <DragElement
         type="moment"
         data="">
-        <q-btn>
+        <q-btn
+          @click="createMoment">
           New moment
           <q-tooltip anchor="top middle"
                      :offset="[0,30]">Drag this button to create a new moment></q-tooltip>
@@ -101,6 +102,9 @@
   import DragElement from './DragElement.vue'
   import AnalysisRepresentation from './AnalysisRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
+
+  const istore = useInterfaceStore()
 
   const store = useProjectStore()
 
@@ -134,6 +138,27 @@
 
   function closeAllMoments () {
       store.getRepo().Moment.where('interviewId', props.interviewId).update({ isExpanded: false })
+  }
+
+  /**
+   * Create a new moment at the end
+   */
+  function createMoment () {
+      // Get the analysis and the first level of rootMoment children
+      if (interview.value) {
+          const analysis = store.getAnalysis(interview.value.analysis.id)
+          if (analysis) {
+              const moments = analysis.rootMoment.children
+              if (moments.length) {
+                  const lastMoment = moments[moments.length - 1]
+                  if (lastMoment) {
+                      store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+                                      lastMoment.id,
+                                      "after")
+                  }
+              }
+          }
+      }
   }
 
   function zoomToWidth (width: number) {
