@@ -2,169 +2,343 @@
   "id": "ruptur2-example",
   "creator": "olivier",
   "contributor": "olivier",
-  "filename": "ruptur2-example.upmt",
+  "created": "2025-03-03T18:20:14.656Z",
+  "modified": "2025-03-04T15:42:47.318Z",
+  "filename": "2025-03-04T165338-ruptur2-example.upmt",
   "name": "RUPTUR2 Example",
-  "comment": "",
+  "comment": "New model",
   "modelfolder": {
+    "id": "BC7mNbCmGJDSa4nL3iZK0",
+    "creator": "olivier",
+    "contributor": "olivier",
+    "created": "2025-03-04T15:42:47.297Z",
+    "modified": "2025-03-04T15:42:47.297Z",
+    "comment": "",
     "name": "RUPTUR2 Example",
     "color": "transparent",
     "isExpanded": false,
     "folders": [],
     "categorymodels": [
       {
+        "id": "OSyyNlkF4FIpH4Gk7zs-S",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Attention",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "tAH3LmA93mDfWYDp6Ec7j",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Intensity",
             "color": ""
           },
           {
+            "id": "6EezXHnziIFYUIb73Jp1x",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Agentivity",
             "color": ""
           }
         ]
       },
       {
+        "id": "zvpdCFG80sI-LXOZgL5Z6",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Bothered",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "jw5gOG49lfJrqGFtkgYwM",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
         ]
       },
       {
+        "id": "fCTpt2fAhkTp8Sj20cC0T",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Experimentation awareness",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "RrCq82tD_hHb8e03-2vdf",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Agentivity",
             "color": ""
           },
           {
+            "id": "upQub6gEbrAm1QUwjeWAM",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Clue",
             "color": ""
           }
         ]
       },
       {
+        "id": "l_hDU1ttFTpXYPMK3BDOO",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Media awareness",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "TcaI11MuImkQPsFQGEzdQ",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Clue",
             "color": ""
           }
         ]
       },
       {
+        "id": "c-W2tf9yPxpZ8xE0qh-yx",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Incongruence",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": [
           {
+            "id": "FTPNECNPpl0KpNKmg61uK",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Modality",
             "color": ""
           }
         ]
       },
       {
+        "id": "T9yXTTDx-zap9hnpGXNn-",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Suprise",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": []
       },
       {
+        "id": "wyuGd9bVJtt-ayslrqk0M",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Weirdness",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": []
       },
       {
+        "id": "WigStLUT3hJaWgFsr6wBC",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Attentional focusing",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "jNNzQ_QwR6fgkrB5Owcq9",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Modality",
             "color": ""
           },
           {
+            "id": "Z2yFIpcBJmXLkmnRceXC9",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Agentivity",
             "color": ""
           },
           {
+            "id": "O5gKqmVURFL9YW8YGHzdN",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
         ]
       },
       {
+        "id": "h-uknTHnb_sTFLZEUrPT3",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Volition",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "U3xeP9TSDZVtBHHL6ChZk",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
         ]
       },
       {
+        "id": "mJg6F8-ftG7v-O0cFeFHn",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Judgment",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": false,
         "properties": [
           {
+            "id": "kmwfSzLYaoOQOU8M1KlDf",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
         ]
       },
       {
+        "id": "Xbe8WEqtLtL0bb78qKFxk",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Not Bothered",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": []
       },
       {
+        "id": "z4_jQ6zSUQw-8ZHvjP3af",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Reality awareness",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": [
           {
+            "id": "PTFyJTxMEHkXTeXoB_eGA",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Clue",
             "color": ""
           }
         ]
       },
       {
+        "id": "wDJQYTiVwN2TZOe84cUfv",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "Hearing",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": [
           {
+            "id": "GZIMIScM-XueGB8p7R2E2",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Source",
             "color": ""
           },
           {
+            "id": "lG8UWwBu6baa7bE6UdYrY",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
         ]
       },
       {
+        "id": "rAwvvbkoeN2Fp6w4ICYU6",
+        "creator": "olivier",
+        "created": "2025-03-04T15:42:47.297Z",
+        "modified": "2025-03-04T15:42:47.297Z",
         "name": "questioning",
+        "comment": "",
         "color": "#efe4b0",
         "isExpanded": true,
         "properties": [
           {
+            "id": "POdo9Xn1l03Tsvkdkps46",
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.296Z",
+            "modified": "2025-03-04T15:42:47.296Z",
+            "comment": "",
             "name": "Object",
             "color": ""
           }
@@ -183,6 +357,12 @@
       "date": "24/09/2024",
       "annotations": [
         {
+          "id": "n9SwtvIkNkBZaEu3U8gYZ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4,
           "endIndex": 142,
@@ -190,6 +370,12 @@
           "text": "(4-142)"
         },
         {
+          "id": "umzbGk2nMcC4GWbqH-K3k",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 158,
           "endIndex": 271,
@@ -197,6 +383,12 @@
           "text": "(158-271)"
         },
         {
+          "id": "Xq9a6OxspX8jMBlelHiTU",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 285,
           "endIndex": 399,
@@ -204,6 +396,12 @@
           "text": "(285-399)"
         },
         {
+          "id": "qaszjXO3Hw2LRyjpbbMWf",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 452,
           "endIndex": 507,
@@ -211,6 +409,12 @@
           "text": "(452-507)"
         },
         {
+          "id": "S3Ws7snTnO1CulojPJfJK",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 521,
           "endIndex": 647,
@@ -218,6 +422,12 @@
           "text": "(521-647)"
         },
         {
+          "id": "QCGonOHcVnb7uf4HZFoet",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 981,
           "endIndex": 1073,
@@ -225,6 +435,12 @@
           "text": "(981-1073)"
         },
         {
+          "id": "D3-6vUyK-wVy9lZUNtEBW",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1238,
           "endIndex": 1277,
@@ -232,6 +448,12 @@
           "text": "(1238-1277)"
         },
         {
+          "id": "noBY-ef9JTRwWc2DnJLxb",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1333,
           "endIndex": 1444,
@@ -239,6 +461,12 @@
           "text": "(1333-1444)"
         },
         {
+          "id": "a9x6-i-BhVCS1sIGpUW1C",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1492,
           "endIndex": 1542,
@@ -246,6 +474,12 @@
           "text": "(1492-1542)"
         },
         {
+          "id": "z4l-sO2bdr-NCEjOio3fu",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1460,
           "endIndex": 1492,
@@ -253,6 +487,12 @@
           "text": "(1460-1492)"
         },
         {
+          "id": "Jkh0L6RmT4ClSgakWbmBw",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1580,
           "endIndex": 1642,
@@ -260,6 +500,12 @@
           "text": "(1580-1642)"
         },
         {
+          "id": "vhEhzyPWULoMoPcDnJ3RJ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1660,
           "endIndex": 1711,
@@ -267,6 +513,12 @@
           "text": "(1660-1711)"
         },
         {
+          "id": "nk0tcos-vmrDZmJWI_Db-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1802,
           "endIndex": 2077,
@@ -274,6 +526,12 @@
           "text": "(1802-2077)"
         },
         {
+          "id": "dsiLNbXGhxqWD3eQhmZlA",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2090,
           "endIndex": 2150,
@@ -281,6 +539,12 @@
           "text": "(2090-2150)"
         },
         {
+          "id": "KrvvPMXR3iaZWio-MF-6N",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.298Z",
+          "modified": "2025-03-04T15:42:47.298Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2623,
           "endIndex": 2736,
@@ -288,6 +552,12 @@
           "text": "(2623-2736)"
         },
         {
+          "id": "xcCkiBWOcZz6dRK_jAwOC",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2748,
           "endIndex": 2839,
@@ -295,6 +565,12 @@
           "text": "(2748-2839)"
         },
         {
+          "id": "IYMwAKmqkrIyvf71xkg0K",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2897,
           "endIndex": 2928,
@@ -302,6 +578,12 @@
           "text": "(2897-2928)"
         },
         {
+          "id": "0SmSm_156mF8LTdx9oJ24",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3001,
           "endIndex": 3040,
@@ -309,6 +591,12 @@
           "text": "(3001-3040)"
         },
         {
+          "id": "wlHyi4yM74obmhL6ZEQsU",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3055,
           "endIndex": 3094,
@@ -316,6 +604,12 @@
           "text": "(3055-3094)"
         },
         {
+          "id": "HTWWcpmDuGeWfJuWaF7YS",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3140,
           "endIndex": 3209,
@@ -323,6 +617,12 @@
           "text": "(3140-3209)"
         },
         {
+          "id": "XexZm3d-BsQ33XtMfoi6I",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3541,
           "endIndex": 3566,
@@ -330,6 +630,12 @@
           "text": "(3541-3566)"
         },
         {
+          "id": "wX-Q13cK4fdBWg28i_nK4",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3634,
           "endIndex": 3717,
@@ -337,6 +643,12 @@
           "text": "(3634-3717)"
         },
         {
+          "id": "r2zewqzgfCx4EH-e_GyBJ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3242,
           "endIndex": 3389,
@@ -344,6 +656,12 @@
           "text": "(3242-3389)"
         },
         {
+          "id": "I_ZLrp88J8Df2TEdHMqfh",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 3389,
           "endIndex": 3453,
@@ -351,6 +669,12 @@
           "text": "(3389-3453)"
         },
         {
+          "id": "g2YRXOdJsvHvn9XXqg7TY",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3732,
           "endIndex": 3902,
@@ -358,6 +682,12 @@
           "text": "(3732-3902)"
         },
         {
+          "id": "MzIUrrkcRd1mMKT6H9X9H",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3977,
           "endIndex": 4106,
@@ -365,6 +695,12 @@
           "text": "(3977-4106)"
         },
         {
+          "id": "rSXJOQCQJpqvvt4Vz-6fo",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4122,
           "endIndex": 4300,
@@ -372,6 +708,12 @@
           "text": "(4122-4300)"
         },
         {
+          "id": "pG3_-SRSOSWhQByUmeE2R",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4438,
           "endIndex": 4463,
@@ -379,6 +721,12 @@
           "text": "(4438-4463)"
         },
         {
+          "id": "do-YrxPxJU44zR5lVnaw8",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4427,
           "endIndex": 4438,
@@ -386,6 +734,12 @@
           "text": "(4427-4438)"
         },
         {
+          "id": "m0jj8sSyt4CTK-8H5rt4D",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4493,
           "endIndex": 4540,
@@ -393,6 +747,12 @@
           "text": "(4493-4540)"
         },
         {
+          "id": "H3B4yWRFEyB0AK6uXIOf3",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4618,
           "endIndex": 4680,
@@ -400,6 +760,12 @@
           "text": "(4618-4680)"
         },
         {
+          "id": "g79Bmi5jjiILN-_TwGh6E",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5027,
           "endIndex": 5197,
@@ -407,6 +773,12 @@
           "text": "(5027-5197)"
         },
         {
+          "id": "P-UghY-7jkRPwwV0XslaY",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5292,
           "endIndex": 5378,
@@ -414,6 +786,12 @@
           "text": "(5292-5378)"
         },
         {
+          "id": "k_nA2CJFlJDyA1m4enIhM",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.299Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5417,
           "endIndex": 5511,
@@ -421,6 +799,12 @@
           "text": "(5417-5511)"
         },
         {
+          "id": "m_VH4HjTQH0-F_lbSgwTm",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.299Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5744,
           "endIndex": 5790,
@@ -428,6 +812,12 @@
           "text": "(5744-5790)"
         },
         {
+          "id": "WFIT1dMDktc_8GdQqdUuA",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5803,
           "endIndex": 5833,
@@ -435,6 +825,12 @@
           "text": "(5803-5833)"
         },
         {
+          "id": "w03LYfAWJbDmotY2hDzqv",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5957,
           "endIndex": 6039,
@@ -442,6 +838,12 @@
           "text": "(5957-6039)"
         },
         {
+          "id": "qNHomjnBNC_kM9NC9NhZJ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6225,
           "endIndex": 6433,
@@ -449,6 +851,12 @@
           "text": "(6225-6433)"
         },
         {
+          "id": "C76F9o9_BxAoz7LfDOLbp",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6447,
           "endIndex": 6648,
@@ -456,6 +864,12 @@
           "text": "(6447-6648)"
         },
         {
+          "id": "OvPABtKjP1vH96Dz804jR",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6661,
           "endIndex": 6728,
@@ -463,6 +877,12 @@
           "text": "(6661-6728)"
         },
         {
+          "id": "k_GVgYe8OOIfU-C3zax0L",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6924,
           "endIndex": 7074,
@@ -470,6 +890,12 @@
           "text": "(6924-7074)"
         },
         {
+          "id": "a1bzFvqcTvDs89hpGS5_x",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7114,
           "endIndex": 7351,
@@ -477,6 +903,12 @@
           "text": "(7114-7351)"
         },
         {
+          "id": "JenMfE0TMr12wIVtgnh3b",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7508,
           "endIndex": 7560,
@@ -484,6 +916,12 @@
           "text": "(7508-7560)"
         },
         {
+          "id": "dy91LPNACpBTpF9qZt-xx",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.300Z",
+          "modified": "2025-03-04T15:42:47.300Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7692,
           "endIndex": 7829,
@@ -491,6 +929,12 @@
           "text": "(7692-7829)"
         },
         {
+          "id": "4j5RAgfV5AqHY2oBoIpp-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7845,
           "endIndex": 7873,
@@ -498,6 +942,12 @@
           "text": "(7845-7873)"
         },
         {
+          "id": "dto_zmBim8eER9jEsUgze",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 8106,
           "endIndex": 8228,
@@ -505,6 +955,12 @@
           "text": "(8106-8228)"
         },
         {
+          "id": "hHHOrfjUiQTB5y20bOF5a",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 8447,
           "endIndex": 8466,
@@ -512,6 +968,12 @@
           "text": "(8447-8466)"
         },
         {
+          "id": "ia2t1NYrhD2KzKAJPtt2P",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 8528,
           "endIndex": 8550,
@@ -520,15 +982,28 @@
         }
       ],
       "analysis": {
+        "id": "tn_MKK-ejTyoXB3FAUdmS",
+        "creator": "olivier",
+        "contributor": "olivier",
+        "created": "2025-03-04T15:42:47.316Z",
+        "modified": "2025-03-04T15:42:47.316Z",
         "name": "",
         "rootMoment": {
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.314Z",
+          "modified": "2025-03-04T15:42:47.314Z",
+          "comment": "",
           "name": "",
           "color": "",
-          "comment": "",
           "isExpanded": true,
           "isCommentVisible": false,
           "isTransitional": false,
           "justification": {
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.306Z",
+            "modified": "2025-03-04T15:42:47.306Z",
             "name": "",
             "descriptems": []
           },
@@ -543,17 +1018,25 @@
             "categories": []
           },
           "parentId": null,
-          "analysisId": "5L7I3xGxNBYbPTRbLXzNN",
+          "analysisId": "tn_MKK-ejTyoXB3FAUdmS",
           "interviewId": "qdf_3RftlKCwK2eKe5AQV",
           "children": [
             {
+              "creator": "olivier",
+              "contributor": "olivier",
+              "created": "2025-03-04T15:42:47.314Z",
+              "modified": "2025-03-04T15:42:47.314Z",
+              "comment": "",
               "name": "P2 Break in presence - music",
               "color": "#ffffff",
-              "comment": "",
               "isExpanded": true,
               "isCommentVisible": false,
               "isTransitional": false,
               "justification": {
+                "creator": "olivier",
+                "contributor": "olivier",
+                "created": "2025-03-04T15:42:47.306Z",
+                "modified": "2025-03-04T15:42:47.306Z",
                 "name": "",
                 "descriptems": []
               },
@@ -574,9 +1057,18 @@
                     "comment": "",
                     "criterion": "",
                     "justification": {
+                      "creator": "olivier",
+                      "contributor": "olivier",
+                      "created": "2025-03-04T15:42:47.306Z",
+                      "modified": "2025-03-04T15:42:47.306Z",
                       "name": "",
                       "descriptems": [
                         {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.310Z",
+                          "modified": "2025-03-04T15:42:47.310Z",
+                          "comment": "",
                           "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                           "startIndex": 3142,
                           "endIndex": 3209,
@@ -593,15 +1085,29 @@
                         "comment": "",
                         "criterion": "",
                         "justification": {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.306Z",
+                          "modified": "2025-03-04T15:42:47.306Z",
                           "name": "",
                           "descriptems": [
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.310Z",
+                              "modified": "2025-03-04T15:42:47.310Z",
+                              "comment": "",
                               "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                               "startIndex": 3649,
                               "endIndex": 3706,
                               "text": "[3649-3706]"
                             },
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.310Z",
+                              "modified": "2025-03-04T15:42:47.310Z",
+                              "comment": "",
                               "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                               "startIndex": 7157,
                               "endIndex": 7351,
@@ -618,45 +1124,84 @@
                             "comment": "",
                             "criterion": "",
                             "justification": {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.306Z",
+                              "modified": "2025-03-04T15:42:47.306Z",
                               "name": "",
                               "descriptems": [
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 7157,
                                   "endIndex": 7351,
                                   "text": "[7157-7351]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 3733,
                                   "endIndex": 3902,
                                   "text": "[3733-3902]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 7114,
                                   "endIndex": 7155,
                                   "text": "[7114-7155]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 5418,
                                   "endIndex": 5511,
                                   "text": "[5418-5511]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 4428,
                                   "endIndex": 4463,
                                   "text": "[4428-4463]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.310Z",
+                                  "modified": "2025-03-04T15:42:47.310Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 4495,
                                   "endIndex": 4540,
                                   "text": "[4495-4540]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "qdf_3RftlKCwK2eKe5AQV",
                                   "startIndex": 3978,
                                   "endIndex": 4106,
@@ -672,7 +1217,7 @@
                   }
                 ]
               },
-              "parentId": "rcbH9l4rnoza3uxX-EJ72",
+              "parentId": "DSujPXtilvzykC5wkvCQS",
               "analysisId": null,
               "interviewId": "qdf_3RftlKCwK2eKe5AQV",
               "children": []
@@ -691,6 +1236,12 @@
       "date": "31/05/2024",
       "annotations": [
         {
+          "id": "Vl1DJJTwrdXCAifMEbTAn",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 472,
           "endIndex": 532,
@@ -698,6 +1249,12 @@
           "text": "(472-532)"
         },
         {
+          "id": "lzemyXpxr005vy15ZJbX0",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 544,
           "endIndex": 594,
@@ -705,6 +1262,12 @@
           "text": "(544-594)"
         },
         {
+          "id": "cllUPv6clhsdHGGbVRINs",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 939,
           "endIndex": 1074,
@@ -712,6 +1275,12 @@
           "text": "(939-1074)"
         },
         {
+          "id": "42NZFreYU9hP2oN8EYl6r",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1254,
           "endIndex": 1345,
@@ -719,6 +1288,12 @@
           "text": "(1254-1345)"
         },
         {
+          "id": "_tZC6Y3o-nYTXlQnPEOq_",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2179,
           "endIndex": 2217,
@@ -726,6 +1301,12 @@
           "text": "(2179-2217)"
         },
         {
+          "id": "sZUWdCxnaCDaiuO_OknFy",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2453,
           "endIndex": 2486,
@@ -733,6 +1314,12 @@
           "text": "(2453-2486)"
         },
         {
+          "id": "2bWxd_1DMEIsoezhxuR0o",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2504,
           "endIndex": 2563,
@@ -740,6 +1327,12 @@
           "text": "(2504-2563)"
         },
         {
+          "id": "PE3BeR6SksjddLnepXJDH",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2564,
           "endIndex": 2587,
@@ -747,6 +1340,12 @@
           "text": "(2564-2587)"
         },
         {
+          "id": "ExcA3imV1vWBWQtI1_WbK",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2589,
           "endIndex": 2604,
@@ -754,6 +1353,12 @@
           "text": "(2589-2604)"
         },
         {
+          "id": "oHmLvHDhI864XyJ_WBPs-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2217,
           "endIndex": 2253,
@@ -761,6 +1366,12 @@
           "text": "(2217-2253)"
         },
         {
+          "id": "rpIXTPgEHNBZ5ajeWfVy8",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2256,
           "endIndex": 2301,
@@ -768,6 +1379,12 @@
           "text": "(2256-2301)"
         },
         {
+          "id": "ci2ZmvHmmC7dc10ea7K1a",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2874,
           "endIndex": 2966,
@@ -775,6 +1392,12 @@
           "text": "(2874-2966)"
         },
         {
+          "id": "-EGcsbi6Qy0zu9vaT_NA9",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 649,
           "endIndex": 731,
@@ -782,6 +1405,12 @@
           "text": "(649-731)"
         },
         {
+          "id": "tXNMePze7jsqDzPP06NXu",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 611,
           "endIndex": 649,
@@ -789,6 +1418,12 @@
           "text": "(611-649)"
         },
         {
+          "id": "ZYFABtsXuUBcY1IICBCU9",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 815,
           "endIndex": 925,
@@ -796,6 +1431,12 @@
           "text": "(815-925)"
         },
         {
+          "id": "2cfL90RQuI6yPxIMZ8D3-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 806,
           "endIndex": 815,
@@ -803,6 +1444,12 @@
           "text": "(806-815)"
         },
         {
+          "id": "DYv88vilzZhcKguNICzEc",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.302Z",
+          "modified": "2025-03-04T15:42:47.302Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1166,
           "endIndex": 1253,
@@ -810,6 +1457,12 @@
           "text": "(1166-1253)"
         },
         {
+          "id": "S__ZMYkIzy-zp-eq6Xu-L",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1949,
           "endIndex": 2028,
@@ -817,6 +1470,12 @@
           "text": "(1949-2028)"
         },
         {
+          "id": "eoK95jTxdjJJw9zkcnEcZ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2029,
           "endIndex": 2133,
@@ -824,6 +1483,12 @@
           "text": "(2029-2133)"
         },
         {
+          "id": "acecmM4NV91aknrXZtA_8",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 1487,
           "endIndex": 1581,
@@ -831,6 +1496,12 @@
           "text": "(1487-1581)"
         },
         {
+          "id": "eYxkOEO0kB62OkJy4PXMd",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 1461,
           "endIndex": 1487,
@@ -838,6 +1509,12 @@
           "text": "(1461-1487)"
         },
         {
+          "id": "wUB2Ph9AbkeFPyTmM30iO",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 1459,
           "endIndex": 1461,
@@ -845,6 +1522,12 @@
           "text": "(1459-1461)"
         },
         {
+          "id": "oqyIum3a5fsvD-1L3yyCK",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3066,
           "endIndex": 3112,
@@ -852,23 +1535,81 @@
           "text": "(3066-3112)"
         },
         {
+          "id": "LObHRIEdmae2EsSm4ELn0",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 3370,
           "endIndex": 3447,
           "interviewId": "uucgTvwMpEdHW0DJh8lAn",
           "text": "(3370-3447)"
+        },
+        {
+          "id": "gpeEpmEzl_YzK23LWPwhM",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:52:04.461Z",
+          "modified": "2025-03-04T15:52:04.461Z",
+          "comment": "",
+          "color": "#ff9797",
+          "startIndex": 71,
+          "endIndex": 91,
+          "interviewId": "uucgTvwMpEdHW0DJh8lAn",
+          "text": "(71-91)"
+        },
+        {
+          "id": "Vhrc68ZX2lY7AUtm70q4M",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:52:10.950Z",
+          "modified": "2025-03-04T15:52:10.950Z",
+          "comment": "",
+          "color": "#ff9797",
+          "startIndex": 224,
+          "endIndex": 250,
+          "interviewId": "uucgTvwMpEdHW0DJh8lAn",
+          "text": "(224-250)"
+        },
+        {
+          "id": "uX5jR0hHqxQ6kyljgo-zf",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:52:34.494Z",
+          "modified": "2025-03-04T15:52:34.494Z",
+          "comment": "",
+          "color": "#7084b0",
+          "startIndex": 882,
+          "endIndex": 925,
+          "interviewId": "uucgTvwMpEdHW0DJh8lAn",
+          "text": "(882-925)"
         }
       ],
       "analysis": {
+        "id": "Rlf_Tdubd5xHWc9cCnKLJ",
+        "creator": "olivier",
+        "contributor": "olivier",
+        "created": "2025-03-04T15:42:47.316Z",
+        "modified": "2025-03-04T15:42:47.316Z",
         "name": "",
         "rootMoment": {
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.314Z",
+          "modified": "2025-03-04T15:42:47.314Z",
+          "comment": "",
           "name": "",
           "color": "",
-          "comment": "",
           "isExpanded": true,
           "isCommentVisible": false,
           "isTransitional": false,
           "justification": {
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.306Z",
+            "modified": "2025-03-04T15:42:47.306Z",
             "name": "",
             "descriptems": []
           },
@@ -883,17 +1624,25 @@
             "categories": []
           },
           "parentId": null,
-          "analysisId": "kqQ7ZPOVn4uRm3M2KhFc1",
+          "analysisId": "Rlf_Tdubd5xHWc9cCnKLJ",
           "interviewId": "uucgTvwMpEdHW0DJh8lAn",
           "children": [
             {
+              "creator": "olivier",
+              "contributor": "olivier",
+              "created": "2025-03-04T15:42:47.314Z",
+              "modified": "2025-03-04T15:42:47.314Z",
+              "comment": "",
               "name": "P3 Break in presence - music",
               "color": "#ffffff",
-              "comment": "",
               "isExpanded": true,
               "isCommentVisible": false,
               "isTransitional": false,
               "justification": {
+                "creator": "olivier",
+                "contributor": "olivier",
+                "created": "2025-03-04T15:42:47.306Z",
+                "modified": "2025-03-04T15:42:47.306Z",
                 "name": "",
                 "descriptems": []
               },
@@ -914,21 +1663,40 @@
                     "comment": "",
                     "criterion": "",
                     "justification": {
+                      "creator": "olivier",
+                      "contributor": "olivier",
+                      "created": "2025-03-04T15:42:47.306Z",
+                      "modified": "2025-03-04T15:42:47.306Z",
                       "name": "",
                       "descriptems": [
                         {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.311Z",
+                          "modified": "2025-03-04T15:42:47.311Z",
+                          "comment": "",
                           "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                           "startIndex": 472,
                           "endIndex": 530,
                           "text": "[472-530]"
                         },
                         {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.311Z",
+                          "modified": "2025-03-04T15:42:47.311Z",
+                          "comment": "",
                           "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                           "startIndex": 2509,
                           "endIndex": 2566,
                           "text": "[2509-2566]"
                         },
                         {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.311Z",
+                          "modified": "2025-03-04T15:42:47.311Z",
+                          "comment": "",
                           "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                           "startIndex": 881,
                           "endIndex": 925,
@@ -945,9 +1713,18 @@
                         "comment": "",
                         "criterion": "",
                         "justification": {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.306Z",
+                          "modified": "2025-03-04T15:42:47.306Z",
                           "name": "",
                           "descriptems": [
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 813,
                               "endIndex": 925,
@@ -960,25 +1737,44 @@
                             "name": "SSC10",
                             "creator": "olivier",
                             "contributor": "olivier",
-                            "color": "",
+                            "color": "#fce5cd",
                             "comment": "",
                             "criterion": "",
                             "justification": {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.306Z",
+                              "modified": "2025-03-04T15:42:47.306Z",
                               "name": "",
                               "descriptems": [
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                                   "startIndex": 938,
                                   "endIndex": 1074,
                                   "text": "[938-1074]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                                   "startIndex": 938,
                                   "endIndex": 1074,
                                   "text": "[938-1074]"
                                 },
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                                   "startIndex": 813,
                                   "endIndex": 925,
@@ -998,15 +1794,29 @@
                         "comment": "",
                         "criterion": "",
                         "justification": {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.306Z",
+                          "modified": "2025-03-04T15:42:47.306Z",
                           "name": "",
                           "descriptems": [
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 938,
                               "endIndex": 1074,
                               "text": "[938-1074]"
                             },
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 882,
                               "endIndex": 925,
@@ -1019,13 +1829,22 @@
                             "name": "SSC12",
                             "creator": "olivier",
                             "contributor": "olivier",
-                            "color": "",
+                            "color": "#d9ead3",
                             "comment": "",
                             "criterion": "",
                             "justification": {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.306Z",
+                              "modified": "2025-03-04T15:42:47.306Z",
                               "name": "",
                               "descriptems": [
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                                   "startIndex": 821,
                                   "endIndex": 856,
@@ -1041,25 +1860,44 @@
                         "name": "SSC8",
                         "creator": "olivier",
                         "contributor": "olivier",
-                        "color": "",
+                        "color": "#c9daf8",
                         "comment": "",
                         "criterion": "",
                         "justification": {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.306Z",
+                          "modified": "2025-03-04T15:42:47.306Z",
                           "name": "",
                           "descriptems": [
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 813,
                               "endIndex": 925,
                               "text": "[813-925]"
                             },
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 694,
                               "endIndex": 731,
                               "text": "[694-731]"
                             },
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 821,
                               "endIndex": 856,
@@ -1077,9 +1915,18 @@
                         "comment": "",
                         "criterion": "",
                         "justification": {
+                          "creator": "olivier",
+                          "contributor": "olivier",
+                          "created": "2025-03-04T15:42:47.306Z",
+                          "modified": "2025-03-04T15:42:47.306Z",
                           "name": "",
                           "descriptems": [
                             {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.311Z",
+                              "modified": "2025-03-04T15:42:47.311Z",
+                              "comment": "",
                               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                               "startIndex": 938,
                               "endIndex": 1074,
@@ -1092,13 +1939,22 @@
                             "name": "SSC13",
                             "creator": "olivier",
                             "contributor": "olivier",
-                            "color": "",
+                            "color": "#fff2cc",
                             "comment": "",
                             "criterion": "",
                             "justification": {
+                              "creator": "olivier",
+                              "contributor": "olivier",
+                              "created": "2025-03-04T15:42:47.306Z",
+                              "modified": "2025-03-04T15:42:47.306Z",
                               "name": "",
                               "descriptems": [
                                 {
+                                  "creator": "olivier",
+                                  "contributor": "olivier",
+                                  "created": "2025-03-04T15:42:47.311Z",
+                                  "modified": "2025-03-04T15:42:47.311Z",
+                                  "comment": "",
                                   "interviewId": "uucgTvwMpEdHW0DJh8lAn",
                                   "startIndex": 821,
                                   "endIndex": 856,
@@ -1114,7 +1970,7 @@
                   }
                 ]
               },
-              "parentId": "a2pIXHD2YSLe9c1xKsj37",
+              "parentId": "12LF9RbL2_pdZqw1Kfitj",
               "analysisId": null,
               "interviewId": "uucgTvwMpEdHW0DJh8lAn",
               "children": []
@@ -1133,6 +1989,12 @@
       "date": "24/09/2024",
       "annotations": [
         {
+          "id": "ZTopqArQ-Lqw2qIkCz6AZ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 430,
           "endIndex": 491,
@@ -1140,6 +2002,12 @@
           "text": "(430-491)"
         },
         {
+          "id": "D8m3MnrajF2L19DAbGP7z",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 565,
           "endIndex": 619,
@@ -1147,6 +2015,12 @@
           "text": "(565-619)"
         },
         {
+          "id": "2whw5EHGPA246jVtWvQlt",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 619,
           "endIndex": 806,
@@ -1154,6 +2028,12 @@
           "text": "(619-806)"
         },
         {
+          "id": "ceUDhsLdDgAfAMnTbg1NH",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 973,
           "endIndex": 1017,
@@ -1161,6 +2041,12 @@
           "text": "(973-1017)"
         },
         {
+          "id": "QvShxftuK_55_6zuig3qk",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1134,
           "endIndex": 1212,
@@ -1168,6 +2054,12 @@
           "text": "(1134-1212)"
         },
         {
+          "id": "lR6YURVafeVrMWfkR4dXE",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1212,
           "endIndex": 1364,
@@ -1175,6 +2067,12 @@
           "text": "(1212-1364)"
         },
         {
+          "id": "SVclANfDypNtsEaqee4OD",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1364,
           "endIndex": 1448,
@@ -1182,6 +2080,12 @@
           "text": "(1364-1448)"
         },
         {
+          "id": "5ScMxA4Ii7zqM0dqwc-ek",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1489,
           "endIndex": 1625,
@@ -1189,6 +2093,12 @@
           "text": "(1489-1625)"
         },
         {
+          "id": "_IFaFVgoIKaCXmAZjiKbf",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1705,
           "endIndex": 1832,
@@ -1196,6 +2106,12 @@
           "text": "(1705-1832)"
         },
         {
+          "id": "i0P019gGPa98SSSzdFI_z",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 1863,
           "endIndex": 1890,
@@ -1203,6 +2119,12 @@
           "text": "(1863-1890)"
         },
         {
+          "id": "sn50nYafBvoLLA3vpvKZK",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 1832,
           "endIndex": 1863,
@@ -1210,6 +2132,12 @@
           "text": "(1832-1863)"
         },
         {
+          "id": "EfokfSFluXiag1WY0_RuE",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2142,
           "endIndex": 2230,
@@ -1217,6 +2145,12 @@
           "text": "(2142-2230)"
         },
         {
+          "id": "5zcPiv43xMuUNktqKiMME",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2264,
           "endIndex": 2454,
@@ -1224,6 +2158,12 @@
           "text": "(2264-2454)"
         },
         {
+          "id": "8UiLTMJExE5A4CI0WY61R",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2466,
           "endIndex": 2560,
@@ -1231,6 +2171,12 @@
           "text": "(2466-2560)"
         },
         {
+          "id": "8YtxoH6l2DYt5Vo5urlJW",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2560,
           "endIndex": 2850,
@@ -1238,6 +2184,12 @@
           "text": "(2560-2850)"
         },
         {
+          "id": "jZxbVHm_e7LE2NYJ7IV4q",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3251,
           "endIndex": 3379,
@@ -1245,6 +2197,12 @@
           "text": "(3251-3379)"
         },
         {
+          "id": "VbofgOjXAOBPpPt020C-_",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.303Z",
+          "modified": "2025-03-04T15:42:47.303Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2955,
           "endIndex": 3108,
@@ -1252,6 +2210,12 @@
           "text": "(2955-3108)"
         },
         {
+          "id": "79aSO1wTbJcLli9FodDwd",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3512,
           "endIndex": 3605,
@@ -1259,6 +2223,12 @@
           "text": "(3512-3605)"
         },
         {
+          "id": "zpW-rZ9D2zX6nUORe2txF",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3605,
           "endIndex": 3720,
@@ -1266,6 +2236,12 @@
           "text": "(3605-3720)"
         },
         {
+          "id": "SwTdGuPwmz0mx-c6E2D0l",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3720,
           "endIndex": 3834,
@@ -1273,6 +2249,12 @@
           "text": "(3720-3834)"
         },
         {
+          "id": "1g2NNPCRr7A_4sipGTNYJ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3906,
           "endIndex": 3918,
@@ -1280,6 +2262,12 @@
           "text": "(3906-3918)"
         },
         {
+          "id": "2hBb6aNtZUgiA9Nbd6TAO",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3952,
           "endIndex": 4056,
@@ -1287,6 +2275,12 @@
           "text": "(3952-4056)"
         },
         {
+          "id": "Q6Dzg3qppLPStMDije5So",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4056,
           "endIndex": 4205,
@@ -1294,6 +2288,12 @@
           "text": "(4056-4205)"
         },
         {
+          "id": "NCLMzdaONVVk0mr8EIsX9",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4205,
           "endIndex": 4432,
@@ -1301,6 +2301,12 @@
           "text": "(4205-4432)"
         },
         {
+          "id": "B-ACWaLTv0-WBMv4E9bzt",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4630,
           "endIndex": 4641,
@@ -1308,6 +2314,12 @@
           "text": "(4630-4641)"
         },
         {
+          "id": "q0MoJDlZPb-uSNbjd_M80",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4624,
           "endIndex": 4630,
@@ -1315,6 +2327,12 @@
           "text": "(4624-4630)"
         },
         {
+          "id": "DzfHcAVgpdkLbwWvUBEqM",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4656,
           "endIndex": 4707,
@@ -1322,6 +2340,12 @@
           "text": "(4656-4707)"
         },
         {
+          "id": "nGxVKxxfrWo0Y-t6vGOpw",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 4735,
           "endIndex": 4833,
@@ -1329,6 +2353,12 @@
           "text": "(4735-4833)"
         },
         {
+          "id": "DGo7vp-JfERX2g28DrXZA",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 4872,
           "endIndex": 4959,
@@ -1336,6 +2366,12 @@
           "text": "(4872-4959)"
         },
         {
+          "id": "P8vKEFgVqbWECEoQ4Pdd4",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 4870,
           "endIndex": 4872,
@@ -1343,6 +2379,12 @@
           "text": "(4870-4872)"
         },
         {
+          "id": "XqwO9nsgaxRmx5f_Gx179",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 5320,
           "endIndex": 5433,
@@ -1350,6 +2392,12 @@
           "text": "(5320-5433)"
         },
         {
+          "id": "tx3hP2HDAbCqesJB9mh3B",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 5433,
           "endIndex": 5451,
@@ -1357,6 +2405,12 @@
           "text": "(5433-5451)"
         },
         {
+          "id": "_o2Ft51sw16o7Uu0c-YQK",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5482,
           "endIndex": 5524,
@@ -1364,6 +2418,12 @@
           "text": "(5482-5524)"
         },
         {
+          "id": "GfORyEFwgtRbuSVl-WC4d",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5524,
           "endIndex": 5656,
@@ -1371,6 +2431,12 @@
           "text": "(5524-5656)"
         },
         {
+          "id": "h61JkHgRiN1Iyp0AVF4EQ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5671,
           "endIndex": 5841,
@@ -1378,6 +2444,12 @@
           "text": "(5671-5841)"
         },
         {
+          "id": "LwCmN8fN1SOqEiD2tH6ju",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6023,
           "endIndex": 6068,
@@ -1385,6 +2457,12 @@
           "text": "(6023-6068)"
         },
         {
+          "id": "XC2cPCHcjrAsJpEz-QlBZ",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6122,
           "endIndex": 6336,
@@ -1392,6 +2470,12 @@
           "text": "(6122-6336)"
         },
         {
+          "id": "tNCUeA6HwINyx_y2SVjwC",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 6349,
           "endIndex": 6420,
@@ -1399,6 +2483,12 @@
           "text": "(6349-6420)"
         },
         {
+          "id": "-cOtNGpNA0WsOVVIBwnYd",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6848,
           "endIndex": 7011,
@@ -1406,6 +2496,12 @@
           "text": "(6848-7011)"
         },
         {
+          "id": "lNWGqkcjeB99QdMXohYCu",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7109,
           "endIndex": 7251,
@@ -1413,6 +2509,12 @@
           "text": "(7109-7251)"
         },
         {
+          "id": "4TYt_b4ZpewCzLoxHqY9i",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7332,
           "endIndex": 7356,
@@ -1420,6 +2522,12 @@
           "text": "(7332-7356)"
         },
         {
+          "id": "dzO1qdBot8FUQPfys-Hqg",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7369,
           "endIndex": 7393,
@@ -1427,6 +2535,12 @@
           "text": "(7369-7393)"
         },
         {
+          "id": "RsnhlXovkfDLkrZ_alPKL",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7658,
           "endIndex": 7687,
@@ -1434,6 +2548,12 @@
           "text": "(7658-7687)"
         },
         {
+          "id": "koDehNy7FyY1NqdZLiAJr",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.304Z",
+          "modified": "2025-03-04T15:42:47.304Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6663,
           "endIndex": 6759,
@@ -1441,6 +2561,12 @@
           "text": "(6663-6759)"
         },
         {
+          "id": "_yho2wvUUa1hoE3PEc0Cx",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6620,
           "endIndex": 6663,
@@ -1449,15 +2575,28 @@
         }
       ],
       "analysis": {
+        "id": "d_P7dKrLsTW8vnI7sfLqO",
+        "creator": "olivier",
+        "contributor": "olivier",
+        "created": "2025-03-04T15:42:47.316Z",
+        "modified": "2025-03-04T15:42:47.316Z",
         "name": "",
         "rootMoment": {
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.315Z",
+          "modified": "2025-03-04T15:42:47.315Z",
+          "comment": "",
           "name": "",
           "color": "",
-          "comment": "",
           "isExpanded": true,
           "isCommentVisible": false,
           "isTransitional": false,
           "justification": {
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.307Z",
+            "modified": "2025-03-04T15:42:47.307Z",
             "name": "",
             "descriptems": []
           },
@@ -1472,17 +2611,25 @@
             "categories": []
           },
           "parentId": null,
-          "analysisId": "-ne3HpK9xpDf3W0Jl0B6l",
+          "analysisId": "d_P7dKrLsTW8vnI7sfLqO",
           "interviewId": "svqMEgHpOUENTFXnMJw2D",
           "children": [
             {
+              "creator": "olivier",
+              "contributor": "olivier",
+              "created": "2025-03-04T15:42:47.315Z",
+              "modified": "2025-03-04T15:42:47.315Z",
+              "comment": "",
               "name": "P4 Break in presence - music",
               "color": "#ffffff",
-              "comment": "",
               "isExpanded": true,
               "isCommentVisible": false,
               "isTransitional": false,
               "justification": {
+                "creator": "olivier",
+                "contributor": "olivier",
+                "created": "2025-03-04T15:42:47.307Z",
+                "modified": "2025-03-04T15:42:47.307Z",
                 "name": "",
                 "descriptems": []
               },
@@ -1496,27 +2643,45 @@
                 "isExpanded": true,
                 "categories": []
               },
-              "parentId": "pIkwTfdh-Y6zjFhbrIWgq",
+              "parentId": "gumqHmgffy4m9EY9MOkjI",
               "analysisId": null,
               "interviewId": "svqMEgHpOUENTFXnMJw2D",
               "children": [
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.314Z",
+                  "modified": "2025-03-04T15:42:47.314Z",
+                  "comment": "",
                   "name": "Crossing the plank",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 6023,
                         "endIndex": 6068,
                         "text": "[6023-6068]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 7110,
                         "endIndex": 7251,
@@ -1534,28 +2699,46 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "OyxoyQXIbH8FsMFFhY3JF",
+                  "parentId": "SJin3EJkky8fucLazBRvS",
                   "analysisId": null,
                   "interviewId": "svqMEgHpOUENTFXnMJw2D",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Hearing the noise",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 5526,
                         "endIndex": 5583,
                         "text": "[5526-5583]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 5583,
                         "endIndex": 5626,
@@ -1573,34 +2756,57 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "OyxoyQXIbH8FsMFFhY3JF",
+                  "parentId": "SJin3EJkky8fucLazBRvS",
                   "analysisId": null,
                   "interviewId": "svqMEgHpOUENTFXnMJw2D",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Wondering if it is elevator music",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 5546,
                         "endIndex": 5582,
                         "text": "[5546-5582]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 6621,
                         "endIndex": 6662,
                         "text": "[6621-6662]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.311Z",
+                        "modified": "2025-03-04T15:42:47.311Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 6848,
                         "endIndex": 7011,
@@ -1608,54 +2814,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "ThKnDuLR2hGC4iaIOG4XR",
-                      "momentId": "0a-h1QNVX6t7pk9FOqgkH",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 5627,
-                            "endIndex": 5656,
-                            "text": "[5627-5656]"
-                          },
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 6620,
-                            "endIndex": 6662,
-                            "text": "[6620-6662]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "pro-active",
-                          "propertymodelId": "jHSTzBPhqXYx3zLzsE-Q3",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                                "startIndex": 5627,
-                                "endIndex": 5656,
-                                "text": "[5627-5656]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "N/A",
-                          "propertymodelId": "uCc3WFCoBXwOQuYUpbNEI",
-                          "justification": {
-                            "name": "",
-                            "descriptems": []
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -1665,28 +2824,46 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "OyxoyQXIbH8FsMFFhY3JF",
+                  "parentId": "SJin3EJkky8fucLazBRvS",
                   "analysisId": null,
                   "interviewId": "svqMEgHpOUENTFXnMJw2D",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": " It is a ringtone",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 6663,
                         "endIndex": 6733,
                         "text": "[6663-6733]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "svqMEgHpOUENTFXnMJw2D",
                         "startIndex": 6735,
                         "endIndex": 6758,
@@ -1694,74 +2871,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "y88PSjafBiTh0PSp4-p-n",
-                      "momentId": "s9mojjaWr21ou09mUayvD",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 5754,
-                            "endIndex": 5840,
-                            "text": "[5754-5840]"
-                          },
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 5670,
-                            "endIndex": 5753,
-                            "text": "[5670-5753]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "on the source of the music",
-                          "propertymodelId": "VguUuKKzO5BC91nWtyUHQ",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                                "startIndex": 6735,
-                                "endIndex": 6758,
-                                "text": "[6735-6758]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "categorymodelId": "fE1hnVHBmLvjUGxTpHdTz",
-                      "momentId": "s9mojjaWr21ou09mUayvD",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 6305,
-                            "endIndex": 6336,
-                            "text": "[6305-6336]"
-                          },
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 7371,
-                            "endIndex": 7392,
-                            "text": "[7371-7392]"
-                          },
-                          {
-                            "interviewId": "svqMEgHpOUENTFXnMJw2D",
-                            "startIndex": 7332,
-                            "endIndex": 7356,
-                            "text": "[7332-7356]"
-                          }
-                        ]
-                      },
-                      "properties": []
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -1771,7 +2881,7 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "OyxoyQXIbH8FsMFFhY3JF",
+                  "parentId": "SJin3EJkky8fucLazBRvS",
                   "analysisId": null,
                   "interviewId": "svqMEgHpOUENTFXnMJw2D",
                   "children": []
@@ -1792,6 +2902,12 @@
       "date": "24/09/2024",
       "annotations": [
         {
+          "id": "EJCUex9bEMByOKKWCBpWn",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 2,
           "endIndex": 122,
@@ -1799,6 +2915,12 @@
           "text": "(2-122)"
         },
         {
+          "id": "C6vGscpRRSTd2s-FtuqRR",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 207,
           "endIndex": 260,
@@ -1806,6 +2928,12 @@
           "text": "(207-260)"
         },
         {
+          "id": "ViRajc6yUuf0eLHP9OQTA",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 274,
           "endIndex": 448,
@@ -1813,6 +2941,12 @@
           "text": "(274-448)"
         },
         {
+          "id": "k_eSpivpZ8rxYBUGNUrwC",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 487,
           "endIndex": 619,
@@ -1820,6 +2954,12 @@
           "text": "(487-619)"
         },
         {
+          "id": "YzVurN7qkN0ie_woCn6SU",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 701,
           "endIndex": 805,
@@ -1827,6 +2967,12 @@
           "text": "(701-805)"
         },
         {
+          "id": "-JGS7L7etpKZy0aaXykx3",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 3442,
           "endIndex": 3530,
@@ -1834,6 +2980,12 @@
           "text": "(3442-3530)"
         },
         {
+          "id": "RQx3xJBHtLr9VQ8v_O_kR",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5445,
           "endIndex": 5526,
@@ -1841,6 +2993,12 @@
           "text": "(5445-5526)"
         },
         {
+          "id": "kzpf2fSzhYWUlMeKPKXM-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 6901,
           "endIndex": 7146,
@@ -1848,6 +3006,12 @@
           "text": "(6901-7146)"
         },
         {
+          "id": "6D-YkhUFLr1wen9HZSBr8",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 7146,
           "endIndex": 7156,
@@ -1855,6 +3019,12 @@
           "text": "(7146-7156)"
         },
         {
+          "id": "1TIX-Y-gdIdYJSfxoKUFE",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1386,
           "endIndex": 1458,
@@ -1862,6 +3032,12 @@
           "text": "(1386-1458)"
         },
         {
+          "id": "8xXs5BNorQZFkI3fT0dYX",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1278,
           "endIndex": 1293,
@@ -1869,6 +3045,12 @@
           "text": "(1278-1293)"
         },
         {
+          "id": "HfQd4goTng4s9ieo2JWLd",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1077,
           "endIndex": 1102,
@@ -1876,6 +3058,12 @@
           "text": "(1077-1102)"
         },
         {
+          "id": "sZLSW6vPctdRafha3CMoP",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1129,
           "endIndex": 1233,
@@ -1883,6 +3071,12 @@
           "text": "(1129-1233)"
         },
         {
+          "id": "fej2oK4XdJee8eEfCryAD",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 1127,
           "endIndex": 1128,
@@ -1890,6 +3084,12 @@
           "text": "(1127-1128)"
         },
         {
+          "id": "a5p0hsY1ZrmfWoFHJWQm0",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 2648,
           "endIndex": 2735,
@@ -1897,6 +3097,12 @@
           "text": "(2648-2735)"
         },
         {
+          "id": "H06mSA5J00TchkzGkUU3F",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 2786,
           "endIndex": 3334,
@@ -1904,6 +3110,12 @@
           "text": "(2786-3334)"
         },
         {
+          "id": "xhdhtUoZ4tIgK-O1hoYH-",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#ff9797",
           "startIndex": 5013,
           "endIndex": 5032,
@@ -1911,6 +3123,12 @@
           "text": "(5013-5032)"
         },
         {
+          "id": "zHKBaIY04FzwIc9ZirteL",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 5361,
           "endIndex": 5445,
@@ -1918,6 +3136,12 @@
           "text": "(5361-5445)"
         },
         {
+          "id": "aUu2kZScPFXiHzURKhqzP",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 882,
           "endIndex": 901,
@@ -1925,6 +3149,12 @@
           "text": "(882-901)"
         },
         {
+          "id": "YeTuCv8a3Vbv2pebP3Hbn",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 980,
           "endIndex": 982,
@@ -1932,6 +3162,12 @@
           "text": "(980-982)"
         },
         {
+          "id": "XbHQYzNePzSdEOJpms04H",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#7bcf7b",
           "startIndex": 901,
           "endIndex": 980,
@@ -1939,6 +3175,12 @@
           "text": "(901-980)"
         },
         {
+          "id": "OpuHwhMJvu0g-3RUwFrM3",
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.305Z",
+          "modified": "2025-03-04T15:42:47.305Z",
+          "comment": "",
           "color": "#ffdc97",
           "startIndex": 2347,
           "endIndex": 2623,
@@ -1947,15 +3189,28 @@
         }
       ],
       "analysis": {
+        "id": "ihjivzVcO2HdwI--6NSz6",
+        "creator": "olivier",
+        "contributor": "olivier",
+        "created": "2025-03-04T15:42:47.316Z",
+        "modified": "2025-03-04T15:42:47.316Z",
         "name": "",
         "rootMoment": {
+          "creator": "olivier",
+          "contributor": "olivier",
+          "created": "2025-03-04T15:42:47.315Z",
+          "modified": "2025-03-04T15:42:47.315Z",
+          "comment": "",
           "name": "",
           "color": "",
-          "comment": "",
           "isExpanded": true,
           "isCommentVisible": false,
           "isTransitional": false,
           "justification": {
+            "creator": "olivier",
+            "contributor": "olivier",
+            "created": "2025-03-04T15:42:47.307Z",
+            "modified": "2025-03-04T15:42:47.307Z",
             "name": "",
             "descriptems": []
           },
@@ -1970,17 +3225,25 @@
             "categories": []
           },
           "parentId": null,
-          "analysisId": "XQMeBG59DB3UcLITqXLQo",
+          "analysisId": "ihjivzVcO2HdwI--6NSz6",
           "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
           "children": [
             {
+              "creator": "olivier",
+              "contributor": "olivier",
+              "created": "2025-03-04T15:42:47.315Z",
+              "modified": "2025-03-04T15:42:47.315Z",
+              "comment": "",
               "name": "Break in presence - Door + name",
               "color": "#ffffff",
-              "comment": "",
               "isExpanded": true,
               "isCommentVisible": false,
               "isTransitional": false,
               "justification": {
+                "creator": "olivier",
+                "contributor": "olivier",
+                "created": "2025-03-04T15:42:47.307Z",
+                "modified": "2025-03-04T15:42:47.307Z",
                 "name": "",
                 "descriptems": []
               },
@@ -1994,21 +3257,34 @@
                 "isExpanded": true,
                 "categories": []
               },
-              "parentId": "XTEb4T9_NxzapEAcZl9Mi",
+              "parentId": "nTYbn2NDzgANJyUOAz3Ur",
               "analysisId": null,
               "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
               "children": [
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Being in the elevator",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 209,
                         "endIndex": 260,
@@ -2026,22 +3302,35 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Hearing knock knock ",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 2,
                         "endIndex": 74,
@@ -2059,22 +3348,35 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Wondering where the noise is coming from",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 38,
                         "endIndex": 51,
@@ -2082,40 +3384,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "uGIOCQLnvZO2kDwtNjpX4",
-                      "momentId": "GBVhl8vJMZTakFhahnihY",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 2,
-                            "endIndex": 51,
-                            "text": "[2-51]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "The source of the noise",
-                          "propertymodelId": "XvfwCJMBvozfDZ9AoZLPs",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 38,
-                                "endIndex": 51,
-                                "text": "[38-51]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2125,34 +3394,57 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Analyzing the environment",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 208,
                         "endIndex": 261,
                         "text": "[208-261]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 274,
                         "endIndex": 425,
                         "text": "[274-425]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 101,
                         "endIndex": 121,
@@ -2160,40 +3452,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "uGIOCQLnvZO2kDwtNjpX4",
-                      "momentId": "vbeAhl5-yV7EoztiFdfeh",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 208,
-                            "endIndex": 260,
-                            "text": "[208-260]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "source of the noise",
-                          "propertymodelId": "XvfwCJMBvozfDZ9AoZLPs",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 309,
-                                "endIndex": 370,
-                                "text": "[309-370]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2203,28 +3462,46 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Thinking the noise is not coming from VR",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 426,
                         "endIndex": 448,
                         "text": "[426-448]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 52,
                         "endIndex": 122,
@@ -2232,24 +3509,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "fE1hnVHBmLvjUGxTpHdTz",
-                      "momentId": "BMpy5VlVmSp_fVG6h3sEY",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 487,
-                            "endIndex": 528,
-                            "text": "[487-528]"
-                          }
-                        ]
-                      },
-                      "properties": []
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2259,28 +3519,46 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Not caring about the noise and pushing the button",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.307Z",
+                    "modified": "2025-03-04T15:42:47.307Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 738,
                         "endIndex": 805,
                         "text": "[738-805]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.312Z",
+                        "modified": "2025-03-04T15:42:47.312Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 882,
                         "endIndex": 982,
@@ -2288,76 +3566,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "PJ4enNehikh93kIieP1lw",
-                      "momentId": "zgaMbSGab5aj-AScUXZja",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 882,
-                            "endIndex": 983,
-                            "text": "[882-983]"
-                          },
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 1279,
-                            "endIndex": 1293,
-                            "text": "[1279-1293]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "Doing an action",
-                          "propertymodelId": "KrUL9ZnOKKC3PDNvCnig0",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 759,
-                                "endIndex": 805,
-                                "text": "[759-805]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "pro-active",
-                          "propertymodelId": "ARsOuRJm-4jo3oh85MVBy",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 700,
-                                "endIndex": 736,
-                                "text": "[700-736]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "the task",
-                          "propertymodelId": "3eW0b7U4XQqB2lOwI3myo",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 738,
-                                "endIndex": 805,
-                                "text": "[738-805]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2367,28 +3576,46 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Hearing the experimenter talking",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.308Z",
+                    "modified": "2025-03-04T15:42:47.308Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 533,
                         "endIndex": 618,
                         "text": "[533-618]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 536,
                         "endIndex": 555,
@@ -2396,55 +3623,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "ThKnDuLR2hGC4iaIOG4XR",
-                      "momentId": "gh3cBIBnhLNw2F-5AnawX",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 1078,
-                            "endIndex": 1102,
-                            "text": "[1078-1102]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "pro-active",
-                          "propertymodelId": "jHSTzBPhqXYx3zLzsE-Q3",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 560,
-                                "endIndex": 618,
-                                "text": "[560-618]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "You",
-                          "propertymodelId": "uCc3WFCoBXwOQuYUpbNEI",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 536,
-                                "endIndex": 555,
-                                "text": "[536-555]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2454,22 +3633,35 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": "Confirming the noise is coming from reality",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.308Z",
+                    "modified": "2025-03-04T15:42:47.308Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 585,
                         "endIndex": 618,
@@ -2477,46 +3669,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "6M6PeXDyf-hHxtIgDVU3A",
-                      "momentId": "mqfgiqnXo4Jicjln6ZP7q",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 586,
-                            "endIndex": 618,
-                            "text": "[586-618]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "real life",
-                          "propertymodelId": "zsWT5zKZP8FjBjThXm1xq",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 605,
-                                "endIndex": 618,
-                                "text": "[605-618]"
-                              },
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 701,
-                                "endIndex": 736,
-                                "text": "[701-736]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2526,34 +3679,57 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
                 },
                 {
+                  "creator": "olivier",
+                  "contributor": "olivier",
+                  "created": "2025-03-04T15:42:47.315Z",
+                  "modified": "2025-03-04T15:42:47.315Z",
+                  "comment": "",
                   "name": " Continuing to not care about the noise",
                   "color": "#ffffff",
-                  "comment": "",
                   "isExpanded": true,
                   "isCommentVisible": false,
                   "isTransitional": false,
                   "justification": {
+                    "creator": "olivier",
+                    "contributor": "olivier",
+                    "created": "2025-03-04T15:42:47.308Z",
+                    "modified": "2025-03-04T15:42:47.308Z",
                     "name": "",
                     "descriptems": [
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 1125,
                         "endIndex": 1233,
                         "text": "[1125-1233]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 1387,
                         "endIndex": 1460,
                         "text": "[1387-1460]"
                       },
                       {
+                        "creator": "olivier",
+                        "contributor": "olivier",
+                        "created": "2025-03-04T15:42:47.313Z",
+                        "modified": "2025-03-04T15:42:47.313Z",
+                        "comment": "",
                         "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                         "startIndex": 889,
                         "endIndex": 934,
@@ -2561,70 +3737,7 @@
                       }
                     ]
                   },
-                  "categoryinstances": [
-                    {
-                      "categorymodelId": "PJ4enNehikh93kIieP1lw",
-                      "momentId": "XNuQSrCwmwYktHCr6f8XG",
-                      "justification": {
-                        "name": "",
-                        "descriptems": [
-                          {
-                            "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                            "startIndex": 3443,
-                            "endIndex": 3507,
-                            "text": "[3443-3507]"
-                          }
-                        ]
-                      },
-                      "properties": [
-                        {
-                          "value": "though",
-                          "propertymodelId": "KrUL9ZnOKKC3PDNvCnig0",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 3442,
-                                "endIndex": 3456,
-                                "text": "[3442-3456]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "pro-active",
-                          "propertymodelId": "ARsOuRJm-4jo3oh85MVBy",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 3442,
-                                "endIndex": 3530,
-                                "text": "[3442-3530]"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "value": "the following",
-                          "propertymodelId": "3eW0b7U4XQqB2lOwI3myo",
-                          "justification": {
-                            "name": "",
-                            "descriptems": [
-                              {
-                                "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
-                                "startIndex": 3508,
-                                "endIndex": 3530,
-                                "text": "[3508-3530]"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  ],
+                  "categoryinstances": [],
                   "specificsynchronicmodel": {
                     "name": "Initial",
                     "creator": "olivier",
@@ -2634,7 +3747,7 @@
                     "isExpanded": true,
                     "categories": []
                   },
-                  "parentId": "EzaCtzhsPZwqUh91Uc27h",
+                  "parentId": "QnVs9SHKVU812QRIAZs_Z",
                   "analysisId": null,
                   "interviewId": "9-_a1VSbpVx-cPC7ClhFa",
                   "children": []
