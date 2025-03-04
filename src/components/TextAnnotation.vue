@@ -18,7 +18,7 @@
         />
     </q-toolbar>
     <AnnotatedText
-      class="textAnnotationComponent q-pt-lg"
+      class="textAnnotationComponent q-pt-lg q-pa-md"
       v-if="interview"
       :text="interview.text"
       :annotations="annotations"
