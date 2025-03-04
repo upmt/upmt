@@ -6,6 +6,7 @@
   import { onMounted } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import { listStoredProjects } from 'stores/storage'
   import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
@@ -23,9 +24,16 @@
       }
       // Load username
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
-      void store.loadProject('./examples/example.upmt')
-      void store.loadProject('./examples/ruptur-example.upmt')
-      void store.loadProject('./examples/ruptur2-example.upmt');
+      // Load stored projects
+      for (const id of listStoredProjects()) {
+          store.loadStoredProject(id)
+      }
+      // Load sample projects if they were not stored
+      for (const id of [ 'example', 'ruptur-example', 'ruptur2-example' ]) {
+          if (! store.getProject(id)) {
+              void store.loadProject(`./examples/${id}.upmt`)
+          }
+      }
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);
