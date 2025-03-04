@@ -29,20 +29,31 @@
           </span>
         </q-toolbar-title>
 
-        <q-btn
-          dense
-          flat
-          round
-          icon="mdi-account">
-          <q-popup-edit
-            v-model="username"
-            auto-save
-            v-slot="scope">
-            <q-input v-model="scope.value"
+        <div>
+          <q-btn
+            v-if="currentProject"
+            dense
+            flat
+            round
+            @click="doStoreProject()"
+            icon="mdi-content-save">
+          </q-btn>
+          <q-btn
+            dense
+            flat
+            round
+            icon="mdi-account">
+            <q-popup-edit
+              v-model="username"
+              auto-save
+              v-slot="scope">
+              <q-input v-model="scope.value"
                      @focus="($event.target as HTMLInputElement).select()"
-                     dense autofocus @keyup.enter="scope.set" />
-          </q-popup-edit>
-        </q-btn>
+                       dense autofocus @keyup.enter="scope.set" />
+            </q-popup-edit>
+          </q-btn>
+        </div>
+
       </q-toolbar>
     </q-header>
 
@@ -99,10 +110,12 @@
 <script setup lang="ts">
 
   import { ref, computed, onMounted } from 'vue'
+  import { useQuasar } from 'quasar'
   import { storeToRefs } from 'pinia'
   import { RouteLocationRaw } from 'vue-router'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import { storeProject } from 'stores/storage'
   import CommentIcon from 'components/CommentIcon.vue'
 
   defineOptions({
@@ -117,6 +130,8 @@
       separator?: boolean
       href?: string
   }
+
+  const $q = useQuasar()
 
   const store = useProjectStore()
 
@@ -184,6 +199,17 @@
   function toggleLeftDrawer () {
       leftDrawerOpen.value = !leftDrawerOpen.value
   }
+
+  function doStoreProject () {
+      if (currentProjectId.value) {
+          const basename = storeProject(currentProjectId.value)
+          $q.notify({
+              type: 'info',
+              message: `Stored as ${basename}`
+          })
+      }
+  }
+
   onMounted(() => {
       leftDrawerOpen.value = false
       rightDrawerOpen.value = false

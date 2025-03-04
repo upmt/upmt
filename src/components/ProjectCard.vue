@@ -14,10 +14,10 @@
     <p>{{ project.comment }}</p>
 
     <q-card-actions align="right">
-      <q-btn :to="{ name: 'project', params: { id: project.id } }" flat>Open</q-btn>
-      <q-btn :to="{ name: 'spreadsheet', params: { id: project.id } }" flat>Compare</q-btn>
+      <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Open</q-btn>
+      <q-btn :to="{ name: 'spreadsheet', params: { id: projectId } }" flat>Compare</q-btn>
       <q-btn @click="exportProject(project)" flat>Save</q-btn>
-      <q-btn @click="storeProject(project)" flat>Store</q-btn>
+      <q-btn @click="doStoreProject(projectId)" flat>Store</q-btn>
     </q-card-actions>
 
     <q-expansion-item
@@ -36,11 +36,10 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import { fs } from '@zenfs/core'
   import { exportFile, useQuasar } from 'quasar'
 
-  import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
+  import { storeProject } from 'stores/storage'
   import StorageList from 'components/StorageList.vue'
 
   import Project from 'stores/models/project'
@@ -82,29 +81,12 @@
       }
   }
 
-  function storeProject (project: Project) {
-      const baseDir = '/projects'
-      const projectDir = `${baseDir}/${project.id}`
-
-      const data = useProjectStore().hydrateProject(project.id)
-
-      const basename = timestampAdd(project.id ?? project.label)
-
-      // Structure: /projects/{project.id}/{timestamp}-{project.id}.upmt
-      if (!fs.existsSync(baseDir)) {
-          fs.mkdirSync(baseDir)
-      }
-      if (!fs.existsSync(projectDir)) {
-          fs.mkdirSync(projectDir)
-      }
-
-      fs.writeFileSync(`${projectDir}/${basename}.upmt`, JSON.stringify(data, null, 2))
-
+  function doStoreProject (projectId: string) {
+      const basename = storeProject(projectId)
       $q.notify({
           type: 'info',
           message: `Stored as ${basename}`
       })
-
   }
 
 </script>

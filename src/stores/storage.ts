@@ -1,4 +1,6 @@
 import { fs } from '@zenfs/core'
+import { timestampAdd } from 'stores/util'
+import { useProjectStore } from 'stores/projectStore'
 
 const BASEDIR = '/projects'
 
@@ -41,8 +43,32 @@ function getStoredProject(id: string)  {
   }
 }
 
+/**
+ * Store the project in browser storage
+ * @returns string: the filename
+ */
+function storeProject (projectId: string) {
+  const baseDir = '/projects'
+  const projectDir = `${baseDir}/${projectId}`
+  const data = useProjectStore().hydrateProject(projectId)
+  const basename = timestampAdd(projectId)
+
+  // Structure: /projects/{project.id}/{timestamp}-{projectId}.upmt
+  if (!fs.existsSync(baseDir)) {
+    fs.mkdirSync(baseDir)
+  }
+  if (!fs.existsSync(projectDir)) {
+    fs.mkdirSync(projectDir)
+  }
+
+  fs.writeFileSync(`${projectDir}/${basename}.upmt`, JSON.stringify(data, null, 2))
+
+  return basename
+}
+
 export {
    getStoredProject,
    isStoredProject,
    listStoredProjects,
+   storeProject
 }
