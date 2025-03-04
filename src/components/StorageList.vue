@@ -1,5 +1,7 @@
 <template>
-  <q-list class="storage">
+  <q-list
+    :key="refreshKey"
+    class="storage">
     <strong>{{ dir }}</strong>
     <q-btn
       @click="doRefresh"
@@ -66,7 +68,7 @@
   const refreshKey = ref(1)
 
   const filenames = computed(() => {
-      console.assert(refreshKey.value)
+      console.log(refreshKey.value)
       if (fs.existsSync(props.dir)) {
           return fs.readdirSync(props.dir)
       } else {
@@ -75,7 +77,8 @@
   })
 
   function doRefresh () {
-      refreshKey.value++;
+      refreshKey.value++
+      console.log("Do Refresh", refreshKey)
   }
 
   function absolute (filename: string) {
