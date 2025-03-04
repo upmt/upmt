@@ -35,13 +35,15 @@
 
   import { computed } from 'vue'
   import { fs } from '@zenfs/core'
-  import { exportFile } from 'quasar'
+  import { exportFile, useQuasar } from 'quasar'
 
   import { timestampAdd } from 'stores/util'
   import { useProjectStore } from 'stores/projectStore'
   import StorageList from 'components/StorageList.vue'
 
   import Project from 'stores/models/project'
+
+  const $q = useQuasar()
 
   const store = useProjectStore()
 
@@ -95,6 +97,12 @@
       }
 
       fs.writeFileSync(`${projectDir}/${basename}.upmt`, JSON.stringify(data, null, 2))
+
+      $q.notify({
+          type: 'info',
+          message: `Stored as ${basename}`
+      })
+
   }
 
 </script>
