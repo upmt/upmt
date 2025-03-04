@@ -9,6 +9,7 @@
         type="moment"
         data="">
         <q-btn
+          size="sm"
           @click="createMoment">
           New moment
           <q-tooltip anchor="top middle"
@@ -18,6 +19,7 @@
 
       <q-btn
         icon="mdi-arrow-expand-down"
+        size="sm"
         @click="expandAllMoments">
         <q-tooltip anchor="top middle" :offset="[0,30]">
           Expand all moments
@@ -26,6 +28,7 @@
 
       <q-btn
         icon="mdi-arrow-expand-up"
+        size="sm"
         @click="closeAllMoments">
         <q-tooltip anchor="top middle" :offset="[0,30]">
           Close all moments
