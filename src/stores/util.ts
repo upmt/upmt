@@ -33,9 +33,15 @@ function timestampStrip (name: string) {
   return name.replace(/^\d{4}-\d{2}-\d{2}T\d{6}-/, '')
 }
 
+function stringToId (name: string) {
+  const id = name ? name.replace(/\W/g, '_') : '_'
+  return id.charAt(0).match(/\d/g)?.length ? `_${id}` : id
+}
+
 export {
 basename,
 ellipsize,
+stringToId,
 timestampAdd,
 timestampStrip,
 ANNOTATION_COLORS

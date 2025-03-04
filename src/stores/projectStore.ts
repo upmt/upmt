@@ -17,7 +17,8 @@ import Property from './models/property'
 import PropertyModel from './models/propertymodel'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
-import { basename, timestampStrip } from './util'
+import { basename, stringToId, timestampStrip } from './util'
+import { isStoredProject, getStoredProject } from './storage'
 import { useInterfaceStore } from 'stores/interface'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
@@ -495,6 +496,18 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function createProject (projectData: Subset<Project>) {
+    if (! projectData.id) {
+      // Generate an id from the name
+      let id = stringToId(projectData.name || "project")
+      // If an existing project with the same id exists, add a suffix
+      while (isStoredProject(id)) {
+        id = id + "_new"
+      }
+      projectData.id = id
+    }
+    if (! projectData.filename) {
+      projectData.filename = `${projectData.id}.upmt`
+    }
     repo.Project.save(projectData)
   }
 
@@ -598,6 +611,22 @@ export const useProjectStore = defineStore('projectStore', () => {
       const p = importProject(response.data, url)
       return p
     })
+  }
+
+  /**
+   * Clear Pinia store from all elements related to project
+   */
+  function clearProjectData (projectId: string) {
+    Object.values(repo).forEach(r => (r as any).where('projectId', projectId).delete())
+  }
+
+  function loadStoredProject (id: string) {
+    const data = getStoredProject(id)
+    if (data) {
+      clearProjectData(id)
+      const p = importProject(data, data.filename)
+      return p
+    }
   }
 
   /* Return a project structure with all relationships hydrated */
@@ -1148,6 +1177,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getSpecificSynchronicCategory,
     getSpecificSynchronicModel,
     loadProject,
+    loadStoredProject,
     momentAddCategoryModel,
     momentMoveCategoryInstance,
     moveMoment,
