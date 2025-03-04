@@ -15,7 +15,8 @@ function listStoredProjects () {
 }
 
 function isStoredProject (id: string) {
-  return fs.existsSync(id2path(id))
+  const projectPath = id2path(id)
+  return fs.existsSync(projectPath) && fs.readdirSync(projectPath).length > 0
 }
 
 /**
