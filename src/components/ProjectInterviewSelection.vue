@@ -27,6 +27,7 @@
                          :label="interview.label">
             </q-route-tab>
             <q-route-tab :to="{ query: { tab: newInterview } }"
+                         :label="newInterviewLabel"
                          class="new-interview"
                          :name="newInterview"
                          :key="newInterview"
@@ -154,6 +155,9 @@
   })
 
   const newInterview = "New interview"
+
+  const newInterviewLabel = computed(() => project.value && project.value.interviews.length ? "" : "Add a first interview")
+
   const {
       editedSpecificSynchronicModelId
   } = storeToRefs(istore)
