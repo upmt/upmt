@@ -26,7 +26,11 @@
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
       // Load stored projects
       for (const id of listStoredProjects()) {
-          store.loadStoredProject(id)
+          try {
+              store.loadStoredProject(id)
+          } catch (error) {
+              console.log("Cannot load project", id, error)
+          }
       }
       // Load sample projects if they were not stored
       for (const id of [ 'example', 'ruptur-example', 'ruptur2-example' ]) {
