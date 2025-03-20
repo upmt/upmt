@@ -17,8 +17,9 @@
       </div>
 
       <div class="specificsynchroniccategory-relation">
-           <SpecificSynchronicCategoryRelation
-             :childrenCount="category.children.length">
+        <SpecificSynchronicCategoryRelation
+          :type="category.abstractionType"
+          :childrenCount="category.children.length">
            </SpecificSynchronicCategoryRelation>
       </div>
 
