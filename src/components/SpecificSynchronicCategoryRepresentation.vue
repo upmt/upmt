@@ -27,7 +27,13 @@
           <JustificationRepresentation :justificationId="category.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
+
       </DropZone>
+
+      <div class="specificsynchroniccategory-criterion"
+           v-if="isCriterionVisible">
+        {{ criterion }}
+      </div>
 
       <div class="specificsynchroniccategory-relation"
            v-if="!isJustificationVisible">
@@ -146,8 +152,15 @@
       return isLeaf.value || displayJustification.value
   })
 
+  const isCriterionVisible = computed(() => {
+      return isLeaf.value || displayJustification.value
+  })
+
   const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
 
+  const criterion = computed(() => {
+      return category.value?.comment ?? ""
+  })
   function debug () {
       (window as any).category = category.value;
       console.log("SpecificSynchronicCategory", { category: category.value })
@@ -326,7 +339,15 @@
   .specificsynchroniccategory-justification {
       border: 1px dashed grey;
   }
-
+  .specificsynchroniccategory-criterion {
+      color: #444;
+      font-size: 9px;
+      width: calc(var(--moment-minimum-width) / 2);
+      opacity: .9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
   .specificsynchroniccategory-header {
       border: 1px solid grey;
   }
