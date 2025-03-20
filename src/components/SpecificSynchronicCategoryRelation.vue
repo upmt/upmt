@@ -29,19 +29,19 @@
         <path
           vector-effect="non-scaling-stroke"
           v-if="isAggregation"
-          :d="`M${parentPosition.x} ${parentPosition.y} l -8 -2 l -8 2 l 8 2 Z`"
+          :d="`M${parentPosition.x} ${parentPosition.y} l -${symbolHalfWidth} -${symbolHalfHeight} l -${symbolHalfWidth} ${symbolHalfHeight} l ${symbolHalfWidth} ${symbolHalfHeight} Z`"
           fill="white"
           stroke="black"
           :stroke-width="strokeWidth" />
         <path
           v-if="isSpecialization"
-          :d="`M${parentPosition.x} ${parentPosition.y} l -8 -3 l 0 6 Z`"
+          :d="`M${parentPosition.x} ${parentPosition.y} l -${ 2 * symbolHalfWidth } -${symbolHalfHeight} l 0 ${2 * symbolHalfHeight} Z`"
           fill="white"
           stroke="black"
           :stroke-width="strokeWidth" />
         <path
           v-if="isProperty"
-          :d="`M${parentPosition.x - 6} ${parentPosition.y - 3} l 6 3 l -6 3`"
+          :d="`M${parentPosition.x - symbolHalfWidth} ${parentPosition.y - symbolHalfHeight} l ${symbolHalfWidth} ${symbolHalfHeight} l -${symbolHalfWidth} ${symbolHalfHeight}`"
           fill="none"
           stroke="black"
           :stroke-width="strokeWidth" />
@@ -65,7 +65,16 @@
       height: 100
   })
 
-  const strokeWidth = ref(1.5)
+  const strokeWidth = ref(1)
+
+  const symbolHalfWidth = computed(() => {
+      return 20
+  })
+
+  const symbolHalfHeight = computed(() => {
+      const count = props.childrenCount
+      return count < 2 ? 6 : 6 / (count / 5)
+  })
 
   const isAggregation = computed(() => props.type === 'aggregation')
   const isSpecialization = computed(() => props.type === 'specialization')
