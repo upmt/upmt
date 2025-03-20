@@ -16,24 +16,6 @@
         </div>
       </div>
 
-      <DropZone :data="`in:${categoryId}`"
-                types="upmt/specificsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
-                class="empty_padding newssc-dropzone"
-                @specificsynchroniccategory="droppedSpecificSynchronicCategory"
-                @annotation="droppedCreatingAnnotation"
-                @selection="droppedCreatingSelection"
-                @descriptem="droppedCreatingDescriptem">
-        <q-btn
-          @click="createSpecificSynchronicCategory(`in:${categoryId}`)"
-          dense
-          class="newssc-button"
-          icon="mdi-plus">
-          <q-tooltip>
-            Create a new child category
-          </q-tooltip>
-        </q-btn>
-      </DropZone>
-
       <DropZone data="add"
                 types="upmt/descriptem upmt/annotation upmt/selection"
                 class="row justify-center"
@@ -50,6 +32,7 @@
       <div class="specificsynchroniccategory-relation"
            v-if="!isJustificationVisible">
         <SpecificSynchronicCategoryRelation
+          :type="category.abstractionType"
           :childrenCount="category.children.length" />
       </div>
 
@@ -264,6 +247,11 @@
       }
   }
 
+  function updateAbstractionType (value: string) {
+      store.updateSpecificSynchronicCategory(props.categoryId, { abstractionType: value })
+  }
+
+
   const categoryName = computed({
       get () {
           return category.value ? category.value.name : ""
@@ -283,7 +271,11 @@
   })
 
   const menuActions = [
-      [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ]
+      [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
+      [ "Set as generic", () => updateAbstractionType('') ],
+      [ "Set as aggregation", () => updateAbstractionType('aggregation') ],
+      [ "Set as specialization", () => updateAbstractionType('specialization') ],
+      [ "Create a new child category", () => createSpecificSynchronicCategory(`in:${props.categoryId}`) ]
   ]
 </script>
 
@@ -377,8 +369,11 @@
   .specificsynchroniccategory-relation {
       width: 20px;
       display: flex;
-      align-items: center;
+      align-items: left;
       justify-content: center;
+  }
+  .relation-menu {
+      flex: 0;
   }
   .specificsynchroniccategory-header:hover .on-name-hover {
       opacity: 1;

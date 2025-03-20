@@ -18,6 +18,9 @@ export default class SpecificSynchronicCategory extends Justifiable {
   @Str('') declare color: string
   @Str('') declare comment: string
 
+  // Abstraction types: classification / aggregation / generalization
+  @Str('') declare abstractionType: string
+
   // Grouping criterion
   @Str('') declare criterion: string
 
@@ -41,6 +44,7 @@ export default class SpecificSynchronicCategory extends Justifiable {
       color: this.color,
       comment: this.comment,
       criterion: this.criterion,
+      abstractionType: this.abstractionType,
       justification: this.justification?.toJSON(),
       children: this.children.map(c => c.toJSON())
     }
