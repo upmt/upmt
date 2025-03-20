@@ -272,9 +272,9 @@
 
   const menuActions = [
       [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
-      [ "Set as generic", () => updateAbstractionType('') ],
-      [ "Set as aggregation", () => updateAbstractionType('aggregation') ],
-      [ "Set as specialization", () => updateAbstractionType('specialization') ],
+      [ "Set as generic abstraction", () => updateAbstractionType('') ],
+      [ "Set as aggregation abstraction", () => updateAbstractionType('aggregation') ],
+      [ "Set as specialization abstraction", () => updateAbstractionType('specialization') ],
       [ "Create a new child category", () => createSpecificSynchronicCategory(`in:${props.categoryId}`) ]
   ]
 </script>
