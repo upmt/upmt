@@ -34,8 +34,8 @@ export default class SpecificSynchronicCategory extends Justifiable {
   @Attr() specificsynchronicmodelId!: string
 
 
-  toJSON (): any {
-    return {
+  toJSON (shallow=false): any {
+    const base = {
       name: this.name,
       created: this._meta?.createdAt,
       modified: this._meta?.updatedAt,
@@ -44,9 +44,16 @@ export default class SpecificSynchronicCategory extends Justifiable {
       color: this.color,
       comment: this.comment,
       criterion: this.criterion,
-      abstractionType: this.abstractionType,
-      justification: this.justification?.toJSON(),
-      children: this.children.map(c => c.toJSON())
+      abstractionType: this.abstractionType
+    }
+    if (shallow) {
+      return base
+    } else {
+      return {
+        ...base,
+        justification: this.justification?.toJSON(),
+        children: this.children.map(c => c.toJSON())
+      }
     }
   }
 }

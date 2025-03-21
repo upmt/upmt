@@ -836,8 +836,10 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       if (parent) {
         const children = [ ...parent.children ]
+        const sourceData = source.toJSON(true)
         const data = {
-          ...source.toJSON(),
+          ...sourceData,
+          id: sourceMomentId,
           parentId: parent.id,
           childIndex
         }

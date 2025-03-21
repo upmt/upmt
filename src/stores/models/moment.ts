@@ -46,11 +46,8 @@ export default class Moment extends Justifiable {
   }
 
 
-  toJSON (): any {
-    if (this.categoryinstances === null || this.children === null) {
-      console.error("Query error for ", this, " - should fetch its relations")
-    }
-    return {
+  toJSON (shallow = false): any {
+    const base = {
       creator: this.creator,
       contributor: this.contributor,
       created: this.created,
@@ -61,13 +58,23 @@ export default class Moment extends Justifiable {
       isExpanded: this.isExpanded,
       isCommentVisible: this.isCommentVisible,
       isTransitional: this.isTransitional,
-      justification: this.justification?.toJSON(),
-      categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
-      specificsynchronicmodel: this.specificsynchronicmodel?.toJSON(),
       parentId: this.parentId,
       analysisId: this.analysisId,
-      interviewId: this.interviewId,
-      children: this.children?.map(m => m.toJSON())
+      interviewId: this.interviewId
+    }
+    if (shallow) {
+      return base
+    } else {
+      if (this.categoryinstances === null || this.children === null) {
+        console.error("Query error for ", this, " - should fetch its relations")
+      }
+      return {
+        ...base,
+        justification: this.justification?.toJSON(),
+        categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
+        specificsynchronicmodel: this.specificsynchronicmodel?.toJSON(),
+        children: this.children?.map(m => m.toJSON())
+      }
     }
   }
 }

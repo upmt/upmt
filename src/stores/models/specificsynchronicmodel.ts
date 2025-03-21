@@ -24,8 +24,8 @@ export default class SpecificSynchronicModel extends BaseModel {
   @Attr() momentId!: string
 
 
-  toJSON (): any {
-    return {
+  toJSON (shallow=false): any {
+    const base = {
       name: this.name,
       created: this._meta?.createdAt,
       modified: this._meta?.updatedAt,
@@ -33,8 +33,15 @@ export default class SpecificSynchronicModel extends BaseModel {
       contributor: this.contributor,
       comment: this.comment,
       color: this.color,
-      isExpanded: this.isExpanded,
-      categories: this.categories.map(c => c.toJSON())
+      isExpanded: this.isExpanded
+    }
+    if (shallow) {
+      return base
+    } else {
+      return {
+        ...base,
+        categories: this.categories.map(c => c.toJSON())
+      }
     }
   }
 }
