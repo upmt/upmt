@@ -109,5 +109,9 @@
   }
 </script>
 
-<style scoped>
+  <style scoped>
+  .storage {
+    overflow: auto;
+    max-height: 30vh;
+  }
 </style>
