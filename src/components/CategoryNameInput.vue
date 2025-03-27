@@ -4,7 +4,28 @@
            dense
            @keyup.enter="validate"
            autofocus />
-  {{feedback}}
+  <div class="feedback"
+       v-if="feedback.original">
+    <em>Nom original</em>
+  </div>
+  <div class="feedback"
+       v-else>
+    <div class="children">
+      <div class="category"
+           v-for="c in feedback.children"
+           :key="c.id">
+        {{c.name}}
+      </div>
+    </div>
+    <div class="category reference"
+         v-if="feedback.reference">
+      {{feedback.reference.name}}
+    </div>
+    <div class="category parent"
+         v-if="feedback.parent">
+      {{feedback.parent.name}}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -31,9 +52,36 @@
   }
 
   const feedback = computed(() => {
-      return `Feedback ${name.value}`
+      const category = store.getSpecificSynchronicCategoryByName(name.value)
+      if (!category) {
+          return { original: true }
+      } else {
+          return {
+              reference: category,
+              children: category.children,
+              parent: category.parent
+          }
+      }
   })
 </script>
 
-<style scoped>
+  <style scoped>
+  .category {
+      border: 1px solid black;
+      margin: 2px;
+  }
+  .feedback {
+      display: flex;
+      flex-direction: row;
+      flex: 0;
+      align-items: center;
+  }
+  .children {
+      display: flex;
+      flex-direction: column;
+      flex: 0;
+  }
+  .reference {
+      font-weight: bold;
+  }
 </style>

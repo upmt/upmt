@@ -444,6 +444,15 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
+  function getSpecificSynchronicCategoryByName (name: string) {
+    return repo.SpecificSynchronicCategory
+      .with('children')
+      .with('parent')
+      .with('justification', (query) => query.with('descriptems'))
+      .where('name', name)
+      .first()
+  }
+
   function getSpecificSynchronicModel (id: string | null) {
     if (id) {
       return repo.SpecificSynchronicModel
@@ -1177,6 +1186,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getProperty,
     getPropertyModel,
     getSpecificSynchronicCategory,
+    getSpecificSynchronicCategoryByName,
     getSpecificSynchronicModel,
     loadProject,
     loadStoredProject,
