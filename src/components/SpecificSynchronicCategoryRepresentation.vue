@@ -30,16 +30,39 @@
 
       </DropZone>
 
-      <div class="specificsynchroniccategory-criterion"
-           v-if="isCriterionVisible">
-        {{ criterion }}
-      </div>
-
-      <div class="specificsynchroniccategory-relation"
-           v-if="!isJustificationVisible">
+      <div class="specificsynchroniccategory-relation">
         <SpecificSynchronicCategoryRelation
           :type="category.abstractionType"
-          :childrenCount="category.children.length" />
+          :childrenCount="isLeaf ? 1 : category.children.length" />
+        <div class="specificsynchroniccategory-relationinfo">
+          <div class="specificsynchroniccategory-criterion">
+            {{ criterion }}
+            <q-tooltip
+              v-if="criterion"
+              flat
+              dense>
+              <div class="criterion-tooltip">{{ criterion }}</div>
+            </q-tooltip>
+            <q-popup-edit v-model="criterion"
+                        auto-save
+                          buttons
+                          v-slot="scope">
+              <q-input
+                label="Criterion"
+                type="textarea"
+                v-model="scope.value"
+                @keyup.ctrl.enter="scope.set"
+                @keyup.esc="scope.cancel"
+                dense
+                autogrow
+                autofocus />
+            </q-popup-edit>
+          </div>
+          <ElementMenu
+            v-if="! isLeaf"
+            class="specificsynchroniccategory-relationmenu"
+            :actions="relationActions" />
+        </div>
       </div>
 
       <DropZone data="add"
@@ -142,6 +165,13 @@
 
   const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
 
+  const criterion = computed({
+      get: () => category.value?.criterion ?? '',
+      set: (value) => {
+          store.updateSpecificSynchronicCategory(props.categoryId, { criterion: value })
+      }
+  })
+
   const displayJustification = ref(false)
 
   const isLeaf = computed(() => {
@@ -152,15 +182,8 @@
       return isLeaf.value || displayJustification.value
   })
 
-  const isCriterionVisible = computed(() => {
-      return isLeaf.value || displayJustification.value
-  })
-
   const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
 
-  const criterion = computed(() => {
-      return category.value?.comment ?? ""
-  })
   function debug () {
       (window as any).category = category.value;
       console.log("SpecificSynchronicCategory", { category: category.value })
@@ -285,6 +308,9 @@
 
   const menuActions = [
       [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
+  ]
+
+  const relationActions = [
       [ "Set as generic abstraction", () => updateAbstractionType('') ],
       [ "Set as aggregation abstraction", () => updateAbstractionType('aggregation') ],
       [ "Set as specialization abstraction", () => updateAbstractionType('specialization') ],
@@ -339,15 +365,6 @@
   .specificsynchroniccategory-justification {
       border: 1px dashed grey;
   }
-  .specificsynchroniccategory-criterion {
-      color: #444;
-      font-size: 9px;
-      width: calc(var(--moment-minimum-width) / 2);
-      opacity: .9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
   .specificsynchroniccategory-header {
       border: 1px solid grey;
   }
@@ -388,14 +405,35 @@
       overflow: hidden;
   }
   .specificsynchroniccategory-relation {
-      width: 20px;
+      width: var(--synchronic-category-relation-width);
       display: flex;
       align-items: left;
       justify-content: center;
+      position: relative;
   }
-  .relation-menu {
-      flex: 0;
+  .specificsynchroniccategory-relationinfo {
+      position: absolute;
+      bottom: calc(50% + 10px);
+      width: var(--synchronic-category-relation-width);
+      left: 0;
+      opacity: 0.1;
   }
+
+  .specificsynchroniccategory-relation:hover   .specificsynchroniccategory-relationinfo {
+      opacity: 1;
+  }
+  .specificsynchroniccategory-criterion {
+      border: 1px dashed lightgrey;
+      width: var(--synchronic-category-relation-width);
+      min-height: 1em;
+      max-height: 24px;
+
+      color: #444;
+      font-size: 9px;
+      display: flex;
+      overflow: hidden;
+  }
+
   .specificsynchroniccategory-header:hover .on-name-hover {
       opacity: 1;
   }
@@ -422,5 +460,8 @@
   .newssc-button {
       width: 8px;
       opacity: .5;
+  }
+  .criterion-tooltip {
+      white-space: pre-line;
   }
 </style>
