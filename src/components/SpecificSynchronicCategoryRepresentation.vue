@@ -83,13 +83,12 @@
               name="mdi-source-fork">
             </q-icon>
             <span class="specificsynchroniccategory-name">{{ categoryName }}
-              <q-popup-edit style="zoom: var(--chart-zoom)" v-model="categoryName" auto-save v-slot="scope">
-                <q-input v-model="scope.value"
-                         @focus="($event.target as HTMLInputElement).select()"
-                         dense
-                         autofocus
-                         counter
-                         @keyup.enter="scope.set" />
+              <q-popup-edit style="zoom: var(--chart-zoom)"
+                            v-model="categoryName"
+                            v-slot="scope"
+                            auto-save>
+                <CategoryNameInput @change="scope.cancel"
+                                   :category="category" />
               </q-popup-edit>
             </span>
           </DragElement>
@@ -147,6 +146,7 @@
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
+  import CategoryNameInput from './CategoryNameInput.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
   import CommentIcon from './CommentIcon.vue'
   import ElementMenu from './ElementMenu.vue'
