@@ -26,8 +26,10 @@ export default class SpecificSynchronicCategory extends Justifiable {
 
   @HasOne(() => Justification, 'parentId') declare justification: Justification | null
 
-  @HasMany(() => SpecificSynchronicCategory, 'parentId') declare children: SpecificSynchronicCategory[]
   @Attr() parentId!: string
+  @BelongsTo(() => SpecificSynchronicCategory, 'parentId') declare parent: SpecificSynchronicCategory | null
+  @HasMany(() => SpecificSynchronicCategory, 'parentId') declare children: SpecificSynchronicCategory[]
+
   @Num(0) declare childIndex: number
 
   @BelongsTo(() => SpecificSynchronicModel, 'specificsynchronicmodelId') declare model: SpecificSynchronicModel | null

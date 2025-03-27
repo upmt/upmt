@@ -31,10 +31,10 @@ export default class Moment extends Justifiable {
 
   @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
 
-  @HasMany(() => Moment, 'parentId') declare children: Moment[]
-
   @Attr() parentId!: string
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
+  @HasMany(() => Moment, 'parentId') declare children: Moment[]
+
   @Num(0) declare childIndex: number
 
   get descriptionLabel () {
