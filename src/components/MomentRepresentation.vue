@@ -80,23 +80,24 @@
                 :actions="menuActions" />
             </div>
           </DropZone>
-          <q-btn
-            flat
-            dense
-            v-if="moment"
-            size="xs"
-            title="Edit specific synchronic model"
-            class="absolute-bottom-right"
-            @click="editModel(moment.specificsynchronicmodel?.id || '')"
-            icon="edit"
-            no-caps>
-          </q-btn>
         </template>
 
         <div class="moment-justification">
           <JustificationRepresentation :justificationId="moment.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
+
+        <q-btn
+          flat
+          dense
+          v-if="moment"
+          size="xs"
+          title="Edit specific synchronic model"
+          class="absolute-bottom-right"
+          @click="editModel(moment.specificsynchronicmodel?.id || '')"
+          icon="edit"
+          no-caps>
+        </q-btn>
 
         <div class="moment-synchronic-specific-model flex row">
           <SpecificSynchronicModelOverview
