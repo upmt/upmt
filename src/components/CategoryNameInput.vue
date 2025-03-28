@@ -4,26 +4,29 @@
            dense
            @keyup.enter="validate"
            autofocus />
-  <div class="feedback"
-       v-if="feedback.original">
+  <div class="context"
+       v-if="context.original">
     <em>Nom original</em>
   </div>
-  <div class="feedback"
+  <div class="context"
        v-else>
     <div class="children">
       <div class="category"
-           v-for="c in feedback.children"
+           v-for="c in context.children"
            :key="c.id">
         {{c.name}}
       </div>
     </div>
     <div class="category reference"
-         v-if="feedback.reference">
-      {{feedback.reference.name}}
+         v-if="context.reference">
+      {{context.reference.name}}
     </div>
-    <div class="category parent"
-         v-if="feedback.parent">
-      {{feedback.parent.name}}
+    <div class="parents">
+      <div class="category parent"
+           v-for="parent in context.parents"
+           :key="parent?.id ?? ''">
+        {{parent?.name ?? ''}}
+      </div>
     </div>
   </div>
 </template>
@@ -51,15 +54,17 @@
       emit('change', name.value)
   }
 
-  const feedback = computed(() => {
-      const category = store.getSpecificSynchronicCategoryByName(name.value)
-      if (!category) {
+  const context = computed(() => {
+      const categories = store.getSpecificSynchronicCategoriesByName(name.value)
+      if (!categories.length) {
           return { original: true }
       } else {
+          const children = Object.fromEntries(categories.map(c => c.children.map(child => [ child.name, child ])).flat())
+          const parents = Object.fromEntries(categories.filter(c => c.parent).map(c => [c.parent?.name, c.parent ]))
           return {
-              reference: category,
-              children: category.children,
-              parent: category.parent
+              reference: categories[0],
+              children: [ ...Object.values(children) ] as SpecificSynchronicCategory[],
+              parents: [ ...Object.values(parents) ] as SpecificSynchronicCategory[]
           }
       }
   })
@@ -70,13 +75,13 @@
       border: 1px solid black;
       margin: 2px;
   }
-  .feedback {
+  .context {
       display: flex;
       flex-direction: row;
       flex: 0;
       align-items: center;
   }
-  .children {
+  .children, .parents {
       display: flex;
       flex-direction: column;
       flex: 0;
