@@ -55,5 +55,7 @@
     --synchronic-category-header-width: var(--moment-minimum-width);
     --synchronic-category-descriptem-width: calc(var(--moment-minimum-width) + 50px);
     --synchronic-category-relation-width: 60px;
+    --overview-height: 12px;
+    --overview-width: 50px;
   }
 </style>

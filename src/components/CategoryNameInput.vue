@@ -17,6 +17,13 @@
         {{c.name}}
       </div>
     </div>
+    <div class="relation">
+      <SpecificSynchronicCategoryRelation
+        v-if="context.reference"
+        :type="context.reference.abstractionType"
+        :childrenCount="context.children.length">
+      </SpecificSynchronicCategoryRelation>
+    </div>
     <div class="category reference"
          v-if="context.reference">
       {{context.reference.name}}
@@ -36,6 +43,7 @@
   import { computed, ref } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
+  import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
 
   const store = useProjectStore()
 
@@ -56,6 +64,7 @@
 
   const context = computed(() => {
       const categories = store.getSpecificSynchronicCategoriesByName(name.value)
+      // FIXME: add names starting with
       if (!categories.length) {
           return { original: true }
       } else {
@@ -74,6 +83,11 @@
   .category {
       border: 1px solid black;
       margin: 2px;
+      overflow: hidden;
+      font-size: 8px;
+      width: var(--overview-width) !important;
+      height: var(--overview-height) !important;
+      align-self: center;
   }
   .context {
       display: flex;
@@ -89,4 +103,12 @@
   .reference {
       font-weight: bold;
   }
+  .relation {
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      min-height: var(--overview-height);
+      line-height: 14px;
+  }
+
 </style>
