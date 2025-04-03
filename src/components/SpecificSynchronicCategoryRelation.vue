@@ -35,7 +35,7 @@
           :stroke-width="strokeWidth" />
         <path
           v-if="isSpecialization"
-          :d="`M${parentPosition.x} ${parentPosition.y} l -${ 2 * symbolHalfWidth } -${symbolHalfHeight} l 0 ${2 * symbolHalfHeight} Z`"
+          :d="`M${parentPosition.x} ${parentPosition.y} l -${ 2 * symbolHalfWidth } -${2 * symbolHalfHeight} l 0 ${4 * symbolHalfHeight} Z`"
           fill="white"
           stroke="black"
           :stroke-width="strokeWidth" />
@@ -73,7 +73,7 @@
 
   const symbolHalfHeight = computed(() => {
       const count = props.childrenCount
-      return count < 2 ? 6 : 6 / (count / 5)
+      return 6 / (1.05 ** count)
   })
 
   const isAggregation = computed(() => props.type === 'aggregation')
