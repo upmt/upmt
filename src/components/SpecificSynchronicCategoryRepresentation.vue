@@ -194,8 +194,22 @@
       console.log("Should expand SSC")
   }
 
+  function createSpecificSynchronicCategory (where: string) {
+      if (category.value) {
+          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
+                                              category.value.specificsynchronicmodelId,
+                                              where,
+                                              null)
+          showContent()
+      }
+  }
+
   function droppedSpecificSynchronicCategory (categoryId: string) {
       // DND on a category to reparent
+      if (!categoryId) {
+          // Empty categoryId: create a new child
+          createSpecificSynchronicCategory(`in:${props.categoryId}`)
+      }
       const source = store.getSpecificSynchronicCategory(categoryId)
       if (categoryId !== props.categoryId && source) {
           // It was maybe a root category. Remove it from the root
@@ -270,16 +284,6 @@
           }
       } catch (e) {
           console.log(`Cannot parse ${selectionData}: ${e}`)
-      }
-  }
-
-  function createSpecificSynchronicCategory (where: string) {
-      if (category.value) {
-          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
-                                              category.value.specificsynchronicmodelId,
-                                              where,
-                                              null)
-          showContent()
       }
   }
 

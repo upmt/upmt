@@ -7,22 +7,27 @@
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
-      <div class="specificsynchronicmodel-title">
-        <q-icon
-          ref="handle"
+      <DragElement
+        type="specificsynchroniccategory"
+        data=""
+        @click.meta="debug">
+        <div class="specificsynchronicmodel-title">
+          <q-icon
+            ref="handle"
           class="specificsynchronicmodel-handle"
-          size="xs"
-          @click.meta="debug"
-          name="mdi-graph-outline"></q-icon>
-        <q-btn
-          dense
-          flat
-          no-caps
-          @click="createSpecificSynchronicCategory(`inmodel:${modelId}`)"
-          title="Drop a descriptem here to create a new category">
-          New category
-        </q-btn>
-      </div>
+            size="xs"
+            @click.meta="debug"
+            name="mdi-graph-outline"></q-icon>
+          <q-btn
+            dense
+            flat
+            no-caps
+            @click="createSpecificSynchronicCategory(`inmodel:${modelId}`)"
+            title="Drop a descriptem here to create a new category">
+            New category
+          </q-btn>
+        </div>
+      </DragElement>
     </DropZone>
     <div class="specificsynchronicmodel-categories">
       <SpecificSynchronicCategoryRepresentation
@@ -38,6 +43,7 @@
   import { computed } from 'vue'
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
+  import DragElement from './DragElement.vue'
   import DropZone from './DropZone.vue'
   import SpecificSynchronicCategoryRepresentation from './SpecificSynchronicCategoryRepresentation.vue'
 
