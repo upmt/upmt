@@ -10,6 +10,11 @@
            :class="{ 'has-child': isCurrentChild(c.name) }"
            v-for="c in context.children"
            :key="c.id">
+        <q-checkbox
+          size="10pt"
+          v-if="! isCurrentChild(c.name)"
+          v-model="newChildren"
+          :val="c.name" />
         {{c.name}}
       </div>
     </div>
@@ -77,6 +82,8 @@
 
   const name = ref(props.category.name)
 
+  const newChildren = ref([])
+
   const completions = ref([] as string[])
 
   const childrenNames = computed(() => new Set(props.category?.children.map(c => c.name) ?? []))
@@ -87,6 +94,15 @@
       if (props.category) {
           store.updateElement(props.category, { name: name.value })
       }
+
+      newChildren.value.forEach(n => {
+          store.addSpecificSynchronicCategory(n,
+                                              props.category.specificsynchronicmodelId,
+                                              `in:${props.category.id}`)
+      })
+      // Since validate may be called twice, reset the newChildren array
+      newChildren.value = []
+
       emit('change', name.value)
   }
 
