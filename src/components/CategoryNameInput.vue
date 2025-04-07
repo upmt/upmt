@@ -1,4 +1,10 @@
 <template>
+  <div class="completions">
+    <div v-for="c in context.completions"
+         :key="c">
+      {{c}}
+    </div>
+  </div>
   <q-input v-model="name"
            @focus="($event.target as HTMLInputElement).select()"
            dense
@@ -64,16 +70,19 @@
 
   const context = computed(() => {
       const categories = store.getSpecificSynchronicCategoriesByName(name.value)
+      const completions = store.getSpecificSynchronicCategoryNamesByPrefix(name.value)
       // FIXME: add names starting with
       if (!categories.length) {
-          return { original: true }
+          return { original: true,
+                   completions }
       } else {
           const children = Object.fromEntries(categories.map(c => c.children.map(child => [ child.name, child ])).flat())
           const parents = Object.fromEntries(categories.filter(c => c.parent).map(c => [c.parent?.name, c.parent ]))
           return {
               reference: categories[0],
               children: [ ...Object.values(children) ] as SpecificSynchronicCategory[],
-              parents: [ ...Object.values(parents) ] as SpecificSynchronicCategory[]
+              parents: [ ...Object.values(parents) ] as SpecificSynchronicCategory[],
+              completions
           }
       }
   })
@@ -110,5 +119,11 @@
       min-height: var(--overview-height);
       line-height: 14px;
   }
-
+  .completions {
+      display: flex;
+      flex-direction: column;
+      max-height: 5em;
+      overflow-x: hidden;
+      overflow-y: auto;
+  }
 </style>
