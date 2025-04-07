@@ -1,15 +1,4 @@
 <template>
-  <div class="completions">
-    <div v-for="c in context.completions"
-         :key="c">
-      {{c}}
-    </div>
-  </div>
-  <q-input v-model="name"
-           @focus="($event.target as HTMLInputElement).select()"
-           dense
-           @keyup.enter="validate"
-           autofocus />
   <div class="context"
        v-if="context.original">
     <em>Nom original</em>
@@ -18,6 +7,7 @@
        v-else>
     <div class="children">
       <div class="category"
+           :class="{ 'has-child': isCurrentChild(c.name) }"
            v-for="c in context.children"
            :key="c.id">
         {{c.name}}
@@ -31,17 +21,43 @@
       </SpecificSynchronicCategoryRelation>
     </div>
     <div class="category reference"
+         :class="{ 'is-current': isCurrentName(context.reference.name) }"
          v-if="context.reference">
       {{context.reference.name}}
     </div>
     <div class="parents">
       <div class="category parent"
+           :class="{ 'has-parent': isCurrentParent(parent?.name) }"
            v-for="parent in context.parents"
            :key="parent?.id ?? ''">
         {{parent?.name ?? ''}}
       </div>
     </div>
   </div>
+  <q-select
+    dense
+    @focus="($event.target as HTMLInputElement).select()"
+    filled
+    :model-value="name"
+    use-input
+    hide-selected
+    fill-input
+    :input-debounce="0"
+    :options="context?.completions ?? []"
+    @filter="filterNames"
+    @input-value="setName"
+    @keyup.enter="validate"
+    autofocus
+    >
+    <template v-slot:no-option>
+      <q-item>
+        <q-item-section class="text-grey">
+          No results
+        </q-item-section>
+      </q-item>
+    </template>
+  </q-select>
+
 </template>
 
 <script setup lang="ts">
@@ -61,7 +77,13 @@
 
   const name = ref(props.category.name)
 
+  const completions = ref([] as string[])
+
+  const childrenNames = computed(() => new Set(props.category?.children.map(c => c.name) ?? []))
+
   function validate () {
+      // If the select has focus, then use the selected name. Else use the input name value.
+
       if (props.category) {
           store.updateElement(props.category, { name: name.value })
       }
@@ -86,6 +108,30 @@
           }
       }
   })
+
+  function isCurrentChild (name: string) {
+      return childrenNames.value.has(name)
+  }
+
+  function isCurrentParent (name: string) {
+      return props.category.parent?.name == name
+  }
+
+  function isCurrentName (name: string) {
+      return props.category?.name === name
+  }
+
+  function setName (value: string) {
+      name.value = value
+      console.log("setName", value)
+  }
+
+  function filterNames (val: string, update: (cb: () => void) => void): void {
+      console.log("filterNames", val, context.value?.completions)
+      update(() => {
+          completions.value = context.value?.completions ?? []
+      })
+  }
 </script>
 
   <style scoped>
@@ -125,5 +171,10 @@
       max-height: 5em;
       overflow-x: hidden;
       overflow-y: auto;
+  }
+  .has-child,
+  .has-parent,
+  .is-current {
+      background-color: lightgreen;
   }
 </style>
