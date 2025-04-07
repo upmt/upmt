@@ -99,7 +99,8 @@
           no-caps>
         </q-btn>
 
-        <div class="moment-synchronic-specific-model flex row">
+        <div class="moment-synchronic-specific-model flex row"
+             :class="{ 'moment-synchronic-specific-model-edited': isEditedModel }">
           <SpecificSynchronicModelOverview
             :modelId="moment?.specificsynchronicmodel?.id ?? ''">
           </SpecificSynchronicModelOverview>
@@ -178,9 +179,14 @@
       layout: { type: String, default: "vertical" }
   })
 
-  const { highlightedMomentId } = storeToRefs(istore)
+  const {
+      highlightedMomentId,
+      editedSpecificSynchronicModelId
+  } = storeToRefs(istore)
 
   const moment = computed(() => store.getMoment(props.momentId))
+
+  const isEditedModel = computed(() => moment.value?.specificsynchronicmodel?.id === editedSpecificSynchronicModelId.value)
 
   function debug () {
       (window as any).moment = moment.value
@@ -423,5 +429,9 @@
   }
   .new-moment-button:hover {
       opacity: .8;
+  }
+  .moment-synchronic-specific-model-edited {
+      border: 3px dotted blue;
+      min-height: 1em;
   }
 </style>
