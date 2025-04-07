@@ -70,7 +70,7 @@
   const filenames = computed(() => {
       console.log(refreshKey.value)
       if (fs.existsSync(props.dir)) {
-          return fs.readdirSync(props.dir)
+          return fs.readdirSync(props.dir).toSorted().reverse()
       } else {
           return []
       }
