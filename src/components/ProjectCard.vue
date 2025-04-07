@@ -20,8 +20,9 @@
     <q-card-actions align="right">
       <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Open</q-btn>
       <q-btn :to="{ name: 'spreadsheet', params: { id: projectId } }" flat>Compare</q-btn>
-      <q-btn @click="exportProject(project)" flat>Save</q-btn>
-      <q-btn @click="doStoreProject(projectId)" flat>Store</q-btn>
+      <q-btn title="Save project in browser database"
+             @click="doStoreProject(projectId)"
+             flat>Save</q-btn>
     </q-card-actions>
 
     <q-expansion-item
@@ -40,12 +41,11 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import { exportFile, useQuasar } from 'quasar'
+  import { useQuasar } from 'quasar'
   import { storeToRefs } from 'pinia'
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import Project from 'stores/models/project'
   import { storeProject } from 'stores/storage'
   import StorageList from 'components/StorageList.vue'
 
@@ -74,23 +74,6 @@
   })
 
   const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
-
-  function exportProject (project: Project) {
-      const data = useProjectStore().hydrateProject(project.id)
-
-      const status = exportFile(project.filename ?? project.label,
-                                JSON.stringify(data, null, 2), {
-                                    encoding: 'utf-8',
-                                    mimeType: 'application/json'
-                                })
-
-      if (status === true) {
-          // browser allowed it
-      } else {
-          // browser denied it
-          console.error(`Error: ${status}`)
-      }
-  }
 
   function doStoreProject (projectId: string) {
       const basename = storeProject(projectId)
