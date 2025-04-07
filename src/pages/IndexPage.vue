@@ -15,7 +15,7 @@
              class="column col-7">
 
           <div v-if="currentProjectId"
-               class="row q-pa-sm row q-gutter-sm">
+               class="column q-pa-sm row q-gutter-sm">
 
             <q-card-section
               class="bg-primary text-white">
