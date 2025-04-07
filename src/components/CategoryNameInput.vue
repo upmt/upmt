@@ -7,6 +7,7 @@
        v-else>
     <div class="children">
       <div class="category"
+           :title="c.name"
            :class="{ 'has-child': isCurrentChild(c.name) }"
            v-for="c in context.children"
            :key="c.id">
@@ -26,12 +27,14 @@
       </SpecificSynchronicCategoryRelation>
     </div>
     <div class="category reference"
+         v-if="context.reference"
          :class="{ 'is-current': isCurrentName(context.reference.name) }"
-         v-if="context.reference">
+         :title="context.reference.name">
       {{context.reference.name}}
     </div>
     <div class="parents">
       <div class="category parent"
+           :title="parent?.name ?? ''"
            :class="{ 'has-parent': isCurrentParent(parent?.name) }"
            v-for="parent in context.parents"
            :key="parent?.id ?? ''">
@@ -153,6 +156,7 @@
   <style scoped>
   .category {
       border: 1px solid black;
+      display: flex;
       margin: 2px;
       overflow: hidden;
       font-size: 8px;
