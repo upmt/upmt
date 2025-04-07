@@ -1,5 +1,5 @@
 <template>
-  <div class="interview"
+  <div class="interview flex column"
        v-if="interview"
        :data-interview="interviewId">
 
@@ -193,7 +193,6 @@
   .interview {
     display: flex;
     flex-direction: column;
-    overflow: hidden !important;
   }
   .interview::-webkit-scrollbar:horizontal{} {
       background-color: red;
@@ -204,5 +203,6 @@
   }
   .scrollable {
       overflow: auto;
+      flex-grow: 1;
   }
 </style>

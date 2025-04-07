@@ -63,6 +63,7 @@
               <template v-slot:before>
                 <q-splitter
                   class="fit fullwindow-height flex"
+                  beforeClass="flex"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
