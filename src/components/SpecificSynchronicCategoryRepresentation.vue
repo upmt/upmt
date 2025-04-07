@@ -389,6 +389,12 @@
   .on-name-hover {
       opacity: 0;
   }
+  .specificsynchroniccategory-name {
+      min-width: 6em;
+  }
+  .specificsynchroniccategory-name:hover {
+      border: 1px dashed #ccccccee;
+  }
   .specificsynchroniccategory-justification {
       align-self: center;
       min-height: 16px;
