@@ -157,6 +157,7 @@
   }
   .reference {
       font-weight: bold;
+      border: 2px solid black;
   }
   .relation {
       margin: 0;
