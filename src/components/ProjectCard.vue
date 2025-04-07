@@ -19,7 +19,6 @@
 
     <q-card-actions align="right">
       <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Open</q-btn>
-      <q-btn :to="{ name: 'spreadsheet', params: { id: projectId } }" flat>Compare</q-btn>
       <q-btn title="Save project in browser database"
              @click="doStoreProject(projectId)"
              flat>Save</q-btn>
