@@ -2,7 +2,11 @@
   <q-card
     v-if="project"
     class="project-card">
-    <q-card-section class="bg-secondary text-white">
+    <q-card-section :class="{
+                            'bg-positive': isCurrentProject,
+                            'bg-secondary': !isCurrentProject,
+                            'text-white': true
+                            }">
       <div
         :title="`Loaded from ${project.filename}`"
         class="text-h6">{{ project.name }}</div>
@@ -37,20 +41,25 @@
 
   import { computed } from 'vue'
   import { exportFile, useQuasar } from 'quasar'
+  import { storeToRefs } from 'pinia'
 
   import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
+  import Project from 'stores/models/project'
   import { storeProject } from 'stores/storage'
   import StorageList from 'components/StorageList.vue'
-
-  import Project from 'stores/models/project'
 
   const $q = useQuasar()
 
   const store = useProjectStore()
 
+  const istore = useInterfaceStore()
+
   const props = defineProps({
       projectId: { type: String, default: "" }
-      })
+  })
+
+  const { currentProjectId } = storeToRefs(istore)
 
   const project = computed(() => {
       if (props.projectId) {
@@ -63,6 +72,8 @@
   const storageDir = computed(() => {
       return `/projects/${props.projectId}`
   })
+
+  const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
 
   function exportProject (project: Project) {
       const data = useProjectStore().hydrateProject(project.id)
