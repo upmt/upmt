@@ -114,9 +114,9 @@
 
           <q-tab-panel :name="newInterview"
                        :key="newInterview">
-            <CreateInterviewForm :projectId="projectId"
-                                 @created="onInterviewCreated"
-                                 @cancel="onInterviewCancel">
+            <CreateInterviewForm
+              @validate="onInterviewCreate"
+              @cancel="onInterviewCancel">
             </CreateInterviewForm>
           </q-tab-panel>
         </q-tab-panels>
@@ -131,11 +131,11 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
-  import Interview from 'stores/models/interview'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import CreateInterviewForm from 'components/CreateInterviewForm.vue'
+  import type { InterviewInfo } from 'components/CreateInterviewForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
@@ -186,12 +186,56 @@
       istore.setEditedSpecificSynchronicModelId("")
   })
 
-  function onInterviewCreated (interview: Interview) {
+  function onInterviewCreate (info: InterviewInfo) {
+      // Create the interview
+      const i = store.getRepo().Interview.save({
+          // This should be ...info
+          // but then TypeScript has trouble determining output type
+          name: info.name,
+          participantName: info.participantName,
+          comment: info.comment,
+          date: info.date,
+          text: info.text,
+          parentId: props.projectId,
+          annotations: [
+          ],
+          analysis: {
+              name: "",
+              rootMoment: {
+                      // Root moment is not visible per-se, it serves
+                  // as a placeholder for its children
+                  name: "Root moment",
+                  children: [
+                      {
+                          name: "Moment 1",
+                          specificsynchronicmodel: {
+                              name: "Initial",
+                              categories: []
+                          },
+                          justification: {
+                              name: "",
+                              descriptems: []
+                          }
+                      }
+                  ]
+              }
+          }
+      })
+
+      const rootMoment = i.analysis?.rootMoment
+      if (rootMoment) {
+          // Fix interviewId for new moments
+          store.updateMoment(rootMoment.id, { interviewId: i.id })
+          if (rootMoment.children.length && rootMoment.children[0]) {
+              store.updateMoment(rootMoment.children[0].id, { interviewId: i.id })
+          }
+      }
+
       // Switch to tab of new interview
       setTimeout(() => {
           router.push({
               query: {
-                  currentInterviewId: interview.id
+                  currentInterviewId: i.id
               }
           }).catch(e => {
              console.log(`Error when switching view: ${e}`)

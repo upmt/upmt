@@ -1,20 +1,28 @@
 <template>
   <q-card>
-    <q-card-section class="bg-secondary text-white text-h5">
-      Create a new interview
-    </q-card-section>
-    <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
+    <div v-if="!interview">
+      <q-card-section class="bg-secondary text-white text-h5">
+        Create a new interview
+      </q-card-section>
+      <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
+    </div>
+    <div v-else>
+      <q-card-section class="bg-secondary text-white text-h5">
+        Editing {{ interview.name }}
+      </q-card-section>
+      <p>Mandatory information is marked with *</p>
+    </div>
 
     <q-form
-      name="creating"
+      name="interviewForm"
       @submit="onSubmit"
       class="q-gutter-md"
       >
 
       <div>
-        <q-btn label="Create"
+        <q-btn :label="!interview ? 'Create':'Validate'"
                type="submit"
-               :disabled="!canCreate"
+               :disabled="!canValidate"
                color="primary"/>
         <q-btn label="Cancel"
                color="primary"
@@ -27,7 +35,7 @@
 
         <q-input
           filled
-          v-model="creatingParticipant"
+          v-model="participant"
           label="Participant name *"
           lazy-rules
           class="col-4"
@@ -37,7 +45,7 @@
         <q-input
           filled
           type="date"
-          v-model="creatingDate"
+          v-model="date"
           label="Interview date"
           lazy-rules
           class="col-4 q-px-md"
@@ -45,7 +53,7 @@
 
         <q-input
           filled
-          v-model="creatingName"
+          v-model="name"
           label="Interview name/id *"
           lazy-rules
           class="col-4"
@@ -58,7 +66,7 @@
         filled
         autogrow
         type="text"
-        v-model="creatingComment"
+        v-model="comment"
         label="Comment"
         />
 
@@ -67,10 +75,11 @@
         label-slot
         autogrow
         counter
+        :disabled="!isNewInterview"
         :input-style="{ minHeight: '4em', maxHeight: '30em' }"
         hint="Please provide the interview text by pasting it here, uploading a file with the upload button or by dragging it here."
         type="textarea"
-        v-model="creatingText"
+        v-model="text"
         label="Interview text *"
         >
         <template v-slot:label>
@@ -91,81 +100,56 @@
 <script setup lang="ts">
   import { useQuasar, QFile } from 'quasar'
   import { computed, ref, Ref } from 'vue'
-  import { useProjectStore } from 'stores/projectStore'
+  import Interview from 'stores/models/interview'
 
   const props = defineProps({
-      projectId: { type: String, required: true }
+      interview: { type: Interview, required: false }
   })
 
-  const emit = defineEmits([ 'created', 'cancel' ])
+  export type InterviewInfo = {
+      name: string
+      participantName: string
+      comment: string
+      date: string
+      text: string
+  }
+
+  const emit = defineEmits([ 'validate', 'cancel' ])
 
   const $q = useQuasar()
 
-  const store = useProjectStore()
+  const isNewInterview = computed(() => !props.interview)
 
   const filepicker: Ref<QFile | null> = ref(null)
   const interviewFilename = ref(null)
 
-  const creatingName = ref("")
-  const creatingParticipant = ref("")
-  const creatingDate = ref("")
-  const creatingComment = ref("")
-  const creatingText = ref("")
+  const name = ref(props.interview?.name ?? "")
+  const participant = ref(props.interview?.participantName ?? "")
+  const date = ref(props.interview?.date ?? "")
+  const comment = ref(props.interview?.comment ?? "")
+  const text = ref(props.interview?.text ?? "")
 
-  const canCreate = computed(() => creatingName.value && creatingParticipant.value && creatingText.value)
+  const canValidate = computed(() => name.value && participant.value && text.value)
 
   function onSubmit (event: Event) {
       if (event.target) {
-          const i = store.getRepo().Interview.save({
-              name: creatingName.value,
-              participantName: creatingParticipant.value,
-              comment: creatingComment.value,
-              date: creatingDate.value,
-              text: creatingText.value,
-              parentId: props.projectId,
-              annotations: [
-              ],
-              analysis: {
-                  name: "",
-                  rootMoment: {
-                      // Root moment is not visible per-se, it serves
-                      // as a placeholder for its children
-                      name: "Root moment",
-                      children: [
-                          {
-                              name: "Moment 1",
-                              specificsynchronicmodel: {
-                                  name: "Initial",
-                                  categories: []
-                              },
-                              justification: {
-                                  name: "",
-                                  descriptems: []
-                              }
-                          }
-                      ]
-                  }
-              }
-          })
-          const rootMoment = i.analysis?.rootMoment
-          if (rootMoment) {
-              // Fix interviewId for new moments
-              store.updateMoment(rootMoment.id, { interviewId: i.id })
-              if (rootMoment.children.length && rootMoment.children[0]) {
-                  store.updateMoment(rootMoment.children[0].id, { interviewId: i.id })
-              }
-          }
-          emit("created", i)
+          emit('validate', {
+              name: name.value,
+              participantName: participant.value,
+              comment: comment.value,
+              date: date.value,
+              text: text.value
+          } as InterviewInfo)
       }
   }
 
   function onCancel () {
       // Reset all form values
-      creatingParticipant.value = ""
-      creatingName.value = ""
-      creatingDate.value = ""
-      creatingText.value = ""
-      creatingComment.value = ""
+      participant.value = ""
+      name.value = ""
+      date.value = ""
+      text.value = ""
+      comment.value = ""
       interviewFilename.value = null
 
       emit("cancel")
@@ -175,7 +159,7 @@
       const reader = new FileReader()
       reader.onload = () => {
           // Parse file and extract data
-          creatingText.value = reader.result as string
+          text.value = reader.result as string
       }
       reader.onerror = () => {
           console.error('Error reading file:', reader.error)
