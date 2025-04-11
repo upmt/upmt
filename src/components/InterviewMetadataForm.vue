@@ -1,16 +1,16 @@
 <template>
   <q-card>
-    <div v-if="!interview">
-      <q-card-section class="bg-secondary text-white text-h5">
-        Create a new interview
-      </q-card-section>
-      <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
-    </div>
-    <div v-else>
+    <div v-if="interview">
       <q-card-section class="bg-secondary text-white text-h5">
         Editing {{ interview.name }}
       </q-card-section>
       <p>Mandatory information is marked with *</p>
+    </div>
+    <div v-else>
+      <q-card-section class="bg-secondary text-white text-h5">
+        Create a new interview
+      </q-card-section>
+      <p>Please provide the following information to create a new interview. Mandatory information is marked with *</p>
     </div>
 
     <q-form
@@ -71,11 +71,11 @@
         />
 
       <q-input
+        v-if="!interview"
         filled
         label-slot
         autogrow
         counter
-        :disabled="!isNewInterview"
         :input-style="{ minHeight: '4em', maxHeight: '30em' }"
         hint="Please provide the interview text by pasting it here, uploading a file with the upload button or by dragging it here."
         type="textarea"
@@ -118,8 +118,6 @@
 
   const $q = useQuasar()
 
-  const isNewInterview = computed(() => !props.interview)
-
   const filepicker: Ref<QFile | null> = ref(null)
   const interviewFilename = ref(null)
 
@@ -138,7 +136,8 @@
               participantName: participant.value,
               comment: comment.value,
               date: date.value,
-              text: text.value
+              // If we are editing an existing interview, the text cannot be modified (and the text ref will always be "")
+              text: props.interview ? props.interview.text : text.value
           } as InterviewInfo)
       }
   }

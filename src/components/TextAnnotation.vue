@@ -1,8 +1,20 @@
 <template>
-  <div class="textAnnotationContainer">
-    <q-toolbar class="row justify-end absolute-top bg-white">
+  <div class="textAnnotationContainer"
+       v-if="interview">
+    <q-toolbar
+      class="row justify-end absolute-top bg-white">
       <CommentIcon
         :element="interview" />
+      <q-btn
+        flat
+        size="sm"
+        dense
+        title="Edit metadata"
+        @click="isMetadataVisible = !isMetadataVisible"
+        icon="edit"
+        >
+      </q-btn>
+      <q-space></q-space>
       <q-btn
         size="sm"
         icon="mdi-cursor-text"
@@ -21,6 +33,12 @@
         :style="{ color: color }"
         />
     </q-toolbar>
+    <InterviewMetadataForm
+      v-if="isMetadataVisible"
+      :interview="interview"
+      @cancel="isMetadataVisible = false"
+      @validate="metadataValidate"
+      />
     <AnnotatedText
       class="textAnnotationComponent q-pt-lg q-pa-md"
       v-if="interview"
@@ -98,7 +116,9 @@
   import { ref, computed, watch } from 'vue'
   import { storeToRefs } from 'pinia'
   import AnnotatedText from './AnnotatedText.vue'
+  import CommentIcon from './CommentIcon.vue'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
+  import InterviewMetadataForm from './InterviewMetadataForm.vue'
   import Annotation from 'stores/models/annotation'
   import Descriptem from 'stores/models/descriptem'
   import { useProjectStore } from 'stores/projectStore'
@@ -128,6 +148,8 @@
 
   const contextMenuVisible = ref(false)
 
+  const isMetadataVisible = ref(false)
+
   const activeAnnotations = ref<Annotation[]>([])
   const activeDescriptems = ref<Descriptem[]>([])
   const currentSelection = ref<TextSelection| null>(null)
@@ -139,6 +161,20 @@
   const { highlightedDescriptemId } = storeToRefs(istore)
 
   const interview = computed(() => store.getInterview(props.interviewId))
+
+  import type { InterviewInfo } from './InterviewMetadataForm.vue'
+
+  function metadataValidate (info: InterviewInfo) {
+      isMetadataVisible.value = false
+      if (interview.value) {
+          store.updateElement(interview.value, {
+              name: info.name,
+              participantName: info.participantName,
+              date: info.date,
+              comment: info.comment
+          })
+      }
+  }
 
   const annotation2class = (a: Annotation) => {
       const mapping: Record<string, string> = {
