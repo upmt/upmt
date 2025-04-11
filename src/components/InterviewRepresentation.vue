@@ -81,9 +81,6 @@
 
       <q-space />
 
-      <CommentIcon
-        :element="interview" />
-
     </q-toolbar>
 
     <AnalysisRepresentation
@@ -101,7 +98,6 @@
   import { computed, ref } from 'vue'
   import type { Ref } from 'vue'
   import { useCssVar } from '@vueuse/core'
-  import CommentIcon from './CommentIcon.vue'
   import DragElement from './DragElement.vue'
   import AnalysisRepresentation from './AnalysisRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'

@@ -1,6 +1,8 @@
 <template>
   <div class="textAnnotationContainer">
     <q-toolbar class="row justify-end absolute-top bg-white">
+      <CommentIcon
+        :element="interview" />
       <q-btn
         size="sm"
         icon="mdi-cursor-text"
