@@ -114,10 +114,10 @@
 
           <q-tab-panel :name="newInterview"
                        :key="newInterview">
-            <CreateInterviewForm
+            <InterviewMetadataForm
               @validate="onInterviewCreate"
               @cancel="onInterviewCancel">
-            </CreateInterviewForm>
+            </InterviewMetadataForm>
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -134,8 +134,8 @@
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
-  import CreateInterviewForm from 'components/CreateInterviewForm.vue'
-  import type { InterviewInfo } from 'components/CreateInterviewForm.vue'
+  import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
+  import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
