@@ -34,6 +34,13 @@ type Subset<K> = {
         : K[attr]
 }
 
+export type GenericCategory = {
+  name: string
+  instances: SpecificSynchronicCategory[],
+  childrenNames: Set<string>,
+  children?: GenericCategory[]
+}
+
 /* Should find how to dynamically inject typescript definitions here:
 const repo = Object.fromEntries([
   Analysis,
@@ -1151,6 +1158,71 @@ export const useProjectStore = defineStore('projectStore', () => {
     return instances.map(ci => ci.moment)
   }
 
+  function getGenericSynchronicModels (projectId: string) {
+    // Return the generic synchronic models for the given projectId
+
+    // Get all specificsynchroniccategories
+    const categories = repo.SpecificSynchronicCategory
+      .where('projectId', projectId)
+      .all()
+
+    // Reconstitute structure
+    const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
+    categories.forEach(ssc => {
+      if (ssc) {
+        ssc.parent = mapping[ssc.parentId] || null
+        if (ssc.parent) {
+          // Add ssc to ssc.parent.children
+          if (ssc.parent.children === undefined) {
+            ssc.parent.children = []
+          }
+          ssc.parent.children.push(ssc)
+        }
+      }
+    })
+
+    // Now that all children are properly set, build the genericCategories structure
+    // GenericCategories is a recursive list of objects
+    // name: ssc_name
+    // instances: [ list of ssc instances ],
+    // children: [ list of children names ]
+    const genericCategories: Record<string, GenericCategory> = { }
+    const rootCategoryNames: string[] = []
+    categories.forEach(ssc => {
+      const generic = genericCategories[ssc.name]
+      if (ssc.specificsynchronicmodelId) {
+        rootCategoryNames.push(ssc.name)
+      }
+      if (generic) {
+        generic.instances.push(ssc);
+        (ssc.children || []).forEach(c => generic.childrenNames.add(c.name))
+      } else {
+        genericCategories[ssc.name] = {
+          name: ssc.name,
+          instances: [ ssc ],
+          childrenNames: new Set((ssc.children || []).map(c => c.name))
+        }
+      }
+    })
+
+    const nameToGeneric = (name: string): GenericCategory => {
+      const generic: GenericCategory | undefined = genericCategories[name]
+      if (! generic) {
+        console.error(`Cannot dereference GenericCategory ${name}`)
+        return {
+          name: 'name',
+          instances: [],
+          childrenNames: new Set()
+        }
+      }
+      return Object.assign(generic, { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname)) })
+    }
+
+    // Return the list of trees starting at rootCategoryNames,
+    // which correspond to the GenericSynchronicCategories
+    return rootCategoryNames.map(name => nameToGeneric(name))
+  }
+
   return {
     addAnnotation,
     addCategoryModel,
@@ -1186,6 +1258,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getCategoryModel,
     getCategoryModelMoments,
     getDescriptem,
+    getGenericSynchronicModels,
     getInterview,
     getInterviewAnnotations,
     getInterviewDescriptems,
