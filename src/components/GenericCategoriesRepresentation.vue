@@ -1,5 +1,6 @@
 <template>
   <div class="genericcategories-container"
+       :key="projectId"
        :data-project="projectId">
 
     <GenericSynchronicCategoryRepresentation
