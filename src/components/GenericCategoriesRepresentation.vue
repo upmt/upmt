@@ -1,0 +1,33 @@
+<template>
+  <div class="genericcategories-container"
+       :data-project="projectId">
+
+    <GenericSynchronicCategoryRepresentation
+      v-for="category in genericCategories"
+      :key="category.name"
+      :category="category">
+    </GenericSynchronicCategoryRepresentation>
+
+  </div>
+</template>
+
+<script setup lang="ts">
+
+  import { computed } from 'vue'
+  import GenericSynchronicCategoryRepresentation from './GenericSynchronicCategoryRepresentation.vue'
+  import { useProjectStore } from 'stores/projectStore'
+
+  const store = useProjectStore()
+
+  const props = defineProps({
+      projectId: { type: String, default: "" },
+  })
+
+  const genericCategories = computed(() => store.getGenericSynchronicModels(props.projectId))
+</script>
+
+<style scoped>
+  .genericcategories-container div {
+    margin: 8px;
+  }
+</style>
