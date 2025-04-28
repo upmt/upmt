@@ -1188,11 +1188,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     // instances: [ list of ssc instances ],
     // children: [ list of children names ]
     const genericCategories: Record<string, GenericCategory> = { }
-    const rootCategoryNames: string[] = []
+    const rootCategoryNames: Set<string> = new Set()
     categories.forEach(ssc => {
       const generic = genericCategories[ssc.name]
       if (ssc.specificsynchronicmodelId) {
-        rootCategoryNames.push(ssc.name)
+        rootCategoryNames.add(ssc.name)
       }
       if (generic) {
         generic.instances.push(ssc);
@@ -1223,7 +1223,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
-    return rootCategoryNames.map(name => nameToGeneric(name))
+    return [ ...rootCategoryNames.values() ].map(name => nameToGeneric(name))
   }
 
   return {
