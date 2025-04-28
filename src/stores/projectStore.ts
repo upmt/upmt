@@ -35,7 +35,8 @@ type Subset<K> = {
 }
 
 export type GenericCategory = {
-  name: string
+  name: string,
+  isRoot: boolean,
   instances: SpecificSynchronicCategory[],
   childrenNames: Set<string>,
   children?: GenericCategory[]
@@ -1167,7 +1168,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       .all()
 
     // Reconstitute structure
-    const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
+   const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
     categories.forEach(ssc => {
       if (ssc) {
         ssc.parent = mapping[ssc.parentId] || null
@@ -1199,6 +1200,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       } else {
         genericCategories[ssc.name] = {
           name: ssc.name,
+          isRoot: (!! ssc.specificsynchronicmodelId),
           instances: [ ssc ],
           childrenNames: new Set((ssc.children || []).map(c => c.name))
         }
@@ -1210,7 +1212,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       if (! generic) {
         console.error(`Cannot dereference GenericCategory ${name}`)
         return {
-          name: 'name',
+          name: `ERROR-${name}`,
+          isRoot: true,
           instances: [],
           childrenNames: new Set()
         }
