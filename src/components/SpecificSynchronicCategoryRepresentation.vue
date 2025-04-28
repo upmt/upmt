@@ -66,9 +66,10 @@
       </div>
 
       <DropZone data="add"
-                types="upmt/specificsynchroniccategory upmt/selection upmt/descriptem upmt/annotation upmt/color"
+                types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation upmt/color"
                 class="row justify-center"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
+                @genericsynchroniccategory="droppedGenericSynchronicCategory"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
@@ -113,9 +114,10 @@
 
       <DropZone :data="`in:${categoryId}`"
                 v-if="category.specificsynchronicmodelId"
-                types="upmt/specificsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
+                types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
                 class="empty_padding newssc-dropzone"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
+                @genericsynchroniccategory="droppedGenericSynchronicCategory"
                 @annotation="droppedCreatingAnnotation"
                 @selection="droppedCreatingSelection"
                 @descriptem="droppedCreatingDescriptem">
@@ -218,6 +220,20 @@
               specificsynchronicmodelId: null,
               parentId: props.categoryId
           })
+      }
+  }
+
+  function droppedGenericSynchronicCategory (categoryName: string, where: string) {
+      if (where === 'add') {
+          // There is no "add" for now
+          where = `in:${props.categoryId}`
+      }
+      if (category.value) {
+          store.addSpecificSynchronicCategory(categoryName,
+                                              category.value.specificsynchronicmodelId,
+                                              where,
+                                              null)
+          showContent()
       }
   }
 
