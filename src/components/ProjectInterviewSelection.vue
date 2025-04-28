@@ -37,7 +37,7 @@
 
           <q-separator />
           <GenericCategoriesRepresentation
-            projectId="project.id" />
+            :projectId="project.id" />
           <ModelFolderRepresentation
             :modelfolderId="project.modelfolder.id"
             :currentInterviewId="currentInterviewId">
