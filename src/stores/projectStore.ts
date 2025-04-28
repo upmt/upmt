@@ -1207,8 +1207,20 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
     })
 
-    const nameToGeneric = (name: string): GenericCategory => {
+    const nameToGeneric = (name: string, ancestors: Set<string> | null = null): GenericCategory => {
       const generic: GenericCategory | undefined = genericCategories[name]
+      if (ancestors === null) {
+        ancestors = new Set()
+      } else if (ancestors.has(name)) {
+        // Prevent recursive structures
+        console.log(`Error in generic structure: ${name} is present as its own ancestor`)
+        return {
+          name: `ERROR-${name}`,
+          isRoot: true,
+          instances: generic?.instances || [],
+          childrenNames: new Set()
+        }
+      }
       if (! generic) {
         console.error(`Cannot dereference GenericCategory ${name}`)
         return {
@@ -1218,7 +1230,8 @@ export const useProjectStore = defineStore('projectStore', () => {
           childrenNames: new Set()
         }
       }
-      return Object.assign(generic, { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname)) })
+      ancestors.add(name)
+      return Object.assign(generic, { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname, ancestors)) })
     }
 
     // Return the list of trees starting at rootCategoryNames,
