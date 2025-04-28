@@ -19,14 +19,14 @@
       <div class="genericsynchroniccategory-relation">
         <SpecificSynchronicCategoryRelation
           :type="abstractionType"
-          :childrenCount="category.children.length">
+          :childrenCount="category.childrenNames.length">
            </SpecificSynchronicCategoryRelation>
       </div>
 
       <div class="genericsynchroniccategory-header">
           <DragElement
-            type="specificsynchroniccategory"
-            :data="category.instances[0].id">
+            type="genericsynchroniccategory"
+            :data="category.name">
             <span class="genericsynchroniccategory-name">{{ category.name }}
             </span>
           </DragElement>
@@ -70,7 +70,7 @@
 
 <style scoped>
   .genericsynchroniccategory {
-       margin: 0;
+       margin: 1px 0;
        padding: 0;
        display: flex;
        flex-direction: row;
