@@ -24,9 +24,13 @@
       </div>
 
       <div class="genericsynchroniccategory-header">
-        <span class="genericsynchroniccategory-name">{{ category.name }}
-        </span>
-        <q-tooltip>{{ category.name }}</q-tooltip>
+          <DragElement
+            type="specificsynchroniccategory"
+            :data="category.instances[0].id">
+            <span class="genericsynchroniccategory-name">{{ category.name }}
+            </span>
+          </DragElement>
+          <q-tooltip>{{ category.name }}</q-tooltip>
       </div>
 
       <div
@@ -43,6 +47,7 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import DragElement from './DragElement.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   // import { useProjectStore } from 'stores/projectStore'
   // const store = useProjectStore()
