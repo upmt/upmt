@@ -1165,10 +1165,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     // Get all specificsynchroniccategories
     const categories = repo.SpecificSynchronicCategory
       .where('projectId', projectId)
-      .all()
+      .get()
 
     // Reconstitute structure
-   const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
+    const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
     categories.forEach(ssc => {
       if (ssc) {
         ssc.parent = mapping[ssc.parentId] || null
