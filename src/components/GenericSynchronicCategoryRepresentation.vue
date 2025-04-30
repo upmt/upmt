@@ -4,6 +4,7 @@
        :data-genericsynchroniccategory="category.name">
 
     <div class="genericsynchroniccategory"
+         :class="{ 'root-generic-synchronic-category': category.isRoot }"
          :style="{ backgroundColor: color }"
          v-if="category"
          :data-genericsynchroniccategory="category.name">
@@ -16,7 +17,8 @@
         </div>
       </div>
 
-      <div class="genericsynchroniccategory-relation">
+      <div class="genericsynchroniccategory-relation"
+           v-if="category.children">
         <SpecificSynchronicCategoryRelation
           :type="abstractionType"
           :childrenCount="category.childrenNames.length">
@@ -87,6 +89,9 @@
   .genericsynchroniccategory-container {
       display: flex;
       flex-direction: row;
+  }
+  .root-generic-synchronic-category:hover {
+      border: 1px dashed #ddd;
   }
   .genericsynchroniccategory-header {
       user-select: none;
