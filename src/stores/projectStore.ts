@@ -1241,7 +1241,11 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
-    return [ ...rootCategoryNames.values() ].map(name => nameToGeneric(name))
+    // and also the mapping by name
+    return {
+      categories: [ ...rootCategoryNames.values() ].map(name => nameToGeneric(name)),
+      byName: genericCategories
+    }
   }
 
   return {

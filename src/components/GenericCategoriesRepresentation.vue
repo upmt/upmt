@@ -4,7 +4,7 @@
        :data-project="projectId">
 
     <GenericSynchronicCategoryRepresentation
-      v-for="category in genericCategories"
+      v-for="category in genericCategories.categories"
       :key="category.name"
       :category="category">
     </GenericSynchronicCategoryRepresentation>
