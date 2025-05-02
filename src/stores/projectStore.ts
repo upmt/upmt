@@ -36,6 +36,7 @@ type Subset<K> = {
 
 export type GenericCategory = {
   name: string,
+  error?: string,
   isRoot: boolean,
   instances: SpecificSynchronicCategory[],
   childrenNames: Set<string>,
@@ -1213,18 +1214,22 @@ export const useProjectStore = defineStore('projectStore', () => {
         ancestors = new Set()
       } else if (ancestors.has(name)) {
         // Prevent recursive structures
-        console.log(`Error in generic structure: ${name} is present as its own ancestor`)
+        const error = `Error in generic structure: ${name} is present as its own ancestor`
+        console.log(error)
         return {
           name: `ERROR-${name}`,
+          error,
           isRoot: true,
           instances: generic?.instances || [],
           childrenNames: new Set()
         }
       }
       if (! generic) {
-        console.error(`Cannot dereference GenericCategory ${name}`)
+        const error = `Inconsistency in GenericCategory building for ${name}`
+        console.error(error)
         return {
           name: `ERROR-${name}`,
+          error,
           isRoot: true,
           instances: [],
           childrenNames: new Set()
