@@ -19,6 +19,19 @@ function basename (path: string) {
   return path.split('/').pop() ?? ""
 }
 
+function groupBy<T>(
+  arr: T[],
+  f: keyof T | ((item: T) => string)
+): Record<string, T[]> {
+  return arr.reduce((out: Record<string, T[]>, val: T) => {
+    const key =
+      typeof f === 'function' ? f(val) : String(val[f]);
+
+    (out[key] = out[key] || []).push(val);
+    return out;
+  }, {});
+}
+
 function timestampAdd (name: string) {
   // Offset the iso time so that toISOString returns a correct timestamp (for the user)
   const d = new Date();
@@ -41,6 +54,7 @@ function stringToId (name: string) {
 export {
 basename,
 ellipsize,
+groupBy,
 stringToId,
 timestampAdd,
 timestampStrip,
