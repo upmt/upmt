@@ -33,7 +33,14 @@
             <span class="genericsynchroniccategory-name">{{ category.name }}
             </span>
           </DragElement>
-          <q-tooltip>{{ category.name }}</q-tooltip>
+          <q-tooltip>{{ category.name }}
+            <div v-if="category.errors">
+              <span v-for="error, key in category.errors"
+                    :key="key">
+                {{ error }}
+              </span>
+            </div>
+          </q-tooltip>
       </div>
 
       <div
