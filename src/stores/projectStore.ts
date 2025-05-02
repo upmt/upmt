@@ -1205,7 +1205,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           generic.errors = [ ...(generic.errors ?? []), error ]
         }
         return {
-          name: `ERROR-${name}`,
+          name: `${name}`,
           errors: [ error ],
           isRoot: true,
           instances: generic?.instances || [],
@@ -1216,7 +1216,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         const error = `Inconsistency in GenericCategory building for ${name}`
         console.log(error)
         return {
-          name: `ERROR-${name}`,
+          name,
           errors: [ error ],
           isRoot: true,
           instances: [],
