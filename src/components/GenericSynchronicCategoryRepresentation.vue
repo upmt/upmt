@@ -25,7 +25,8 @@
            </SpecificSynchronicCategoryRelation>
       </div>
 
-      <div class="genericsynchroniccategory-header">
+      <div class="genericsynchroniccategory-header"
+           :class="{ 'has-error': category.errors?.length }">
           <DragElement
             type="genericsynchroniccategory"
             :data="category.name">
@@ -102,6 +103,9 @@
       width: 50px !important;
       height: 14px !important;
       align-self: center;
+  }
+  .genericsynchroniccategory-header.has-error {
+      border: 2px solid red;
   }
   .genericsynchroniccategory-relation,
   .genericsynchroniccategory-filler {
