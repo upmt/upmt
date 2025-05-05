@@ -110,9 +110,8 @@
   }
 
   const context = computed(() => {
-      const categories = store.getSpecificSynchronicCategoriesByName(name.value)
-      const completions = store.getSpecificSynchronicCategoryNamesByPrefix(name.value)
-      // FIXME: add names starting with
+      const categories = store.getSpecificSynchronicCategoriesByName(props.category.projectId, name.value)
+      const completions = store.getSpecificSynchronicCategoryNamesByPrefix(props.category.projectId, name.value)
       if (!categories.length) {
           return { original: true,
                    completions }

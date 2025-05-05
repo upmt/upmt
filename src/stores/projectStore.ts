@@ -454,18 +454,20 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
-  function getSpecificSynchronicCategoriesByName (name: string) {
+  function getSpecificSynchronicCategoriesByName (projectId: string, name: string) {
     return repo.SpecificSynchronicCategory
       .with('children')
       .with('parent')
       .with('justification', (query) => query.with('descriptems'))
+      .where('projectId', projectId)
       .where('name', name)
       .get()
   }
 
-  function getSpecificSynchronicCategoryNamesByPrefix (prefix: string) {
+  function getSpecificSynchronicCategoryNamesByPrefix (projectId: string, prefix: string) {
     const lower = prefix.toLowerCase()
     const categories = repo.SpecificSynchronicCategory
+      .where('projectId', projectId)
       .where('name', (name) => name.toLowerCase().startsWith(lower))
       .get()
     const names = [ ...new Set(categories.map(c => c.name)) ]
