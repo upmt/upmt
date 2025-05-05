@@ -18,10 +18,10 @@
       </div>
 
       <div class="genericsynchroniccategory-relation"
-           v-if="category.children">
+           v-if="category.children?.length">
         <SpecificSynchronicCategoryRelation
           :type="abstractionType"
-          :childrenCount="category.childrenNames.length">
+          :childrenCount="category.children?.length">
            </SpecificSynchronicCategoryRelation>
       </div>
 
@@ -84,8 +84,6 @@
        padding: 0;
        display: flex;
        flex-direction: row;
-       flex: 1;
-       height: 100%;
   }
   .genericsynchroniccategory-children {
       margin: 0;
@@ -93,6 +91,7 @@
       display: flex;
       flex-direction: column;
       align-self: center;
+      flex: 0 0 auto;
   }
   .genericsynchroniccategory-container {
       display: flex;
@@ -102,6 +101,7 @@
       border: 1px dashed #ddd;
   }
   .genericsynchroniccategory-header {
+      flex: 0 0 auto;
       user-select: none;
       cursor: pointer;
       border: 1px solid black;
@@ -114,11 +114,18 @@
   .genericsynchroniccategory-header.has-error {
       border: 2px solid red;
   }
-  .genericsynchroniccategory-relation,
+  .genericsynchroniccategory-relation {
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      line-height: 14px;
+  }
   .genericsynchroniccategory-filler {
       margin: 0;
       padding: 0;
       width: 10px;
       line-height: 14px;
+      flex: 0 0 auto;
   }
 </style>
