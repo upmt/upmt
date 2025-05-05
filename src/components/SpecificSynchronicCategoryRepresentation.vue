@@ -11,6 +11,7 @@
       <div :class="[ 'specificsynchroniccategory-children' ]">
         <div v-for="c in category.children" :key="c.id">
           <SpecificSynchronicCategoryRepresentation
+            :genericModel="genericModel"
             :categoryId="c.id">
           </SpecificSynchronicCategoryRepresentation>
         </div>
@@ -74,7 +75,8 @@
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
                 @color="droppedColor">
-        <div class="specificsynchroniccategory-header">
+        <div class="specificsynchroniccategory-header"
+             :class="{ 'has-error': genericElement.errors?.length }">
           <DragElement
             type="specificsynchroniccategory"
             :data="categoryId"
@@ -92,6 +94,14 @@
                                    :category="category" />
               </q-popup-edit>
             </span>
+            <q-tooltip>{{ categoryName }}
+              <div v-if="genericElement.errors">
+                <span v-for="error, key in genericElement.errors"
+                      :key="key">
+                  {{ error }}
+                </span>
+              </div>
+            </q-tooltip>
           </DragElement>
           <div class="element-toolbar">
             <q-badge
@@ -162,10 +172,29 @@
 
   const props = defineProps({
       categoryId: { type: String, default: "" },
+      genericModel: { type: Object, default: null },
       layout: { type: String, default: "vertical" }
   })
 
   const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
+
+  const categoryName = computed({
+      get () {
+          return category.value ? category.value.name : ""
+      },
+      set (value: string) {
+          store.updateSpecificSynchronicCategory(props.categoryId, { name:value })
+      }
+  })
+
+  const categoryColor = computed({
+      get () {
+          return category.value ? category.value.color : ""
+      },
+      set (color: string) {
+          store.updateSpecificSynchronicCategory(props.categoryId, { color })
+      }
+  })
 
   const criterion = computed({
       get: () => category.value?.criterion ?? '',
@@ -185,6 +214,8 @@
   })
 
   const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
+
+  const genericElement = computed(() => props.genericModel ? props.genericModel.byName[categoryName.value] : {})
 
   function debug () {
       (window as any).category = category.value;
@@ -308,24 +339,6 @@
   }
 
 
-  const categoryName = computed({
-      get () {
-          return category.value ? category.value.name : ""
-      },
-      set (value: string) {
-          store.updateSpecificSynchronicCategory(props.categoryId, { name:value })
-      }
-  })
-
-  const categoryColor = computed({
-      get () {
-          return category.value ? category.value.color : ""
-      },
-      set (color: string) {
-          store.updateSpecificSynchronicCategory(props.categoryId, { color })
-      }
-  })
-
   const menuActions = [
       [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
   ]
@@ -387,6 +400,9 @@
   }
   .specificsynchroniccategory-header {
       border: 1px solid grey;
+  }
+  .specificsynchroniccategory-header.has-error {
+      border: 1px solid red;
   }
   .specificsynchroniccategory-body {
       border: 1px solid grey;
