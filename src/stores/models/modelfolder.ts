@@ -16,7 +16,7 @@ export default class ModelFolder extends BaseModel {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @Bool(true) declare isExpanded: boolean
 
   // ownerId is the parent project for toplevel modelfolders
@@ -41,7 +41,7 @@ export default class ModelFolder extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,

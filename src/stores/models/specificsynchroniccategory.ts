@@ -16,7 +16,7 @@ export default class SpecificSynchronicCategory extends Justifiable {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
 
   // Abstraction types: classification / aggregation / generalization
   @Str('') declare abstractionType: string
@@ -44,7 +44,7 @@ export default class SpecificSynchronicCategory extends Justifiable {
       creator: this.creator,
       contributor: this.contributor,
       color: this.color,
-      comment: this.comment,
+      note: this.note,
       criterion: this.criterion,
       abstractionType: this.abstractionType
     }

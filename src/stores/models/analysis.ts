@@ -26,7 +26,7 @@ export default class Analysis extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       name: this.name,
       rootMoment: this.rootMoment?.toJSON()
     }

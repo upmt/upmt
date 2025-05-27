@@ -15,7 +15,7 @@
 
     <q-separator />
 
-    <p>{{ project.comment }}</p>
+    <p>{{ project.note }}</p>
 
     <q-card-actions align="right">
       <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Open</q-btn>

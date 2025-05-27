@@ -23,7 +23,7 @@
                          icon="mdi-comment-text-outline"
                          :name="interview.id"
                          :key="interview.id"
-                         :title="interview.comment"
+                         :title="interview.note"
                          :label="interview.label">
             </q-route-tab>
             <q-route-tab :to="{ query: { tab: newInterview } }"
@@ -196,7 +196,7 @@
           // but then TypeScript has trouble determining output type
           name: info.name,
           participantName: info.participantName,
-          comment: info.comment,
+          note: info.note,
           date: info.date,
           text: info.text,
           parentId: props.projectId,

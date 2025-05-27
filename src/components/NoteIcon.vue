@@ -3,14 +3,14 @@
     size="xs"
     flat
     round
-    :class="commentClass"
+    :class="noteClass"
     icon="mdi-chat-outline">
-    <q-popup-edit v-model="comment"
+    <q-popup-edit v-model="note"
                   auto-save
                   buttons
                   v-slot="scope">
       <q-input
-        label="Comment"
+        label="Note"
         type="textarea"
         v-model="scope.value"
         @keyup.ctrl.enter="scope.set"
@@ -21,8 +21,8 @@
     </q-popup-edit>
     <q-tooltip
       class="bg-blue-grey-2 text-black"
-      v-if="comment">
-      <pre class="comment-tooltip">{{ comment }}</pre>
+      v-if="note">
+      <pre class="note-tooltip">{{ note }}</pre>
     </q-tooltip>
   </q-btn>
 </template>
@@ -40,30 +40,31 @@
       elementType: { type: String, default: "" }
   })
 
-  const comment = computed({
+  const note = computed({
       get: () => {
-          return props.element ? props.element.comment : ""
+          return props.element ? props.element.note : ""
       },
       set: (value) => {
           if (props.element) {
-              store.updateElement(props.element, { comment: value })
+              store.updateElement(props.element, { note: value })
           }
       }
   })
 
-  const commentClass = computed(() => {
-      return comment.value ? [ "comment" ] : [ "comment", "comment-is-empty" ]
+  const noteClass = computed(() => {
+      return note.value ? [ "note" ] : [ "note", "note-is-empty" ]
   })
 </script>
 
 <style scoped>
-  .comment-is-empty {
+  .note-is-empty {
       opacity: .3;
   }
   .text-pre-line {
-      white-space: pre-line;
+      /* Preserve all white-space characters, including line breaks */
+      white-space-collapse: preserve;
   }
-  .comment-tooltip {
+  .note-tooltip {
       font-family: sans;
   }
 </style>

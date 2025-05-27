@@ -110,7 +110,7 @@
               color="grey-6"
               :title="`${descriptemCount} descriptems`"
               rounded>{{ descriptemCount }}</q-badge>
-            <CommentIcon
+            <NoteIcon
               :element="category" />
             <div class="element-toolbar-secondary on-name-hover">
               <ColorizeIcon
@@ -160,7 +160,7 @@
   import DragElement from './DragElement.vue'
   import CategoryNameInput from './CategoryNameInput.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
-  import CommentIcon from './CommentIcon.vue'
+  import NoteIcon from './NoteIcon.vue'
   import ElementMenu from './ElementMenu.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   import { useProjectStore } from 'stores/projectStore'

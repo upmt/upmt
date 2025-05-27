@@ -16,7 +16,7 @@ export default class Property extends Justifiable {
   @Str('') declare modified: string
 
   @Str('') declare value: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
 
   @Attr() declare propertymodelId: string
@@ -59,7 +59,7 @@ export default class Property extends Justifiable {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       value: this.value,
       propertymodelId: this.propertymodelId,
       justification: undefined

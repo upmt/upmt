@@ -21,7 +21,7 @@
             v-if="currentProject"
             class="context">
             {{ currentProject.name }}
-            <CommentIcon
+            <NoteIcon
               :element="currentProject" />
             <span v-if="currentInterview">
               - {{ currentInterview.label }}
@@ -116,7 +116,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject } from 'stores/storage'
-  import CommentIcon from 'components/CommentIcon.vue'
+  import NoteIcon from 'components/NoteIcon.vue'
 
   defineOptions({
       name: 'MainLayout'

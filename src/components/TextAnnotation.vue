@@ -3,7 +3,7 @@
        v-if="interview">
     <q-toolbar
       class="row justify-end absolute-top bg-white">
-      <CommentIcon
+      <NoteIcon
         :element="interview" />
       <q-btn
         flat
@@ -116,7 +116,7 @@
   import { ref, computed, watch } from 'vue'
   import { storeToRefs } from 'pinia'
   import AnnotatedText from './AnnotatedText.vue'
-  import CommentIcon from './CommentIcon.vue'
+  import NoteIcon from './NoteIcon.vue'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import InterviewMetadataForm from './InterviewMetadataForm.vue'
   import Annotation from 'stores/models/annotation'
@@ -171,7 +171,7 @@
               name: info.name,
               participantName: info.participantName,
               date: info.date,
-              comment: info.comment
+              note: info.note
           })
       }
   }

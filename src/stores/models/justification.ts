@@ -29,7 +29,7 @@ export default class Justification extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       name: this.name,
       descriptems: this.descriptems.map(d => d.toJSON())
     }

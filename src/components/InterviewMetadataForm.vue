@@ -66,8 +66,8 @@
         filled
         autogrow
         type="text"
-        v-model="comment"
-        label="Comment"
+        v-model="note"
+        label="Note"
         />
 
       <q-input
@@ -109,7 +109,7 @@
   export type InterviewInfo = {
       name: string
       participantName: string
-      comment: string
+      note: string
       date: string
       text: string
   }
@@ -124,7 +124,7 @@
   const name = ref(props.interview?.name ?? "")
   const participant = ref(props.interview?.participantName ?? "")
   const date = ref(props.interview?.date ?? "")
-  const comment = ref(props.interview?.comment ?? "")
+  const note = ref(props.interview?.note ?? "")
   const text = ref(props.interview?.text ?? "")
 
   const canValidate = computed(() => name.value && participant.value && text.value)
@@ -134,7 +134,7 @@
           emit('validate', {
               name: name.value,
               participantName: participant.value,
-              comment: comment.value,
+              note: note.value,
               date: date.value,
               // If we are editing an existing interview, the text cannot be modified (and the text ref will always be "")
               text: props.interview ? props.interview.text : text.value
@@ -148,7 +148,7 @@
       name.value = ""
       date.value = ""
       text.value = ""
-      comment.value = ""
+      note.value = ""
       interviewFilename.value = null
 
       emit("cancel")

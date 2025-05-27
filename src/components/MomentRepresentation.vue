@@ -37,7 +37,7 @@
         v-model="expand"
         header-class="header-class q-pa-xs"
         expand-icon-class="icon-class q-pa-xs"
-        :title="moment.comment"
+        :title="moment.note"
         >
 
         <template v-slot:header>
@@ -74,7 +74,7 @@
               <ColorizeIcon
                 class="on-name-hover"
                 v-model="momentColor" />
-              <CommentIcon
+              <NoteIcon
                 :element="moment" />
               <ElementMenu
                 :actions="menuActions" />
@@ -165,7 +165,7 @@
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
-  import CommentIcon from './CommentIcon.vue'
+  import NoteIcon from './NoteIcon.vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'

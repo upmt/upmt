@@ -16,7 +16,7 @@ export default class MomentModel extends BaseModel {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @Bool(false) declare isTransitional: boolean
 
   @BelongsToMany(() => CategoryModel, () => CategoryMomentModel, 'momentmodelId', 'categorymodelId') declare categorymodels: CategoryModel[]

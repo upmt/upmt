@@ -17,7 +17,7 @@ export default class SpecificSynchronicModel extends BaseModel {
   @Str('') declare name: string
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') declare categories: SpecificSynchronicCategory[]
 
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
@@ -31,7 +31,7 @@ export default class SpecificSynchronicModel extends BaseModel {
       modified: this._meta?.updatedAt,
       creator: this.creator,
       contributor: this.contributor,
-      comment: this.comment,
+      note: this.note,
       color: this.color,
       isExpanded: this.isExpanded
     }

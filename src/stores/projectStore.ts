@@ -243,10 +243,9 @@ function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
     name: m.name,
     childIndex: index,
     color: fixColorName(m.color),
-    comment: m.comment,
+    note: m.comment,
     interviewId: interview.id,
     isExpanded: !m.isCollapsed,
-    isCommentVisible: m.isCommentVisible,
     isTransitional: m.transitional,
     categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
     specificsynchronicmodel: repo.SpecificSynchronicModel.make({
@@ -269,7 +268,7 @@ function mapInterview (i: OldInterview): Interview {
   const interview: Interview = repo.Interview.make({
     date: i.date,
     color: fixColorName(i.color),
-    comment: i.comment,
+    note: i.comment,
     participantName: i.participantName,
     text: i.interviewText.text
   })
@@ -1174,7 +1173,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     //const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
     const children = groupBy(categories, 'parentId')
     const names = groupBy(categories, 'name')
-    console.log({ children, names })
+    // console.log({ children, names })
 
     const rootCategoryNames: Set<string> = new Set()
     const genericCategories: Record<string, GenericCategory> = Object.fromEntries(
@@ -1192,7 +1191,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         }]
       }))
 
-    console.log({ children, names, genericCategories })
+    // console.log({ children, names, genericCategories })
 
     const nameToGeneric = (name: string, ancestors: Set<string> | null = null): GenericCategory => {
       const generic: GenericCategory | undefined = genericCategories[name]

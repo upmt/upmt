@@ -16,7 +16,7 @@ export default class CategoryModel extends BaseModel {
   @Str('') declare name: string
   @Str('') declare color: string
   @Bool(true) declare isExpanded: boolean
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @HasMany(() => PropertyModel, 'categorymodelId') declare properties: PropertyModel[]
 
   @Attr() modelfolderId!: string
@@ -29,7 +29,7 @@ export default class CategoryModel extends BaseModel {
       created: this.created,
       modified: this.modified,
       name: this.name,
-      comment: this.comment,
+      note: this.note,
       color: this.color,
       isExpanded: this.isExpanded,
       properties: this.properties.map(p => p.toJSON())

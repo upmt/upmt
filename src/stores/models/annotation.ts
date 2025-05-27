@@ -16,7 +16,7 @@ export default class Annotation extends BaseModel {
   @Str('') declare color: string
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
-  @Str('') declare comment: string
+  @Str('') declare note: string
 
   @Attr() interviewId!: string
   @BelongsTo(() => Interview, 'interviewId') declare interview: Interview
@@ -41,7 +41,7 @@ export default class Annotation extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       color: this.color,
       startIndex: this.startIndex,
       endIndex: this.endIndex,

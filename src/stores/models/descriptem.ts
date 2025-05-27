@@ -17,7 +17,7 @@ export default class Descriptem extends BaseModel {
 
   @Num(0) declare startIndex: number
   @Num(0) declare endIndex: number
-  @Str('') declare comment: string
+  @Str('') declare note: string
 
   @Attr() justificationId!: string
   @BelongsTo(() => Justification, 'justificationId') declare justification: Justification | null
@@ -47,7 +47,7 @@ export default class Descriptem extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       interviewId: this.interviewId,
       startIndex: this.startIndex,
       endIndex: this.endIndex,

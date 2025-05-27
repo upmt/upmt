@@ -17,9 +17,8 @@ export default class Moment extends Justifiable {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @Bool(false) declare isExpanded: boolean
-  @Bool(false) declare isCommentVisible: boolean
   @Bool(false) declare isTransitional: boolean
 
   @Attr() analysisId!: string
@@ -52,11 +51,10 @@ export default class Moment extends Justifiable {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,
-      isCommentVisible: this.isCommentVisible,
       isTransitional: this.isTransitional,
       parentId: this.parentId,
       analysisId: this.analysisId,

@@ -17,7 +17,7 @@ export default class Interview extends BaseModel {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @Str('') declare date: string
   @Str('') declare text: string
   @Str('') declare participantName: string
@@ -49,7 +49,7 @@ export default class Interview extends BaseModel {
       name: this.name,
       participantName: this.participantName,
       color: this.color,
-      comment: this.comment,
+      note: this.note,
       date: this.date,
       annotations: this.annotations.map(a => a.toJSON()),
       analysis: this.analysis?.toJSON(),

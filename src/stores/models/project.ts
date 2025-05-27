@@ -15,7 +15,7 @@ export default class Project extends BaseModel {
 
   @Str('') declare filename: string
   @Str('') declare name: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
 
@@ -34,7 +34,7 @@ export default class Project extends BaseModel {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       filename: this.filename,
       name: this.name,
       modelfolder: this.modelfolder?.toJSON(),

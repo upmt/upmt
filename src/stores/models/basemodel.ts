@@ -16,7 +16,7 @@ export default class BaseModel extends Model {
   @Str('') declare created: string
   @Str('') declare modified: string
   @Str('') declare projectId: string
-  @Str('') declare comment: string
+  @Str('') declare note: string
 
   static override creating (model: BaseModel) {
     if (!this.context) {

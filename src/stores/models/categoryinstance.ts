@@ -15,7 +15,7 @@ export default class CategoryInstance extends Justifiable {
   @Str('') declare created: string
   @Str('') declare modified: string
 
-  @Str('') declare comment: string
+  @Str('') declare note: string
   @HasOne(() => Justification, 'parentId') declare justification: Justification
   @HasMany(() => Property, 'categoryinstanceId') declare properties: Property[]
 
@@ -56,7 +56,7 @@ export default class CategoryInstance extends Justifiable {
       contributor: this.contributor,
       created: this.created,
       modified: this.modified,
-      comment: this.comment,
+      note: this.note,
       categorymodelId: this.categorymodelId,
       categorymodelName: this.model?.name,
       momentId: this.momentId,
