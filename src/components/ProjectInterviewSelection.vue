@@ -36,12 +36,12 @@
           </q-tabs>
 
           <q-separator />
-          <GenericCategoriesRepresentation
+          <GenericCategoriesOverview
             :projectId="project.id" />
-          <ModelFolderRepresentation
+          <!-- <ModelFolderRepresentation
             :modelfolderId="project.modelfolder.id"
             :currentInterviewId="currentInterviewId">
-          </ModelFolderRepresentation>
+          </ModelFolderRepresentation> -->
         </div>
       </template>
 
@@ -133,9 +133,9 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
-  import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
+  import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
-  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
+//  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'

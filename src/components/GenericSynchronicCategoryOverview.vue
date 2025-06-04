@@ -11,9 +11,9 @@
 
       <div class="genericsynchroniccategory-children">
         <div v-for="c in category.children" :key="c.name">
-          <GenericSynchronicCategoryRepresentation
+          <GenericSynchronicCategoryOverview
             :category="c">
-          </GenericSynchronicCategoryRepresentation>
+          </GenericSynchronicCategoryOverview>
         </div>
       </div>
 
