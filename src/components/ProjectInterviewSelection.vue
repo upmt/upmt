@@ -37,7 +37,8 @@
 
           <q-separator />
           <GenericCategoriesOverview
-            :projectId="project.id" />
+            :projectId="projectId"
+            :categories="globalGraphs.categories" />
           <!-- <ModelFolderRepresentation
             :modelfolderId="project.modelfolder.id"
             :currentInterviewId="currentInterviewId">
@@ -174,6 +175,8 @@
   const editedSpecificSynchronicModel = computed(() => {
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
   })
+
+  const globalGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one

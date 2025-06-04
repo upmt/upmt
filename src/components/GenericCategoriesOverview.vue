@@ -4,7 +4,7 @@
        :data-project="projectId">
 
     <GenericSynchronicCategoryOverview
-      v-for="category in genericCategories.categories"
+      v-for="category in categories"
       :key="category.name"
       :category="category">
     </GenericSynchronicCategoryOverview>
@@ -14,17 +14,15 @@
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
   import GenericSynchronicCategoryOverview from './GenericSynchronicCategoryOverview.vue'
-  import { useProjectStore } from 'stores/projectStore'
 
-  const store = useProjectStore()
+  import type { GenericCategory } from 'stores/projectStore'
 
-  const props = defineProps({
-      projectId: { type: String, default: "" },
-  })
+  defineProps<{
+      projectId: string,
+      categories:  GenericCategory[]
+  }>()
 
-  const genericCategories = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 </script>
 
 <style scoped>
