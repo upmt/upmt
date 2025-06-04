@@ -40,7 +40,8 @@ export type GenericCategory = {
   isRoot: boolean,
   instances: SpecificSynchronicCategory[],
   childrenNames: Set<string>,
-  children?: GenericCategory[]
+  children?: GenericCategory[],
+  abstractionType: string
 }
 
 /* Should find how to dynamically inject typescript definitions here:
@@ -1231,7 +1232,8 @@ export const useProjectStore = defineStore('projectStore', () => {
           errors: [ error ],
           isRoot: true,
           instances: [],
-          childrenNames: new Set()
+          childrenNames: new Set(),
+          abstractionType: ''
         }
       }
       const newAncestors = ancestors.union(new Set([ name ]))
