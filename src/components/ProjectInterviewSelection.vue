@@ -84,7 +84,7 @@
                          v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row">
                         <q-toolbar-title>
-                          Editing <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel }}</strong>
+                          Editing <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
                         </q-toolbar-title>
                         <q-btn
                           icon="mdi-close"
