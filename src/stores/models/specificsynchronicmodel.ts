@@ -1,7 +1,8 @@
 import BaseModel from './basemodel'
+import GenericSynchronicModel from './genericsynchronicmodel'
 import Moment from './moment'
 import SpecificSynchronicCategory from './specificsynchroniccategory'
-import { Attr, BelongsTo, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 
 export default class SpecificSynchronicModel extends BaseModel {
   static override entity = 'specificsynchronicmodel'
@@ -16,24 +17,27 @@ export default class SpecificSynchronicModel extends BaseModel {
 
   @Str('') declare name: string
   @Str('') declare color: string
-  @Bool(true) declare isExpanded: boolean
   @Str('') declare note: string
   @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') declare categories: SpecificSynchronicCategory[]
 
+  /* A SpecificSynchronicmodel belongs either to a Moment (true SSM)
+     or to a genericModel (Generic Synchronic Category disguised as
+     SSC) */
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string
 
+  @BelongsTo(() => GenericSynchronicModel, 'genericModelId') declare genericModel: GenericSynchronicModel | null
+  @Attr() genericModelId!: string
 
   toJSON (shallow=false): any {
     const base = {
       name: this.name,
-      created: this._meta?.createdAt,
-      modified: this._meta?.updatedAt,
       creator: this.creator,
       contributor: this.contributor,
-      note: this.note,
+      created: this._meta?.createdAt,
+      modified: this._meta?.updatedAt,
       color: this.color,
-      isExpanded: this.isExpanded
+      note: this.note
     }
     if (shallow) {
       return base

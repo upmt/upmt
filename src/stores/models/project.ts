@@ -1,5 +1,6 @@
 import BaseModel from './basemodel'
 import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import GenericSynchronicModel from './genericsynchronicmodel'
 import Interview from './interview'
 import ModelFolder from './modelfolder'
 
@@ -18,6 +19,7 @@ export default class Project extends BaseModel {
   @Str('') declare note: string
   @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
+  @HasMany(() => GenericSynchronicModel, 'projectId') declare genericModels: GenericSynchronicModel[]
 
   get label (): string {
     if (this.name) {
