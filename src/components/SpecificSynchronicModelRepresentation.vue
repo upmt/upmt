@@ -33,7 +33,7 @@
       <SpecificSynchronicCategoryRepresentation
         v-for="c in model.categories"
         :key="c.id"
-        :genericModel="genericModel"
+        :genericGraph="genericGraph"
         :categoryId="c.id" />
     </div>
   </div>
@@ -57,7 +57,7 @@
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
 
-  const genericModel = computed(() => model.value ? store.getGenericSynchronicModels(model.value.projectId) : {})
+  const genericGraph = computed(() => model.value ? store.getGenericSynchronicGraphs(model.value.projectId) : {})
 
   function showContent () {
       // Make sure the Model/Category is displayed

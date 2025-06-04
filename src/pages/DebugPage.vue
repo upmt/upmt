@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <VObjectInspector :data="projects" />
-    <VObjectInspector :expandLevel="2" :expandPaths="['$.*.children']" :data="genericmodels" />
+    <VObjectInspector :expandLevel="2" :expandPaths="['$.*.children']" :data="genericgraphs" />
   </q-page>
 </template>
 
@@ -20,5 +20,5 @@
   const store = useProjectStore()
   const istore = useInterfaceStore()
   const projects = computed(() => { return store.getAllProjects() })
-  const genericmodels = computed(() => store.getGenericSynchronicModels(istore.getProjectId()))
+  const genericgraphs = computed(() => store.getGenericSynchronicGraphs(istore.getProjectId()))
 </script>

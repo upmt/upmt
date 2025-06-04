@@ -11,7 +11,7 @@
       <div :class="[ 'specificsynchroniccategory-children' ]">
         <div v-for="c in category.children" :key="c.id">
           <SpecificSynchronicCategoryRepresentation
-            :genericModel="genericModel"
+            :genericGraph="genericGraph"
             :categoryId="c.id">
           </SpecificSynchronicCategoryRepresentation>
         </div>
@@ -172,7 +172,7 @@
 
   const props = defineProps({
       categoryId: { type: String, default: "" },
-      genericModel: { type: Object, default: null },
+      genericGraph: { type: Object, default: null },
       layout: { type: String, default: "vertical" }
   })
 
@@ -215,7 +215,7 @@
 
   const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
 
-  const genericElement = computed(() => props.genericModel ? props.genericModel.byName[categoryName.value] : {})
+  const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
 
   function debug () {
       (window as any).category = category.value;

@@ -1161,8 +1161,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     return instances.map(ci => ci.moment)
   }
 
-  function getGenericSynchronicModels (projectId: string) {
-    // Return the generic synchronic models for the given projectId
+  function getGenericSynchronicGraphs (projectId: string) {
+    // Return the generic synchronic graphs for the given projectId
 
     // Get all specificsynchroniccategories
     const categories = repo.SpecificSynchronicCategory
@@ -1274,7 +1274,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getCategoryModel,
     getCategoryModelMoments,
     getDescriptem,
-    getGenericSynchronicModels,
+    getGenericSynchronicGraphs,
     getInterview,
     getInterviewAnnotations,
     getInterviewDescriptems,

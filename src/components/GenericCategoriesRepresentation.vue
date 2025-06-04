@@ -24,7 +24,7 @@
       projectId: { type: String, default: "" },
   })
 
-  const genericCategories = computed(() => store.getGenericSynchronicModels(props.projectId))
+  const genericCategories = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 </script>
 
 <style scoped>
