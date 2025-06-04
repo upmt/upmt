@@ -22,6 +22,9 @@
       <q-btn title="Save project in browser database"
              @click="doStoreProject(projectId)"
              flat>Save</q-btn>
+      <q-btn title="Export as CSV"
+             @click="doCsvExport(projectId)"
+             flat>Export</q-btn>
     </q-card-actions>
 
     <q-expansion-item
@@ -40,8 +43,10 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import { useQuasar } from 'quasar'
+  import { useQuasar, exportFile } from 'quasar'
   import { storeToRefs } from 'pinia'
+
+  import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
@@ -80,6 +85,36 @@
           type: 'info',
           message: `Stored as ${basename}`
       })
+  }
+
+  function doCsvExport (projectId: string) {
+      const categories = store.getSpecificSynchronicCategoriesByProject(projectId)
+      const categoryDict = Object.fromEntries(categories.map(category => [ category.id, category ]))
+
+      const categoryName = (category: SpecificSynchronicCategory | undefined): string => {
+          if (! category) {
+              return "??"
+          } else if (! category.parentId) {
+              // Root category - single label
+              return category.name
+          } else {
+              const parent = categoryDict[category.parentId]
+              return `${categoryName(parent)} / ${category.name}`
+          }
+      }
+      const data = categories.map(category => {
+          const catName = categoryName(category)
+          if (category.justification?.descriptems) {
+              return category.justification.descriptems.map(descriptem =>
+                  [ catName, descriptem.text, descriptem.startIndex, descriptem.endIndex ])
+          } else {
+              return []
+          }
+      }).flat()
+      // Define CSV columns
+      data.unshift([ "Category", "Descriptem", "Start", "End" ])
+
+      exportFile(`${projectId}.csv`, data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
   }
 
 </script>
