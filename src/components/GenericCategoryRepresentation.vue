@@ -8,11 +8,12 @@
       dense-toggle
       :duration="0"
       expand-icon-toggle
+      :expand-icon-class="{ 'invisible': genericcategory.children?.length == 0 }"
       switch-toggle-side
       no-v-model="expand"
       header-class="header-class"
       :title="genericcategory.name"
-      :content-inset-level="1"
+      :content-inset-level="0.2"
       >
 
       <template v-slot:header>
