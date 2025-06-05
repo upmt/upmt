@@ -39,6 +39,7 @@
           <GenericCategoryRepresentation
             v-for="category in globalGraphs.categories"
             :key="category.name"
+            :graphInfo="globalGraphs"
             :genericcategory="category"
             :currentInterviewId="currentInterviewId" />
           <GenericCategoriesOverview

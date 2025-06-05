@@ -82,6 +82,7 @@
         <GenericCategoryRepresentation
           v-for="cat in genericcategory.children"
           :key="cat.name"
+          :graphInfo="graphInfo"
           :genericcategory="cat"
           :currentInterviewId="currentInterviewId"
           />
@@ -102,7 +103,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { groupBy } from './util'
 
-  import type { GenericCategory } from 'stores/projectStore'
+  import type { GenericCategory, GraphInfo } from 'stores/projectStore'
 
   const istore = useInterfaceStore()
 
@@ -112,6 +113,7 @@
 
   const props = defineProps<{
       genericcategory: GenericCategory,
+      graphInfo: GraphInfo,
       currentInterviewId: string
   }>()
 
@@ -122,10 +124,14 @@
       console.log("genericcategory", props.genericcategory)
   }
 
-  // FIXME: should get moment list from genericcategory.instances (go to root model, then to model moment)
-  const moments = computed(() => [])
+  const moments = computed((): Moment[] => {
+      const momentIds = props.genericcategory.instances
+            .map(ssc => props.graphInfo.instanceIdToContainerInfo[ssc.id]?.momentId)
+            .filter(id => !!id) as string[]
+      return store.getMoments(momentIds)
+  })
 
-  const currentMoments = computed(() => moments.value.filter(m => m.interviewId === props.currentInterviewId))
+  const currentMoments = computed(() => moments.value?.filter((m: Moment) => m.interviewId === props.currentInterviewId) || [])
 
   const genericcategoryName = computed({
       get () {
