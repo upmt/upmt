@@ -18,6 +18,7 @@
       <template v-slot:header>
         <DragElement
           class="genericsynchroniccategory-name"
+          :class="{ 'has-error': genericcategory.errors?.length }"
           @click="debug"
           type="genericsynchroniccategory"
           :data="genericcategory.name">
@@ -27,6 +28,14 @@
             class="genericcategory-handle"
             size="xs"
             name="mdi-source-repository" />
+          <q-tooltip>{{ genericcategory.name }}
+            <div v-if="genericcategory.errors">
+              <span v-for="error, key in genericcategory.errors"
+                    :key="key">
+                {{ error }}
+              </span>
+            </div>
+          </q-tooltip>
           <span
             class="genericcategory-label">
             {{ genericcategory.name }} <q-btn
@@ -76,6 +85,7 @@
           <ElementMenu
             :actions="menuActions" />
         </DragElement>
+
       </template>
 
       <div class="genericcategory-children">
@@ -186,5 +196,8 @@
   }
   .interview-name {
       font-weight: 200;
+  }
+  .has-error {
+      border: 2px solid red;
   }
 </style>
