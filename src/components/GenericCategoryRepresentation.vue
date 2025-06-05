@@ -19,11 +19,11 @@
         <DragElement
           class="genericsynchroniccategory-name"
           :class="{ 'has-error': genericcategory.errors?.length }"
+          :style="{ backgroundColor: genericcategory.color }"
           @click="debug"
           type="genericsynchroniccategory"
           :data="genericcategory.name">
           <q-icon
-            :style="{ backgroundColor: genericcategory.color }"
             ref="handle"
             class="genericcategory-handle"
             size="xs"
