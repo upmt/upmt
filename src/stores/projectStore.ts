@@ -37,13 +37,22 @@ type Subset<K> = {
 
 export type GenericCategory = {
   name: string,
-  errors?: string[],
   isRoot: boolean,
+  errors?: string[],
+  children?: GenericCategory[],
   color: string,
   instances: SpecificSynchronicCategory[],
   childrenNames: Set<string>,
-  children?: GenericCategory[],
   abstractionType: string
+}
+export type ContainerInfo = {
+  momentId: string,
+  genericModelId: string
+}
+export type GraphInfo = {
+  categories: GenericCategory[],
+  byName: Record<string, GenericCategory>,
+  instanceIdToContainerInfo: Record<string, ContainerInfo>
 }
 
 /* Should find how to dynamically inject typescript definitions here:
@@ -1180,28 +1189,33 @@ export const useProjectStore = defineStore('projectStore', () => {
     return instances.map(ci => ci.moment)
   }
 
-  function getGenericSynchronicGraphs (projectId: string) {
+  function getGenericSynchronicGraphs (projectId: string): GraphInfo {
     // Return the generic synchronic graphs for the given projectId
 
     // Get all specificsynchroniccategories
     const categories = repo.SpecificSynchronicCategory
+      .with('model')
       .where('projectId', projectId)
       .get()
 
     // Reconstitute structure
     //const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
-    const children = groupBy(categories, 'parentId')
+    const children: Record<string, SpecificSynchronicCategory[]> = groupBy(categories, 'parentId')
     const names = groupBy(categories, 'name')
     // console.log({ children, names })
 
     const rootCategoryNames: Set<string> = new Set()
+    // List of root SSC instances
+    const rootInstances: SpecificSynchronicCategory[] = []
+
     const genericCategories: Record<string, GenericCategory> = Object.fromEntries(
       Object.entries(names).map( ([name, instances]) => {
         const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => c.name)).flat())
         const errors = []
-        const isRoot = instances.some(ssc => !!ssc.specificsynchronicmodelId)
-        if (isRoot) {
+        const roots = instances.filter(ssc => !!ssc.specificsynchronicmodelId)
+        if (roots.length > 0) {
           rootCategoryNames.add(name)
+          rootInstances.push(...roots)
         }
         const colors = instances
           .map((ssc: SpecificSynchronicCategory) => ssc.color)
@@ -1219,7 +1233,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
         return [ name, {
           name,
-          isRoot,
+          isRoot: roots.length > 0,
           errors,
           color,
           instances,
@@ -1230,53 +1244,91 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     // console.log({ children, names, genericCategories })
 
-    const nameToGeneric = (name: string, ancestors: Set<string> | null = null): GenericCategory => {
-      const generic: GenericCategory | undefined = genericCategories[name]
-      if (ancestors === null) {
-        ancestors = new Set()
-      } else if (ancestors.has(name)) {
-        // Prevent recursive structures
-        const error = `Error in generic structure: ${name} is present as its own ancestor`
-        console.log(error)
-        if (generic) {
-          // Document the error in the byName mapping
-          generic.errors = [ ...(generic.errors ?? []), error ]
-        }
-        return {
-          name: `${name}`,
-          errors: [ error ],
-          isRoot: true,
-          color: '',
-          instances: generic?.instances || [],
-          childrenNames: new Set(),
-          abstractionType: ''
-        }
-      }
-      if (! generic) {
-        const error = `Inconsistency in GenericCategory building for ${name}`
-        console.log(error)
-        return {
-          name,
-          errors: [ error ],
-          isRoot: true,
-          color: '',
-          instances: [],
-          childrenNames: new Set(),
-          abstractionType: ''
+    // Memoizing moment/model info - structure of
+    // { momentId, genericModelId } indexed by ssc id (instance)
+    const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
+    // We have to make 1 tree traversal to build the instance to container relationship
+
+    // It may be factorizable with the nameToGeneric traversal, but
+    // they are against different trees with potentially different
+    // roots, so it is not that simple
+    function propagateContainerInfo (ssc: SpecificSynchronicCategory, containerInfo: ContainerInfo | null = null) {
+      if (! containerInfo) {
+        if (ssc.model) {
+          containerInfo = {
+            momentId: ssc.model.momentId,
+            genericModelId: ssc.model.genericModelId
+          }
+        } else {
+          console.log(`Error: could not get containerInfo for ${ssc.id}`)
+          containerInfo = {
+            momentId: "",
+            genericModelId: ""
+          }
         }
       }
-      const newAncestors = ancestors.union(new Set([ name ]))
-      return Object.assign({},
-        generic,
-        { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname, newAncestors)) })
+      instanceIdToContainerInfo[ssc.id] = containerInfo;
+      (children[ssc.id] || []).forEach((child: SpecificSynchronicCategory) => propagateContainerInfo(child, containerInfo))
     }
+    rootInstances.forEach(ssc => propagateContainerInfo(ssc))
+
+    // We know have a fully-initialized instanceIdToContainerInfo structure
+
+    // Re-build the children graph + add momentIds/genericModelIds info to every category
+    const nameToGeneric = (name: string,
+      ancestors: Set<string> | null = null): GenericCategory => {
+        const generic: GenericCategory | undefined = genericCategories[name]
+
+        if (ancestors === null) {
+          ancestors = new Set()
+        } else if (ancestors.has(name)) {
+          // Prevent recursive structures
+          const error = `Error in generic structure: ${name} is present as its own ancestor`
+          console.log(error)
+          if (generic) {
+            // Document the error in the byName mapping
+            generic.errors = [ ...(generic.errors ?? []), error ]
+          }
+          return {
+            name: `${name}`,
+            errors: [ error ],
+            isRoot: true,
+            color: '',
+            instances: generic?.instances || [],
+            childrenNames: new Set(),
+            abstractionType: ''
+          }
+        }
+
+        if (! generic) {
+          const error = `Inconsistency in GenericCategory building for ${name}`
+          console.log(error)
+          return {
+            name,
+            errors: [ error ],
+            isRoot: true,
+            color: '',
+            instances: [],
+            childrenNames: new Set(),
+            abstractionType: ''
+          }
+        }
+        // We know we will follow the trees from their roots, so the
+        // container information will correctly propagate
+
+        const newAncestors = ancestors.union(new Set([ name ]))
+        return Object.assign({},
+          generic,
+          { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname, newAncestors)) })
+      }
 
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
     // and also the mapping by name
     return {
       categories: [ ...rootCategoryNames.values() ].map(name => nameToGeneric(name, null)),
-      byName: genericCategories
+      byName: genericCategories,
+      instanceIdToContainerInfo
     }
   }
 
