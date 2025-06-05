@@ -83,7 +83,9 @@
         </template>
 
         <div class="moment-justification">
-          <JustificationRepresentation :justificationId="moment.justification?.id ?? ''">
+          <JustificationRepresentation
+            v-if="moment"
+            :justificationId="moment.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
 
