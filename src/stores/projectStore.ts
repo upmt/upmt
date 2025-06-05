@@ -7,6 +7,7 @@ import BaseModel from './models/basemodel'
 import CategoryInstance from './models/categoryinstance'
 import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
+import GenericSynchronicModel from './models/genericsynchronicmodel'
 import Interview from './models/interview'
 import Justification from './models/justification'
 import ModelFolder from './models/modelfolder'
@@ -66,6 +67,7 @@ const repo = {
   CategoryModel:    useRepo(CategoryModel),
   CategoryInstance: useRepo(CategoryInstance),
   Descriptem:       useRepo(Descriptem),
+  GenericSynchronicModel: useRepo(GenericSynchronicModel),
   Interview:        useRepo(Interview),
   Justification:    useRepo(Justification),
   ModelFolder:      useRepo(ModelFolder),
@@ -1213,8 +1215,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         return [ name, {
           name,
           isRoot,
+          errors,
+          color,
           instances,
-          childrenNames
+          childrenNames,
+          abstractionType
         }]
       }))
 
@@ -1270,6 +1275,41 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function buildGenericSynchronicModelFromGraphs (graphs: any) {
+    const projectId = graphs.categories[0].instances[0].projectId
+
+    // FIXME: pass model as parameter?
+    // FIXME: handle updating existing model (at least adds)
+    let genericModel = repo.GenericSynchronicModel
+      .where('projectId', projectId)
+      .first()
+
+    if (! genericModel) {
+      // Create the first genericModel
+      genericModel = repo.GenericSynchronicModel.save({ name: 'default' })
+    }
+    const specificModel = genericModel.proxy
+
+    type SpecificSynchronicCategoryBasicType = {
+      name: string,
+      abstractionType: string,
+      children: SpecificSynchronicCategoryBasicType[],
+      model: SpecificSynchronicModel
+    }
+    function jsonifyGenericCategory (gc: GenericCategory): SpecificSynchronicCategoryBasicType {
+      return {
+        name: gc.name,
+        abstractionType: gc.abstractionType,
+        children: gc.children?.map(child => jsonifyGenericCategory(child)) ?? [],
+        model: specificModel
+      }
+    }
+
+    graphs.categories.forEach((category: GenericCategory) => {
+      repo.SpecificSynchronicCategory.save(jsonifyGenericCategory(category))
+    })
+  }
+
   return {
     addAnnotation,
     addCategoryModel,
@@ -1281,6 +1321,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     addTextSelectionToCategoryInstance,
     addTextSelectionToProperty,
     addTextSelectionToSpecificSynchronicCategory,
+    buildGenericSynchronicModelFromGraphs,
     createProject,
     deleteAnnotation,
     deleteCategoryModel,
