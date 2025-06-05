@@ -42,9 +42,19 @@
             :graphInfo="globalGraphs"
             :genericcategory="category"
             :currentInterviewId="currentInterviewId" />
-          <GenericCategoriesOverview
-            :projectId="projectId"
-            :categories="globalGraphs.categories" />
+          <q-expansion-item
+            dense
+            dense-toggle
+            :duration="0"
+            expand-icon-toggle
+            label="Generic model overview">
+
+            <GenericCategoriesOverview
+              :projectId="projectId"
+              :categories="globalGraphs.categories" />
+
+          </q-expansion-item>
+
           <!-- <ModelFolderRepresentation
             :modelfolderId="project.modelfolder.id"
             :currentInterviewId="currentInterviewId">
