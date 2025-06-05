@@ -36,6 +36,11 @@
           </q-tabs>
 
           <q-separator />
+          <GenericCategoryRepresentation
+            v-for="category in globalGraphs.categories"
+            :key="category.name"
+            :genericcategory="category"
+            :currentInterviewId="currentInterviewId" />
           <GenericCategoriesOverview
             :projectId="projectId"
             :categories="globalGraphs.categories" />
@@ -135,6 +140,7 @@
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
+  import GenericCategoryRepresentation from 'components/GenericCategoryRepresentation.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
