@@ -38,6 +38,7 @@ export type GenericCategory = {
   name: string,
   errors?: string[],
   isRoot: boolean,
+  color: string,
   instances: SpecificSynchronicCategory[],
   childrenNames: Set<string>,
   children?: GenericCategory[],
@@ -1190,10 +1191,25 @@ export const useProjectStore = defineStore('projectStore', () => {
     const genericCategories: Record<string, GenericCategory> = Object.fromEntries(
       Object.entries(names).map( ([name, instances]) => {
         const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => c.name)).flat())
+        const errors = []
         const isRoot = instances.some(ssc => !!ssc.specificsynchronicmodelId)
         if (isRoot) {
           rootCategoryNames.add(name)
         }
+        const colors = instances
+          .map((ssc: SpecificSynchronicCategory) => ssc.color)
+          .filter((color: string | undefined) => !!color)
+        const color = colors[0] ?? ""
+
+        const types = new Set(instances.map(ssc => ssc.abstractionType))
+        let abstractionType = ''
+        if (types.size > 1) {
+          // More than 1 abstractionType: error, and keep ''
+          errors.push(`There are ${types.size} differents abstraction types for ${name}: ${[...types]}`)
+        } else {
+          abstractionType = [ ...types ][0] ?? ''
+        }
+
         return [ name, {
           name,
           isRoot,
@@ -1220,8 +1236,10 @@ export const useProjectStore = defineStore('projectStore', () => {
           name: `${name}`,
           errors: [ error ],
           isRoot: true,
+          color: '',
           instances: generic?.instances || [],
-          childrenNames: new Set()
+          childrenNames: new Set(),
+          abstractionType: ''
         }
       }
       if (! generic) {
@@ -1231,6 +1249,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           name,
           errors: [ error ],
           isRoot: true,
+          color: '',
           instances: [],
           childrenNames: new Set(),
           abstractionType: ''

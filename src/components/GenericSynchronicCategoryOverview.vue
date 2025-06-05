@@ -5,7 +5,7 @@
 
     <div class="genericsynchroniccategory"
          :class="{ 'root-generic-synchronic-category': category.isRoot }"
-         :style="{ backgroundColor: color }"
+         :style="{ backgroundColor: category.color }"
          v-if="category"
          :data-genericsynchroniccategory="category.name">
 
@@ -57,7 +57,6 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
   import DragElement from './DragElement.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   // import { useProjectStore } from 'stores/projectStore'
@@ -69,13 +68,6 @@
 
   // FIXME: detect inconsistencies
   const abstractionType = computed(() => props.category.instances[0].abstractionType)
-
-  const color = computed(() => {
-      const colors = props.category.instances
-            .map((ssc: SpecificSynchronicCategory) => ssc.color)
-            .filter((color: string | undefined) => !!color)
-      return colors[0] ?? ""
-  })
 </script>
 
 <style scoped>
