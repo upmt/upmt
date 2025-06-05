@@ -1,7 +1,7 @@
 <template>
   <div class="categorymodel-container row"
        v-if="categorymodel"
-       :data-descriptem="categorymodel.id">
+       :data-categorymodel="categorymodel.id">
     <q-expansion-item
       class="categorymodel-body"
       dense
