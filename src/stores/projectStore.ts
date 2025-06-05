@@ -445,6 +445,11 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
+  function getMoments (ids: string[]) {
+    /* Warning: for efficiency, there is no dereferencing of linked entities */
+    return repo.Moment.whereId(ids).get()
+  }
+
   function getMomentModel (id: string) {
       return repo.MomentModel.with('categorymodels').find(id) as MomentModel
     }
@@ -1353,6 +1358,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getJustification,
     getJustificationParent,
     getMoment,
+    getMoments,
     getMomentModel,
     getProperty,
     getPropertyModel,
