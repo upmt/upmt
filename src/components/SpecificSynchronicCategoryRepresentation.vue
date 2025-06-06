@@ -341,11 +341,13 @@
   }
 
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+
+  const menuActions: NamedAction[] = [
       [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
   ]
 
-  const relationActions = [
+  const relationActions: NamedAction[] = [
       [ "Set as generic abstraction", () => updateAbstractionType('') ],
       [ "Set as aggregation abstraction", () => updateAbstractionType('aggregation') ],
       [ "Set as specialization abstraction", () => updateAbstractionType('specialization') ],

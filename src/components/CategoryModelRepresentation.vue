@@ -191,7 +191,8 @@
       details.value = true
   }
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
       [ "Rename", () => popupEdit.value && (popupEdit.value as any).show() ],
       [ "Add a property", () => store.addPropertyModel(props.categorymodelId, "newprop") ],
       [ "Delete", () => store.deleteModelFolder(props.categorymodelId) ]

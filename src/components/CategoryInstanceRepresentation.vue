@@ -88,10 +88,11 @@ function droppedSelection (selectionData: string) {
     }
   }
 
-type NamedActions = [ name: string, action: (element: any) => any][]
-const menuActions: NamedActions = [
-    [ "Duplicate", () => store.duplicateCategoryInstance(props.categoryinstanceId) ],
-    [ "Delete", () => store.deleteCategoryInstance(props.categoryinstanceId) ]
+  import type { NamedAction } from 'components/util.ts'
+
+  const menuActions: NamedAction[] = [
+      [ "Duplicate", () => store.duplicateCategoryInstance(props.categoryinstanceId) ],
+      [ "Delete", () => store.deleteCategoryInstance(props.categoryinstanceId) ]
   ]
 </script>
 

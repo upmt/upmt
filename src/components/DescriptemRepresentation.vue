@@ -148,8 +148,9 @@
       highlightedMomentId.value = identifier
   }
 
-  type NamedActions = [ name: string, action: (element: any) => void][]
-  const menuActions: NamedActions = [
+  import type { NamedAction } from 'components/util.ts'
+
+  const menuActions: NamedAction[] = [
       [ "Modify", () => alert("Not implemented yet") ],
       [ "Duplicate", () => store.duplicateDescriptem(props.descriptemId) ],
       [ "Delete", () => store.deleteDescriptem(props.descriptemId) ]

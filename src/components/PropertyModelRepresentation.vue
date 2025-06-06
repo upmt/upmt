@@ -57,7 +57,8 @@
       console.log("PropertyModel", propertymodel.value?.toJSON())
   }
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
       [ "Rename", () => popupEdit.value && (popupEdit.value as any).show() ],
       [ "Delete", () => store.deletePropertyModel(props.propertymodelId) ]
   ]

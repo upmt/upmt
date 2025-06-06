@@ -41,4 +41,10 @@ export type TextSelection = {
   text?: string
 }
 
+export type NamedAction = [
+  name: string,
+  action: (element: any) => any,
+  tooltip?: string
+]
+
 export { ANNOTATION_COLORS, groupBy, clamp }

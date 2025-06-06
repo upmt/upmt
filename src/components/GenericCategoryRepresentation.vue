@@ -169,7 +169,8 @@
           .map(([id, arr]) => [ names[id], (arr as Array<any>).length ])
   }
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
       [ "Debug", () => debug() ]
   ]
 </script>

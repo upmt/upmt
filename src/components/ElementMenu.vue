@@ -25,11 +25,12 @@
 
 <script setup lang="ts">
 
-  // type NamedActions = [ name: string, action: (element: any) => any][]
+  import type { NamedAction } from 'components/util.ts'
 
-  defineProps([
-      "actions"
-  ])
+  defineProps<{
+      actions: NamedAction[]
+  }>()
+
 </script>
 
 <style scoped>

@@ -59,7 +59,8 @@
       }
   }
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
       [ "Edit generic model", () => editGenericModel() ],
       [ "Store as model", () => storeAsModel() ]
   ]

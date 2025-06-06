@@ -343,7 +343,8 @@
       istore.setEditedSpecificSynchronicModelId(ssmId)
   }
 
-  const menuActions = [
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
       [ "Toggle transitional", toggleTransitional ],
       [ "Delete", () => store.deleteMoment(props.momentId) ]
   ]

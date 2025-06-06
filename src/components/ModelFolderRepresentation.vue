@@ -162,10 +162,10 @@
       }
   })
 
-  type NamedActions = [ name: string, action: (element: any) => any][]
+  import type { NamedAction } from 'components/util.ts'
 
   const menuActions = computed(() => {
-      const actions: NamedActions = [
+      const actions: NamedAction[] = [
           [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
           [ `Add a category`, () => store.addCategoryModel(props.modelfolderId, "newcategory") ]
       ]
