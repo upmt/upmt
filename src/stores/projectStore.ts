@@ -1222,7 +1222,10 @@ export const useProjectStore = defineStore('projectStore', () => {
           .filter((color: string | undefined) => !!color)
         const color = colors[0] ?? ""
 
-        const types = new Set(instances.map(ssc => ssc.abstractionType))
+        const types = new Set(instances
+          // ignore abstraction type for ssc without child
+          .filter(ssc => children[ssc.id])
+          .map(ssc => ssc.abstractionType))
         let abstractionType = ''
         if (types.size > 1) {
           // More than 1 abstractionType: error, and keep ''
