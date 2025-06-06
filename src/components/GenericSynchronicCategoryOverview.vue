@@ -107,6 +107,7 @@
   }
   .genericsynchroniccategory-filler {
       height: calc(var(--overview-height) + 2px);
+      align-self: center;
       flex: 1;
   }
   .genericsynchroniccategory-header.has-error {

@@ -89,6 +89,7 @@
       padding: 0;
       width: 10px;
       line-height: calc(var(--overview-height) + 2px);
+      align-self: center;
   }
   .specificsynchroniccategory-filler {
       height: calc(var(--overview-height) + 2px);
