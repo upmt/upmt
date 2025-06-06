@@ -33,13 +33,15 @@
             <span class="genericsynchroniccategory-name">{{ category.name }}
             </span>
           </DragElement>
-          <q-tooltip>{{ category.name }}
-            <div v-if="category.errors">
-              <span v-for="error, key in category.errors"
-                    :key="key">
-                {{ error }}
-              </span>
+          <q-tooltip  class="bg-red-5" anchor="top right" self="top left" v-if="category.errors?.length">
+            {{ category.name }}
+            <div v-for="error, key in category.errors"
+                 :key="key">
+              {{ error }}
             </div>
+          </q-tooltip>
+          <q-tooltip anchor="top right" self="top left" v-else>
+            {{ category.name }}
           </q-tooltip>
       </div>
 
@@ -89,6 +91,9 @@
   .genericsynchroniccategory-container {
       display: flex;
       flex-direction: row;
+  }
+  .genericsynchroniccategory-name {
+      align-self: center;
   }
   .genericsynchroniccategory-header {
       border: 1px solid black;
