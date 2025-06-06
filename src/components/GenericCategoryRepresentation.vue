@@ -1,9 +1,9 @@
 <template>
-  <div class="genericcategory-container row"
+  <div class="genericsynchroniccategory-container row"
        v-if="genericcategory"
        :data-genericcategory="genericcategory.name">
     <q-expansion-item
-      class="genericcategory-body"
+      class="genericsynchroniccategory-body"
       dense
       dense-toggle
       :duration="0"
@@ -26,7 +26,7 @@
           :data="genericcategory.name">
           <q-icon
             ref="handle"
-            class="genericcategory-handle"
+            class="genericsynchroniccategory-handle"
             size="xs"
             name="mdi-source-repository" />
           <q-tooltip class="bg-red-5" anchor="top right" self="top left" v-if="genericcategory.errors?.length">
@@ -36,7 +36,7 @@
             </div>
           </q-tooltip>
           <span
-            class="genericcategory-label">
+            class="genericsynchroniccategory-label">
             {{ genericcategory.name }} <q-btn
                                        size="sm"
                                        dense>
@@ -87,7 +87,7 @@
 
       </template>
 
-      <div class="genericcategory-children">
+      <div class="genericsynchroniccategory-children">
         <GenericCategoryRepresentation
           v-for="cat in genericcategory.children"
           :key="cat.name"
@@ -175,17 +175,20 @@
 </script>
 
 <style scoped>
-  .genericcategory-handle {
+  .genericsynchroniccategory-handle {
       opacity: .5;
       cursor: pointer;
   }
-  .genericcategory-handle:hover {
+  .genericsynchroniccategory-handle:hover {
       opacity: .7;
   }
-  .genericcategory-name:hover .on-name-hover {
+  .genericsynchroniccategory-name {
+      align-items: center;
+  }
+  .genericsynchroniccategory-name:hover .on-name-hover {
       opacity: 1;
   }
-  .genericcategory-children {
+  .genericsynchroniccategory-children {
       border-left: 1px dotted black;
   }
   .q-list--dense > .q-item, .q-item--dense {
