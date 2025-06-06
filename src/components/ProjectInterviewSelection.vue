@@ -11,7 +11,7 @@
         <div class="fit fullwindow-height">
           <q-tabs
             dense
-            active-class="active"
+            active-class="active-interview-label"
             align="left"
             no-caps
             :inlineLabel="true"
@@ -305,8 +305,8 @@
       font-weight: 200;
   }
 
-  .active .q-tab__label {
-      background-color: #eeeeee;
+  .active-interview-label {
+      background-color: #ccc;
       font-weight: bold;
   }
   .q-tab {
