@@ -162,21 +162,20 @@
 
   function zoomToWidth (width: number) {
       const div = document.querySelector(".analysis")
-      if (div && div.parentElement) {
-          console.log("Setting zoom", zoom.value, width,
-                      'parent', div.parentElement.clientWidth, div.parentElement.scrollWidth,
-                      'div', div.clientWidth, div.scrollWidth)
-
-          const parentWidth = div.parentElement.clientWidth - 60
-          const newZoom = parentWidth / width
-          zoom.value = +newZoom.toFixed(2)
+      if (div) {
+          const parent = div.closest(".q-splitter")
+          if (parent) {
+              const parentWidth = parent.clientWidth - 60
+              const newZoom = parentWidth / width
+              zoom.value = +newZoom.toFixed(2)
+          }
       }
   }
 
   function zoomToFit () {
       const div = document.querySelector(".analysis")
       if (div) {
-          zoomToWidth(div.scrollWidth / zoom.value)
+          zoomToWidth(div.clientWidth)
       }
   }
 
