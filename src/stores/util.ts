@@ -32,7 +32,7 @@ function groupBy<T>(
   }, {});
 }
 
-function timestampAdd (name: string) {
+function timestampAdd (name: string): string {
   // Offset the iso time so that toISOString returns a correct timestamp (for the user)
   const d = new Date();
   const tzoffset = d.getTimezoneOffset() * 60000; // offset in milliseconds
@@ -42,11 +42,21 @@ function timestampAdd (name: string) {
   return `${timestamp}-${name}`
 }
 
-function timestampStrip (name: string) {
+function timestampStrip (name: string): string {
   return name.replace(/^\d{4}-\d{2}-\d{2}T\d{6}-/, '')
 }
 
-function stringToId (name: string) {
+function timestampGet (name: string): Date | null {
+  const m = name.match(/^(\d{4}-\d{2}-\d{2})T(\d{2})(\d{2})(\d{2})-/)
+  if (m) {
+    const datestr = `${m[1]}T${m[2]}:${m[3]}:${m[4]}`
+    return new Date(datestr)
+  } else {
+    return null
+  }
+}
+
+function stringToId (name: string): string {
   const id = name ? name.replace(/\W/g, '_') : '_'
   return id.charAt(0).match(/\d/g)?.length ? `_${id}` : id
 }
@@ -57,6 +67,7 @@ ellipsize,
 groupBy,
 stringToId,
 timestampAdd,
+timestampGet,
 timestampStrip,
 ANNOTATION_COLORS
 }

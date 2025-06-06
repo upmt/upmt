@@ -1,5 +1,5 @@
 import { fs } from '@zenfs/core'
-import { timestampAdd } from 'stores/util'
+import { timestampAdd, timestampGet } from 'stores/util'
 import { useProjectStore } from 'stores/projectStore'
 
 const BASEDIR = '/projects'
@@ -21,6 +21,25 @@ function listStoredProjects () {
     return []
   }
   return fs.readdirSync(BASEDIR)
+}
+
+/**
+ * Get the stored files of project id as JSON objects
+ */
+function getProjectFiles(id: string)  {
+  const projectPath = id2path(id)
+  let versions: string[] = []
+  try {
+    versions = fs.readdirSync(projectPath).sort().reverse()
+  } catch (error) {
+    console.log("No such stored project", id, error)
+  }
+  return versions.map(basename => {
+    return {
+      filename: `${projectPath}/${basename}`,
+      date: timestampGet(basename)
+    }
+  })
 }
 
 function isStoredProject (id: string) {
@@ -51,6 +70,18 @@ function getStoredProject(id: string)  {
 }
 
 /**
+ * Get the latest info of project id as JSON object
+ */
+function getProjectInfo(id: string)  {
+  const files = getProjectFiles(id)
+  if (files.length) {
+    return files[0]
+  } else {
+    return null
+  }
+}
+
+/**
  * Store the project in browser storage
  * @returns string: the filename
  */
@@ -70,6 +101,8 @@ function storeProject (projectId: string) {
 }
 
 export {
+   getProjectFiles,
+   getProjectInfo,
    getStoredProject,
    isStoredProject,
    listStoredProjects,

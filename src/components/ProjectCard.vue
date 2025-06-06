@@ -11,6 +11,7 @@
         :title="`Loaded from ${project.filename}`"
         class="text-h6">{{ project.name }}</div>
       <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
+      <div class="text-subtitle2" v-if="info?.date">Last saved {{ date.formatDate(info.date, 'DD/MM/YYYY HH:MM') }}</div>
     </q-card-section>
 
     <q-separator />
@@ -43,14 +44,14 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import { useQuasar, exportFile } from 'quasar'
+  import { useQuasar, date, exportFile } from 'quasar'
   import { storeToRefs } from 'pinia'
 
   import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { storeProject } from 'stores/storage'
+  import { storeProject, getProjectInfo } from 'stores/storage'
   import StorageList from 'components/StorageList.vue'
 
   const $q = useQuasar()
@@ -78,6 +79,8 @@
   })
 
   const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
+
+  const info = computed(() => getProjectInfo(props.projectId))
 
   function doStoreProject (projectId: string) {
       const basename = storeProject(projectId)
