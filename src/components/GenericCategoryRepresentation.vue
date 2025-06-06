@@ -29,12 +29,10 @@
             class="genericcategory-handle"
             size="xs"
             name="mdi-source-repository" />
-          <q-tooltip>{{ genericcategory.name }}
-            <div v-if="genericcategory.errors">
-              <span v-for="error, key in genericcategory.errors"
+          <q-tooltip class="bg-red-5" anchor="top right" self="top left" v-if="genericcategory.errors?.length">
+            <div v-for="error, key in genericcategory.errors"
                     :key="key">
-                {{ error }}
-              </span>
+              {{ error }}
             </div>
           </q-tooltip>
           <span
