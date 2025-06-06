@@ -94,13 +94,15 @@
                                    :category="category" />
               </q-popup-edit>
             </span>
-            <q-tooltip>{{ categoryName }}
-              <div v-if="genericElement.errors">
-                <span v-for="error, key in genericElement.errors"
-                      :key="key">
-                  {{ error }}
-                </span>
+            <q-tooltip  class="bg-red-5" anchor="top right" self="top left" v-if="genericElement.errors?.length">
+              {{ categoryName }}
+              <div v-for="error, key in genericElement.errors"
+                   :key="key">
+                {{ error }}
               </div>
+            </q-tooltip>
+            <q-tooltip v-else>
+              {{ categoryName }}
             </q-tooltip>
           </DragElement>
           <div class="element-toolbar">
