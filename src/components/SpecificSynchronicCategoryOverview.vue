@@ -80,7 +80,7 @@
       overflow: hidden;
       font-size: 8px;
       width: 50px !important;
-      height: 12px !important;
+      height: var(--overview-height) !important;
       align-self: center;
   }
   .specificsynchroniccategory-relation,
@@ -88,6 +88,10 @@
       margin: 0;
       padding: 0;
       width: 10px;
-      line-height: 14px;
+      line-height: calc(var(--overview-height) + 2px);
+  }
+  .specificsynchroniccategory-filler {
+      height: calc(var(--overview-height) + 2px);
+      flex: 1;
   }
 </style>

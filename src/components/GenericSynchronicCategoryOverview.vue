@@ -72,10 +72,12 @@
 
 <style scoped>
   .genericsynchroniccategory {
-       margin: 1px 0;
+       margin: 0;
        padding: 0;
        display: flex;
        flex-direction: row;
+       flex: 1;
+       height: 100%;
   }
   .genericsynchroniccategory-children {
       margin: 0;
@@ -83,41 +85,34 @@
       display: flex;
       flex-direction: column;
       align-self: center;
-      flex: 0 0 auto;
   }
   .genericsynchroniccategory-container {
       display: flex;
       flex-direction: row;
   }
-  .root-generic-synchronic-category:hover {
-      border: 1px dashed #ddd;
-  }
   .genericsynchroniccategory-header {
-      flex: 0 0 auto;
-      user-select: none;
-      cursor: pointer;
       border: 1px solid black;
       overflow: hidden;
-      font-size: 10px;
+      font-size: 8px;
       width: 50px !important;
-      height: 14px !important;
+      height: var(--overview-height) !important;
       align-self: center;
   }
-  .genericsynchroniccategory-header.has-error {
-      border: 2px solid red;
-  }
-  .genericsynchroniccategory-relation {
-      flex: 0 0 auto;
-      margin: 0;
-      padding: 0;
-      width: 10px;
-      line-height: 14px;
-  }
+  .genericsynchroniccategory-relation,
   .genericsynchroniccategory-filler {
       margin: 0;
       padding: 0;
       width: 10px;
-      line-height: 14px;
-      flex: 0 0 auto;
+      line-height: calc(var(--overview-height) + 2px);
+  }
+  .genericsynchroniccategory-filler {
+      height: calc(var(--overview-height) + 2px);
+      flex: 1;
+  }
+  .genericsynchroniccategory-header.has-error {
+      border: 2px solid red;
+  }
+  .root-generic-synchronic-category:hover {
+      border: 1px dashed #ddd;
   }
 </style>
