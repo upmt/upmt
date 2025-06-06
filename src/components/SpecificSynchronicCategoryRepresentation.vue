@@ -122,7 +122,7 @@
         </div>
       </DropZone>
 
-      <DropZone :data="`in:${categoryId}`"
+      <DropZone :data="`before:${categoryId}`"
                 v-if="category.specificsynchronicmodelId"
                 types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
                 class="empty_padding newssc-dropzone"
