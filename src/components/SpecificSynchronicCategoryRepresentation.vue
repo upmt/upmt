@@ -83,7 +83,7 @@
             @click.meta="debug">
             <q-icon
               size="xs"
-              name="mdi-source-fork">
+              name="mdi-source-branch">
             </q-icon>
             <span class="specificsynchroniccategory-name">{{ categoryName }}
               <q-popup-edit style="zoom: var(--chart-zoom)"
