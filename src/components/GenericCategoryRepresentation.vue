@@ -123,7 +123,7 @@
   const props = defineProps<{
       genericcategory: GenericCategory,
       graphInfo: GraphInfo,
-      currentInterviewId: string
+      currentInterviewId: string | null
   }>()
 
   const popupEdit = ref(null)

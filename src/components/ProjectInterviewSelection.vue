@@ -36,11 +36,9 @@
           </q-tabs>
 
           <q-separator />
-          <GenericCategoryRepresentation
-            v-for="category in globalGraphs.categories"
-            :key="category.name"
-            :graphInfo="globalGraphs"
-            :genericcategory="category"
+          <GenericCategoriesRepresentation
+            :projectId="projectId"
+            :graph="globalGraphs"
             :currentInterviewId="currentInterviewId" />
           <q-expansion-item
             dense
@@ -51,6 +49,7 @@
 
             <GenericCategoriesOverview
               :projectId="projectId"
+              :currentInterviewId="currentInterviewId"
               :categories="globalGraphs.categories" />
 
           </q-expansion-item>
@@ -151,7 +150,7 @@
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
-  import GenericCategoryRepresentation from 'components/GenericCategoryRepresentation.vue'
+  import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
@@ -258,7 +257,7 @@
       setTimeout(() => {
           router.push({
               query: {
-                  currentInterviewId: i.id
+                  currentInterviewId: i.id ?? ""
               }
           }).catch(e => {
              console.log(`Error when switching view: ${e}`)
