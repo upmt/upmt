@@ -114,6 +114,7 @@
                       </q-toolbar>
                       <SpecificSynchronicModelRepresentation
                         v-if="editedSpecificSynchronicModelId"
+                        :hideJustifications="isEditedModelGeneric"
                         :modelId="editedSpecificSynchronicModelId" />
                     </div>
                   </template>
@@ -190,6 +191,10 @@
 
   const editedSpecificSynchronicModel = computed(() => {
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
+  })
+
+  const isEditedModelGeneric = computed(() => {
+      return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.genericModelId
   })
 
   const globalGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))

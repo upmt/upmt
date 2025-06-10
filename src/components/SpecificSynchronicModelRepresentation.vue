@@ -34,6 +34,7 @@
         v-for="c in model.categories"
         :key="c.id"
         :genericGraph="genericGraph"
+        :hideJustifications="hideJustifications"
         :categoryId="c.id" />
     </div>
   </div>
@@ -52,7 +53,8 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      modelId: { type: String, default: null }
+      modelId: { type: String, default: null },
+      hideJustifications: { type: Boolean, default: false }
   })
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))

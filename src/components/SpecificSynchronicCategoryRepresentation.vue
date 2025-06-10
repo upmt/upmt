@@ -9,12 +9,13 @@
          :data-specificsynchroniccategory="categoryId">
 
       <div :class="[ 'specificsynchroniccategory-children' ]">
-        <div v-for="c in category.children" :key="c.id">
-          <SpecificSynchronicCategoryRepresentation
-            :genericGraph="genericGraph"
-            :categoryId="c.id">
-          </SpecificSynchronicCategoryRepresentation>
-        </div>
+        <SpecificSynchronicCategoryRepresentation
+          v-for="c in category.children"
+          :key="c.id"
+          :genericGraph="genericGraph"
+          :hideJustifications="hideJustifications"
+          :categoryId="c.id">
+        </SpecificSynchronicCategoryRepresentation>
       </div>
 
       <DropZone data="add"
@@ -175,7 +176,8 @@
   const props = defineProps({
       categoryId: { type: String, default: "" },
       genericGraph: { type: Object, default: null },
-      layout: { type: String, default: "vertical" }
+      layout: { type: String, default: "vertical" },
+      hideJustifications: { type: Boolean, default: false }
   })
 
   const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
@@ -212,7 +214,7 @@
   })
 
   const isJustificationVisible = computed(() => {
-      return isLeaf.value || displayJustification.value
+      return !props.hideJustifications && ( isLeaf.value || displayJustification.value )
   })
 
   const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
