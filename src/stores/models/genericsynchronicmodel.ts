@@ -26,7 +26,8 @@ export default class GenericSynchronicModel extends BaseModel {
       created: this._meta?.createdAt,
       modified: this._meta?.updatedAt,
       color: this.color,
-      note: this.note
+      note: this.note,
+      proxy: this.proxy.toJSON()
     }
     if (shallow) {
       return base

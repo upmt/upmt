@@ -19,7 +19,7 @@ export default class Project extends BaseModel {
   @Str('') declare note: string
   @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
-  @HasMany(() => GenericSynchronicModel, 'projectId') declare genericModels: GenericSynchronicModel[]
+  @HasMany(() => GenericSynchronicModel, 'projectId') declare genericmodels: GenericSynchronicModel[]
 
   get label (): string {
     if (this.name) {
@@ -40,7 +40,8 @@ export default class Project extends BaseModel {
       filename: this.filename,
       name: this.name,
       modelfolder: this.modelfolder?.toJSON(),
-      interviews: this.interviews?.map(i => i.toJSON())
+      interviews: this.interviews?.map(i => i.toJSON()),
+      genericmodels: this.genericmodels?.map(m => m.toJSON())
     }
   }
 }
