@@ -29,6 +29,15 @@
             class="genericsynchroniccategory-handle"
             size="xs"
             name="mdi-source-branch-check" />
+          <q-icon
+            v-if="isSpecialization"
+            size="xs"
+            name="mdi-triangle-outline" />
+          <q-icon
+            v-if="isAggregation"
+            size="xs"
+            name="mdi-cards-diamond-outline" />
+
           <q-tooltip class="bg-red-5" anchor="top right" self="top left" v-if="genericcategory.errors?.length">
             <div v-for="error, key in genericcategory.errors"
                     :key="key">
@@ -141,6 +150,9 @@
   })
 
   const currentMoments = computed(() => moments.value?.filter((m: Moment) => m.interviewId === props.currentInterviewId) || [])
+
+  const isAggregation = computed(() => props.genericcategory.abstractionType == 'aggregation')
+  const isSpecialization = computed(() => props.genericcategory.abstractionType == 'specialization')
 
   const genericcategoryName = computed({
       get () {
