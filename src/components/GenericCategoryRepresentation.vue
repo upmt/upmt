@@ -28,7 +28,7 @@
             ref="handle"
             class="genericsynchroniccategory-handle"
             size="xs"
-            name="mdi-source-repository" />
+            name="mdi-source-branch-check" />
           <q-tooltip class="bg-red-5" anchor="top right" self="top left" v-if="genericcategory.errors?.length">
             <div v-for="error, key in genericcategory.errors"
                     :key="key">
