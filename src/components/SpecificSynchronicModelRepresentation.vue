@@ -34,7 +34,7 @@
         v-for="c in model.categories"
         :key="c.id"
         :genericGraph="genericGraph"
-        :hideJustifications="hideJustifications"
+        :hideJustifications="!model.momentId"
         :categoryId="c.id" />
     </div>
   </div>

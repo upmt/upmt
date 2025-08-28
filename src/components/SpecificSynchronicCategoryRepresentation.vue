@@ -24,9 +24,19 @@
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem">
+
         <div class="specificsynchroniccategory-justification"
              v-if="isJustificationVisible">
-          <JustificationRepresentation :justificationId="category.justification?.id ?? ''">
+          <ul v-if="genericGraph"
+              class="justification-descriptems">
+            <li v-for="descriptem in categoryDescriptems" :key="descriptem.id">
+              <DescriptemRepresentation :descriptemId="descriptem.id">
+              </DescriptemRepresentation>
+            </li>
+          </ul>
+          <JustificationRepresentation
+            v-else
+            :justificationId="category.justification?.id ?? ''">
           </JustificationRepresentation>
         </div>
 
@@ -111,8 +121,8 @@
               @click="displayJustification = !displayJustification"
               class="descriptems-badge"
               color="grey-6"
-              :title="`${descriptemCount} descriptems`"
-              rounded>{{ descriptemCount }}</q-badge>
+              :title="`${categoryDescriptemCount} descriptems`"
+              rounded>{{ categoryDescriptemCount }}</q-badge>
             <NoteIcon
               :element="category" />
             <div class="element-toolbar-secondary on-name-hover">
@@ -157,7 +167,8 @@
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
-//  import { storeToRefs } from 'pinia'
+  import { storeToRefs } from 'pinia'
+  import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
@@ -172,6 +183,8 @@
   const istore = useInterfaceStore()
 
   const store = useProjectStore()
+
+  const { currentProjectId } = storeToRefs(istore)
 
   const props = defineProps({
       categoryId: { type: String, default: "" },
@@ -207,17 +220,37 @@
       }
   })
 
-  const displayJustification = ref(false)
-
   const isLeaf = computed(() => {
       return !category.value?.children.length
   })
 
+  // Initial state for displayJustification
+  // Hide by default
+  const displayJustification = ref(false)
+  if (isLeaf.value) {
+      displayJustification.value = ! props.hideJustifications
+  }
+
   const isJustificationVisible = computed(() => {
-      return !props.hideJustifications && ( isLeaf.value || displayJustification.value )
+      return displayJustification.value
   })
 
-  const descriptemCount = computed(() => category.value?.justification?.descriptems.length || 0)
+  const categoryDescriptems = computed(() => {
+      if (! category.value || ! currentProjectId.value) {
+          return []
+      }
+      if (props.genericGraph) {
+          // Query for all descriptems for all categories
+          const categories = store.getSpecificSynchronicCategoriesByName (currentProjectId.value, category.value.name)
+          return categories.map(cat => cat.justification?.descriptems || []).flat()
+      } else {
+          return category.value?.justification?.descriptems || []
+      }
+  })
+
+  const categoryDescriptemCount = computed(() => {
+      return categoryDescriptems.value.length
+  })
 
   const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
 
@@ -511,5 +544,12 @@
   }
   .criterion-tooltip {
       white-space: pre-line;
+  }
+  .justification-descriptems {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding-left: 8px;
   }
 </style>
