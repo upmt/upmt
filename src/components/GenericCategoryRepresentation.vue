@@ -72,6 +72,7 @@
                   <q-btn class="full-width justify-content-between"
                          align="left"
                          no-caps
+                         @click="switchTab(name)"
                          size="sm">
                     <span class="interview-name">{{name}}</span>
                   </q-btn>
@@ -113,6 +114,7 @@
 
   import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
+  import { useRouter } from 'vue-router'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import Moment from 'stores/models/moment'
@@ -136,6 +138,8 @@
   }>()
 
   const popupEdit = ref(null)
+
+  const router = useRouter()
 
   function debug () {
       (window as any).genericcategory = props.genericcategory
@@ -179,6 +183,16 @@
 
       return Object.entries(groupBy(moments, 'interviewId'))
           .map(([id, arr]) => [ names[id], (arr as Array<any>).length ])
+  }
+
+  function switchTab (interviewName: string) {
+      router.push({
+          query: {
+              tab: interviewName
+          }
+      }).catch(e => {
+          console.log(`Error when switching view: ${e}`)
+      })
   }
 
   import type { NamedAction } from 'components/util.ts'
