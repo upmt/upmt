@@ -18,9 +18,9 @@
     </div>
 
     <GenericCategoryRepresentation
-      v-for="category in graph.categories"
+      v-for="category in genericGraphs.categories"
       :key="category.name"
-      :graphInfo="graph"
+      :genericGraphs="genericGraphs"
       :genericcategory="category"
       :currentInterviewId="currentInterviewId" />
 
@@ -46,7 +46,7 @@
 
   const props = defineProps<{
       projectId: string,
-      graph: GraphInfo,
+      genericGraphs: GraphInfo,
       currentInterviewId: string
   }>()
 
@@ -59,7 +59,7 @@
 
   function storeAsModel () {
       // Store the whole graph as a generic model
-      const model = store.buildGenericSynchronicModelFromGraphs (props.projectId, props.graph)
+      const model = store.buildGenericSynchronicModelFromGraphs (props.projectId, props.genericGraphs)
       if (model) {
           $q.notify({
               type: 'info',

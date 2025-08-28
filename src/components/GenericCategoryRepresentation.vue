@@ -101,7 +101,7 @@
         <GenericCategoryRepresentation
           v-for="cat in genericcategory.children"
           :key="cat.name"
-          :graphInfo="graphInfo"
+          :genericGraphs="genericGraphs"
           :genericcategory="cat"
           :currentInterviewId="currentInterviewId"
           />
@@ -133,7 +133,7 @@
 
   const props = defineProps<{
       genericcategory: GenericCategory,
-      graphInfo: GraphInfo,
+      genericGraphs: GraphInfo,
       currentInterviewId: string | null
   }>()
 
@@ -148,7 +148,7 @@
 
   const moments = computed((): Moment[] => {
       const momentIds = props.genericcategory.instances
-            .map(ssc => props.graphInfo.instanceIdToContainerInfo[ssc.id]?.momentId)
+            .map(ssc => props.genericGraphs.instanceIdToContainerInfo[ssc.id]?.momentId)
             .filter(id => !!id) as string[]
       return store.getMoments(momentIds)
   })

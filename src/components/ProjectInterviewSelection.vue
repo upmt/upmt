@@ -38,7 +38,7 @@
           <q-separator />
           <GenericCategoriesRepresentation
             :projectId="projectId"
-            :graph="globalGraphs"
+            :genericGraphs="genericGraphs"
             :currentInterviewId="currentInterviewId" />
           <q-expansion-item
             dense
@@ -50,7 +50,7 @@
             <GenericCategoriesOverview
               :projectId="projectId"
               :currentInterviewId="currentInterviewId"
-              :categories="globalGraphs.categories" />
+              :categories="genericGraphs.categories" />
 
           </q-expansion-item>
 
@@ -100,7 +100,13 @@
                          v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row">
                         <q-toolbar-title>
-                          Editing <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
+                          Editing
+                          <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
+                          <span v-if="isEditedModelGeneric">
+                            <q-btn
+                              @click="updateGenericModel">Update generic model
+                            </q-btn>
+                          </span>
                         </q-toolbar-title>
                         <q-btn
                           icon="mdi-close"
@@ -114,7 +120,6 @@
                       </q-toolbar>
                       <SpecificSynchronicModelRepresentation
                         v-if="editedSpecificSynchronicModelId"
-                        :hideJustifications="isEditedModelGeneric"
                         :modelId="editedSpecificSynchronicModelId" />
                     </div>
                   </template>
@@ -197,7 +202,7 @@
       return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.genericModelId
   })
 
-  const globalGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
+  const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
@@ -281,6 +286,10 @@
              console.log(`Error when switching view: ${e}`)
           })
       }
+  }
+
+  function updateGenericModel () {
+      store.buildGenericSynchronicModelFromGraphs (props.projectId, genericGraphs.value)
   }
 
   function closeEditedModel () {
