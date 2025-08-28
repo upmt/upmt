@@ -4,6 +4,15 @@
        :data-project="projectId">
 
     <div class="text-title2 text-bold">Generic model
+      <q-btn
+        flat
+        dense
+        size="xs"
+        title="Edit generic model"
+        @click="editGenericModel()"
+        icon="edit"
+        no-caps>
+      </q-btn>
       <ElementMenu
         :actions="menuActions" />
     </div>
