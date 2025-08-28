@@ -1352,7 +1352,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   // Build a GenericSynchronicModel from the given graphs.
   // It builds it from the graph.categories, which can be filtered if needed
-  function buildGenericSynchronicModelFromGraphs (projectId: string, graphs: any): GenericSynchronicModel | null {
+  function buildGenericSynchronicModelFromGraphs (projectId: string, graphs: GraphInfo): GenericSynchronicModel | null {
     const genericModel = getGenericSynchronicModel(projectId)
     if (! genericModel) {
       return null
