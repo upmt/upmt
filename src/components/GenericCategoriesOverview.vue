@@ -6,6 +6,7 @@
     <GenericSynchronicCategoryOverview
       v-for="category in categories"
       :key="category.name"
+      :projectId="projectId"
       :currentInterviewId="currentInterviewId"
       :category="category">
     </GenericSynchronicCategoryOverview>
@@ -22,7 +23,7 @@
   defineProps<{
       projectId: string,
       categories:  GenericCategory[],
-      currentInterviewId: string
+      currentInterviewId: string | null
   }>()
 
 </script>

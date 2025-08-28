@@ -12,6 +12,8 @@
       <div class="genericsynchroniccategory-children">
         <div v-for="c in category.children" :key="c.name">
           <GenericSynchronicCategoryOverview
+            :projectId="projectId"
+            :currentInterviewId="currentInterviewId"
             :category="c">
           </GenericSynchronicCategoryOverview>
         </div>
@@ -61,15 +63,20 @@
   import { computed } from 'vue'
   import DragElement from './DragElement.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
+
+  import type { GenericCategory } from 'stores/projectStore'
+
   // import { useProjectStore } from 'stores/projectStore'
   // const store = useProjectStore()
 
-  const props = defineProps({
-      category: { type: Object, default: null }
-  })
+  const props = defineProps<{
+      projectId: string,
+      category:  GenericCategory,
+      currentInterviewId: string | null
+  }>()
 
   // FIXME: detect inconsistencies
-  const abstractionType = computed(() => props.category.instances[0].abstractionType)
+  const abstractionType = computed(() => props.category.instances[0]?.abstractionType || "")
 </script>
 
 <style scoped>
