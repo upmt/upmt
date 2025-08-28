@@ -485,7 +485,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.SpecificSynchronicCategory
       .with('children')
       .with('parent')
-      .with('model')
+      .with('model', (query) => query.with('moment'))
       .with('justification', (query) => query.with('descriptems', (q) => q.with('interview')))
       .where('projectId', projectId)
       .get()
