@@ -262,7 +262,7 @@
       setTimeout(() => {
           router.push({
               query: {
-                  currentInterviewId: i.id ?? ""
+                  tab: info.name
               }
           }).catch(e => {
              console.log(`Error when switching view: ${e}`)
