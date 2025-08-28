@@ -4,6 +4,9 @@ import { configure, fs } from '@zenfs/core'
 import { IndexedDB } from '@zenfs/dom'
 
 export default defineBoot(async () => {
+    /* In zenfs >= 2.0 Will be:
+    await configureSingle({ backend: IndexedDB });
+     */
     await configure({
         mounts: {
 		    '/': IndexedDB,
