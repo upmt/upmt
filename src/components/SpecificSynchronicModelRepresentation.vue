@@ -3,7 +3,9 @@
        v-if="model"
        :data-specificsynchronicmodel="modelId">
     <DropZone :data="`inmodel:${modelId}`"
-              types="upmt/selection upmt/descriptem upmt/annotation"
+              types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
+              @specificsynchroniccategory="droppedSpecificSynchronicCategory"
+              @genericsynchroniccategory="droppedGenericSynchronicCategory"
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
@@ -72,6 +74,26 @@
   }
 
   // Dropped selection to create a SpecificSynchronicModel. where is before or after or in:
+  function droppedGenericSynchronicCategory (categoryName: string, where: string) {
+      store.addSpecificSynchronicCategory(categoryName,
+                                          props.modelId,
+                                          where,
+                                          null)
+      showContent()
+  }
+
+  function droppedSpecificSynchronicCategory (categoryId: string, where: string) {
+      // Get the name from the id
+      const category = store.getSpecificSynchronicCategory(categoryId)
+      if (category) {
+          store.addSpecificSynchronicCategory(category.name,
+                                              props.modelId,
+                                              where,
+                                              null)
+          showContent()
+      }
+  }
+
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && model.value) {
