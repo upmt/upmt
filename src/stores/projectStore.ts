@@ -106,6 +106,9 @@ type TextSelection = {
   interviewId: string
 }
 
+/**
+ * Types used for loading/adapting upmtv1 files
+ */
 type ReffableModel = CategoryModel | PropertyModel | MomentModel
 
 const idCache: Record<string, Record<string, ReffableModel>> = {
@@ -389,7 +392,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         .with('momentmodels')
         .with('folders', (query) => { query.withAll() })
         .find(id)
-    }
+  }
 
   function getRepo () {
       return repo
@@ -663,6 +666,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     return out
   }
 
+  /**
+   * Load a projet file from a URL
+   */
   function loadProject (url: string) {
     return axios.get(url).then((response) => {
       const p = importProject(response.data, url)
@@ -677,6 +683,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     Object.values(repo).forEach(r => (r as any).where('projectId', projectId).delete())
   }
 
+  /**
+   * Load a projet file from the ZenFS managed storage space
+   * In this case, we only specify the id
+   */
   function loadStoredProject (id: string) {
     const data = getStoredProject(id)
     if (data) {
@@ -686,7 +696,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  /* Return a project structure with all relationships hydrated */
+  /**
+   * Return a project structure with all relationships hydrated
+   */
   function hydrateProject (id: string): any {
     const project = { ...getProject(id) }
     /* Go through all related elements and fetch them */
