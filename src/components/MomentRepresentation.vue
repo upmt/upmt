@@ -254,7 +254,7 @@
   function droppedMoment (momentId: string, where: string) {
       console.log("Dropped Moment", momentId, "where", where)
       if (!momentId) {
-          store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+          store.addMoment(istore.newMomentId(),
                           props.momentId,
                           where)
           showContent()
@@ -272,7 +272,7 @@
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && moment.value) {
-          store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+          store.addMoment(istore.newMomentId(),
                           props.momentId,
                           where,
                           descriptem.toJSON())
@@ -283,7 +283,7 @@
   function droppedCreatingAnnotation (annotationId: string, where: string) {
       const annotation = store.getAnnotation(annotationId)
       if (annotation && moment.value) {
-          store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+          store.addMoment(istore.newMomentId(),
                           props.momentId,
                           where,
                           annotation.toJSON())
@@ -295,7 +295,7 @@
       try {
           const selection = JSON.parse(selectionData)
           if (moment.value) {
-              store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+              store.addMoment(istore.newMomentId(),
                               props.momentId,
                               where,
                               selection)

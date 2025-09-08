@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import { computed, ref, Ref } from 'vue'
 import Interview from 'stores/models/interview'
 
+const SSCPrefix = "SSC"
+const MomentPrefix = "Moment "
+
 export const useInterfaceStore = defineStore('interface', () => {
   const _username = ref("")
   const highlightedMomentId = ref("")
@@ -19,6 +22,37 @@ export const useInterfaceStore = defineStore('interface', () => {
 
   function newSSCIndexIncrement () {
     return newSSCIndex.value++
+  }
+
+  function newSSCId (prefix: string = SSCPrefix) {
+    return `${prefix}${newSSCIndexIncrement()}`
+  }
+
+  function newMomentId (prefix: string = MomentPrefix) {
+    return `${prefix}${newMomentIndexIncrement()}`
+  }
+
+  function maxIndexValue (names: string[], prefix: string) {
+    const regex = new RegExp(`^${prefix}(\\d+)$`)
+    const values = names.map(item => {
+      const match = item.match(regex)
+      return match ? parseInt(match[1] || "0", 10) : null;
+    }).filter(num => num !== null)
+
+    if (values.length) {
+      return Math.max(...values)
+    } else {
+      return 0
+    }
+  }
+
+  /**
+   * Reset the values for SSCIndex/MomentIndex after loading a new project
+   * so that we do not propose existing indices
+   */
+  function resetIndexes (categoryNames: string[], momentNames: string[]) {
+    newSSCIndex.value = maxIndexValue(categoryNames, SSCPrefix) + 1
+    newMomentIndex.value = maxIndexValue(momentNames, MomentPrefix) + 1
   }
 
   function setCurrentProjectId (projectId: string | null) {
@@ -57,6 +91,9 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   return {
+    // Constants
+    SSCPrefix,
+    MomentPrefix,
     currentInterview,
     currentProjectId,
     getUsername,
@@ -66,6 +103,9 @@ export const useInterfaceStore = defineStore('interface', () => {
     highlightedDescriptemId,
     newMomentIndexIncrement,
     newSSCIndexIncrement,
+    newMomentId,
+    newSSCId,
+    resetIndexes,
     setCurrentInterview,
     setCurrentProjectId,
     setEditedSpecificSynchronicModelId,

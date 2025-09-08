@@ -151,7 +151,7 @@
               if (moments.length) {
                   const lastMoment = moments[moments.length - 1]
                   if (lastMoment) {
-                      store.addMoment(`New moment ${istore.newMomentIndexIncrement()}`,
+                      store.addMoment(istore.newMomentId(),
                                       lastMoment.id,
                                       "after")
                   }

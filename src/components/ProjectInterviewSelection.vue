@@ -211,7 +211,12 @@
       } else {
           currentInterviewId.value = newInterview
       }
-  })
+      // We changed project - reset newSSC/newMoment indexes
+      istore.resetIndexes (store.getSpecificSynchronicCategoryNamesByPrefix(props.projectId, istore.SSCPrefix),
+                           store.getMomentsByProject(props.projectId).map(moment => moment.name))
+  },
+        // Trigger function at init time too
+        { immediate: true })
 
   watch(currentInterviewId, () => {
       istore.setCurrentInterview(store.getInterview(currentInterviewId.value))

@@ -266,7 +266,7 @@
 
   function createSpecificSynchronicCategory (where: string) {
       if (category.value) {
-          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(istore.newSSCId(),
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               null)
@@ -337,7 +337,7 @@
   function droppedCreatingDescriptem (descriptemId: string, where: string) {
       const descriptem = store.getDescriptem(descriptemId)
       if (descriptem && category.value) {
-          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(istore.newSSCId(),
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               descriptem.toJSON())
@@ -348,7 +348,7 @@
   function droppedCreatingAnnotation (annotationId: string, where: string) {
       const annotation = store.getAnnotation(annotationId)
       if (annotation && category.value) {
-          store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
+          store.addSpecificSynchronicCategory(istore.newSSCId(),
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               annotation.toJSON())
@@ -360,7 +360,7 @@
       try {
           const selection = JSON.parse(selectionData)
           if (selection && category.value) {
-              store.addSpecificSynchronicCategory(`SSC${istore.newSSCIndexIncrement()}`,
+              store.addSpecificSynchronicCategory(istore.newSSCId(),
                                                   category.value.specificsynchronicmodelId,
                                                   where,
                                                   selection)
