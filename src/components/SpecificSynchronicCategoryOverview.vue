@@ -24,8 +24,12 @@
       </div>
 
       <div class="specificsynchroniccategory-header">
-        <span class="specificsynchroniccategory-name">{{ category.name }}
-        </span>
+          <DragElement
+            type="specificsynchroniccategory"
+            :data="categoryId">
+            <span class="specificsynchroniccategory-name">{{ category.name }}
+            </span>
+          </DragElement>
       </div>
 
       <div
@@ -42,6 +46,7 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import DragElement from './DragElement.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
