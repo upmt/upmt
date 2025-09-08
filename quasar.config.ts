@@ -50,13 +50,13 @@ export default defineConfig((ctx) => {
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
+      // Note: hash is necessary to have it work with relative publicPath
       // vueRouterBase,
       vueDevtools: true,
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
-
-            publicPath: '/upmt',
+      publicPath: './',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -64,8 +64,13 @@ export default defineConfig((ctx) => {
       // minify: false,
       // polyfillModulePreload: true,
       // distDir
-
       // extendViteConf (viteConf) {},
+
+      // From https://github.com/quasarframework/quasar/issues/8513#issuecomment-1127654470
+      // Needed to enable relative publicPath
+      extendViteConf(viteConf, { isServer, isClient }) {
+        viteConf.base = "";
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [
