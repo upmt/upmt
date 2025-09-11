@@ -166,6 +166,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
   import { getProjectFiles, listStoredProjects } from 'stores/storage'
+  import { timestampAdd } from 'stores/util'
   import ProjectCard from 'components/ProjectCard.vue'
   import JSZip from 'jszip'
 
@@ -255,7 +256,7 @@
       zip.generateAsync({
           type: "blob",
           streamFiles: true
-      }).then(zipData => exportFile("upmt2-corpus.zip", zipData))
+      }).then(zipData => exportFile(timestampAdd("upmt2-corpus.zip"), zipData))
           .catch(error => console.log("Error when creating corpus zip:", error))
   }
 
@@ -288,4 +289,5 @@
     width: 100%;
     max-width: 250px;
   }
+
 </style>
