@@ -36,6 +36,8 @@ function getProjectFiles(id: string)  {
   }
   return versions.map(basename => {
     return {
+      id,
+      basename,
       filename: `${projectPath}/${basename}`,
       date: timestampGet(basename)
     }

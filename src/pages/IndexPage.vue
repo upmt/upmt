@@ -45,6 +45,20 @@
                   </p>
                 </q-tooltip>
               </q-btn>
+              <q-btn
+                icon="mdi-download-circle-outline"
+                flat
+                @click="downloadAllData"
+                >
+                <q-tooltip>
+                  <p class="text-h5">Download all data</p>
+                  <p>Your data is versioned and stored in the
+                  permanent storage space of your webbrowser. Use this
+                  button to download the latest version of all saved
+                  projects.
+                  </p>
+                </q-tooltip>
+              </q-btn>
             </div>
           </q-card-section>
 
@@ -147,10 +161,13 @@
 
   import { computed, ref, Ref } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { useQuasar, QFile } from 'quasar'
+  import { fs } from '@zenfs/core'
+  import { useQuasar, QFile, exportFile } from 'quasar'
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
+  import { getProjectFiles, listStoredProjects } from 'stores/storage'
   import ProjectCard from 'components/ProjectCard.vue'
+  import JSZip from 'jszip'
 
   defineOptions({
       name: 'IndexPage'
@@ -220,6 +237,26 @@
               message: `General exception: ${e}`
           })
       }
+  }
+
+
+  function downloadAllData () {
+      const projectFiles = listStoredProjects().map(projectId => getProjectFiles(projectId))
+            .filter(versions => versions.length > 0)
+      // Versions are sorted in reverse order, so the first element is the most recent one
+            .map(versions => versions[0])
+      const zip = new JSZip()
+      projectFiles.forEach(item => {
+          if (item) {
+              const data = fs.readFileSync(item.filename, 'utf-8')
+              zip.file(item.basename, data)
+          }
+      })
+      zip.generateAsync({
+          type: "blob",
+          streamFiles: true
+      }).then(zipData => exportFile("upmt2-corpus.zip", zipData))
+          .catch(error => console.log("Error when creating corpus zip:", error))
   }
 
   function newProject () {
