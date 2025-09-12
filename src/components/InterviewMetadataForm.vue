@@ -35,11 +35,19 @@
 
         <q-input
           filled
-          v-model="participant"
-          label="Participant name *"
+          v-model="name"
+          label="Interview name/id *"
           lazy-rules
           class="col-4"
           :rules="[ (val: string) => val && val.length > 0 || 'It  must be filled']"
+          />
+
+        <q-input
+          filled
+          v-model="participant"
+          label="Participant name"
+          lazy-rules
+          class="col-4 q-px-md"
           />
 
         <q-input
@@ -49,15 +57,6 @@
           label="Interview date"
           lazy-rules
           class="col-4 q-px-md"
-          />
-
-        <q-input
-          filled
-          v-model="name"
-          label="Interview name/id *"
-          lazy-rules
-          class="col-4"
-          :rules="[ (val: string) => val && val.length > 0 || 'It  must be filled']"
           />
 
       </div>
@@ -88,8 +87,16 @@
             <q-file label="drag an existing text file here"
                     v-model="interviewFilename"
                     ref="filepicker"
-                    filled
-                    @update:model-value="uploadInterviewFile"/>
+                    outlined
+                    hide-bottom-space
+                    square
+                    dense
+                    item-aligned
+                    @update:model-value="uploadInterviewFile">
+              <template v-slot:prepend>
+                <q-icon name="mdi-upload-circle-outline" @click.stop.prevent />
+              </template>
+            </q-file>
           </div>
         </template>
       </q-input>
