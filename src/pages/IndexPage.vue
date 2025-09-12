@@ -47,6 +47,7 @@
               </q-btn>
               <q-btn
                 icon="mdi-download-circle-outline"
+                size="xl"
                 flat
                 @click="downloadAllData"
                 >
