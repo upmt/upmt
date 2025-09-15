@@ -35,7 +35,9 @@
       // Load sample projects if they were not stored
       for (const id of [ 'example', 'ruptur-example', 'ruptur2-example' ]) {
           if (! store.getProject(id)) {
-              void store.loadProject(`./examples/${id}.upmt`)
+              void store.loadProject(`./examples/${id}.upmt`).catch((error) => {
+                  console.log(`Cannot load example ${id}:`, error)
+              })
           }
       }
       (window as any).store = store;
