@@ -40,7 +40,6 @@ export default class Descriptem extends BaseModel {
     return this.endIndex - this.startIndex
   }
 
-
   toJSON (): any {
     return {
       creator: this.creator,

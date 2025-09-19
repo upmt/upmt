@@ -13,9 +13,9 @@
 
   const emit = defineEmits([ 'annotation', 'descriptem', 'selection',
                              'color',
-                             'categoryinstance', 'moment', 'property',
+                             'moment',
                              'specificsynchroniccategory', 'genericsynchroniccategory',
-                             'categorymodel', 'momentmodel' ])
+                           ])
 
   const props = defineProps({
       data: {

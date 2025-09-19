@@ -4,21 +4,16 @@ import axios from 'axios'
 import Analysis from './models/analysis'
 import Annotation from './models/annotation'
 import BaseModel from './models/basemodel'
-import CategoryInstance from './models/categoryinstance'
-import CategoryModel from './models/categorymodel'
 import Descriptem from './models/descriptem'
 import GenericSynchronicModel from './models/genericsynchronicmodel'
 import Interview from './models/interview'
 import Justification from './models/justification'
 import ModelFolder from './models/modelfolder'
 import Moment from './models/moment'
-import MomentModel from './models/momentmodel'
 import Project from './models/project'
-import Property from './models/property'
-import PropertyModel from './models/propertymodel'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
-import { basename, stringToId, timestampStrip, groupBy } from './util'
+import { stringToId, groupBy } from './util'
 import { isStoredProject, getStoredProject } from './storage'
 import { useInterfaceStore } from 'stores/interface'
 
@@ -59,35 +54,28 @@ export type GraphInfo = {
 const repo = Object.fromEntries([
   Analysis,
   Annotation,
-  CategoryModel,
   Descriptem,
   Interview,
   Justification,
   ModelFolder,
   Moment,
-  MomentModel,
   Project,
-  PropertyModel
 ].map(c => [c.entity, useRepo(c)]))
  */
 const repo = {
   Analysis:         useRepo(Analysis),
   Annotation:       useRepo(Annotation),
-  CategoryModel:    useRepo(CategoryModel),
-  CategoryInstance: useRepo(CategoryInstance),
   Descriptem:       useRepo(Descriptem),
   GenericSynchronicModel: useRepo(GenericSynchronicModel),
   Interview:        useRepo(Interview),
   Justification:    useRepo(Justification),
   ModelFolder:      useRepo(ModelFolder),
   Moment:           useRepo(Moment),
-  MomentModel:      useRepo(MomentModel),
   Project:          useRepo(Project),
-  Property:         useRepo(Property),
-  PropertyModel:    useRepo(PropertyModel),
   SpecificSynchronicCategory: useRepo(SpecificSynchronicCategory),
   SpecificSynchronicModel: useRepo(SpecificSynchronicModel),
 }
+
 // For updateElement, only the entity name seems to be easily available.
 // Augment the repo object with entity name for every entity
 const repoValues = Object.values(repo).map(r => {
@@ -104,257 +92,6 @@ type TextSelection = {
   startIndex: number,
   endIndex: number,
   interviewId: string
-}
-
-/**
- * Types used for loading/adapting upmtv1 files
- */
-type ReffableModel = CategoryModel | PropertyModel | MomentModel
-
-const idCache: Record<string, Record<string, ReffableModel>> = {
-  CategoryModel: {} as Record<number, CategoryModel>,
-  PropertyModel: {} as Record<number, PropertyModel>,
-  MomentModel: {} as Record<number, MomentModel>
-}
-interface OldReference {
-   "@id": number,
-   "@model": string
-}
-// .interview_list[0].rootMoment.moment_list[0].moment_list[0].moment_list[0].concreteCategory_list[0].concreteProperty_list[0]
-interface OldSchemaProperty {
-   "@id": number
-   "@model": string
-   expanded: boolean
-   name: string
-}
-interface OldSchemaCategory {
-   "@id": number
-   "@model": string
-   color: string
-   expanded: boolean
-   name: string
-   schemaProperty_list: OldSchemaProperty[]
-}
-interface OldMomentType {
-   "@id": number
-   "@model": string
-   color: string
-   expanded: boolean
-   name: string
-   schemaCategory_list: OldReference[]
-}
-interface OldSchemaFolder {
-   "@id": string
-   "@model": string
-   expanded: boolean
-   name: string
-   schemaCategory_list: OldSchemaCategory[]
-   schemaFolder_list: OldSchemaFolder[]
-   schemaMomentType_list: OldMomentType[]
-}
-interface OldJustification {
-   descripteme_list: Descriptem[]
-}
-interface OldProperty {
-   justification: OldJustification
-   schemaProperty: OldReference
-   value: string
-}
-interface OldCategory {
-   concreteProperty_list: OldProperty[]
-   justification: OldJustification
-   schemaCategory: OldReference
-}
-interface OldMoment {
-   name: string
-   color: string
-   comment: string
-   isCollapsed: boolean
-   isCommentVisible: boolean
-   transitional: boolean
-   justification: OldJustification
-   moment_list: OldMoment[]
-   concreteCategory_list: OldCategory[]
-}
-interface OldInterview {
-   date: string
-   color: string
-   comment: string
-   participantName: string
-   interviewText: any
-   rootMoment: OldMoment
-}
-
-// Fix the color name
-// It is sometimes written as 0x7084b0ff, sometimes as 7092be
-function fixColorName (c: string): string {
-  if (typeof c !== 'string') {
-    return c
-  }
-  if (c.length === 6) {
-    return `#${c}`
-  } else if (c.startsWith('0x')) {
-    return `#${c.slice(2, 8)}`
-  } else {
-    return c
-  }
-}
-
-/*
- * Return a reference id, built from the entity model and the numerical id
- * to avoid clashes (same numerical ids for different entities e.g. Category and Folder)
- */
-function getReferenceId (e: OldReference): string {
-  return `${e['@model']}-${e['@id']}`
-}
-
-function mapSchemaCategoryReference (sc: OldReference): CategoryModel | null {
-  const key = getReferenceId(sc)
-  if (!idCache.CategoryModel) return null
-  const model = idCache.CategoryModel[key] as CategoryModel
-  if (!model) {
-    console.error(`Missing ${key}`)
-  }
-  return model ?? null
-}
-
-function mapConcreteProperty (p: OldProperty, interview: Interview): Property | null {
-  const key = getReferenceId(p.schemaProperty)
-  if (!idCache.PropertyModel) return null
-  const model = idCache.PropertyModel[key] as PropertyModel
-  if (!model) {
-    console.error(`Missing ${key}`)
-  }
-  return repo.Property.make({
-    propertymodelId: model.id,
-    value: p.value,
-    justification: repo.Justification.make({
-      descriptems: p.justification?.descripteme_list.map(d => repo.Descriptem.make({
-        startIndex: d.startIndex,
-        endIndex: d.endIndex,
-        interviewId: interview.id
-      }))
-    })
-  })
-}
-
-function mapConcreteCategory (c: OldCategory, interview: Interview): CategoryInstance {
-  const model = mapSchemaCategoryReference(c.schemaCategory)
-  return repo.CategoryInstance.make({
-    categorymodelId: model?.id,
-    justification: repo.Justification.make({
-      descriptems: c.justification?.descripteme_list.map(d => repo.Descriptem.make({
-        startIndex: d.startIndex,
-        endIndex: d.endIndex,
-        interviewId: interview.id
-      }))
-    }),
-    properties: c.concreteProperty_list.map(p => mapConcreteProperty(p, interview))
-  })
-}
-
-// Map an imported moment to a Moment
-function mapMoment (m: OldMoment, index: number, interview: Interview): Moment {
-  const moment = repo.Moment.make({
-    name: m.name,
-    childIndex: index,
-    color: fixColorName(m.color),
-    note: m.comment,
-    interviewId: interview.id,
-    isExpanded: !m.isCollapsed,
-    isTransitional: m.transitional,
-    categoryinstances: m.concreteCategory_list?.map(cc => mapConcreteCategory(cc, interview)),
-    specificsynchronicmodel: repo.SpecificSynchronicModel.make({
-      name: "Initial",
-      categories: []
-    }),
-    justification: repo.Justification.make({
-      descriptems: m.justification?.descripteme_list.map(d => repo.Descriptem.make({
-        startIndex: d.startIndex,
-        endIndex: d.endIndex,
-        interviewId: interview.id
-      }))
-    }),
-    children: m.moment_list.map((c: OldMoment, index: number) => mapMoment(c, index, interview))
-  })
-  return moment
-}
-
-function mapInterview (i: OldInterview): Interview {
-  const interview: Interview = repo.Interview.make({
-    date: i.date,
-    color: fixColorName(i.color),
-    note: i.comment,
-    participantName: i.participantName,
-    text: i.interviewText.text
-  })
-  interview.annotations = repo.Annotation.make(i.interviewText.annotation_list.map((a: Annotation) => ({
-    ...a,
-    color: fixColorName(a.color),
-    interview
-  })))
-
-  interview.analysis = repo.Analysis.make({
-    rootMoment: mapMoment(i.rootMoment, 0, interview)
-  })
-  return interview
-}
-
-function mapSchemaProperty (sp: OldSchemaProperty): PropertyModel | null {
-  const key = getReferenceId(sp)
-  if (!idCache.PropertyModel) return null
-  let model = idCache.PropertyModel[key] as PropertyModel
-  if (!model) {
-    model = repo.PropertyModel.make({
-      name: sp.name
-    })
-    idCache.PropertyModel[key] = model
-  }
-  return model
-}
-
-function mapSchemaCategory (sc: OldSchemaCategory): CategoryModel | null {
-  const key = getReferenceId(sc)
-  if (!idCache.CategoryModel) return null
-  let model = idCache.CategoryModel[key] as CategoryModel
-  if (!model) {
-    model = repo.CategoryModel.make({
-      name: sc.name,
-      color: fixColorName(sc.color),
-      isExpanded: sc.expanded,
-      properties: sc.schemaProperty_list?.map(p => mapSchemaProperty(p))
-    })
-    idCache.CategoryModel[key] = model
-  }
-  return model
-}
-
-function mapMomentType (mt: OldMomentType): MomentModel | null {
-  const key = getReferenceId(mt)
-  if (!idCache.MomentModel) return null
-  let model = idCache.MomentModel[key] as MomentModel
-  if (!model) {
-    model = repo.MomentModel.make({
-      name: mt.name,
-      color: fixColorName(mt.color),
-      isExpanded: mt.expanded,
-      // It should be mapped to existing defined refs
-      categorymodels: mt.schemaCategory_list.map(mapSchemaCategoryReference)
-    })
-    idCache.MomentModel[key] = model
-  }
-  return model
-}
-
-function mapOldFolder (folder: OldSchemaFolder): ModelFolder {
-    return repo.ModelFolder.make({
-      name: folder.name,
-      color: 'transparent',
-      isExpanded: folder.expanded,
-      folders: folder.schemaFolder_list.map(mapOldFolder),
-      categorymodels: folder.schemaCategory_list.map(mapSchemaCategory),
-      momentmodels: folder.schemaMomentType_list.map(mapMomentType)
-    })
 }
 
 export const useProjectStore = defineStore('projectStore', () => {
@@ -387,9 +124,9 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getFolder (id: string): ModelFolder | null {
-      return repo.ModelFolder
-        .with('categorymodels', (query) => { query.with('properties') })
-        .with('momentmodels')
+    return repo.ModelFolder
+      // .with('categorymodels', (query) => { query.with('properties') })
+      // .with('momentmodels')
         .with('folders', (query) => { query.withAll() })
         .find(id)
   }
@@ -408,18 +145,6 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getAnalysis (id: string) {
     return repo.Analysis.with('rootMoment', (query) => query.with('children', (q) => q.orderBy('childIndex'))).find(id)
   }
-
-  function getCategoryInstance (id: string) {
-    return repo.CategoryInstance
-      .with('model')
-      .with('justification', query => query.with('descriptems'))
-      .with('properties', query => query.with('model'))
-      .find(id)
-  }
-
-  function getCategoryModel (id: string) {
-      return repo.CategoryModel.with('properties').find(id)
-    }
 
   function getDescriptem (id: string) {
     return repo.Descriptem
@@ -451,9 +176,6 @@ export const useProjectStore = defineStore('projectStore', () => {
         (qc) => qc.with('justification',
           (qj) => qj.with('descriptems')
         )))
-      .with('categoryinstances', (query) => query
-        .with('justification', (q) => q.with('descriptems'))
-        .with('properties', (q) => q.with('model').with('justification', (qj) => qj.with('descriptems'))))
       .find(id)
   }
 
@@ -467,10 +189,6 @@ export const useProjectStore = defineStore('projectStore', () => {
       .where('projectId', projectId)
       .get()
   }
-
-  function getMomentModel (id: string) {
-      return repo.MomentModel.with('categorymodels').find(id) as MomentModel
-    }
 
   function getSpecificSynchronicCategory (id: string) {
     return repo.SpecificSynchronicCategory
@@ -523,18 +241,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function getProperty (id: string) {
-    return repo.Property
-      .with('model')
-      .with('justification', (query) => query.with('descriptems'))
-      .find(id)
-  }
-
-  function getPropertyModel (id: string) {
-    return repo.PropertyModel
-      .find(id)
-  }
-
   function getInterviewDescriptems (interviewId: string) {
     // Return the descriptems defined on a specific interview
     return repo.Descriptem.where('interviewId', interviewId).with('interview').get()
@@ -546,18 +252,10 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getJustificationParent (id: string) {
-    // Parent can be either Category/Moment/Property
-    let parent: Moment | CategoryInstance | Property | null = repo.Moment.find(id)
-    if (!parent) {
-      parent = repo.CategoryInstance.with('model').with('moment').find(id)
-    }
-    if (!parent) {
-      parent = repo.Property
-        .with('model')
-        .with('categoryinstance', query =>
-          query.with('model').with('moment'))
-        .find(id)
-    }
+    // Parent can be either SpecificSynchronicCategory or Moment
+    const parent: Moment | SpecificSynchronicCategory | null = (getMoment(id)
+      ??  getSpecificSynchronicCategory(id)
+    )
     return parent
   }
 
@@ -579,96 +277,20 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function importProject (data: any, url: string) {
     let out
-    let schema
     if ('modelfolder' in data) {
       // New style
-
       // Configure pinia-orm context so that projectId is correctly set.
       const istore = useInterfaceStore()
       istore.setCurrentProjectId(data.id)
-
+      console.log("Loaded", data, " from ", url)
       out = repo.Project.save(data as Project)
-      schema = out.modelfolder
       // We must remap models
     } else {
       // Old upmt files
-      // Load schema first so that idCache is properly initialized
-      // Strip possible timestamp from beginning of filename
-      const filename = basename(url)
-      const projectId = timestampStrip(filename.replace('.upmt', ''))
-      schema = mapOldFolder(data.schemaTreeRoot)
-
-      // Configure pinia-orm context so that projectId is correctly set.
-      const istore = useInterfaceStore()
-      istore.setCurrentProjectId(projectId)
-
-      out = repo.Project.save({
-        id: projectId,
-        filename,
-        name: data.name,
-        interviews: data.interview_list.map((i: OldInterview) => mapInterview(i)),
-        modelfolder: schema
-      })
+      console.log("Unhandled old data")
+      return null
     }
-    console.log("Imported", { project: out, idcache: idCache })
-    // Check missing ids in the loaded data: normally, all children
-    // elements should have a link to the parent id
-    const checkMissingRef = (folder: ModelFolder | null) => {
-      if (!folder) {
-        console.log("Null folder")
-        return
-      }
-      for (const f of (folder.folders ?? [])) {
-        if (f.parentId !== folder.id) {
-            console.log("Error for f", folder, f)
-        }
-        checkMissingRef(f)
-      }
-      for (const cm of (folder.categorymodels ?? [])) {
-        if (cm.modelfolderId !== folder.id) {
-          console.log("Error for cm", folder, cm)
-        }
-        if (!cm.modelfolderId) {
-          console.log("Empty modelfolderId for cm", folder, cm)
-        }
-      }
-      for (const mm of (folder.momentmodels ?? [])) {
-        if (mm.modelfolderId !== folder.id) {
-          console.log("Error for mm", folder, mm)
-        }
-      }
-    }
-    // Compare the loaded folder structure with the structure returned through getFolder
-      // by comparing the number of children (categorymodels, momentmodels)
-    const compareFolder = (folder: ModelFolder | null) => {
-      if (!folder) {
-        console.log("NULL folder???")
-        return
-      }
-      const stored = getFolder(folder.id)
-      if (!stored) {
-        console.log("NULL folder", folder.id)
-        return
-      }
-      if (folder.categorymodels.length !== stored.categorymodels.length) {
-        const missing = (new Set(folder.categorymodels.map(cm => cm.name)) as any).difference(new Set(stored.categorymodels.map(cm => cm.name)))
-        console.log("Differing cm for folder", folder.name, folder.id, folder.categorymodels.length, stored.categorymodels.length, missing)
-      }
-      if (folder.momentmodels.length !== stored.momentmodels.length) {
-        console.log("Differing mm for folder", folder.name, folder.id, folder.momentmodels.length, stored.momentmodels.length)
-      }
-      if (folder.folders.length !== stored.folders.length) {
-        console.log("Differing folder count for folder", folder.name, folder.id, folder.folders.length, stored.folders.length)
-      }
-      for (const f of folder.folders) {
-        compareFolder(f)
-      }
-    }
-    /* FIXME: to remove once loading is solid */
-    console.log("Checking refs")
-    checkMissingRef(schema)
-    console.log("Comparing loaded vs stored")
-    compareFolder(schema)
+    console.log("Imported", { project: out, url })
     return out
   }
 
@@ -712,8 +334,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     const hydrateFolder = (id: string) => {
       const folder = getFolder(id)
       if (folder) {
-        folder.categorymodels = folder.categorymodels.map(cm => getCategoryModel(cm.id) as CategoryModel)
-        folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
+        // folder.categorymodels = folder.categorymodels.map(cm => getCategoryModel(cm.id) as CategoryModel)
+        // folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
         folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
       }
       return folder
@@ -753,10 +375,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     repoByEntity[element.$entity()].where('id', (element.id as any)).update(values)
   }
 
-  function updateProperty (identifier: string, values: object) {
-    repo.Property.where('id', identifier).update(values)
-  }
-
   function updateMoment (identifier: string, values: object) {
     repo.Moment.where('id', identifier).update(values)
   }
@@ -775,56 +393,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.ModelFolder.where('id', identifier).update(values)
   }
 
-  function updateCategoryInstance (identifier: string, values: object) {
-    repo.CategoryInstance.where('id', identifier).update(values)
-  }
-
-  function updateCategoryModel (identifier: string, values: object) {
-    repo.CategoryModel.where('id', identifier).update(values)
-  }
-
-  function updatePropertyModel (identifier: string, values: object) {
-    repo.PropertyModel.where('id', identifier).update(values)
-  }
-
   function updateDescriptem (identifier: string, values: object) {
     repo.Descriptem.where('id', identifier).update(values)
-  }
-
-  function momentMoveCategoryInstance (ciId: string, destinationMomentId: string) {
-    const categoryinstance = getCategoryInstance(ciId)
-    const moment = getMoment(destinationMomentId)
-
-    if (moment && categoryinstance) {
-      updateCategoryInstance(ciId, { momentId: destinationMomentId })
-    }
-  }
-
-  function momentAddCategoryModel (cmId: string, destinationMomentId: string) {
-    const categoryModel = getCategoryModel(cmId)
-    const moment = getMoment(destinationMomentId)
-
-    console.log("addCategoryModel", moment, cmId, categoryModel)
-    if (moment && categoryModel) {
-      console.log("Creating new categoryinstance ", categoryModel.name)
-      // We create a new Category and attach it to the destinationMomentId
-      repo.CategoryInstance.save({
-        categoryModelId: cmId,
-        justification: {
-          name: ''
-        },
-        properties: categoryModel.properties.map(pm => ({
-          value: '',
-          propertymodelId: pm.id,
-          justification: {
-            name: ''
-          },
-          model: pm
-        })),
-        momentId: destinationMomentId,
-        model: categoryModel
-      })
-    }
   }
 
   function addAnnotation (textselection: TextSelection, color = '') {
@@ -1017,54 +587,27 @@ export const useProjectStore = defineStore('projectStore', () => {
        */
     }
 
-  function addCategoryModel (parentId: string, name: string) {
-    return repo.CategoryModel.save({ modelfolderId: parentId, name })
-  }
-
   function addModelFolder (parentId: string, name: string) {
     return repo.ModelFolder.save({ parentId, name })
-  }
-
-  function addPropertyModel (parentId: string, name: string) {
-    return repo.PropertyModel.save({ categorymodelId: parentId, name })
   }
 
   function deleteAnnotation (annotationId: string) {
     repo.Annotation.where('id', annotationId).delete()
   }
 
-  function deleteCategoryInstance (categoryinstanceId: string) {
-    repo.CategoryInstance.where('id', categoryinstanceId).delete()
-  }
-
   function deleteDescriptem (descriptemId: string) {
     repo.Descriptem.where('id', descriptemId).delete()
   }
 
-  function deletePropertyModel (pmId: string) {
-    repo.Property.where('propertymodelId', pmId).delete()
-    repo.PropertyModel.where('id', pmId).delete()
-  }
-
-  function deleteCategoryModel (cmId: string) {
-    repo.PropertyModel.where('categorymodelId', cmId).get().forEach(pm => deletePropertyModel(pm.id))
-    repo.CategoryInstance.where('categorymodelId', cmId).delete()
-    repo.CategoryModel.where('id', cmId).delete()
-  }
-
-  function deleteMomentModel (mmId: string) {
-    repo.MomentModel.where('id', mmId).delete()
-  }
-
   function deleteModelFolder (folderId: string) {
     repo.ModelFolder.where('parentId', folderId).get().forEach(mf => deleteModelFolder(mf.id))
-    repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
-    repo.MomentModel.where('modelfolderId', folderId).get().forEach(mm => deleteMomentModel(mm.id))
+    //repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
+    //repo.MomentModel.where('modelfolderId', folderId).get().forEach(mm => deleteMomentModel(mm.id))
     repo.ModelFolder.where('id', folderId).delete()
   }
 
   function deleteMoment (momentId: string) {
-    // FIXME: check cascade deletion of justification/categoryinstances
+    // FIXME: check cascade deletion of justification/specificsynchronicmodel
     repo.Moment.where('id', momentId).delete()
   }
 
@@ -1078,17 +621,6 @@ export const useProjectStore = defineStore('projectStore', () => {
         })
       })
       repo.SpecificSynchronicCategory.where('id', categoryId).delete()
-    }
-  }
-
-  function duplicateCategoryInstance (categoryinstanceId: string) {
-    // Duplicate a CategoryInstance with the same parent
-    const ci = getCategoryInstance(categoryinstanceId)
-    if (ci) {
-      console.log("Duplicating", ci.toJSON())
-      repo.CategoryInstance.save({
-        ...ci.toJSON()
-      })
     }
   }
 
@@ -1125,27 +657,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function addTextSelectionToCategoryInstance (selectionData: TextSelection, categoryinstanceId: string) {
-    // Add JSON representation of text selection (Annotation or Descriptem) to CategoryInstance
-    const ci = getCategoryInstance(categoryinstanceId)
-    if (ci) {
-      if (!ci.justification) {
-        // Create justification + descriptem
-        repo.Justification.save({
-          parentId: ci.id,
-          descriptems: [
-            selectionData
-          ]
-        })
-      } else {
-        repo.Descriptem.save({
-          ...selectionData,
-          justificationId: ci.justification.id
-        })
-      }
-    }
-  }
-
   function addTextSelectionToSpecificSynchronicCategory (selectionData: TextSelection, categoryId: string) {
     // Add JSON representation of text selection (Annotation or Descriptem) to SpecificSynchronicCategory
     const ssc = getSpecificSynchronicCategory(categoryId)
@@ -1165,46 +676,6 @@ export const useProjectStore = defineStore('projectStore', () => {
         })
       }
     }
-  }
-
-  function addTextSelectionToProperty (selectionData: TextSelection, propertyId: string) {
-    // Add JSON representation of text selection (Annotation or Descriptem) to property
-    const property = getProperty(propertyId)
-    console.log("Add textselection", selectionData, "to", property)
-    if (property) {
-      if (!property.justification) {
-        // Create justification + descriptem
-        repo.Justification.save({
-          parentId: property.id,
-          descriptems: [
-            selectionData
-          ]
-        })
-      } else {
-        repo.Descriptem.save({
-          ...selectionData,
-          justificationId: property.justification.id
-        })
-      }
-    }
-  }
-
-  function getCategoryModelMoments (categorymodelId: string) {
-    // Given a categorymodel, return the moments where it is involved
-    const instances = repo.CategoryInstance
-      .with('moment', query => query
-        .with('categoryinstances', q => q
-          .with('model')
-          .with('justification', qj => qj
-            .with('descriptems'))
-          .with('properties', qp => qp
-            .with('justification', qj => qj
-              .with('descriptems'))
-            .with('model')))
-        .with('justification',
-          q => q.with('descriptems')))
-      .where('categorymodelId', categorymodelId).get()
-    return instances.map(ci => ci.moment)
   }
 
   function getGenericSynchronicGraphs (projectId: string): GraphInfo {
@@ -1404,26 +875,18 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   return {
     addAnnotation,
-    addCategoryModel,
     addModelFolder,
     addMoment,
-    addPropertyModel,
     addSpecificSynchronicCategory,
     addTextSelectionToMoment,
-    addTextSelectionToCategoryInstance,
-    addTextSelectionToProperty,
     addTextSelectionToSpecificSynchronicCategory,
     buildGenericSynchronicModelFromGraphs,
     createProject,
     deleteAnnotation,
-    deleteCategoryModel,
-    deleteCategoryInstance,
     deleteDescriptem,
-    deletePropertyModel,
     deleteModelFolder,
     deleteMoment,
     deleteSpecificSynchronicCategory,
-    duplicateCategoryInstance,
     duplicateDescriptem,
     importProject,
     hydrateProject,
@@ -1434,9 +897,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     getRepo,
     getAnalysis,
     getAnnotation,
-    getCategoryInstance,
-    getCategoryModel,
-    getCategoryModelMoments,
     getDescriptem,
     getGenericSynchronicGraphs,
     getGenericSynchronicModel,
@@ -1448,9 +908,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMoment,
     getMoments,
     getMomentsByProject,
-    getMomentModel,
-    getProperty,
-    getPropertyModel,
     getSpecificSynchronicCategory,
     getSpecificSynchronicCategoriesByName,
     getSpecificSynchronicCategoriesByProject,
@@ -1458,18 +915,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     getSpecificSynchronicModel,
     loadProject,
     loadStoredProject,
-    momentAddCategoryModel,
-    momentMoveCategoryInstance,
     moveMoment,
     updateDescriptem,
     updateElement,
-    updateProperty,
     updateMoment,
     recursiveUpdateMoment,
     updateModelFolder,
-    updateCategoryModel,
-    updateCategoryInstance,
-    updatePropertyModel,
     updateSpecificSynchronicCategory
   }
 })

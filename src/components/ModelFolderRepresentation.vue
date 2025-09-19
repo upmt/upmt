@@ -20,11 +20,7 @@
       <template v-slot:header>
         <DropZone data="header"
                   class="empty_padding"
-                  types="upmt/categorymodel upmt/modelfolder upmt/annotation upmt/descriptem upmt/selection"
-                  @annotation="droppedAnnotation"
-                  @selection="droppedSelection"
-                  @descriptem="droppedDescriptem"
-                  @categorymodel="droppedCategoryModel"
+                  types="upmt/modelfolder"
                   @modelfolder="droppedModelFolder">
           <DragElement
             type="modelfolder"
@@ -58,16 +54,6 @@
             :modelfolderId="f.id">
           </ModelFolderRepresentation>
         </div>
-        <div v-for="cm in modelfolder.categorymodels" :key="cm.id">
-          <CategoryModelRepresentation
-            :currentInterviewId="currentInterviewId"
-            :categorymodelId="cm.id" />
-        </div>
-        <div v-for="mm in modelfolder.momentmodels" :key="mm.id">
-          <MomentModelRepresentation
-            :currentInterviewId="currentInterviewId"
-            :momentmodelId="mm.id" />
-        </div>
       </div>
 
     </q-expansion-item>
@@ -78,14 +64,11 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
-  import CategoryModelRepresentation from './CategoryModelRepresentation.vue'
-  import MomentModelRepresentation from './MomentModelRepresentation.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import { useProjectStore } from 'stores/projectStore'
-  import type { TextSelection } from './util'
 
   const store = useProjectStore()
 
@@ -99,36 +82,6 @@
   function debug () {
       (window as any).modelfolder = modelfolder.value
       console.log("Modelfolder", modelfolder.value)
-  }
-
-  function createCategoryModelFromSelection (selection: TextSelection) {
-      store.addCategoryModel(props.modelfolderId, selection.text ?? "New category")
-  }
-
-  function droppedAnnotation (annotationId: string) {
-      const annotation = store.getAnnotation(annotationId)
-      if (annotation) {
-          createCategoryModelFromSelection(annotation.toJSON())
-      }
-  }
-
-  function droppedDescriptem (descriptemId: string) {
-      const descriptem = store.getDescriptem(descriptemId)
-      if (descriptem) {
-          createCategoryModelFromSelection(descriptem.toJSON())
-      }
-  }
-
-  function droppedSelection (selectionData: string) {
-      try {
-          const selection = JSON.parse(selectionData)
-          createCategoryModelFromSelection(selection)
-      } catch (e) {
-          console.log(`Cannot parse ${selectionData}: ${e}`)
-      }
-  }
-  function droppedCategoryModel (cmId: string) {
-      store.updateCategoryModel(cmId, { modelfolderId: props.modelfolderId })
   }
 
   function droppedModelFolder (modelfolderId: string) {
@@ -167,7 +120,6 @@
   const menuActions = computed(() => {
       const actions: NamedAction[] = [
           [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
-          [ `Add a category`, () => store.addCategoryModel(props.modelfolderId, "newcategory") ]
       ]
 
       if (modelfolder.value && modelfolder.value.parentId) {

@@ -1,5 +1,4 @@
 import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
-import CategoryInstance from './categoryinstance'
 import Justifiable from './justifiable'
 import Justification from './justification'
 import SpecificSynchronicModel from './specificsynchronicmodel'
@@ -28,8 +27,6 @@ export default class Moment extends Justifiable {
 
   @HasOne(() => SpecificSynchronicModel, 'momentId') declare specificsynchronicmodel: SpecificSynchronicModel | null
 
-  @HasMany(() => CategoryInstance, 'momentId') declare categoryinstances: CategoryInstance[]
-
   @Attr() parentId!: string
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
   @HasMany(() => Moment, 'parentId') declare children: Moment[]
@@ -43,7 +40,6 @@ export default class Moment extends Justifiable {
   get asContext () {
     return { moment: this }
   }
-
 
   toJSON (shallow = false): any {
     const base = {
@@ -63,13 +59,9 @@ export default class Moment extends Justifiable {
     if (shallow) {
       return base
     } else {
-      if (this.categoryinstances === null || this.children === null) {
-        console.error("Query error for ", this, " - should fetch its relations")
-      }
       return {
         ...base,
         justification: this.justification?.toJSON(),
-        categoryinstances: this.categoryinstances?.map(c => c.toJSON()),
         specificsynchronicmodel: this.specificsynchronicmodel?.toJSON(),
         children: this.children?.map(m => m.toJSON())
       }

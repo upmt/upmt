@@ -36,6 +36,10 @@ export default class SpecificSynchronicCategory extends Justifiable {
   @Attr() specificsynchronicmodelId!: string
 
 
+  get asContext () {
+    return { specificsynchroniccategory: this }
+  }
+
   toJSON (shallow=false): any {
     const base = {
       name: this.name,

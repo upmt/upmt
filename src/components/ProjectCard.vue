@@ -92,6 +92,7 @@
 
   function doCsvExport (projectId: string) {
       const categories = store.getSpecificSynchronicCategoriesByProject(projectId)
+      console.log("CSV", { categories })
       const categoryDict = Object.fromEntries(categories.map(category => [ category.id, category ]))
 
       const categoryName = (category: SpecificSynchronicCategory | undefined): string => {
@@ -107,6 +108,9 @@
       }
       const data = categories.map(category => {
           const catName = categoryName(category)
+          // FIXME: for each category, we would like to have moment + interview
+          // But we need to rebuld this info: for each category, get to its root category for which category.model is defined.
+          // Then we have access to category.model.moment
           if (category.justification?.descriptems) {
               return category.justification.descriptems.map(descriptem =>
                   [ catName, descriptem.text, descriptem.startIndex, descriptem.endIndex ])

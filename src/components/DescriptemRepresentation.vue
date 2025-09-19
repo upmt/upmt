@@ -30,21 +30,11 @@
       <div v-if="withContext"
            class="descriptem-context">
         <span class="context-item"
-              v-if="context.property">
+              v-if="context.specificsynchroniccategory">
           <q-icon
             size="xs"
-            name="mdi-note-text-outline"></q-icon>
-          <div class="property-name">{{ context.property.name }}</div>
-          <div class="property-value">{{ context.property.value }}
-          </div>
-        </span>
-        <span
-          class="context-item"
-          v-if="context.categoryinstance">
-          <q-icon
-            size="xs"
-            name="mdi-tag-outline"></q-icon>
-          <span class="categoryinstance-name">{{ context.categoryinstance.name }}</span>
+            name="mdi-source-branch"></q-icon>
+          <div class="property-name">{{ context.specificsynchroniccategory.name }}</div>
         </span>
         <span
           class="context-item"
@@ -78,8 +68,7 @@
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import Moment from 'stores/models/moment'
-  import Property from 'stores/models/property'
-  import CategoryInstance from 'stores/models/categoryinstance'
+  import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
 
   const store = useProjectStore()
   const istore = useInterfaceStore()
@@ -112,11 +101,11 @@
 
   type Context = {
       moment?: Moment,
-      categoryinstance?: CategoryInstance,
-      property?: Property
+      specificsynchroniccategory?: SpecificSynchronicCategory,
+
   }
 
-  // context is an object with optional moment / categoryinstance / property values
+  // context is an object with optional moment / specificsynchroniccategory values
   const context = computed((): Context => {
       if (descriptem.value && descriptem.value.justification) {
           const parent = store.getJustificationParent(descriptem.value.justification.parentId)

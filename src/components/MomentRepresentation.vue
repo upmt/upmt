@@ -42,10 +42,8 @@
 
         <template v-slot:header>
           <DropZone data="header"
-                    types="upmt/categorymodel upmt/categoryinstance upmt/descriptem upmt/annotation upmt/selection upmt/color"
+                    types="upmt/descriptem upmt/annotation upmt/selection upmt/color"
                     class="row full-width justify-center moment-header q-pa-xs"
-                    @categoryinstance="droppedCategoryInstance"
-                    @categorymodel="droppedCategoryModel"
                     @annotation="droppedAnnotation"
                     @selection="droppedSelection"
                     @descriptem="droppedDescriptem"
@@ -108,12 +106,6 @@
           </SpecificSynchronicModelOverview>
         </div>
 
-        <div :class="[ 'moment-categoryinstances', layout ]">
-          <div v-for="c in moment.categoryinstances" :key="c.id">
-            <CategoryInstanceRepresentation :categoryinstanceId="c.id" />
-          </div>
-        </div>
-
       </q-expansion-item>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
@@ -161,7 +153,6 @@
   import { computed } from 'vue'
   import { storeToRefs } from 'pinia'
   import JustificationRepresentation from './JustificationRepresentation.vue'
-  import CategoryInstanceRepresentation from './CategoryInstanceRepresentation.vue'
   import MomentRepresentation from './MomentRepresentation.vue'
   import SpecificSynchronicModelOverview from './SpecificSynchronicModelOverview.vue'
   import DropZone from './DropZone.vue'
@@ -205,22 +196,6 @@
       if (moment.value && !moment.value.isExpanded) {
           store.updateMoment(props.momentId, { isExpanded: true })
       }
-  }
-
-  function droppedCategoryInstance (categoryinstanceId: string, data: string) {
-      console.log("droppedCategoryInstance", categoryinstanceId, props.momentId, data)
-      const ci = store.getCategoryInstance(categoryinstanceId)
-      if (ci) {
-          // store.momentAddCategoryModel(ci.model.id, props.momentId)
-          // store.deleteCategoryInstance(categoryinstanceId)
-          store.momentMoveCategoryInstance(categoryinstanceId, props.momentId)
-          showContent()
-      }
-  }
-
-  function droppedCategoryModel (cmId: string) {
-      store.momentAddCategoryModel(cmId, props.momentId)
-      showContent()
   }
 
   function droppedDescriptem (descriptemId: string) {

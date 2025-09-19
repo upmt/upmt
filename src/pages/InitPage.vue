@@ -34,7 +34,7 @@
 
   const store = useProjectStore()
 
-  const project = ref<Project>()
+  const project = ref<Project|null>(null)
 
   function loadSample (filename = './examples/example.upmt') {
       $q.loading.show()

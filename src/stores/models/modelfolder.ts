@@ -1,7 +1,5 @@
 import BaseModel from './basemodel'
-import { Attr, Str, Uid, Bool, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
-import CategoryModel from './categorymodel'
-import MomentModel from './momentmodel'
+import { Attr, Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
 
 export default class ModelFolder extends BaseModel {
   static override entity = 'modelfolders'
@@ -25,15 +23,6 @@ export default class ModelFolder extends BaseModel {
   @Attr() parentId!: string
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
 
-  @HasMany(() => CategoryModel, 'modelfolderId')
-  @OnDelete('cascade')
-  declare categorymodels: CategoryModel[]
-
-  @HasMany(() => MomentModel, 'modelfolderId')
-  @OnDelete('cascade')
-  declare momentmodels: MomentModel[]
-
-
   toJSON (): any {
     return {
       id: this.id,
@@ -45,9 +34,7 @@ export default class ModelFolder extends BaseModel {
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,
-      folders: this.folders?.map(f => f.toJSON()),
-      categorymodels: this.categorymodels?.map(c => c.toJSON()),
-      momentmodels: this.momentmodels?.map(m => m.toJSON())
+      folders: this.folders?.map(f => f.toJSON())
     }
   }
 }
