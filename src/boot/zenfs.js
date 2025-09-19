@@ -1,17 +1,10 @@
 import { defineBoot } from '#q-app/wrappers'
-import { configure, fs } from '@zenfs/core'
+import { configureSingle, fs } from '@zenfs/core'
 // import { exists, writeFile } from '@zenfs/core/promises'
 import { IndexedDB } from '@zenfs/dom'
 
 export default defineBoot(async () => {
-    /* In zenfs >= 2.0 Will be:
     await configureSingle({ backend: IndexedDB });
-     */
-    await configure({
-        mounts: {
-		    '/': IndexedDB,
-	    }
-    })
     console.log("zenfs boot configured", fs.mounts)
     window.fs = fs
 
