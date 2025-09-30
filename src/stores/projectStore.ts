@@ -478,13 +478,13 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
-    console.log("Trying to move", sourceMomentId, where || "to", referenceMomentId)
     // Empty sourceId. Can be from New Moment button to create a new moment.
     const source = getMoment(sourceMomentId)
     const reference = getMoment(referenceMomentId)
     let parent = reference
 
     if (source && reference) {
+      console.log(`Trying to move ${source.name} [${sourceMomentId}] ${where || 'to'} ${reference.name} [${referenceMomentId}]`)
       let childIndex = 0
 
       if (where.startsWith('in:')) {
@@ -514,6 +514,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       } else {
           console.error("Strange error - parent", parent, " is null")
       }
+    } else {
+      console.error(`Trying to move ${source?.toString() || 'null'} [${sourceMomentId}] ${where || 'to'} ${reference?.toString() || 'null'} [${referenceMomentId}] but one of them is null`)
     }
   }
 
