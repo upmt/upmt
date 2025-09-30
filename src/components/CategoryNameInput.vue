@@ -65,7 +65,16 @@
       </q-item>
     </template>
   </q-select>
-
+  <div class="row wrap justify-between">
+    <q-btn
+      flat
+      size="sm"
+      @click="validate">Set</q-btn>
+    <q-btn
+      flat
+      size="sm"
+      @click="cancel">Cancel</q-btn>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -109,6 +118,10 @@
       emit('change', name.value)
   }
 
+  function cancel () {
+      emit('change', props.category.name)
+  }
+
   const context = computed(() => {
       const categories = store.getSpecificSynchronicCategoriesByName(props.category.projectId, name.value)
       const completions = store.getSpecificSynchronicCategoryNamesByPrefix(props.category.projectId, name.value)
@@ -141,11 +154,10 @@
 
   function setName (value: string) {
       name.value = value
-      console.log("setName", value)
   }
 
   function filterNames (val: string, update: (cb: () => void) => void): void {
-      console.log("filterNames", val, context.value?.completions)
+      // console.log("filterNames", val, context.value?.completions)
       update(() => {
           completions.value = context.value?.completions ?? []
       })
