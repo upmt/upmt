@@ -275,13 +275,30 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Project.save(projectData)
   }
 
+  function fixChildIndex (moment: any) {
+    if (Array.isArray(moment.children)) {
+      moment.children
+        // Sort along possible existing childIndex info
+        .sort((m1: any, m2: any) => (m1.childIndex ?? 0) - (m2.childIndex ?? 0))
+        .forEach((child: any, index: number) => {
+          child.childIndex = index
+          // Recursively handle structure
+          fixChildIndex(child)
+        })
+    }
+  }
   function importProject (data: any, url: string) {
     let out
+    // FIXME: use data.version info
     if ('modelfolder' in data) {
       // New style
       // Configure pinia-orm context so that projectId is correctly set.
       const istore = useInterfaceStore()
       istore.setCurrentProjectId(data.id)
+      // Fix wrongly initialized childIndex for Moments
+      for (const interview of data.interviews) {
+        fixChildIndex(interview.analysis.rootMoment)
+      }
       console.log("Loaded", data, " from ", url)
       out = repo.Project.save(data as Project)
       // We must remap models
