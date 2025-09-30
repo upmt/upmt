@@ -189,7 +189,7 @@
       editedSpecificSynchronicModelId
   } = storeToRefs(istore)
 
-  const currentInterviewId = ref("")
+  const currentInterviewId = ref(project?.value?.interviews[0]?.id ?? "")
   const splitterModel = ref(20)
   const splitterTranscript = ref(90)
   const splitterInterview = ref(500)
@@ -207,7 +207,7 @@
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
       if (project.value && project.value.interviews[0]) {
-          currentInterviewId.value = project.value.interviews[0].id
+          currentInterviewId.value = project.value.interviews[0].id || ""
       } else {
           currentInterviewId.value = newInterview
       }

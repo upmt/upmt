@@ -20,11 +20,16 @@
 
   import type { GenericCategory } from 'stores/projectStore'
 
-  defineProps<{
+  interface Props {
       projectId: string,
-      categories:  GenericCategory[],
-      currentInterviewId: string | null
-  }>()
+      categories: GenericCategory[],
+      currentInterviewId: string
+  }
+
+  withDefaults(defineProps<Props>(), {
+      projectId: "",
+      currentInterviewId: ""
+  })
 
 </script>
 

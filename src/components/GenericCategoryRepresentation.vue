@@ -131,11 +131,15 @@
 
   const store = useProjectStore()
 
-  const props = defineProps<{
+  interface Props {
       genericcategory: GenericCategory,
       genericGraphs: GraphInfo,
-      currentInterviewId: string | null
-  }>()
+      currentInterviewId: string
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+      currentInterviewId: ""
+  })
 
   const popupEdit = ref(null)
 
