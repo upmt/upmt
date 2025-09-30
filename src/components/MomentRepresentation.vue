@@ -184,6 +184,7 @@
   function debug () {
       (window as any).moment = moment.value
       console.log("Moment", moment.value)
+      console.log("Children:\n", moment.value?.children.map(c => `${c.childIndex}: ${c.name}`).join("\n  "))
   }
 
   function unhighlight () {
