@@ -120,6 +120,7 @@
                       </q-toolbar>
                       <SpecificSynchronicModelRepresentation
                         v-if="editedSpecificSynchronicModelId"
+                        :isGeneric="true"
                         :modelId="editedSpecificSynchronicModelId" />
                     </div>
                   </template>

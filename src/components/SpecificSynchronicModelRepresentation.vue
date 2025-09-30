@@ -35,6 +35,7 @@
       <SpecificSynchronicCategoryRepresentation
         v-for="c in model.categories"
         :key="c.id"
+        :isGeneric="isGeneric"
         :genericGraph="genericGraph"
         :hideJustifications="!model.momentId"
         :categoryId="c.id" />
@@ -56,6 +57,7 @@
 
   const props = defineProps({
       modelId: { type: String, default: null },
+      isGeneric: { type: Boolean, default: false },
       hideJustifications: { type: Boolean, default: false }
   })
 

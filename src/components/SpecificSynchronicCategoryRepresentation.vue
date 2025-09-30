@@ -12,6 +12,7 @@
         <SpecificSynchronicCategoryRepresentation
           v-for="c in category.children"
           :key="c.id"
+          :isGeneric="isGeneric"
           :genericGraph="genericGraph"
           :hideJustifications="hideJustifications"
           :categoryId="c.id">
@@ -27,7 +28,7 @@
 
         <div class="specificsynchroniccategory-justification"
              v-if="isJustificationVisible">
-          <ul v-if="genericGraph"
+          <ul v-if="isGeneric"
               class="justification-descriptems">
             <li v-for="descriptem in categoryDescriptems" :key="descriptem.id">
               <DescriptemRepresentation :descriptemId="descriptem.id">
@@ -190,7 +191,8 @@
       categoryId: { type: String, default: "" },
       genericGraph: { type: Object, default: null },
       layout: { type: String, default: "vertical" },
-      hideJustifications: { type: Boolean, default: false }
+      hideJustifications: { type: Boolean, default: false },
+      isGeneric: { type: Boolean, default: false }
   })
 
   const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
@@ -239,7 +241,7 @@
       if (! category.value || ! currentProjectId.value) {
           return []
       }
-      if (props.genericGraph) {
+      if (props.isGeneric) {
           // Query for all descriptems for all categories
           const categories = store.getSpecificSynchronicCategoriesByName (currentProjectId.value, category.value.name)
           return categories.map(cat => cat.justification?.descriptems || []).flat()
