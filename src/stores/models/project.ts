@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { HasMany, HasOne, Num, Str, Uid } from 'pinia-orm/dist/decorators'
 import GenericSynchronicModel from './genericsynchronicmodel'
 import Interview from './interview'
 import ModelFolder from './modelfolder'
@@ -8,6 +8,10 @@ export default class Project extends BaseModel {
   static override entity = 'projects'
 
   @Uid() declare id: string
+
+  // Version number, used to discriminate between various versions of
+  // the format and adapt accordingly
+  @Num(2) declare version: number
 
   @Str('') declare creator: string
   @Str('') declare contributor: string
