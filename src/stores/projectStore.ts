@@ -498,6 +498,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       if (parent) {
         const children = [ ...parent.children ]
+        // originalIndex of the element
+        const originalIndex = children.findIndex(moment => moment.id == sourceMomentId)
         const sourceData = source.toJSON(true)
         const data = {
           ...sourceData,
@@ -505,12 +507,22 @@ export const useProjectStore = defineStore('projectStore', () => {
           parentId: parent.id,
           childIndex
         }
-        console.log("Saving data ", data)
-        repo.Moment.save(data)
-        // Items before childIndex are the same. Renumber following ones.
-          children.slice(childIndex).forEach(moment => {
-            updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
-          })
+        // The "as any as Moment" is necessary because save may return (not here) an array.
+        const newMoment = repo.Moment.save(data) as any as Moment
+        // Insert the newMoment in the appropriate place
+        children.splice(childIndex, 0, newMoment)
+        // Remove its previous version if it was there
+        if (originalIndex > -1) {
+          children.splice(originalIndex, 1)
+        }
+        // console.log("New children")
+        // console.table(children, [ 'name', 'childIndex' ])
+        // We now have a fixed children array. Update the stored childIndex information
+        children.forEach( (moment, index) => {
+          if (moment.childIndex != index) {
+            updateMoment(moment.id, { childIndex: index })
+          }
+        })
       } else {
           console.error("Strange error - parent", parent, " is null")
       }
