@@ -102,9 +102,22 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Project.all()
   }
 
+  // Return the project and just the first level of child information
   function getProject (id: string): Project | null {
     return repo.Project
       .with('modelfolder')
+      .with('genericmodels')
+      .with('interviews')
+      .find(id)
+  }
+
+  // Return the project and its children with their information
+  function getFullProject (id: string): Project | null {
+    return repo.Project
+      .with('modelfolder')
+      .with('genericmodels',
+        query => query.with('proxy', qp => qp.with('categories'))
+      )
       .with('interviews',
         query => query
           .with('annotations')
@@ -345,7 +358,7 @@ export const useProjectStore = defineStore('projectStore', () => {
    * Return a project structure with all relationships hydrated
    */
   function hydrateProject (id: string): any {
-    const project = { ...getProject(id) }
+    const project = { ...getFullProject(id) }
     /* Go through all related elements and fetch them */
     console.log("Export project", project)
     const hydrateFolder = (id: string) => {
@@ -365,17 +378,25 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
       return ssc
     }
+    const hydrateSpecificSynchronicModel = (model: SpecificSynchronicModel | null) => {
+        if (model) {
+          model.categories = model.categories.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
+        }
+    }
+
     const hydrateMoment = (id: string) => {
       const moment = getMoment(id)
       if (moment) {
         moment.children = moment.children.map(m => hydrateMoment(m.id) as Moment)
-        const model = moment.specificsynchronicmodel
-        if (model) {
-          model.categories = model.categories.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
-        }
+        hydrateSpecificSynchronicModel(moment.specificsynchronicmodel)
       }
       return moment
     }
+
+    for (const genericmodel of (project.genericmodels ?? [])) {
+      hydrateSpecificSynchronicModel(genericmodel.proxy)
+    }
+
     if (project.modelfolder) {
       project.modelfolder = hydrateFolder(project.modelfolder.id) as ModelFolder
     }
@@ -527,7 +548,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           console.error("Strange error - parent", parent, " is null")
       }
     } else {
-      console.error(`Trying to move ${source?.toString() || 'null'} [${sourceMomentId}] ${where || 'to'} ${reference?.toString() || 'null'} [${referenceMomentId}] but one of them is null`)
+      console.error(`Trying to move ${source?.name || 'null'} [${sourceMomentId}] ${where || 'to'} ${reference?.name || 'null'} [${referenceMomentId}] but one of them is null`)
     }
   }
 
@@ -923,6 +944,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     hydrateProject,
     getAllProjects,
     getProject,
+    getFullProject,
     getProjectByName,
     getFolder,
     getRepo,
