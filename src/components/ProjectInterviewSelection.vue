@@ -104,7 +104,7 @@
                           <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
                           <span v-if="isEditedModelGeneric">
                             <q-btn
-                              @click="updateGenericModel">Update generic model
+                              @click="updateGenericModel">Update template model
                             </q-btn>
                           </span>
                         </q-toolbar-title>

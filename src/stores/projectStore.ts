@@ -864,7 +864,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       .first()
 
     if (! genericModel) {
-      const name = 'Stored Generic Model'
+      const name = 'Template Generic Model'
       genericModel = repo.GenericSynchronicModel.save({ name, projectId, proxy: { name }})
     }
     return genericModel
