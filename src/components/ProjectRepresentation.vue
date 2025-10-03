@@ -5,7 +5,7 @@
     <h2>{{ project.interviews.length }} interviews</h2>
     <ul class="interview-list">
       <li v-for="interview in project.interviews" :key="interview.id">
-        <InterviewRepresentation :interview="interview">
+        <InterviewRepresentation :interviewId="interview.id">
         </InterviewRepresentation>
       </li>
     </ul>
