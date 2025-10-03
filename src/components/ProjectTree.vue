@@ -47,7 +47,7 @@
       const [entitytype, entityid] = node.id.split('-', 2)
 
       if (entitytype === 'projects') {
-          const project = pstore.getProject(entityid)
+          const project = pstore.getFullProject(entityid)
           if (project) {
               done(project.interviews.map((i: Interview): QTreeNode => {
                   return {
