@@ -890,6 +890,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     // FIXME: handle updating existing model (at least adds)
     let genericModel = repo.GenericSynchronicModel
       .where('projectId', projectId)
+      .with('proxy')
       .first()
 
     if (! genericModel) {
