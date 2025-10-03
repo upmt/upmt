@@ -71,7 +71,8 @@
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
       [ "Edit generic model", () => editGenericModel() ],
-      [ "Store as model", () => storeAsModel() ]
+      [ "Store as model", () => storeAsModel() ],
+      [ "Dump", () => console.log({graphs: props.genericGraphs}) ]
   ]
 </script>
 
