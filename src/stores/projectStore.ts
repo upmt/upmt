@@ -732,6 +732,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getGenericSynchronicGraphs (projectId: string): GraphInfo {
     // Return the generic synchronic graphs for the given projectId
+    // It gets all defined specificsynchroniccategories (either from specific model or from template model)
 
     // Get all specificsynchroniccategories
     const categories = repo.SpecificSynchronicCategory
@@ -742,9 +743,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     // Reconstitute structure
     //const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
     const children: Record<string, SpecificSynchronicCategory[]> = groupBy(categories, 'parentId')
-    const names = groupBy(categories, 'name')
     // console.log({ children, names })
 
+    const names = groupBy(categories, 'name')
+
+    // These will be updated during the categories traversal
     const rootCategoryNames: Set<string> = new Set()
     // List of root SSC instances
     const rootInstances: SpecificSynchronicCategory[] = []
@@ -754,7 +757,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => c.name)).flat())
         const errors = []
         const roots = instances.filter(ssc => !!ssc.specificsynchronicmodelId)
-        if (roots.length > 0) {
+        // It is a root in all instances
+        const isRoot = (roots.length == instances.length)
+        // else we would use: roots.length > 0 (it is root in at least 1 instance)
+
+        if (isRoot) {
           rootCategoryNames.add(name)
           rootInstances.push(...roots)
         }
@@ -777,7 +784,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
         return [ name, {
           name,
-          isRoot: roots.length > 0,
+          isRoot,
           errors,
           color,
           instances,
@@ -789,10 +796,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     // console.log({ children, names, genericCategories })
 
     // Memoizing moment/model info - structure of
-    // { momentId, genericModelId } indexed by ssc id (instance)
-    const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
-    // We have to make 1 tree traversal to build the instance to container relationship
+    // { momentId, genericModelId } (exclusive) indexed by ssc id (instance)
 
+    const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
+
+    // We have to make 1 tree traversal to build the instance to container (moment or generic model) relationship
     // It may be factorizable with the nameToGeneric traversal, but
     // they are against different trees with potentially different
     // roots, so it is not that simple
