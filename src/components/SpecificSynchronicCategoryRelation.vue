@@ -7,8 +7,9 @@
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg">
-      <g>
+      <g :class="direction">
         <line
+          v-if="direction == 'horizontal'"
           vector-effect="non-scaling-stroke"
           :x1="0"
           :y1="barPosition.y"
@@ -56,6 +57,7 @@
 
   const props = defineProps({
       childrenCount: { type: Number, default: 1 },
+      direction: { type: String, default: 'horizontal' },
       type: { type: String, default: "" }
   })
 
@@ -95,5 +97,10 @@
   .tree-box svg {
       width: 100%;
       height: 100%;
+  }
+  g.vertical {
+      transform: rotate(-90deg);
+      transform-origin: center center;
+      transform-box: fill-box;
   }
 </style>

@@ -1,6 +1,10 @@
 <template>
   <div ref="container"
-       :class="[ 'specificsynchroniccategory-container', `specificsynchroniccategory-${categoryId}` ]"
+       :class="[
+               'specificsynchroniccategory-container',
+               `specificsynchroniccategory-${categoryId}`,
+               withChildren ? 'horizontal' : 'vertical'
+               ]"
        :data-specificsynchroniccategory="categoryId">
 
     <div :class="[ 'specificsynchroniccategory' ]"
@@ -8,7 +12,8 @@
          v-if="category"
          :data-specificsynchroniccategory="categoryId">
 
-      <div :class="[ 'specificsynchroniccategory-children' ]">
+      <div :class="[ 'specificsynchroniccategory-children' ]"
+           v-if="withChildren">
         <SpecificSynchronicCategoryRepresentation
           v-for="c in category.children"
           :key="c.id"
@@ -46,6 +51,7 @@
       <div class="specificsynchroniccategory-relation">
         <SpecificSynchronicCategoryRelation
           :type="category.abstractionType"
+          :direction="withChildren ? 'horizontal' : 'vertical'"
           :childrenCount="isLeaf ? 1 : category.children.length" />
         <div class="specificsynchroniccategory-relationinfo">
           <div class="specificsynchroniccategory-criterion">
@@ -149,12 +155,12 @@
           @click="createSpecificSynchronicCategory(`before:${categoryId}`)"
           dense
           class="newssc-button"
-          icon="mdi-menu-right">
+          :icon="withChildren ? 'mdi-menu-right' : 'mdi-menu-up'">
         </q-btn>
       </DropZone>
 
       <div
-        v-if="category.parentId"
+        v-if="category.parentId && withChildren"
         class="specificsynchroniccategory-filler"
         >
       <SpecificSynchronicCategoryRelation :childrenCount="1" />
@@ -192,7 +198,8 @@
       genericGraph: { type: Object, default: null },
       layout: { type: String, default: "vertical" },
       hideJustifications: { type: Boolean, default: false },
-      isGeneric: { type: Boolean, default: false }
+      isGeneric: { type: Boolean, default: false },
+      withChildren: { type: Boolean, default: true }
   })
 
   const category = computed(() => store.getSpecificSynchronicCategory(props.categoryId))
@@ -424,6 +431,10 @@
       border: 1px solid transparent;
       flex: 1;
   }
+  .vertical .specificsynchroniccategory {
+      flex-direction: column-reverse;
+      align-items: center;
+  }
   .highlighted .specificsynchroniccategory {
       border: 2px solid yellow;
   }
@@ -543,6 +554,10 @@
   .newssc-button {
       width: 8px;
       opacity: .5;
+  }
+  .vertical .newssc-button {
+      height: 8px;
+      width: 48px;
   }
   .criterion-tooltip {
       white-space: pre-line;

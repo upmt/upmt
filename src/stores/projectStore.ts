@@ -231,6 +231,38 @@ export const useProjectStore = defineStore('projectStore', () => {
       .get()
   }
 
+  function getSpecificSynchronicCategoryChildren (sscId: string): SpecificSynchronicCategory[] {
+    /* Recursively get SSC children */
+    const ssc = getSpecificSynchronicCategory(sscId)
+    if (ssc !== null) {
+      const children = [
+        ...ssc.children,
+        ...ssc.children.map(child => getSpecificSynchronicCategoryChildren(child.id)).flat()
+      ]
+      return children
+    } else {
+      return []
+    }
+  }
+  function getSpecificSynchronicCategoriesByModel (modelId: string) {
+    if (modelId) {
+      const roots = repo.SpecificSynchronicCategory
+        .with('children')
+        .with('parent')
+        .where('specificsynchronicmodelId', modelId)
+        .get()
+
+      const nodes = [
+        ...roots,
+        ...roots.map(child => getSpecificSynchronicCategoryChildren(child.id)).flat()
+      ]
+
+      return nodes
+    } else {
+      return []
+    }
+  }
+
   function getSpecificSynchronicCategoryNamesByPrefix (projectId: string, prefix: string) {
     const lower = prefix.toLowerCase()
     const categories = repo.SpecificSynchronicCategory
@@ -851,6 +883,29 @@ export const useProjectStore = defineStore('projectStore', () => {
             abstractionType: ''
           }
         }
+        /* Too costly:
+        else {
+          const rootAncestors = Array.from(ancestors).filter((name: string) => rootCategoryNames.has(name))
+          // There should be only 1 rootAncestor. If there are more that 1 we have an inconsistency.
+          if (rootAncestors.length > 1) {
+            const error = `Error in generic structure: ${name} has more that 1 root ancestor`
+            console.log(error)
+            if (generic) {
+              // Document the error in the byName mapping
+              generic.errors = [ ...(generic.errors ?? []), error ]
+            }
+            return {
+              name: `${name}`,
+              errors: [ error ],
+              isRoot: true,
+              color: '',
+              instances: generic?.instances || [],
+              childrenNames: new Set(),
+              abstractionType: ''
+            }
+          }
+        }
+         */
 
         if (! generic) {
           const error = `Inconsistency in GenericCategory building for ${name}`
@@ -913,6 +968,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       name: string,
       abstractionType: string,
       children: SpecificSynchronicCategoryBasicType[],
+      genericModelId?: string,
       model?: SpecificSynchronicModel
     }
     function jsonifyGenericCategory (gc: GenericCategory, model: SpecificSynchronicModel | null): SpecificSynchronicCategoryBasicType {
@@ -920,7 +976,8 @@ export const useProjectStore = defineStore('projectStore', () => {
         name: gc.name,
         abstractionType: gc.abstractionType,
         // Do not transmit model info to children: only the root category should have it.
-        children: gc.children?.map(child => jsonifyGenericCategory(child, null)) ?? []
+        children: gc.children?.map(child => jsonifyGenericCategory(child, null)) ?? [],
+        genericModelId: genericModel.id
       }
       if (model) {
         data.model = model
@@ -929,7 +986,13 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
 
     graphs.categories.forEach((category: GenericCategory) => {
-      repo.SpecificSynchronicCategory.save(jsonifyGenericCategory(category, specificModel))
+      // FIXME: here we create from scratch every time. We should instead only update when necessary.
+      // Actually pinia-orm updates when matching primaryKey, but it is id here and not
+      // name
+      // We do not want to use name as primaryKey (side effects)
+      // We could extend jsonifyGenericCategory to include the "id" field for existing SSC (so that the ORM knows it should just update when existing)
+      const data = jsonifyGenericCategory(category, specificModel)
+      repo.SpecificSynchronicCategory.save(data)
     })
     return genericModel
   }
@@ -973,6 +1036,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getSpecificSynchronicCategory,
     getSpecificSynchronicCategoriesByName,
     getSpecificSynchronicCategoriesByProject,
+    getSpecificSynchronicCategoriesByModel,
     getSpecificSynchronicCategoryNamesByPrefix,
     getSpecificSynchronicModel,
     loadProject,

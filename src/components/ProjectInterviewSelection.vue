@@ -107,6 +107,8 @@
                               @click="updateGenericModel">Update template model
                             </q-btn>
                           </span>
+                          <q-radio v-model="editViewMode" val="horizontal" label="Horizontal" />
+                          <q-radio v-model="editViewMode" val="vertical" label="Vertical" />
                         </q-toolbar-title>
                         <q-btn
                           icon="mdi-close"
@@ -118,10 +120,15 @@
                           @click="closeEditedModel">
                         </q-btn>
                       </q-toolbar>
-                      <SpecificSynchronicModelRepresentation
-                        v-if="editedSpecificSynchronicModelId"
-                        :isGeneric="true"
-                        :modelId="editedSpecificSynchronicModelId" />
+                      <div v-if="editedSpecificSynchronicModelId">
+                        <SpecificSynchronicModelRepresentation
+                          v-if="editViewMode == 'horizontal'"
+                          :isGeneric="isEditedModelGeneric"
+                          :modelId="editedSpecificSynchronicModelId" />
+                        <VerticalGraph
+                          v-else
+                          :modelId="editedSpecificSynchronicModelId" />
+                      </div>
                     </div>
                   </template>
                 </q-splitter>
@@ -161,6 +168,7 @@
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
+  import VerticalGraph from 'components/VerticalGraph.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
@@ -202,6 +210,8 @@
   const isEditedModelGeneric = computed(() => {
       return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.genericModelId
   })
+
+  const editViewMode = ref('horizontal')
 
   const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 
