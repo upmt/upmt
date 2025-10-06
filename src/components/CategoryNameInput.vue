@@ -50,6 +50,7 @@
     use-input
     hide-selected
     fill-input
+    menu-anchor="top right"
     :input-debounce="0"
     :options="context?.completions ?? []"
     @filter="filterNames"
