@@ -156,6 +156,7 @@
           dense
           class="newssc-button"
           :icon="withChildren ? 'mdi-menu-right' : 'mdi-menu-up'">
+          <q-tooltip>Create a parent category</q-tooltip>
         </q-btn>
       </DropZone>
 
