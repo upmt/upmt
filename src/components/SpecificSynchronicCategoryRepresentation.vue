@@ -81,6 +81,15 @@
             v-if="! isLeaf"
             class="specificsynchroniccategory-relationmenu"
             :actions="relationActions" />
+          <q-btn
+            size="xs"
+            @click.stop="createChildCategory"
+            flat
+            round
+            dense
+            title="Create a new child category"
+            icon="mdi-plus">
+          </q-btn>
         </div>
       </div>
 
@@ -385,6 +394,9 @@
       store.updateSpecificSynchronicCategory(props.categoryId, { abstractionType: value })
   }
 
+  function createChildCategory () {
+      createSpecificSynchronicCategory(`in:${props.categoryId}`)
+  }
 
   import type { NamedAction } from 'components/util.ts'
 
@@ -396,7 +408,7 @@
       [ "Set as generic abstraction", () => updateAbstractionType('') ],
       [ "Set as aggregation abstraction", () => updateAbstractionType('aggregation') ],
       [ "Set as specialization abstraction", () => updateAbstractionType('specialization') ],
-      [ "Create a new child category", () => createSpecificSynchronicCategory(`in:${props.categoryId}`) ]
+      [ "Create a new child category", () => createChildCategory() ]
   ]
 </script>
 
