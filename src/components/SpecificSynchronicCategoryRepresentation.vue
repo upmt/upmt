@@ -113,8 +113,7 @@
               name="mdi-source-branch">
             </q-icon>
             <span class="specificsynchroniccategory-name">{{ categoryName }}
-              <q-popup-edit style="zoom: var(--chart-zoom)"
-                            v-model="categoryName"
+              <q-popup-edit v-model="categoryName"
                             v-slot="scope"
                             auto-save>
                 <CategoryNameInput @change="scope.cancel"

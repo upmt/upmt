@@ -35,37 +35,6 @@
         </q-tooltip>
       </q-btn>
 
-      <q-btn
-        icon="mdi-fit-to-page-outline"
-        size="sm"
-        @click="zoomToFit">
-        <q-tooltip anchor="top middle" :offset="[0,30]">
-          Fit whole analysis
-        </q-tooltip>
-      </q-btn>
-
-      <div class="q-pa-no col-2 q-mx-md">
-        <q-badge color="info">
-          Zoom: {{ zoom }}
-        </q-badge>
-
-        <q-slider v-model="zoom"
-                  :min="0.1"
-                  :max="4"
-                  :step=".1"
-                  >
-        </q-slider>
-      </div>
-
-      <q-btn
-        icon="mdi-numeric-1-box-outline"
-        size="sm"
-        @click="zoomReset">
-        <q-tooltip anchor="top middle" :offset="[0,30]">
-          Reset zoom to original level
-        </q-tooltip>
-      </q-btn>
-
       <div class="col-2 q-mx-md q-pa-no">
         <q-badge color="info">
           Moment width: {{ minimumWidth }}
@@ -83,13 +52,19 @@
 
     </q-toolbar>
 
-    <AnalysisRepresentation
-      ref="analysis"
-      class="scrollable analysis"
-      v-if="interview.analysis"
-      :analysisId="interview.analysis.id">
-    </AnalysisRepresentation>
-
+    <VueZoomable
+      selector=".analysis"
+      v-model:zoom="zoomLevel"
+      :minZoom="0.5"
+      :maxZoom="3"
+      >
+      <AnalysisRepresentation
+        ref="analysis"
+        class="scrollable analysis"
+        v-if="interview.analysis"
+        :analysisId="interview.analysis.id">
+      </AnalysisRepresentation>
+    </VueZoomable>
   </div>
 </template>
 
@@ -98,6 +73,10 @@
   import { computed, ref } from 'vue'
   import type { Ref } from 'vue'
   import { useCssVar } from '@vueuse/core'
+
+  import VueZoomable from "vue-zoomable"
+  import "vue-zoomable/dist/style.css"
+
   import DragElement from './DragElement.vue'
   import AnalysisRepresentation from './AnalysisRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
@@ -115,20 +94,13 @@
 
   const el = ref(null)
 
-  const zoomVar = useCssVar('--chart-zoom', el) as unknown as Ref<number>
+  const zoomLevel = ref(1.0)
 
   const momentMinimumWidthVar = useCssVar('--moment-minimum-width', el) as unknown as Ref<string>
 
   const minimumWidth = computed({
       get: () => parseFloat(momentMinimumWidthVar.value),
       set: (value) => { momentMinimumWidthVar.value = `${value}px` }
-  })
-
-  // useCssVar returns a string, and QSlider expects a number. Convert it.
-  // Using it directly works but produces a warning.
-  const zoom = computed({
-      get: () => Number(zoomVar.value),
-      set: (value) => { zoomVar.value = value }
   })
 
   function expandAllMoments () {
@@ -160,28 +132,6 @@
       }
   }
 
-  function zoomToWidth (width: number) {
-      const div = document.querySelector(".analysis")
-      if (div) {
-          const parent = div.closest(".q-splitter")
-          if (parent) {
-              const parentWidth = parent.clientWidth - 60
-              const newZoom = parentWidth / width
-              zoom.value = +newZoom.toFixed(2)
-          }
-      }
-  }
-
-  function zoomToFit () {
-      const div = document.querySelector(".analysis")
-      if (div) {
-          zoomToWidth(div.clientWidth)
-      }
-  }
-
-  function zoomReset () {
-      zoom.value = 1
-  }
 </script>
 
 <style>

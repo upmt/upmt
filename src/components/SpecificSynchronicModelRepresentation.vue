@@ -31,15 +31,22 @@
         </div>
       </DragElement>
     </DropZone>
-    <div class="specificsynchronicmodel-categories">
-      <SpecificSynchronicCategoryRepresentation
-        v-for="c in model.categories"
-        :key="c.id"
-        :isGeneric="isGeneric"
-        :genericGraph="genericGraph"
-        :hideJustifications="!model.momentId"
-        :categoryId="c.id" />
-    </div>
+    <VueZoomable
+      selector=".specificsynchronicmodel-categories"
+      :minZoom="0.5"
+      :maxZoom="3"
+      >
+      <div class="specificsynchronicmodel-categories">
+        <SpecificSynchronicCategoryRepresentation
+          v-for="c in model.categories"
+          :key="c.id"
+          :isGeneric="isGeneric"
+          :layout="layout"
+          :genericGraph="genericGraph"
+          :hideJustifications="!model.momentId"
+          :categoryId="c.id" />
+      </div>
+    </VueZoomable>
   </div>
 </template>
 
@@ -48,6 +55,10 @@
   import { computed } from 'vue'
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
+
+  import VueZoomable from "vue-zoomable"
+  import "vue-zoomable/dist/style.css"
+
   import DragElement from './DragElement.vue'
   import DropZone from './DropZone.vue'
   import SpecificSynchronicCategoryRepresentation from './SpecificSynchronicCategoryRepresentation.vue'

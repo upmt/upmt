@@ -50,6 +50,5 @@
   .analysis-content {
     display: flex;
     flex-direction: row;
-    zoom: var(--chart-zoom);
   }
 </style>

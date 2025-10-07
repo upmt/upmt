@@ -58,7 +58,7 @@
                 name="mdi-alpha-m-box-outline">
               </q-icon>
               <span class="moment-name">{{ momentName }}
-                <q-popup-edit style="zoom: var(--chart-zoom)" v-model="momentName" auto-save v-slot="scope">
+                <q-popup-edit v-model="momentName" auto-save v-slot="scope">
                   <MomentNameInput @change="scope.cancel"
                                      :moment="moment" />
                 </q-popup-edit>
