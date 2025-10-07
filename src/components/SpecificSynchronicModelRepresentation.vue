@@ -32,6 +32,7 @@
       </DragElement>
     </DropZone>
     <VueZoomable
+      style="flex-grow: 1;"
       selector=".specificsynchronicmodel-categories"
       :minZoom="0.5"
       :maxZoom="3"
@@ -157,4 +158,8 @@
 </script>
 
 <style scoped>
-</style>
+  .specificsynchronicmodel-container {
+    display: flex;
+    flex-direction: column;
+  }
+  </style>

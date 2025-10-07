@@ -54,6 +54,7 @@
 
     <VueZoomable
       selector=".analysis"
+      style="flex-grow: 1;"
       v-model:zoom="zoomLevel"
       :minZoom="0.5"
       :maxZoom="3"
@@ -138,6 +139,8 @@
   .interview {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
   }
   .interview::-webkit-scrollbar:horizontal{} {
       background-color: red;

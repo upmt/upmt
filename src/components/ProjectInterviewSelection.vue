@@ -81,7 +81,8 @@
               <template v-slot:before>
                 <q-splitter
                   class="fit fullwindow-height flex"
-                  beforeClass="flex"
+                  beforeClass="flex overflow-hidden"
+                  afterClass="flex overflow-hidden"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
@@ -98,7 +99,7 @@
                   <template v-slot:after>
                     <div class="edited-model-container flex column"
                          v-if="editedSpecificSynchronicModel">
-                      <q-toolbar class="row">
+                      <q-toolbar class="row toolbar">
                         <q-toolbar-title>
                           Editing
                           <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
@@ -120,7 +121,9 @@
                           @click="closeEditedModel">
                         </q-btn>
                       </q-toolbar>
-                      <div v-if="editedSpecificSynchronicModelId">
+                      <div v-if="editedSpecificSynchronicModelId"
+                           class="model-representation"
+                           >
                         <SpecificSynchronicModelRepresentation
                           v-if="editViewMode == 'horizontal'"
                           :isGeneric="isEditedModelGeneric"
@@ -349,6 +352,16 @@
 
   div.edited-model-container {
       display: flex;
+      flex-grow: 1;
+  }
+
+  .model-representation {
+      flex-grow: 1;
+      display: flex;
+  }
+
+  .toolbar {
+      flex-grow: 0;
   }
 
   .interview-splitter {

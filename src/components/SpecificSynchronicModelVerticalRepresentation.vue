@@ -88,4 +88,7 @@
     --vue3-org-chart-line-top: 1rem;
     --vue3-org-chart-line-color: black;
   }
+  .specificsynchronicmodel-vertical {
+      flex-grow: 1;
+  }
 </style>
