@@ -3,6 +3,7 @@
        v-if="model"
        :data-specificsynchronicmodel="modelId">
     <vue3-org-chart class="chart"
+                    @on-ready="initApi"
                     :data="nodes">
        <!-- <template #node="{item, children, open, toggleChildren}"> -->
          <template #node="{item}">
@@ -70,6 +71,15 @@
                       ]
         return nodes
     })
+
+    const chartApi = ref(null)
+
+    // this function will be called when vue3-org-chart is ready
+    // it will pass api object as argument
+    // api object contains reset function and some other functions will be added in future
+    const initApi = ({api}: any) => {
+        chartApi.value = api
+    }
 </script>
 
 <style scoped>
