@@ -134,7 +134,7 @@
   const note = ref(props.interview?.note ?? "")
   const text = ref(props.interview?.text ?? "")
 
-  const canValidate = computed(() => name.value && participant.value && text.value)
+  const canValidate = computed(() => name.value && text.value)
 
   function onSubmit (event: Event) {
       if (event.target) {
