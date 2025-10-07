@@ -125,7 +125,7 @@
                           v-if="editViewMode == 'horizontal'"
                           :isGeneric="isEditedModelGeneric"
                           :modelId="editedSpecificSynchronicModelId" />
-                        <VerticalGraph
+                        <SpecificSynchronicModelVerticalRepresentation
                           v-else
                           :modelId="editedSpecificSynchronicModelId" />
                       </div>
@@ -168,7 +168,7 @@
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
-  import VerticalGraph from 'components/VerticalGraph.vue'
+  import SpecificSynchronicModelVerticalRepresentation from 'components/SpecificSynchronicModelVerticalRepresentation.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
