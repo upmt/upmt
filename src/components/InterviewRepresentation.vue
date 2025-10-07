@@ -60,7 +60,7 @@
       >
       <AnalysisRepresentation
         ref="analysis"
-        class="scrollable analysis"
+        class="analysis"
         v-if="interview.analysis"
         :analysisId="interview.analysis.id">
       </AnalysisRepresentation>
@@ -145,9 +145,5 @@
   }
   .interview-metadata > span {
       margin: 0 1em;
-  }
-  .scrollable {
-      overflow: auto;
-      flex-grow: 1;
   }
 </style>
