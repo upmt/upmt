@@ -197,6 +197,25 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment.whereId(ids).get()
   }
 
+  function getMomentsByPrefix (projectId: string, prefix: string) {
+    const lower = prefix.toLowerCase()
+    const moments = repo.Moment
+      .where('projectId', projectId)
+      .where('name', (name) => name.toLowerCase().startsWith(lower))
+      .get()
+    const names = [ ...new Set(moments.map(c => c.name)) ]
+    return names
+  }
+
+  function getMomentsByName (projectId: string, name: string) {
+    return repo.Moment
+      .with('parent')
+      .with('justification', (query) => query.with('descriptems'))
+      .where('projectId', projectId)
+      .where('name', name)
+      .get()
+  }
+
   function getMomentsByProject (projectId: string) {
     return repo.Moment
       .where('projectId', projectId)
@@ -1032,6 +1051,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     getJustificationParent,
     getMoment,
     getMoments,
+    getMomentsByName,
+    getMomentsByPrefix,
     getMomentsByProject,
     getSpecificSynchronicCategory,
     getSpecificSynchronicCategoriesByName,
