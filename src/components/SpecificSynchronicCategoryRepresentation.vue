@@ -19,6 +19,8 @@
           :key="c.id"
           :isGeneric="isGeneric"
           :genericGraph="genericGraph"
+          :layout="layout"
+          :withChildren="withChildren"
           :hideJustifications="hideJustifications"
           :categoryId="c.id">
         </SpecificSynchronicCategoryRepresentation>

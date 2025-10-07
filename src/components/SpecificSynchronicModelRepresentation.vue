@@ -69,7 +69,8 @@
   const props = defineProps({
       modelId: { type: String, default: null },
       isGeneric: { type: Boolean, default: false },
-      hideJustifications: { type: Boolean, default: false }
+      hideJustifications: { type: Boolean, default: false },
+      layout: { type: String, default: 'horizontal' }
   })
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
