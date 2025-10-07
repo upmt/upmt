@@ -3,7 +3,7 @@
        :class="[
                'specificsynchroniccategory-container',
                `specificsynchroniccategory-${categoryId}`,
-               withChildren ? 'horizontal' : 'vertical'
+               props.layout
                ]"
        :data-specificsynchroniccategory="categoryId">
 
@@ -51,7 +51,7 @@
       <div class="specificsynchroniccategory-relation">
         <SpecificSynchronicCategoryRelation
           :type="category.abstractionType"
-          :direction="withChildren ? 'horizontal' : 'vertical'"
+          :direction="props.layout"
           :childrenCount="isLeaf ? 1 : category.children.length" />
         <div class="specificsynchroniccategory-relationinfo">
           <div class="specificsynchroniccategory-criterion">
@@ -164,7 +164,7 @@
           @click="createSpecificSynchronicCategory(`before:${categoryId}`)"
           dense
           class="newssc-button"
-          :icon="withChildren ? 'mdi-menu-right' : 'mdi-menu-up'">
+          :icon="isVertical ? 'mdi-menu-up' : 'mdi-menu-right'">
           <q-tooltip>Create a parent category</q-tooltip>
         </q-btn>
       </DropZone>
@@ -206,7 +206,7 @@
   const props = defineProps({
       categoryId: { type: String, default: "" },
       genericGraph: { type: Object, default: null },
-      layout: { type: String, default: "vertical" },
+      layout: { type: String, default: "horizontal" }, // horizontal or vertical
       hideJustifications: { type: Boolean, default: false },
       isGeneric: { type: Boolean, default: false },
       withChildren: { type: Boolean, default: true }
@@ -242,6 +242,8 @@
   const isLeaf = computed(() => {
       return !category.value?.children.length
   })
+
+  const isVertical = computed(() => props.layout == 'vertical')
 
   // Initial state for displayJustification
   // Hide by default
