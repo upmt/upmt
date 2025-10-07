@@ -70,7 +70,7 @@
     <q-btn
       flat
       size="sm"
-      @click="validate">Set</q-btn>
+      @click="validate">OK</q-btn>
     <q-btn
       flat
       size="sm"
