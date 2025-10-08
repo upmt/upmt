@@ -161,5 +161,12 @@
   .specificsynchronicmodel-container {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
   }
-  </style>
+  .controll__buttons {
+      zoom: .5;
+  }
+  .controll__item--circle {
+      display: none;
+  }
+</style>

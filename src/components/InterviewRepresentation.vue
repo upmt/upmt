@@ -149,4 +149,10 @@
   .interview-metadata > span {
       margin: 0 1em;
   }
+  .controll__buttons {
+      zoom: .5;
+  }
+  .controll__item--circle {
+      display: none;
+  }
 </style>
