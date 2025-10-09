@@ -100,9 +100,19 @@
                     <div class="edited-model-container flex column"
                          v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row toolbar">
-                        <q-toolbar-title>
-                          Editing
-                          <strong>{{ editedSpecificSynchronicModel.moment?.descriptionLabel || editedSpecificSynchronicModel.name }}</strong>
+                        <q-toolbar-title class="row">
+                          <div>Editing&nbsp;</div>
+                          <div v-if="editedSpecificSynchronicModel.moment">
+                            synchronic description of
+                            <q-icon
+                              size="xs"
+                              name="mdi-alpha-m-box-outline">
+                            </q-icon>
+                            <strong>{{ editedSpecificSynchronicModel.moment.descriptionLabel }}</strong>
+                          </div>
+                          <div v-else>detached model
+                            <strong>{{ editedSpecificSynchronicModel.name }}</strong>
+                          </div>
                           <span v-if="isEditedModelGeneric">
                             <q-btn
                               @click="updateGenericModel">Update template model
