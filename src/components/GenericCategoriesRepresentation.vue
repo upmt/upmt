@@ -3,7 +3,7 @@
        :key="projectId"
        :data-project="projectId">
 
-    <div class="text-title2 text-bold">Generic model
+    <div class="text-title2 text-bold">Dynamic generic model
       <q-btn
         flat
         dense
