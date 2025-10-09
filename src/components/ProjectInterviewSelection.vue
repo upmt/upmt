@@ -43,9 +43,11 @@
           <q-expansion-item
             dense
             dense-toggle
+            switch-toggle-side
             :duration="0"
-            expand-icon-toggle
-            label="Generic model overview">
+            expand-icon="mdi-eye-outline"
+            expanded-icon="mdi-eye-off-outline"
+            label="Overview">
 
             <GenericCategoriesOverview
               :projectId="projectId"
