@@ -78,7 +78,7 @@
             <q-splitter
               class="fit fullwindow-height"
               v-model="splitterTranscript"
-              :limits="[5,95]">
+              :limits="[2,98]">
 
               <template v-slot:before>
                 <q-splitter
