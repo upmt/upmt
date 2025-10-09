@@ -2,6 +2,7 @@
   <div class="specificsynchronicmodel-vertical"
        v-if="model"
        :data-specificsynchronicmodel="modelId">
+    <p class="warning">Warning: this vertical interface is in development - there are refresh issues when adding/deleting items</p>
     <vue3-org-chart class="chart"
                     @on-ready="initApi"
                     :data="nodes">
@@ -90,5 +91,8 @@
   }
   .specificsynchronicmodel-vertical {
       flex-grow: 1;
+  }
+  .warning {
+      color: #e04343;
   }
 </style>
