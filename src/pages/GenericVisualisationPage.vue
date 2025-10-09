@@ -31,7 +31,7 @@
 
   const project = computed(() => {
       if (props.id) {
-          const p = store.getProject(props.id)
+          const p = store.getFullProject(props.id)
           istore.setCurrentProjectId(props.id)
           return p
       } else {
