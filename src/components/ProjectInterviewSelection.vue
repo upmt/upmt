@@ -374,6 +374,7 @@
 
   .toolbar {
       flex-grow: 0;
+      max-width: 80vw;
   }
 
   .interview-splitter {
