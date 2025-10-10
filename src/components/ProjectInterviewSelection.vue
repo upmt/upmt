@@ -120,18 +120,20 @@
                               @click="updateGenericModel">Update template model
                             </q-btn>
                           </span>
-                          <q-radio v-model="editViewMode" val="horizontal" label="Horizontal" />
-                          <q-radio v-model="editViewMode" val="vertical" label="Vertical" />
                         </q-toolbar-title>
-                        <q-btn
-                          icon="mdi-close"
-                          flat
-                          round
-                          dense
-                          size="md"
-                          class="float-right"
-                          @click="closeEditedModel">
-                        </q-btn>
+                          <div>
+                          <q-radio size="xs" v-model="editViewMode" val="horizontal" label="Horizontal" />
+                          <q-radio size="xs" v-model="editViewMode" val="vertical" label="Vertical" />
+                          <q-btn
+                            icon="mdi-close"
+                            flat
+                            round
+                            dense
+                            size="md"
+                            class="float-right"
+                            @click="closeEditedModel">
+                          </q-btn>
+                          </div>
                       </q-toolbar>
                       <div v-if="editedSpecificSynchronicModelId"
                            class="model-representation"
