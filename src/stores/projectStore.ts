@@ -193,8 +193,8 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function getMoments (ids: string[]) {
-    /* Warning: for efficiency, there is no dereferencing of linked entities */
-    return repo.Moment.whereId(ids).get()
+    /* Warning: for efficiency, there is no dereferencing of linked entities apart from specificsynchronicmodel */
+    return repo.Moment.whereId(ids).with('specificsynchronicmodel').get()
   }
 
   function getMomentsByPrefix (projectId: string, prefix: string) {

@@ -50,16 +50,25 @@
                                        size="sm"
                                        dense>
               <q-menu class="column">
-                <q-btn v-for="moment in currentMoments"
-                       :label="moment.name"
-                       align="left"
-                       no-caps
-                       :key="moment.id"
-                       @click="highlightMoment(moment.id)"
-                       size="sm"
-                       :style="{ backgroundColor: moment.color }"
-                       icon="mdi-alpha-m-box-outline">
-                </q-btn>
+                <div  v-for="moment in currentMoments"
+                      :key="moment.id">
+                  <q-btn
+                    :label="moment.name"
+                    align="left"
+                    no-caps
+                    @click="highlightMoment(moment.id)"
+                    size="sm"
+                    :style="{ backgroundColor: moment.color }"
+                    icon="mdi-alpha-m-box-outline">
+                  </q-btn>
+                  <q-btn
+                    icon="edit"
+                    flat
+                    dense
+                    size="sm"
+                    @click="editMomentSpecificSynchronicModel(moment.specificsynchronicmodel?.id ?? '')">
+                  </q-btn>
+                </div>
               </q-menu>
               {{ currentMoments.length }}</q-btn> /
             <q-btn
@@ -179,6 +188,10 @@
       } else {
           highlightedMomentId.value = momentId
       }
+  }
+
+  function editMomentSpecificSynchronicModel (modelId: string) {
+      istore.setEditedSpecificSynchronicModelId(modelId)
   }
 
   function byInterview (moments: Array<Moment>) {
