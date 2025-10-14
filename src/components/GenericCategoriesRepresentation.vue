@@ -3,20 +3,17 @@
        :key="projectId"
        :data-project="projectId">
 
-    <div class="text-title2 text-bold">Dynamic generic model
+    <div class="text-bold">{{ title }}
       <q-btn
         flat
         dense
         size="xs"
-        title="Edit generic model"
-        @click="editGenericModel()"
-        icon="edit"
+        icon="info"
         no-caps>
+        <q-tooltip>This is the dynamically generated model resulting from the combination of all synchronic models from interviews and all detached synchronic models.
+        </q-tooltip>
       </q-btn>
-      <ElementMenu
-        :actions="menuActions" />
     </div>
-
     <GenericCategoryRepresentation
       v-for="category in genericGraphs.categories"
       :key="category.name"
@@ -29,51 +26,17 @@
 
 <script setup lang="ts">
 
-  import { useQuasar } from 'quasar'
   import GenericCategoryRepresentation from './GenericCategoryRepresentation.vue'
 
   import type { GraphInfo } from 'stores/projectStore'
-  import { useProjectStore } from 'stores/projectStore'
-  import { useInterfaceStore } from 'stores/interface'
 
-  import ElementMenu from './ElementMenu.vue'
-
-  const store = useProjectStore()
-
-  const istore = useInterfaceStore()
-
-  const $q = useQuasar()
-
-  const props = defineProps<{
+  defineProps<{
       projectId: string,
       genericGraphs: GraphInfo,
-      currentInterviewId: string
+      currentInterviewId: string,
+      title?: string
   }>()
 
-  function editGenericModel () {
-      const genericmodel = store.getGenericSynchronicModel(props.projectId)
-      if (genericmodel) {
-          istore.setEditedSpecificSynchronicModelId(genericmodel.proxy.id)
-      }
-  }
-
-  function storeAsModel () {
-      // Store the whole graph as a generic model
-      const model = store.buildGenericSynchronicModelFromGraphs (props.projectId, props.genericGraphs)
-      if (model) {
-          $q.notify({
-              type: 'info',
-              message: `Stored as ${model.name}`
-          })
-      }
-  }
-
-  import type { NamedAction } from 'components/util.ts'
-  const menuActions: NamedAction[] = [
-      [ "Edit generic model", () => editGenericModel() ],
-      [ "Store as model", () => storeAsModel() ],
-      [ "Dump", () => console.log({graphs: props.genericGraphs}) ]
-  ]
 </script>
 
 <style scoped>

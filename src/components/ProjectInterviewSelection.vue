@@ -9,6 +9,7 @@
 
       <template v-slot:before>
         <div class="fit fullwindow-height">
+          <div class="text-bold">Interviews</div>
           <q-tabs
             dense
             active-class="active-interview-label"
@@ -34,9 +35,17 @@
                          icon="add">
             </q-route-tab>
           </q-tabs>
-
+          <q-separator />
+          <div class="text-bold"></div>
+          <DetachedModelsRepresentation
+            title="Detached models"
+            :projectId="projectId"
+            :genericGraphs="genericGraphs"
+            :currentInterviewId="currentInterviewId">
+          </DetachedModelsRepresentation>
           <q-separator />
           <GenericCategoriesRepresentation
+            title="Dynamic generic model"
             :projectId="projectId"
             :genericGraphs="genericGraphs"
             :currentInterviewId="currentInterviewId" />
@@ -117,7 +126,8 @@
                           </div>
                           <span v-if="isEditedModelGeneric">
                             <q-btn
-                              @click="updateGenericModel">Update template model
+                              @click="updateGenericModel">
+                              Generate from dynamic model
                             </q-btn>
                           </span>
                         </q-toolbar-title>
@@ -180,6 +190,7 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
+  import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
