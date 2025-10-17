@@ -11,6 +11,7 @@ export default class BaseModel extends Model {
   static context: ContextProvider | null = null
 
   @Uid() declare id: string
+  @Str('') declare name: string
   @Str('') declare creator: string
   @Str('') declare contributor: string
   @Str('') declare created: string
