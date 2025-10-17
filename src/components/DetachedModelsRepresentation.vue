@@ -36,7 +36,10 @@
         no-caps
         @click="editDetachedModel(model.proxy.id)"
         >
-        {{ model.proxy.name }}
+        <ElementNameInput
+          :element="model.proxy"
+          label="Name">
+        </ElementNameInput>
       </q-btn>
     </div>
 
@@ -50,6 +53,7 @@
   import type { GraphInfo } from 'stores/projectStore'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import ElementNameInput from './ElementNameInput.vue'
 
   const store = useProjectStore()
 
