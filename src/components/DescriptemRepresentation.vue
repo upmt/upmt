@@ -151,6 +151,7 @@
       display: flex;
       flex-direction: row;
       height: 1.2em;
+      overflow: hidden;
   }
   .descriptem-header {
       width: 100%;
@@ -163,7 +164,6 @@
       text-overflow: ellipsis;
       overflow: hidden;
       width: 100%;
-      max-width: var(--moment-minimum-width);
       height: 1.2em;
       font-style: italic;
   }

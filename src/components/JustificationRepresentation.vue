@@ -35,5 +35,6 @@
     flex-direction: column;
     margin: 0;
     padding-left: 8px;
+    width: calc(var(--synchronic-category-descriptem-width) + 50px);
   }
 </style>

@@ -458,6 +458,9 @@
       background-color: yellow;
   }
   .specificsynchroniccategory-justification {
+      width: calc(var(--synchronic-category-descriptem-width) + 50px);
+  }
+  .vertical .specificsynchroniccategory-justification {
       width: var(--synchronic-category-descriptem-width);
   }
   .specificsynchroniccategory-header {
