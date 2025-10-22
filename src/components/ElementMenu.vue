@@ -14,7 +14,7 @@
           v-for="[label, action] in actions"
           clickable
           :key="label"
-          @click="action"
+          @click="action(parameter)"
           v-close-popup>
           {{ label }}
         </q-item>
@@ -28,7 +28,8 @@
   import type { NamedAction } from 'components/util.ts'
 
   defineProps<{
-      actions: NamedAction[]
+      actions: NamedAction[],
+      parameter?: any
   }>()
 
 </script>
