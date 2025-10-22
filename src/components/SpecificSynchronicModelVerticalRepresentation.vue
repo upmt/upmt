@@ -56,7 +56,7 @@
         // Add virtual single root
         const rootNode = {
             id: 'root',
-            name: '',
+            name: model.value?.name ?? '',
             parentId: "",
             category: null
         }
