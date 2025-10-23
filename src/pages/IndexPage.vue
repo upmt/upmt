@@ -77,7 +77,8 @@
 
               <q-fab class="self-center"
                      color="secondary"
-                     push icon="add"
+                     push
+                     icon="add"
                      direction="right">
 
                 <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
@@ -164,6 +165,11 @@
   import { storeToRefs } from 'pinia'
   import { fs } from '@zenfs/core'
   import { useQuasar, QFile, exportFile } from 'quasar'
+
+  import { stringToId } from 'stores/util'
+
+  import Project from 'stores/models/project'
+
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
   import { getProjectFiles, listStoredProjects } from 'stores/storage'
@@ -195,6 +201,50 @@
       }
   }
 
+  function importWithNewId(existing: Project, jsonData: any, sourceName: string): void | null {
+      // Use a modal dialog to ask for a new id
+      $q.dialog({
+          title: 'Give a project identifier',
+          html: true,
+          message: `The loaded project <strong>${jsonData.name}</strong> (id: <em>${jsonData.id}</em>) has the same identifier as an existing loaded project named <strong>${existing.name}</strong>.<br>Enter a new name (or keep it to overwrite the old data).`,
+          prompt: {
+              model: jsonData.name,
+              isValid: val => /^[\w -]+$/.test(val), // "Use only alphabetic characters, numbers and _/-",
+              type: 'text' // optional
+          },
+          cancel: true,
+          persistent: true
+      }).onOk(newName => {
+          if (newName) {
+              const newId = stringToId(newName)
+
+              // Fix name/id info in loaded data
+              jsonData.id = newId
+              jsonData.name = newName
+
+              try {
+                  store.importProject(jsonData, sourceName)
+              } catch (error) {
+                  console.log(`Import error: ${error}`, jsonData)
+                  $q.notify({
+                      type: 'error',
+                      message: `Import error: ${error}`
+                  })
+                  return
+              }
+              $q.notify({
+                  type: 'info',
+                  message: `Imported project ${newName} (${newId})`
+              })
+          } else {
+              $q.notify({
+                  type: 'warning',
+                  message: `Cancelled project loading ${existing.name}`
+              })
+          }
+      })
+  }
+
   function uploadFile (event: Event) {
       try {
           // `event.target.files[0]` is the desired file object
@@ -218,7 +268,15 @@
                   jsonData = null
               }
               if (jsonData !== null && sourceFile?.name) {
-                  store.importProject(jsonData, sourceFile.name)
+                  // Check if jsonData.id is an existing id, ask the question if it is the case.
+                  const existing = projects.value.find(project => project.id == jsonData.id)
+                  if (existing) {
+                      // Ask the question.
+                      importWithNewId(existing, jsonData, sourceFile.name)
+                  } else {
+                      // No existing project. We can load it with the current id
+                      store.importProject(jsonData, sourceFile.name)
+                  }
               }
           }
           reader.onerror = () => {
