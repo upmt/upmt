@@ -119,10 +119,20 @@
                               size="xs"
                               name="mdi-alpha-m-box-outline">
                             </q-icon>
-                            <strong>{{ editedSpecificSynchronicModel.moment.descriptionLabel }}</strong>
+                            <strong>{{ editedSpecificSynchronicModel.moment.name }}
+                              <q-popup-edit v-model="editedSpecificSynchronicModelName" auto-save v-slot="scope">
+                                <MomentNameInput @change="scope.cancel"
+                                                 :moment="editedSpecificSynchronicModel.moment" />
+                              </q-popup-edit>
+                            </strong>
                           </div>
-                          <div v-else>detached model
-                            <strong>{{ editedSpecificSynchronicModel.name }}</strong>
+                          <div v-else>
+                            <strong>
+                              <ElementNameInput
+                                :element="editedSpecificSynchronicModel"
+                                label="Name">
+                              </ElementNameInput>
+                            </strong>
                           </div>
                           <span v-if="isEditedModelGeneric">
                             <q-btn
@@ -191,9 +201,11 @@
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
+  import ElementNameInput from './ElementNameInput.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
+  import MomentNameInput from './MomentNameInput.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import SpecificSynchronicModelVerticalRepresentation from 'components/SpecificSynchronicModelVerticalRepresentation.vue'
@@ -243,7 +255,25 @@
 
   const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 
-  watch(() => props.projectId, () => {
+  const editedSpecificSynchronicModelName = computed({
+      get () {
+          if (editedSpecificSynchronicModel.value?.moment) {
+              return editedSpecificSynchronicModel.value.moment.name
+          } else {
+              return editedSpecificSynchronicModel.value?.name ?? ""
+          }
+      },
+      set (value: string) {
+          if (editedSpecificSynchronicModel.value?.moment) {
+              store.updateMoment(editedSpecificSynchronicModel.value.moment.id, { name:value })
+          } else if (editedSpecificSynchronicModel.value) {
+              store.updateElement(editedSpecificSynchronicModel.value, { name:value })
+          }
+      }
+  })
+
+
+watch(() => props.projectId, () => {
       // There are interviews. Select the first one
       if (project.value && project.value.interviews[0]) {
           currentInterviewId.value = project.value.interviews[0].id || ""
