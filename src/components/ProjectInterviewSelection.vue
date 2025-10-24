@@ -193,6 +193,37 @@
 
     </q-splitter>
 
+    <q-drawer
+      v-model="infoPanelDisplay"
+      side="right"
+      overlay
+      bordered
+      >
+      <InfoPanel
+        :projectId="projectId"
+        :genericGraphs="genericGraphs"
+        :currentInterviewId="currentInterviewId">
+      </InfoPanel>
+      <q-btn
+        class="absolute-top-right"
+        flat
+        square
+        @click="infoPanelDisplay = !infoPanelDisplay"
+        size="md"
+        icon="mdi-chevron-double-right"
+        >
+      </q-btn>
+    </q-drawer>
+    <q-page-sticky position="top-right">
+      <q-btn
+        flat
+        square
+        @click="infoPanelDisplay = !infoPanelDisplay"
+        size="md"
+        icon="mdi-chevron-double-left"
+        >
+      </q-btn>
+    </q-page-sticky>
   </div>
 </template>
 
@@ -204,6 +235,7 @@
   import ElementNameInput from './ElementNameInput.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
+  import InfoPanel from './InfoPanel.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   import MomentNameInput from './MomentNameInput.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
@@ -242,6 +274,8 @@
   const splitterModel = ref(20)
   const splitterTranscript = ref(90)
   const splitterInterview = ref(500)
+
+  const infoPanelDisplay = ref(false)
 
   const editedSpecificSynchronicModel = computed(() => {
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
