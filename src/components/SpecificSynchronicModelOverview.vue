@@ -9,6 +9,9 @@
         :categoryId="c.id">
       </SpecificSynchronicCategoryOverview>
     </div>
+    <div v-if="isEmpty">
+      Empty model
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,8 @@
   })
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
+
+  const isEmpty = computed(() => model.value && ! model.value.categories)
 
 </script>
 
