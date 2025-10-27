@@ -14,23 +14,36 @@
 
     <q-tab-panels v-model="infoTab">
       <q-tab-panel name="notes">
-        <div class="text-h6">Notes</div>
-        <ul>
-          <li v-for="note in notes"
-              :key="note.element.id">
-            {{ note.text }}
-          </li>
-        </ul>
+        <div v-for="note in notes"
+             :key="note.element.id">
+          <q-btn
+            size="xs"
+            :icon="note.icon">
+            <q-tooltip>{{ note.tooltip }}</q-tooltip>
+          </q-btn>
+          {{ note.text }}
+        </div>
       </q-tab-panel>
 
       <q-tab-panel name="errors">
-        <div class="text-h6">Errors</div>
-        <ul>
-          <li v-for="category in categoriesWithError"
+        <div class="categories-with-error">
+          <div v-for="category in categoriesWithError"
               :key="category.name">
-            {{ category.name }} : {{ category.errors }}
-          </li>
-        </ul>
+            <span class="category-title">
+              <q-icon
+                                           size="xs"
+                                           name="mdi-source-branch">
+              </q-icon>
+              {{ category.name }}
+            </span>
+            <div class="errors">
+              <span v-for="error, i in category.errors"
+                    :key="i">
+                {{ error }}
+              </span>
+            </div>
+          </div>
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -64,7 +77,9 @@
       return categories.filter(category => category.note).map((category: any) => {
           return {
               text: category.note,
-              element: category
+              element: category,
+              icon: 'mdi-source-branch',
+              tooltip: `Category ${category.note}`
           }
       })
   })
