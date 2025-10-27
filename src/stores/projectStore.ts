@@ -339,6 +339,17 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Project.save(projectData)
   }
 
+  /**
+   * Clear Pinia store from all elements related to project
+   */
+  function clearProjectData (projectId: string) {
+    Object.values(repo).forEach(r => (r as any).where('projectId', projectId).delete())
+  }
+  function fixTextAttributeFromAnnotations(annotations: any[]) {
+    annotations.forEach(annotation => {
+      delete annotation.text
+    })
+  }
   function fixChildIndex (moment: any) {
     if (Array.isArray(moment.children)) {
       moment.children
@@ -351,18 +362,29 @@ export const useProjectStore = defineStore('projectStore', () => {
         })
     }
   }
+
+  /**
+   * Import a data structure (read from a JSON object)
+   */
   function importProject (data: any, url: string) {
     let out
     // FIXME: use data.version info
     if ('modelfolder' in data) {
       // New style
       // Configure pinia-orm context so that projectId is correctly set.
+
+      // Clear project data before loading
+      clearProjectData(data.id)
+
       const istore = useInterfaceStore()
       istore.setCurrentProjectId(data.id)
       // Fix wrongly initialized childIndex for Moments
+      // and remove text attribute from annotations
       for (const interview of data.interviews) {
         fixChildIndex(interview.analysis.rootMoment)
+        fixTextAttributeFromAnnotations(interview.annotations)
       }
+
       console.log("Loaded", data, " from ", url)
       out = repo.Project.save(data as Project)
       // We must remap models
@@ -386,20 +408,12 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   /**
-   * Clear Pinia store from all elements related to project
-   */
-  function clearProjectData (projectId: string) {
-    Object.values(repo).forEach(r => (r as any).where('projectId', projectId).delete())
-  }
-
-  /**
    * Load a projet file from the ZenFS managed storage space
    * In this case, we only specify the id
    */
   function loadStoredProject (id: string) {
     const data = getStoredProject(id)
     if (data) {
-      clearProjectData(id)
       const p = importProject(data, data.filename)
       return p
     }
