@@ -151,6 +151,10 @@
   }
   .controll__buttons {
       zoom: .5;
+      top: 1em;
+      left: 1em;
+      bottom: unset !important;
+      right: unset !important;
   }
   .controll__item--circle {
       display: none;
