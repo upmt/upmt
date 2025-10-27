@@ -9,7 +9,7 @@
       xmlns="http://www.w3.org/2000/svg">
       <g :class="direction">
         <line
-          v-if="direction == 'horizontal'"
+          v-if="childrenCount > 1"
           vector-effect="non-scaling-stroke"
           :x1="0"
           :y1="barPosition.y"

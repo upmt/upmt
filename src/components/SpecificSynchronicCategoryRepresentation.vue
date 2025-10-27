@@ -3,7 +3,7 @@
        :class="[
                'specificsynchroniccategory-container',
                `specificsynchroniccategory-${categoryId}`,
-               props.layout
+               layout
                ]"
        :data-specificsynchroniccategory="categoryId">
 
@@ -53,7 +53,7 @@
       <div class="specificsynchroniccategory-relation">
         <SpecificSynchronicCategoryRelation
           :type="category.abstractionType"
-          :direction="props.layout"
+          :direction="layout"
           :childrenCount="isLeaf ? 1 : category.children.length" />
         <div class="specificsynchroniccategory-relationinfo">
           <div class="specificsynchroniccategory-criterion">
@@ -174,7 +174,8 @@
         v-if="category.parentId && withChildren"
         class="specificsynchroniccategory-filler"
         >
-      <SpecificSynchronicCategoryRelation :childrenCount="1" />
+        <SpecificSynchronicCategoryRelation :direction="layout"
+                                            :childrenCount="1" />
       </div>
 
     </div>
@@ -430,6 +431,10 @@
       flex-direction: column;
       align-self: center;
   }
+  .vertical .specificsynchroniccategory-children {
+      flex-direction: row;
+      margin: 0 1em;
+  }
   .specificsynchroniccategory-children.horizontal {
       flex-direction: row;
   }
@@ -507,6 +512,7 @@
       min-height: 16px;
       opacity: 1.0;
       transition: opacity 1.5s ease;
+      overflow: hidden;
   }
   @starting-style {
       .specificsynchroniccategory-justification {
@@ -519,16 +525,27 @@
   }
   .specificsynchroniccategory-relation {
       width: var(--synchronic-category-relation-width);
+      height: 100%;
       display: flex;
-      align-items: left;
       justify-content: center;
       position: relative;
+  }
+  .vertical .specificsynchroniccategory-relation {
+      height: var(--synchronic-category-relation-width);
+      width: 100%;
   }
   .specificsynchroniccategory-relationinfo {
       position: absolute;
       bottom: calc(50% + 10px);
       width: var(--synchronic-category-relation-width);
       left: 0;
+      opacity: 0.1;
+  }
+  .vertical .specificsynchroniccategory-relationinfo {
+      position: absolute;
+      top: 0;
+      width: var(--synchronic-category-relation-width);
+      left: calc(50% - 40px);
       opacity: 0.1;
   }
 
@@ -563,6 +580,11 @@
       justify-content: center;
       height: 24px;
       flex: 1;
+  }
+  .vertical .specificsynchroniccategory-filler {
+      flex-direction: column;
+      width: 24px;
+      height: 24px;
   }
   .descriptems-badge {
       opacity: .6;

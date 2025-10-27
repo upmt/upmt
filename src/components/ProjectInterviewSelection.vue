@@ -164,11 +164,8 @@
                            class="model-representation"
                            >
                         <SpecificSynchronicModelRepresentation
-                          v-if="editViewMode == 'horizontal'"
+                          :layout="editViewMode"
                           :isGeneric="isEditedModelGeneric"
-                          :modelId="editedSpecificSynchronicModelId" />
-                        <SpecificSynchronicModelVerticalRepresentation
-                          v-else
                           :modelId="editedSpecificSynchronicModelId" />
                       </div>
                     </div>
@@ -245,7 +242,6 @@
   import MomentNameInput from './MomentNameInput.vue'
 //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
-  import SpecificSynchronicModelVerticalRepresentation from 'components/SpecificSynchronicModelVerticalRepresentation.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
