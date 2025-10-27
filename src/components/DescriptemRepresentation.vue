@@ -164,6 +164,7 @@
       text-overflow: ellipsis;
       overflow: hidden;
       width: 100%;
+      max-width: var(--synchronic-category-descriptem-width);
       height: 1.2em;
       font-style: italic;
   }
