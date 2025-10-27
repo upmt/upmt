@@ -111,6 +111,18 @@
                     <div class="edited-model-container flex column"
                          v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row toolbar">
+                        <div>
+                          <q-btn
+                            icon="mdi-close"
+                              flat
+                            round
+                            dense
+                              size="md"
+                            class="float-right"
+                            @click="closeEditedModel">
+                          </q-btn>
+                          </div>
+
                         <q-toolbar-title class="row">
                           <div>Editing&nbsp;</div>
                           <div v-if="editedSpecificSynchronicModel.moment">
@@ -140,20 +152,13 @@
                               Generate from dynamic model
                             </q-btn>
                           </span>
+                          <q-btn-toggle
+                            size="xs"
+                            v-model="editViewMode"
+                            :options="[ { icon: 'mdi-pan-horizontal', value: 'horizontal' },
+                                      { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
+                          </q-btn-toggle>
                         </q-toolbar-title>
-                          <div>
-                          <q-radio size="xs" v-model="editViewMode" val="horizontal" label="Horizontal" />
-                          <q-radio size="xs" v-model="editViewMode" val="vertical" label="Vertical" />
-                          <q-btn
-                            icon="mdi-close"
-                            flat
-                            round
-                            dense
-                            size="md"
-                            class="float-right"
-                            @click="closeEditedModel">
-                          </q-btn>
-                          </div>
                       </q-toolbar>
                       <div v-if="editedSpecificSynchronicModelId"
                            class="model-representation"
