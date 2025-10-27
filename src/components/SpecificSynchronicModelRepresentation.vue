@@ -1,5 +1,6 @@
 <template>
   <div class="specificsynchronicmodel-container"
+       :class="layout"
        v-if="model"
        :data-specificsynchronicmodel="modelId">
     <DropZone :data="`inmodel:${modelId}`"
@@ -162,6 +163,13 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+  }
+  .specificsynchronicmodel-categories {
+      display:  flex;
+      flex-direction: column;
+  }
+  .vertical .specificsynchronicmodel-categories {
+      flex-direction: row;
   }
   .controll__buttons {
       zoom: .5;
