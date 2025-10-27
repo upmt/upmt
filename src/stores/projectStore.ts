@@ -958,31 +958,37 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function getGenericSynchronicModel(projectId: string): GenericSynchronicModel {
+  function createDetachedModel(projectId: string, name: string = "Detached model"): GenericSynchronicModel {
+    // create detached model
+    const detachedModel = repo.GenericSynchronicModel.save({ name, projectId, proxy: { name }})
+    return detachedModel
+  }
+
+  function getDetachedModels(projectId: string): GenericSynchronicModel[] {
+    const detachedModels = repo.GenericSynchronicModel
+      .where('projectId', projectId)
+      .with('proxy')
+      .get()
+    return detachedModels
+  }
+
+  function getDetachedModel(projectId: string, name: string): GenericSynchronicModel | null {
     // get or create generic model
     // FIXME: pass model as parameter?
     // FIXME: handle updating existing model (at least adds)
-    let genericModel = repo.GenericSynchronicModel
+    const detachedModel = repo.GenericSynchronicModel
       .where('projectId', projectId)
+      .where('name', name)
       .with('proxy')
       .first()
 
-    if (! genericModel) {
-      const name = 'Default Detached Model'
-      genericModel = repo.GenericSynchronicModel.save({ name, projectId, proxy: { name }})
-    }
-    return genericModel
+    return detachedModel
   }
 
   // Build a GenericSynchronicModel from the given graphs.
   // It builds it from the graph.categories, which can be filtered if needed
-  function buildGenericSynchronicModelFromGraphs (projectId: string, graphs: GraphInfo): GenericSynchronicModel | null {
-    const genericModel = getGenericSynchronicModel(projectId)
-    if (! genericModel) {
-      return null
-    }
-    const specificModel = genericModel.proxy
-
+  function buildSynchronicModelFromGraphs (specificModel: SpecificSynchronicModel,
+    graphs: GraphInfo): SpecificSynchronicModel | null {
     type SpecificSynchronicCategoryBasicType = {
       name: string,
       abstractionType: string,
@@ -996,7 +1002,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         abstractionType: gc.abstractionType,
         // Do not transmit model info to children: only the root category should have it.
         children: gc.children?.map(child => jsonifyGenericCategory(child, null)) ?? [],
-        genericModelId: genericModel.id
+        genericModelId: specificModel.genericModelId
       }
       if (model) {
         data.model = model
@@ -1013,7 +1019,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       const data = jsonifyGenericCategory(category, specificModel)
       repo.SpecificSynchronicCategory.save(data)
     })
-    return genericModel
+    return specificModel
   }
 
   return {
@@ -1023,7 +1029,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     addSpecificSynchronicCategory,
     addTextSelectionToMoment,
     addTextSelectionToSpecificSynchronicCategory,
-    buildGenericSynchronicModelFromGraphs,
+    buildSynchronicModelFromGraphs,
     createProject,
     deleteAnnotation,
     deleteDescriptem,
@@ -1043,7 +1049,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     getAnnotation,
     getDescriptem,
     getGenericSynchronicGraphs,
-    getGenericSynchronicModel,
+    createDetachedModel,
+    getDetachedModel,
+    getDetachedModels,
     getInterview,
     getInterviewAnnotations,
     getInterviewDescriptems,

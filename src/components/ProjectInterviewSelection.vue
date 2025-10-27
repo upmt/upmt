@@ -136,7 +136,7 @@
                           </div>
                           <span v-if="isEditedModelGeneric">
                             <q-btn
-                              @click="updateGenericModel">
+                              @click="updateGenericModel(editedSpecificSynchronicModel)">
                               Generate from dynamic model
                             </q-btn>
                           </span>
@@ -244,8 +244,10 @@
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
   import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
+
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+  import SpecificSynchronicModel from 'stores/models/specificsynchronicmodel'
 
   const istore = useInterfaceStore()
 
@@ -307,7 +309,7 @@
   })
 
 
-watch(() => props.projectId, () => {
+  watch(() => props.projectId, () => {
       // There are interviews. Select the first one
       if (project.value && project.value.interviews[0]) {
           currentInterviewId.value = project.value.interviews[0].id || ""
@@ -396,8 +398,8 @@ watch(() => props.projectId, () => {
       }
   }
 
-  function updateGenericModel () {
-      store.buildGenericSynchronicModelFromGraphs (props.projectId, genericGraphs.value)
+  function updateGenericModel (model: SpecificSynchronicModel) {
+      store.buildSynchronicModelFromGraphs (model, genericGraphs.value)
   }
 
   function closeEditedModel () {

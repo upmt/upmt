@@ -25,12 +25,13 @@
       </q-btn>
     </div>
 
-    <div class="detachedmodels-list"
+    <div class="detachedmodels-list flex column"
          v-if="project"
          >
       <q-btn
         v-for="model in project.genericmodels"
         :key="model.id"
+        align="left"
         flat
         dense
         no-caps
@@ -73,10 +74,11 @@
 
   function addDetachedModel () {
       // FIXME: should add new one not just get the default
-      const genericmodel = store.getGenericSynchronicModel(props.projectId)
-      if (genericmodel) {
-          editDetachedModel(genericmodel.proxy.id)
+      const detachedModel = store.createDetachedModel(props.projectId, "Detached model")
+      if (detachedModel) {
+          editDetachedModel(detachedModel.proxy.id)
       }
+      return detachedModel
   }
 
 </script>
