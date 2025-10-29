@@ -47,8 +47,9 @@
           <span
             class="genericsynchroniccategory-label">
             {{ genericcategory.name }} <q-btn
-                                       size="sm"
-                                       dense>
+                                         :title="currentInterviewMomentsLabel"
+                                         size="sm"
+                                         dense>
               <q-menu class="column">
                 <div  v-for="moment in currentMoments"
                       :key="moment.id">
@@ -72,6 +73,7 @@
               </q-menu>
               {{ currentMoments.length }}</q-btn> /
             <q-btn
+              :title="momentsLabel"
               size="sm"
               dense>
               <q-menu class="column">
@@ -179,6 +181,24 @@
           console.log(`Renaming ${props.genericcategory.name} to ${value}`)
           // FIXME:
           // store.updateGenericCategoryName(props.genericcategory.name, { name: value })
+      }
+  })
+
+  const currentInterviewMomentsLabel = computed(() => {
+      const count = currentMoments.value.length
+      if (count) {
+          return `Present in ${count} moments in the current interview`
+      } else {
+          return "Not present in the current interview"
+      }
+  })
+
+  const momentsLabel = computed(() => {
+      const count = moments.value.length
+      if (count) {
+          return `Present in ${count} moments`
+      } else {
+          return "Not present in any interview"
       }
   })
 
