@@ -2,6 +2,17 @@
   <q-layout view="hHr lpr fFr">
     <q-header elevated>
       <q-toolbar>
+        <router-link
+          to="/">
+          <q-btn
+            flat
+            class="text-white"
+            dense
+            round
+            icon="mdi-home-outline"
+            aria-label="Home"
+            />
+        </router-link>
         <q-btn
           flat
           dense
@@ -149,16 +160,11 @@
 
   const menuList = computed<MenuItem[]>(() => {
       let menu: MenuItem[] = [
-          {
-              label: 'Home',
-              icon: 'mdi-home',
-              link: '/home'
-          }
       ]
 
       if (currentProjectId.value) {
           menu.push({
-              label: "Specific models",
+              label: "Project editor",
               icon: 'mdi-semantic-web',
               link: `/project/${currentProjectId.value}`
           })
@@ -169,21 +175,6 @@
           })
       }
       menu = menu.concat([
-          {
-              label: 'Documentation',
-              icon: 'mdi-help-circle-outline',
-              href: 'https://github.com/upmt/upmt/wiki'
-          },
-          {
-              label: 'Discussions',
-              icon: 'mdi-chat-question-outline',
-              href: 'https://github.com/upmt/upmt/discussions'
-          },
-          {
-              label: 'Github',
-              icon: 'mdi-github',
-              href: 'https://github.com/upmt/upmt'
-          },
           {
               label: 'Debug',
               icon: 'mdi-eye',
