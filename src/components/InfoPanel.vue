@@ -6,8 +6,8 @@
       align="justify"
       narrow-indicator
       >
-      <q-tab name="notes" label="Notes" />
-      <q-tab name="errors" label="Errors" />
+      <q-tab name="notes" size="xs" icon="mdi-chat-outline" label="Notes" />
+      <q-tab name="errors" icon="mdi-alert-outline" label="Errors" />
     </q-tabs>
 
     <q-separator />
