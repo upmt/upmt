@@ -502,7 +502,9 @@
       opacity: 0;
   }
   .specificsynchroniccategory-name {
-      min-width: 6em;
+      display: inline-flex;
+      width: calc(100% - 18px);
+      text-overflow: ellipsis;
   }
   .specificsynchroniccategory-name:hover {
       border: 1px dashed #ccccccee;
