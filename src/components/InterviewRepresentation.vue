@@ -58,6 +58,7 @@
       v-model:zoom="zoomLevel"
       :minZoom="0.5"
       :maxZoom="3"
+      :wheelZoomStep="0.5"
       >
       <AnalysisRepresentation
         ref="analysis"

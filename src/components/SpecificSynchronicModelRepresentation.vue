@@ -37,6 +37,7 @@
       selector=".specificsynchronicmodel-categories"
       :minZoom="0.5"
       :maxZoom="3"
+      :wheelZoomStep="0.5"
       >
       <div class="specificsynchronicmodel-categories">
         <SpecificSynchronicCategoryRepresentation
