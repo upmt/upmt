@@ -51,7 +51,7 @@
           </DetachedModelsRepresentation>
           <q-separator />
           <GenericCategoriesRepresentation
-            title="Dynamic generic model"
+            title="Merged global generic model"
             :projectId="projectId"
             :genericGraphs="genericGraphs"
             :currentInterviewId="currentInterviewId" />
