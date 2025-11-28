@@ -83,23 +83,24 @@
           </JustificationRepresentation>
         </div>
 
-        <q-btn
-          flat
-          dense
-          v-if="moment"
-          size="xs"
-          title="Edit specific synchronic model"
-          class="absolute-bottom-right"
-          @click="editModel(moment.specificsynchronicmodel?.id || '')"
-          icon="edit"
-          no-caps>
-        </q-btn>
-
         <div class="moment-synchronic-specific-model flex row"
              :class="{ 'moment-synchronic-specific-model-edited': isEditedModel }">
           <SpecificSynchronicModelOverview
             :modelId="moment?.specificsynchronicmodel?.id ?? ''">
           </SpecificSynchronicModelOverview>
+
+          <q-btn
+            flat
+            dense
+            v-if="moment"
+            size="xs"
+            title="Edit specific synchronic model"
+            class="absolute-bottom-right"
+            @click="editModel(moment.specificsynchronicmodel?.id || '')"
+            icon="edit"
+            no-caps>
+          </q-btn>
+
         </div>
 
       </q-expansion-item>
@@ -315,6 +316,15 @@
   }
 
   function editModel (ssmId: string) {
+      if (!ssmId) {
+          // The SpecificSynchronicModel does not exist (old data) - create it
+          const specificsynchronicmodel = store.getRepo().SpecificSynchronicModel.make({
+              name: "Initial",
+              categories: []
+          })
+          store.updateMoment(props.momentId, { specificsynchronicmodel })
+          ssmId = specificsynchronicmodel.id
+      }
       istore.setEditedSpecificSynchronicModelId(ssmId)
   }
 
@@ -407,6 +417,9 @@
   }
   .new-moment-button:hover {
       opacity: .8;
+  }
+  .moment-synchronic-specific-model {
+      min-height: 1em;
   }
   .moment-synchronic-specific-model-edited {
       border: 3px dotted blue;
