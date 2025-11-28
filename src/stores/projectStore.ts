@@ -716,6 +716,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Descriptem.where('id', descriptemId).delete()
   }
 
+  function deleteInterview (interviewId: string) {
+    // FIXME: check cascaded deletion of elements
+    repo.Interview.where('id', interviewId).delete()
+  }
+
   function deleteModelFolder (folderId: string) {
     repo.ModelFolder.where('parentId', folderId).get().forEach(mf => deleteModelFolder(mf.id))
     //repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
@@ -1047,6 +1052,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     createProject,
     deleteAnnotation,
     deleteDescriptem,
+    deleteInterview,
     deleteModelFolder,
     deleteMoment,
     deleteSpecificSynchronicCategory,
