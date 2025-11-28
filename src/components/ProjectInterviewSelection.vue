@@ -26,6 +26,12 @@
                          :key="interview.id"
                          :title="interview.note"
                          :label="interview.label">
+              <template v-slot:default>
+                <ElementMenu
+                  :actions="menuActions"
+                  :parameter="interview">
+                </ElementMenu>
+              </template>
             </q-route-tab>
             <q-route-tab :to="{ query: { tab: newInterview } }"
                          :label="newInterviewLabel"
@@ -233,7 +239,10 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
+  import { useQuasar } from 'quasar'
+
   import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
+  import ElementMenu from './ElementMenu.vue'
   import ElementNameInput from './ElementNameInput.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
@@ -264,6 +273,8 @@
       const p = store.getProject(props.projectId)
       return p
   })
+
+  const $q = useQuasar()
 
   const newInterview = "New interview"
 
@@ -412,6 +423,31 @@
       istore.setEditedSpecificSynchronicModelId("")
       // istore.setCurrentProject(null)
   })
+
+
+  import type { NamedAction } from 'components/util.ts'
+
+  const menuActions: NamedAction[] = [
+        [ "Delete", (interview) => {
+           $q.dialog({
+             title: 'Confirm interview deletion',
+             html: true,
+             message: `Do you confirm the deletion of  <strong>${interview.label}</strong>?`,
+             cancel: true,
+             persistent: true
+           }).onOk(() => {
+             const name = interview.name
+             currentInterviewId.value = ""
+             store.deleteInterview(interview.id)
+             $q.notify({
+                  type: 'info',
+                  message: `Deleted interview ${name}`
+             })
+           })
+        }
+      ],
+      [ "Debug", (interview) => console.log("Debug", { interview }) ]
+  ]
 </script>
 
 <style scoped>
