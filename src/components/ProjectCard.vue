@@ -11,7 +11,7 @@
         :title="`Loaded from ${project.filename}`"
         class="text-h6">{{ project.name }}</div>
       <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
-      <div class="text-subtitle2" v-if="info?.date">Last saved {{ date.formatDate(info.date, 'DD/MM/YYYY HH:MM') }}</div>
+      <div class="text-subtitle2" v-if="last_saved_date">Last saved {{ last_saved_date }}</div>
     </q-card-section>
 
     <q-separator />
@@ -42,8 +42,9 @@
 
 <script setup lang="ts">
 
+  import moment from 'moment'
   import { computed } from 'vue'
-  import { useQuasar, date, exportFile } from 'quasar'
+  import { useQuasar, exportFile } from 'quasar'
   import { storeToRefs } from 'pinia'
 
   import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
@@ -83,6 +84,10 @@
   const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
 
   const info = computed(() => getProjectInfo(props.projectId))
+
+  const last_saved_date = computed(() => {
+      return info.value ? moment(info.value.date).fromNow() : null
+  })
 
   function doStoreProject (projectId: string) {
       const basename = storeProject(projectId)
