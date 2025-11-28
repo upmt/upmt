@@ -19,13 +19,12 @@
     <p>{{ project.note }}</p>
 
     <q-card-actions align="right">
-      <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Open</q-btn>
+      <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Edit</q-btn>
       <q-btn title="Save project in browser database"
              @click="doStoreProject(projectId)"
              flat>Save</q-btn>
-      <q-btn title="Export as CSV"
-             @click="doCsvExport(projectId)"
-             flat>Export</q-btn>
+      <ElementMenu
+        :actions="menuActions" />
     </q-card-actions>
 
     <q-expansion-item
@@ -52,6 +51,9 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject, getProjectInfo } from 'stores/storage'
+  import { timestampAdd } from 'stores/util'
+
+  import ElementMenu from './ElementMenu.vue'
   import StorageList from 'components/StorageList.vue'
 
   const $q = useQuasar()
@@ -90,14 +92,19 @@
       })
   }
 
+  function doUpmtExport (projectId: string) {
+     const data = store.hydrateProject(projectId)
+     exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
+  }
+
   function doCsvExport (projectId: string) {
       const categories = store.getSpecificSynchronicCategoriesByProject(projectId)
       console.log("CSV", { categories })
       const categoryDict = Object.fromEntries(categories.map(category => [ category.id, category ]))
 
       const categoryName = (category: SpecificSynchronicCategory | undefined): string => {
-          if (! category) {
-              return "??"
+      if (! category) {
+          return "??"
           } else if (! category.parentId) {
               // Root category - single label
               return category.name
@@ -121,7 +128,17 @@
       // Define CSV columns
       data.unshift([ "Category", "Descriptem", "Start", "End" ])
 
-      exportFile(`${projectId}.csv`, data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
+  exportFile(timestampAdd(`${projectId}.csv`),
+             data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
   }
 
+  import type { NamedAction } from 'components/util.ts'
+  const menuActions: NamedAction[] = [
+      [ "Download project file", () => doUpmtExport(props.projectId) ],
+      [ "Export as CSV", () => doCsvExport(props.projectId) ],
+      [ "Delete", () =>  $q.notify({
+          type: 'error',
+          message: `Not implemented yet`
+          }) ]
+  ]
 </script>
