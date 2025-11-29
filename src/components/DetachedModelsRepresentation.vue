@@ -28,17 +28,23 @@
     <div class="detachedmodels-list flex column"
          v-if="project"
          >
-      <q-btn
-        v-for="model in project.genericmodels"
-        :key="model.id"
-        align="left"
-        flat
-        dense
-        no-caps
-        @click="editDetachedModel(model.proxy.id)"
-        >
-        {{ model.proxy.name }}
-      </q-btn>
+      <div class="detached-model-item"
+           v-for="model in project.genericmodels"
+           :key="model.id">
+        <q-btn
+          class="detached-model-name"
+          align="left"
+          flat
+          dense
+          no-caps
+          @click="editDetachedModel(model.proxy.id)"
+          >
+          {{ model.proxy.name }}
+        </q-btn>
+        <ElementMenu
+          :actions="menuActions"
+          :parameter="model" />
+      </div>
     </div>
 
   </div>
@@ -51,6 +57,8 @@
   import type { GraphInfo } from 'stores/projectStore'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+
+  import ElementMenu from './ElementMenu.vue'
 
   const store = useProjectStore()
 
@@ -81,6 +89,11 @@
       return detachedModel
   }
 
+  import type { NamedAction } from 'components/util.ts'
+
+  const menuActions: NamedAction[] = [
+      [ "Delete", (model) => store.deleteDetachedModel(model.id) ],
+  ]
 </script>
 
 <style scoped>

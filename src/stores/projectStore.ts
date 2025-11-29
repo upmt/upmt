@@ -1004,6 +1004,13 @@ export const useProjectStore = defineStore('projectStore', () => {
     return detachedModel
   }
 
+  function deleteDetachedModel (modelId: string) {
+    // FIXME: check cascade deletion
+    repo.GenericSynchronicModel
+      .where('id', modelId)
+      .delete()
+  }
+
   // Build a GenericSynchronicModel from the given graphs.
   // It builds it from the graph.categories, which can be filtered if needed
   function buildSynchronicModelFromGraphs (specificModel: SpecificSynchronicModel,
@@ -1052,6 +1059,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     createProject,
     deleteAnnotation,
     deleteDescriptem,
+    deleteDetachedModel,
     deleteInterview,
     deleteModelFolder,
     deleteMoment,
