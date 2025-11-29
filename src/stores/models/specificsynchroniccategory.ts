@@ -43,8 +43,8 @@ export default class SpecificSynchronicCategory extends Justifiable {
   toJSON (shallow=false): any {
     const base = {
       name: this.name,
-      created: this._meta?.createdAt,
-      modified: this._meta?.updatedAt,
+      created: this.created,
+      modified: this.modified,
       creator: this.creator,
       contributor: this.contributor,
       color: this.color,

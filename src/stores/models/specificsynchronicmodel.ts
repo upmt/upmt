@@ -34,8 +34,8 @@ export default class SpecificSynchronicModel extends BaseModel {
       name: this.name,
       creator: this.creator,
       contributor: this.contributor,
-      created: this._meta?.createdAt,
-      modified: this._meta?.updatedAt,
+      created: this.created,
+      modified: this.modified,
       color: this.color,
       note: this.note
     }
