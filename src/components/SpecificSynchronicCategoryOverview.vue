@@ -87,6 +87,11 @@
       width: 50px !important;
       height: var(--overview-height) !important;
       align-self: center;
+      }
+   .specificsynchroniccategory-name {
+       text-overflow: ellipsis;
+       overflow: hidden;
+       white-space: nowrap;
   }
   .specificsynchroniccategory-relation,
   .specificsynchroniccategory-filler {

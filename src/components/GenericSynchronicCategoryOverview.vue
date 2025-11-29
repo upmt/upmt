@@ -100,7 +100,10 @@
       flex-direction: row;
   }
   .genericsynchroniccategory-name {
-      align-self: center;
+     align-self: center;
+     text-overflow: ellipsis;
+     overflow: hidden;
+     white-space: nowrap;
   }
   .genericsynchroniccategory-header {
       border: 1px solid black;

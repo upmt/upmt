@@ -505,6 +505,8 @@
       display: inline-flex;
       width: calc(100% - 18px);
       text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
   }
   .specificsynchroniccategory-name:hover {
       border: 1px dashed #ccccccee;
