@@ -68,7 +68,7 @@
 
             <div
               id="project-list"
-              class="row q-pa-md q-gutter-md justify-start content-start">
+              class="row fit q-pa-md q-gutter-md justify-start content-start">
 
               <ProjectCard
                 v-for="project in projects"
