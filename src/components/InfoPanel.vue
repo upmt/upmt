@@ -74,14 +74,24 @@
   const notes = computed(() => {
       // FIXME: get into pinia to optimize
       const categories = store.getSpecificSynchronicCategoriesByProject(props.projectId)
-      return categories.filter(category => category.note).map((category: any) => {
+      const category_notes = categories.filter(category => category.note).map((category: any) => {
           return {
               text: category.note,
               element: category,
               icon: 'mdi-source-branch',
-              tooltip: `Category ${category.note}`
+              tooltip: `Category ${category.name}`
           }
       })
+      const moments = store.getMomentsByProject(props.projectId)
+      const moment_notes = moments.filter(moment => moment.note).map((moment: any) => {
+          return {
+              text: moment.note,
+              element: moment,
+              icon: 'mdi-alpha-m-box-outline',
+              tooltip: `Moment ${moment.name}`
+          }
+      })
+      return [ ...category_notes, ...moment_notes ]
   })
 
   const categoriesWithError = computed(() => {
