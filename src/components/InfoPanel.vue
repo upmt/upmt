@@ -18,7 +18,8 @@
              :key="note.element.id">
           <q-btn
             size="xs"
-            :icon="note.icon">
+            :icon="note.icon"
+            @click="onNoteClick(note)">
             <q-tooltip>{{ note.tooltip }}</q-tooltip>
           </q-btn>
           {{ note.text }}
@@ -52,12 +53,14 @@
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
+  import { storeToRefs } from 'pinia'
   import { useProjectStore } from 'stores/projectStore'
-  // import { useInterfaceStore } from 'stores/interface'
+  import { useInterfaceStore } from 'stores/interface'
+  import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
 
-  // const istore = useInterfaceStore()
+  const istore = useInterfaceStore()
 
   import type { GraphInfo } from 'stores/projectStore'
 
@@ -68,6 +71,14 @@
       title?: string
   }>()
 
+  type Note = {
+      text: string,
+      element: BaseModel,
+      icon: string,
+      tooltip: string
+  }
+
+  const { highlightedMomentId } = storeToRefs(istore)
 
   const infoTab = ref('notes')
 
@@ -80,7 +91,7 @@
               element: category,
               icon: 'mdi-source-branch',
               tooltip: `Category ${category.name}`
-          }
+          } as Note
       })
       const moments = store.getMomentsByProject(props.projectId)
       const moment_notes = moments.filter(moment => moment.note).map((moment: any) => {
@@ -89,7 +100,7 @@
               element: moment,
               icon: 'mdi-alpha-m-box-outline',
               tooltip: `Moment ${moment.name}`
-          }
+          } as Note
       })
       return [ ...category_notes, ...moment_notes ]
   })
@@ -97,6 +108,13 @@
   const categoriesWithError = computed(() => {
       return Object.values(props.genericGraphs.byName).filter(category => category.errors && category.errors.length > 0)
   })
+
+  function onNoteClick (note: Note) {
+      if (note.icon == 'mdi-alpha-m-box-outline') {
+          highlightedMomentId.value = note.element.id
+      }
+  }
+
 </script>
 
 <style scoped>
