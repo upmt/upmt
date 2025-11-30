@@ -27,7 +27,9 @@
         <DragElement
           type="genericsynchroniccategory"
           :data="category.name">
-          <span class="specificsynchroniccategory-name">{{ category.name }}
+          <span :title="category.name"
+                class="specificsynchroniccategory-name">
+            {{ category.name }}
           </span>
         </DragElement>
       </div>
