@@ -43,7 +43,7 @@ export default class Interview extends BaseModel {
   }
 
 
-  toJSON (): any {
+  toJSON (shallow = false): any {
     return {
       id: this.id,
       name: this.name,
@@ -52,7 +52,7 @@ export default class Interview extends BaseModel {
       note: this.note,
       date: this.date,
       annotations: this.annotations.map(a => a.toJSON()),
-      analysis: this.analysis?.toJSON(),
+      analysis: this.analysis?.toJSON(shallow),
       text: this.text
     }
   }

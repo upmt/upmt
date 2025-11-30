@@ -19,7 +19,7 @@ export default class Analysis extends BaseModel {
 
   @Attr() interviewId!: string
 
-  toJSON (): any {
+  toJSON (shallow = false): any {
     return {
       id: this.id,
       creator: this.creator,
@@ -28,7 +28,7 @@ export default class Analysis extends BaseModel {
       modified: this.modified,
       note: this.note,
       name: this.name,
-      rootMoment: this.rootMoment?.toJSON()
+      rootMoment: this.rootMoment?.toJSON(shallow)
     }
   }
 }

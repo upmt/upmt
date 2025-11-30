@@ -34,7 +34,7 @@ export default class Project extends BaseModel {
   }
 
 
-  toJSON (): any {
+  toJSON (shallow = false): any {
     return {
       creator: this.creator,
       contributor: this.contributor,
@@ -43,9 +43,9 @@ export default class Project extends BaseModel {
       note: this.note,
       filename: this.filename,
       name: this.name,
-      modelfolder: this.modelfolder?.toJSON(),
-      interviews: this.interviews?.map(i => i.toJSON()),
-      genericmodels: this.genericmodels?.map(m => m.toJSON())
+      modelfolder: this.modelfolder?.toJSON(shallow),
+      interviews: this.interviews?.map(i => i.toJSON(shallow)),
+      genericmodels: this.genericmodels?.map(m => m.toJSON(shallow))
     }
   }
 }

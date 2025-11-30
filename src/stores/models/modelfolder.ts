@@ -23,7 +23,7 @@ export default class ModelFolder extends BaseModel {
   @Attr() parentId!: string
   @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
 
-  toJSON (): any {
+  toJSON (shallow = false): any {
     return {
       id: this.id,
       creator: this.creator,
@@ -34,7 +34,7 @@ export default class ModelFolder extends BaseModel {
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,
-      folders: this.folders?.map(f => f.toJSON())
+      folders: this.folders?.map(f => f.toJSON(shallow))
     }
   }
 }

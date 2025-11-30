@@ -44,7 +44,7 @@ export default class SpecificSynchronicModel extends BaseModel {
     } else {
       return {
         ...base,
-        categories: this.categories.map(c => c.toJSON())
+        categories: this.categories.map(c => c.toJSON(shallow))
       }
     }
   }

@@ -58,7 +58,7 @@ export default class SpecificSynchronicCategory extends Justifiable {
       return {
         ...base,
         justification: this.justification?.toJSON(),
-        children: this.children.map(c => c.toJSON())
+        children: this.children.map(c => c.toJSON(shallow))
       }
     }
   }
