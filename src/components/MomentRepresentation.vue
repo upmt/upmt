@@ -97,7 +97,7 @@
             title="Edit specific synchronic model"
             class="absolute-bottom-right"
             @click="editModel(moment.specificsynchronicmodel?.id || '')"
-            icon="edit"
+            icon="mdi-graph-outline"
             no-caps>
           </q-btn>
 
