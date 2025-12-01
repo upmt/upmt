@@ -14,6 +14,7 @@
   const emit = defineEmits([ 'annotation', 'descriptem', 'selection',
                              'color',
                              'moment',
+                             'project',
                              'specificsynchroniccategory', 'genericsynchroniccategory',
                            ])
 
@@ -73,7 +74,7 @@
           if (dragType.startsWith('upmt/')) {
               const payload = dt.getData(dragType)
               const itemType = dragType.replace('upmt/', '')
-              emit((itemType as any), payload, props.data)
+              emit((itemType as any), payload, props.data, event)
           }
       }
   }
