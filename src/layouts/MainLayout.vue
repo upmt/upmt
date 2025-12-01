@@ -37,6 +37,9 @@
             <span v-if="currentInterview">
               - {{ currentInterview.label }}
             </span>
+            <span v-if="isModified">
+              (modified)
+            </span>
           </span>
         </q-toolbar-title>
 
@@ -148,7 +151,7 @@
 
   const istore = useInterfaceStore()
 
-  const { currentInterview, currentProjectId, username } = storeToRefs(istore)
+  const { currentInterview, currentProjectId, username, isModified } = storeToRefs(istore)
 
   const currentProject = computed(() => {
       if (currentProjectId.value) {

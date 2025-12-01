@@ -20,7 +20,8 @@
   onMounted(() => {
       BaseModel.context = {
           getUsername: istore.getUsername,
-          getProjectId: istore.getProjectId
+          getProjectId: istore.getProjectId,
+          setModified: istore.setModified
       }
       // Load username
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
@@ -40,6 +41,7 @@
               })
           }
       }
+      istore.setModified(false);
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);

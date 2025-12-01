@@ -224,6 +224,7 @@
 
               try {
                   store.importProject(jsonData, sourceName)
+                  istore.setModified(false)
               } catch (error) {
                   console.log(`Import error: ${error}`, jsonData)
                   $q.notify({
@@ -276,6 +277,7 @@
                   } else {
                       // No existing project. We can load it with the current id
                       store.importProject(jsonData, sourceFile.name)
+                      istore.setModified(false)
                   }
               }
           }

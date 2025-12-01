@@ -11,6 +11,8 @@ export const useInterfaceStore = defineStore('interface', () => {
   const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
   const newSSCIndex = ref(1)
+  // Is the data modified?
+  const isModified = ref(false)
 
   const currentProjectId: Ref<string | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
@@ -25,6 +27,11 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   function newSSCId (prefix: string = SSCPrefix) {
+    // FIXME: could have either generic "context" info or
+    // descriptem/annotation/selection data to generate a unique name
+    // based on the characteristics of the contextual element
+    // (e.g. extracting name from textual content)
+    // See https://github.com/retextjs/retext-keywords
     return `${prefix}${newSSCIndexIncrement()}`
   }
 
@@ -90,6 +97,11 @@ export const useInterfaceStore = defineStore('interface', () => {
     return currentProjectId.value ?? ""
   }
 
+  function setModified (value: boolean): boolean {
+    isModified.value = value
+    return value
+  }
+
   return {
     // Constants
     SSCPrefix,
@@ -108,6 +120,8 @@ export const useInterfaceStore = defineStore('interface', () => {
     resetIndexes,
     setCurrentInterview,
     setCurrentProjectId,
+    isModified,
+    setModified,
     setEditedSpecificSynchronicModelId,
     setUsername,
     username

@@ -1,9 +1,11 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid } from 'pinia-orm/dist/decorators'
 
+// When changing API, also update App.vue
 type ContextProvider = {
   getUsername?: () => string,
-  getProjectId?: () => string
+  getProjectId?: () => string,
+  setModified?: (value: boolean) => boolean
 }
 
 export default class BaseModel extends Model {
@@ -22,6 +24,10 @@ export default class BaseModel extends Model {
   static override creating (model: BaseModel) {
     if (!this.context) {
       return true
+    }
+
+    if (this.context.setModified) {
+      this.context.setModified(true)
     }
 
     if (this.context?.getUsername) {
