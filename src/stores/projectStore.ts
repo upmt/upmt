@@ -374,10 +374,15 @@ export const useProjectStore = defineStore('projectStore', () => {
       // Configure pinia-orm context so that projectId is correctly set.
 
       // Clear project data before loading
-      clearProjectData(data.id)
+      if (clear) {
+        clearProjectData(data.id)
+      }
 
+      // The currentProjectId is used when loading to properly
+      // initialize the property for every element
       const istore = useInterfaceStore()
       istore.setCurrentProjectId(data.id)
+
       // Fix wrongly initialized childIndex for Moments
       // and remove text attribute from annotations
       for (const interview of data.interviews) {
@@ -620,8 +625,13 @@ export const useProjectStore = defineStore('projectStore', () => {
   function addSpecificSynchronicCategory (name: string,
     specificsynchronicmodelId: string,
     where = "", // before, after, or in:<ssc-id> for inside
-    textselection: TextSelection | null = null) {
+    textselection: TextSelection | null = null,
+    abstractionType: string = '') {
       console.log("addSSC", name, where, specificsynchronicmodelId, "with", textselection)
+      if (![ '', 'classification', 'aggregation'].includes(abstractionType)) {
+        console.log(`Wrong abstractionType in addSpecificSynchronicCategory: ${abstractionType}. Fix code.`)
+        return null
+      }
       let destination = null // if it remains null, then it will be added to the model itself.
       let childIndex = 0
 
@@ -639,6 +649,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         children: [],
         specificsynchronicmodelId,
         childIndex,
+        abstractionType,
         parentId: null as string | null,
         justification: {
           name: "",

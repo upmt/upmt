@@ -320,10 +320,13 @@
           where = `in:${props.categoryId}`
       }
       if (category.value) {
+          const abstractionType = genericElement.value?.abstractionType || ''
+
           store.addSpecificSynchronicCategory(categoryName,
                                               category.value.specificsynchronicmodelId,
                                               where,
-                                              null)
+                                              null,
+                                              abstractionType)
           showContent()
       }
   }

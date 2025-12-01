@@ -55,9 +55,11 @@
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
+  import { computed, ComputedRef } from 'vue'
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
+
+  import type { GraphInfo } from 'stores/projectStore'
 
   import VueZoomable from "vue-zoomable"
   import "vue-zoomable/dist/style.css"
@@ -78,7 +80,7 @@
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
 
-  const genericGraph = computed(() => model.value ? store.getGenericSynchronicGraphs(model.value.projectId) : {})
+  const genericGraph: ComputedRef<GraphInfo> = computed(() => model.value ? store.getGenericSynchronicGraphs(model.value.projectId) : {} as GraphInfo)
 
   function showContent () {
       // Make sure the Model/Category is displayed
@@ -92,10 +94,13 @@
 
   // Dropped selection to create a SpecificSynchronicModel. where is before or after or in:
   function droppedGenericSynchronicCategory (categoryName: string, where: string) {
+      const genericInfo = genericGraph.value ? genericGraph.value.byName[categoryName] : { abstractionType: '' }
+
       store.addSpecificSynchronicCategory(categoryName,
                                           props.modelId,
                                           where,
-                                          null)
+                                          null,
+                                          genericInfo?.abstractionType || '')
       showContent()
   }
 
@@ -103,10 +108,13 @@
       // Get the name from the id
       const category = store.getSpecificSynchronicCategory(categoryId)
       if (category) {
+          const genericInfo = genericGraph.value ? genericGraph.value.byName[category.name] : { abstractionType: '' }
+
           store.addSpecificSynchronicCategory(category.name,
                                               props.modelId,
                                               where,
-                                              null)
+                                              null,
+                                              genericInfo?.abstractionType || '')
           showContent()
       }
   }
