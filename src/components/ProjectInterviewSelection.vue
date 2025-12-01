@@ -229,6 +229,7 @@
         @click="infoPanelDisplay = !infoPanelDisplay"
         size="md"
         icon="mdi-chevron-double-left"
+        icon-right="mdi-chat-outline"
         >
       </q-btn>
     </q-page-sticky>
