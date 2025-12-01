@@ -410,8 +410,8 @@
 
   const relationActions: NamedAction[] = [
       [ "Set as generic abstraction", () => updateAbstractionType('') ],
-      [ "Set as aggregation abstraction", () => updateAbstractionType('aggregation') ],
-      [ "Set as specialization abstraction", () => updateAbstractionType('specialization') ],
+      [ "Set as aggregation abstraction ⋄", () => updateAbstractionType('aggregation') ],
+      [ "Set as specialization abstraction ⧍", () => updateAbstractionType('specialization') ],
       [ "Create a new child category", () => createChildCategory() ]
   ]
 </script>
