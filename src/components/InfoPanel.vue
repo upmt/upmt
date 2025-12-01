@@ -14,6 +14,12 @@
 
     <q-tab-panels v-model="infoTab">
       <q-tab-panel name="notes">
+        <q-input
+          filled
+          v-model="notes_filter"
+          label="Filter..."
+          stack-label
+          dense />
         <div v-for="note in notes"
              :key="note.element.id">
           <q-btn
@@ -82,6 +88,8 @@
 
   const infoTab = ref('notes')
 
+  const notes_filter = ref('')
+
   const notes = computed(() => {
       // FIXME: get into pinia to optimize
       const categories = store.getSpecificSynchronicCategoriesByProject(props.projectId)
@@ -102,7 +110,12 @@
               tooltip: `Moment ${moment.name}`
           } as Note
       })
-      return [ ...category_notes, ...moment_notes ]
+      const output = [ ...category_notes, ...moment_notes ]
+      if (notes_filter.value) {
+          return output.filter(note => note.text.includes(notes_filter.value))
+      } else {
+          return output
+      }
   })
 
   const categoriesWithError = computed(() => {
