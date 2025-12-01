@@ -366,7 +366,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   /**
    * Import a data structure (read from a JSON object)
    */
-  function importProject (data: any, url: string) {
+  function importProject (data: any, url: string, clear: boolean = true) {
     let out
     // FIXME: use data.version info
     if ('modelfolder' in data) {
@@ -407,14 +407,8 @@ export const useProjectStore = defineStore('projectStore', () => {
    */
   function loadProject (url: string) {
     return axios.get(url).then((response) => {
-      if (response.headers['content-type'] == 'text/html') {
-        console.log(`Invalid data (text/html) from ${url}`)
-        return null
-      } else {
-        // Invalid data but the dev server returns a 200
-        const p = importProject(response.data, url)
-        return p
-      }
+      const p = importProject(response.data, url)
+      return p
     })
   }
 
