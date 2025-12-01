@@ -1,43 +1,61 @@
 <template>
-  <q-card
-    v-if="project"
-    class="project-card">
-    <q-card-section :class="{
-                            'bg-positive': isCurrentProject,
-                            'bg-secondary': !isCurrentProject,
-                            'text-white': true
-                            }">
-      <div
-        :title="`Loaded from ${project.filename}`"
-        class="text-h6">{{ project.name }}</div>
-      <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
-      <div class="text-subtitle2" v-if="last_saved_date">Last saved {{ last_saved_date }}</div>
-    </q-card-section>
+  <DropZone data="add"
+            class="flex column"
+            types="upmt/project"
+            v-if="project"
+            @project="droppedProject">
+    <q-card
+      v-if="project"
+      class="project-card">
+      <q-card-section :class="{
+                              'bg-positive': isCurrentProject,
+                              'bg-secondary': !isCurrentProject,
+                              'text-white': true
+                              }">
+        <DragElement
+          type="project"
+          class="project-header flex column"
+          :data="projectId">
+          <div
+            :title="`Loaded from ${project.filename}`"
+            class="text-h6">
+            <q-icon
+              size="xs"
+              name="mdi-semantic-web" />
+            {{ project.name }}
+          </div>
+        </DragElement>
+        <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
+        <div class="text-subtitle2" v-if="last_saved_date">Last saved {{ last_saved_date }}</div>
+      </q-card-section>
 
-    <q-separator />
+      <q-separator />
 
-    <p>{{ project.note }}</p>
+      <p>{{ project.note }}</p>
 
-    <q-card-actions align="right">
-      <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Edit</q-btn>
-      <q-btn title="Save project in browser database"
-             @click="doStoreProject(projectId)"
-             flat>Save</q-btn>
-      <ElementMenu
-        :actions="menuActions" />
-    </q-card-actions>
+      <q-card-actions align="right">
+        <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Edit</q-btn>
+        <q-btn title="Save project in browser database"
+               @click="doStoreProject(projectId)"
+               v-if="isCurrentProject"
+               :disable="!isModified"
+               flat>Save</q-btn>
+        <ElementMenu
+          :actions="menuActions" />
+      </q-card-actions>
 
-    <q-expansion-item
-      class="pa-md-xs"
-      label="Versions"
-      header-class="text-caption"
-      dense
-      dense-toggle>
-      <StorageList
-        :dir="storageDir" />
-    </q-expansion-item>
+      <q-expansion-item
+        class="pa-md-xs"
+        label="Versions"
+        header-class="text-caption"
+        dense
+        dense-toggle>
+        <StorageList
+          :dir="storageDir" />
+      </q-expansion-item>
 
-  </q-card>
+    </q-card>
+  </DropZone>
 </template>
 
 <script setup lang="ts">
@@ -55,7 +73,9 @@
   import { timestampAdd } from 'stores/util'
 
   import ElementMenu from './ElementMenu.vue'
-  import StorageList from 'components/StorageList.vue'
+  import StorageList from './StorageList.vue'
+  import DropZone from './DropZone.vue'
+  import DragElement from './DragElement.vue'
 
   const $q = useQuasar()
 
@@ -67,7 +87,7 @@
       projectId: { type: String, default: "" }
   })
 
-  const { currentProjectId } = storeToRefs(istore)
+  const { currentProjectId, isModified } = storeToRefs(istore)
 
   const project = computed(() => {
       if (props.projectId) {
@@ -102,6 +122,24 @@
      exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
   }
 
+  function droppedProject (sourceProjectId: string) {
+      // Import another project into this project
+      const original = store.hydrateProject(sourceProjectId)
+
+      // Build an importable subset that will not overwrite the main project metadata
+
+      // Serialize/Unserialize it to make a deep clone - else the original items will be migrated from the original doc
+      const source = JSON.parse(JSON.stringify({
+          // Set the project id to the destination project id
+          id: props.projectId,
+          interviews: original.interviews,
+          modelfolder: original.modelfolder,
+          genericmodels: original.genericmodels
+      }))
+
+      store.importProject(source, "imported project", false)
+  }
+
   function doCsvExport (projectId: string) {
       const categories = store.getSpecificSynchronicCategoriesByProject(projectId)
       console.log("CSV", { categories })
@@ -133,8 +171,8 @@
       // Define CSV columns
       data.unshift([ "Category", "Descriptem", "Start", "End" ])
 
-  exportFile(timestampAdd(`${projectId}.csv`),
-             data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
+      exportFile(timestampAdd(`${projectId}.csv`),
+                 data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
   }
 
   import type { NamedAction } from 'components/util.ts'
