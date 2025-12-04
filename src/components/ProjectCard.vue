@@ -118,24 +118,27 @@
   }
 
   function doUpmtExport (projectId: string) {
-     const data = store.hydrateProject(projectId)
-     exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
+      const data = store.hydrateProject(projectId)
+      exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
   }
 
   function droppedProject (sourceProjectId: string) {
       // Import another project into this project
       const original = store.hydrateProject(sourceProjectId)
 
-      // Build an importable subset that will not overwrite the main project metadata
+      // Build an importable subset that will not overwrite the main
+      // project metadata
 
-      // Serialize/Unserialize it to make a deep clone - else the original items will be migrated from the original doc
-      const source = JSON.parse(JSON.stringify({
+      // We can directly reference the "original" items since they
+      // were deep cloned by the hydrateProject function, and are thus
+      // only data decoupled from the original instances.
+      const source = {
           // Set the project id to the destination project id
           id: props.projectId,
           interviews: original.interviews,
           modelfolder: original.modelfolder,
           genericmodels: original.genericmodels
-      }))
+      }
 
       store.importProject(source, "imported project", false)
   }
