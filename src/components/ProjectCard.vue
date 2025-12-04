@@ -155,7 +155,7 @@
       store.importProject(sourceSubset, "imported project", false)
       $q.notify({
           type: 'info',
-          message: `Imported ${source.interviews.length} interviews from ${source.id} into ${props.projectId}`
+          message: `Imported ${source.interviews.length} interviews from ${sourceProjectId} into ${props.projectId}`
       })
   }
 
