@@ -482,7 +482,19 @@ export const useProjectStore = defineStore('projectStore', () => {
         analysis.rootMoment = hydrateMoment(interview.analysis.rootMoment.id) as Moment
       }
     })
-    return project
+    // The project structure hold references to model objects, that
+    // define toJSON() methods.  When stringifying the structure, the
+    // methods would be called, which may corrupt the data structure
+    // (since we hydrated everything).
+
+    // Use the structuredClone method to copy the primitives values
+    // while skipping the functions (such as toJSON).
+    if (structuredClone) {
+      return structuredClone(project)
+    } else {
+      console.error("structuredClone is not available - cannot properly clone the object structure")
+      return project
+    }
   }
 
   function updateElement (element: BaseModel, values: object) {
