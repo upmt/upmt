@@ -111,7 +111,9 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
-  // Return the project and its children with their information
+  // Return the project and its children with their information.  It
+  // is not meant to get the full recursive structure (esp. the
+  // moments) - the hydrateProject() method is used afterwards.
   function getFullProject (id: string): Project | null {
     return repo.Project
       .with('modelfolder')
@@ -177,17 +179,19 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function getJustification (id: string) {
     return repo.Justification
-      .with('descriptems')
+      .with('descriptems', qd => qd.orderBy('startIndex'))
       .find(id)
   }
 
   function getMoment (id: string) {
     return repo.Moment
       .with('children', (q) => q.orderBy('childIndex'))
-      .with('justification', (query) => query.with('descriptems'))
+      .with('justification', (query) => query.with('descriptems',
+        qd => qd.orderBy('startIndex')
+      ))
       .with('specificsynchronicmodel', (query) => query.with('categories',
         (qc) => qc.with('justification',
-          (qj) => qj.with('descriptems')
+          (qj) => qj.with('descriptems', qd => qd.orderBy('startIndex'))
         )))
       .find(id)
   }
@@ -210,7 +214,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getMomentsByName (projectId: string, name: string) {
     return repo.Moment
       .with('parent')
-      .with('justification', (query) => query.with('descriptems'))
+      .with('justification', (query) => query.with('descriptems', qd => qd.orderBy('startIndex')))
       .where('projectId', projectId)
       .where('name', name)
       .get()
@@ -226,7 +230,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.SpecificSynchronicCategory
       .with('parent')
       .with('children')
-      .with('justification', (query) => query.with('descriptems'))
+      .with('justification', (query) => query.with('descriptems', qd => qd.orderBy('startIndex')))
       .find(id)
   }
 
@@ -234,7 +238,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.SpecificSynchronicCategory
       .with('children')
       .with('parent')
-      .with('justification', (query) => query.with('descriptems'))
+      .with('justification', (query) => query.with('descriptems', qd => qd.orderBy('startIndex')))
       .where('projectId', projectId)
       .where('name', name)
       .get()
@@ -245,7 +249,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       .with('children')
       .with('parent')
       .with('model', (query) => query.with('moment'))
-      .with('justification', (query) => query.with('descriptems', (q) => q.with('interview')))
+      .with('justification', (query) => query.with('descriptems',
+        qd => qd.orderBy('startIndex').with('interview')))
       .where('projectId', projectId)
       .get()
   }
@@ -297,7 +302,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       return repo.SpecificSynchronicModel
         .with('categories', (qc) => qc.with('children')
           .with('justification',
-            (qj) => qj.with('descriptems')))
+            (qj) => qj.with('descriptems', qd => qd.orderBy('startIndex'))))
         .with('moment')
         .find(id)
     } else {
