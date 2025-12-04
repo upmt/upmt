@@ -15,7 +15,7 @@
       <span>
         <q-icon
           size="xs"
-          title
+          :title="filesize(filename)"
           name="mdi-semantic-web" />
         {{ filename }}
       </span>
@@ -83,6 +83,11 @@
 
   function absolute (filename: string) {
       return `${props.dir}/${filename}`
+  }
+
+  function filesize (filename: string) {
+      const stats = fs.statSync(absolute(filename))
+      return stats.size
   }
 
   function doDownload (filename: string) {
