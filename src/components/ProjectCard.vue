@@ -70,7 +70,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject, getProjectInfo } from 'stores/storage'
-  import { timestampAdd } from 'stores/util'
+  import { timestampAdd, stripIds } from 'stores/util'
 
   import ElementMenu from './ElementMenu.vue'
   import StorageList from './StorageList.vue'
@@ -124,7 +124,7 @@
 
   function droppedProject (sourceProjectId: string) {
       // Import another project into this project
-      const original = store.hydrateProject(sourceProjectId)
+      const source = stripIds(store.hydrateProject(sourceProjectId))
 
       // Build an importable subset that will not overwrite the main
       // project metadata
@@ -132,18 +132,30 @@
       // We can directly reference the "original" items since they
       // were deep cloned by the hydrateProject function, and are thus
       // only data decoupled from the original instances.
-      const source = {
+
+      // Add a suffix to interview name if they conflict
+      for (const interview of source.interviews) {
+          const basename = interview.name
+          let name = basename
+          let suffix = 1
+          while (project.value?.interviews[name]) {
+              name = `${basename} - ${suffix}`
+              suffix += 1
+          }
+          interview.name = name
+      }
+      const sourceSubset = {
           // Set the project id to the destination project id
           id: props.projectId,
-          interviews: original.interviews,
-          modelfolder: original.modelfolder,
-          genericmodels: original.genericmodels
+          interviews: source.interviews,
+          modelfolder: source.modelfolder,
+          genericmodels: source.genericmodels
       }
 
-      store.importProject(source, "imported project", false)
+      store.importProject(sourceSubset, "imported project", false)
       $q.notify({
           type: 'info',
-          message: `Imported ${original.interviews.length} interviews from ${original.id} into ${props.projectId}`
+          message: `Imported ${source.interviews.length} interviews from ${source.id} into ${props.projectId}`
       })
   }
 
