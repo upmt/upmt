@@ -282,15 +282,27 @@
   const newInterviewLabel = computed(() => project.value && project.value.interviews.length ? "" : "Add a first interview")
 
   const {
-      editedSpecificSynchronicModelId
+      editedSpecificSynchronicModelId,
+      currentInterview,
+      highlightedMomentId
   } = storeToRefs(istore)
 
-  const currentInterviewId = ref(project?.value?.interviews[0]?.id ?? "")
   const splitterModel = ref(20)
   const splitterTranscript = ref(90)
   const splitterInterview = ref(500)
 
   const infoPanelDisplay = ref(false)
+
+  const currentInterviewId = computed({
+      get () {
+          return currentInterview?.value?.id ?? ""
+      },
+      set (value: string) {
+          istore.setCurrentInterview(store.getInterview(value))
+          istore.setEditedSpecificSynchronicModelId("")
+          highlightedMomentId.value = ""
+      }
+  })
 
   const editedSpecificSynchronicModel = computed(() => {
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
@@ -327,7 +339,7 @@
       if (project.value && project.value.interviews[0]) {
           currentInterviewId.value = project.value.interviews[0].id || ""
       } else {
-          currentInterviewId.value = newInterview
+          currentInterviewId.value = newInterview || ""
       }
       // We changed project - reset newSSC/newMoment indexes
       istore.resetIndexes (store.getSpecificSynchronicCategoryNamesByPrefix(props.projectId, istore.SSCPrefix),
@@ -335,11 +347,6 @@
   },
         // Trigger function at init time too
         { immediate: true })
-
-  watch(currentInterviewId, () => {
-      istore.setCurrentInterview(store.getInterview(currentInterviewId.value))
-      istore.setEditedSpecificSynchronicModelId("")
-  })
 
   function onInterviewCreate (info: InterviewInfo) {
       // Create the interview
