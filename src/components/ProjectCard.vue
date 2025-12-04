@@ -141,6 +141,10 @@
       }
 
       store.importProject(source, "imported project", false)
+      $q.notify({
+          type: 'info',
+          message: `Imported ${original.interviews.length} interviews from ${original.id} into ${props.projectId}`
+      })
   }
 
   function doCsvExport (projectId: string) {
