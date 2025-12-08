@@ -364,16 +364,17 @@ export const useProjectStore = defineStore('projectStore', () => {
       delete annotation.text
     })
   }
-  function fixChildIndex (moment: any) {
-    if (Array.isArray(moment.children)) {
-      moment.children
+  function fixChildIndexAndInterview (moment: Moment, interviewId: string) {
+    moment.interviewId = interviewId
+    if (Array.isArray(moment.children) && moment.children.length > 0) {
+        moment.children
         // Sort along possible existing childIndex info
-        .sort((m1: any, m2: any) => (m1.childIndex ?? 0) - (m2.childIndex ?? 0))
-        .forEach((child: any, index: number) => {
-          child.childIndex = index
-          // Recursively handle structure
-          fixChildIndex(child)
-        })
+            .sort((m1: any, m2: any) => (m1.childIndex ?? 0) - (m2.childIndex ?? 0))
+            .forEach((child: any, index: number) => {
+                child.childIndex = index
+                // Recursively handle structure
+                fixChildIndexAndInterview(child, interviewId)
+            })
     }
   }
 
@@ -400,7 +401,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       // Fix wrongly initialized childIndex for Moments
       // and remove text attribute from annotations
       for (const interview of data.interviews) {
-        fixChildIndex(interview.analysis.rootMoment)
+        fixChildIndexAndInterview(interview.analysis.rootMoment, interview.id)
         fixTextAttributeFromAnnotations(interview.annotations)
       }
 
