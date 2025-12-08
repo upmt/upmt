@@ -134,6 +134,7 @@
                           <div v-if="editedSpecificSynchronicModel.moment">
                             synchronic description of
                             <q-icon
+                              @click="istore.setHighlightedMomentId(editedSpecificSynchronicModel.moment.id)"
                               size="xs"
                               name="mdi-alpha-m-box-outline">
                             </q-icon>
