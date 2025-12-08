@@ -1,7 +1,8 @@
 <template>
   <div class="descriptem-modification"
        v-if="model">
-    <span class="text-italic">The <u>original descriptem</u> is underlined, the <b>new selection</b> is bold</span>
+    <p class="no-margin no-padding">To modify the descriptem, select the new text and validate.</p>
+    <p class="text-italic no-margin no-padding">The <u>original descriptem</u> is underlined, the <b>new selection</b> is bold.</p>
     <AnnotatedText
       class="textAnnotationComponent"
       :text="contextText"
