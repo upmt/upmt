@@ -334,6 +334,17 @@
   })
 
 
+  watch(highlightedMomentId, () => {
+      // Make sure the right interview is selected
+      // If no highlight, do not change anything
+      if (highlightedMomentId.value) {
+          const interview  = store.getInterviewByMoment(highlightedMomentId.value)
+          if (interview && interview.id != currentInterviewId.value) {
+              currentInterviewId.value = interview.id
+          }
+      }
+  })
+
   watch(() => props.projectId, () => {
       // There are interviews. Select the first one
       if (project.value && project.value.interviews[0]) {
