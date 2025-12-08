@@ -16,7 +16,7 @@
           v-if="! isCurrentChild(c.name)"
           v-model="newChildren"
           :val="c.name" />
-        {{c.name}}
+        <span class="child-category-name">{{c.name}}</span>
       </div>
     </div>
     <div class="relation">
@@ -171,6 +171,8 @@
       display: flex;
       margin: 2px;
       overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       font-size: 8px;
       width: var(--overview-width) !important;
       height: var(--overview-height) !important;
