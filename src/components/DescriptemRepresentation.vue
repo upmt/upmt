@@ -140,7 +140,6 @@
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
-      [ "Modify", () => alert("Not implemented yet") ],
       [ "Duplicate", () => store.duplicateDescriptem(props.descriptemId) ],
       [ "Delete", () => store.deleteDescriptem(props.descriptemId) ]
   ]
