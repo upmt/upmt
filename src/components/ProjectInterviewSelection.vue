@@ -114,7 +114,7 @@
                   </template>
 
                   <template v-slot:after>
-                    <div class="edited-model-container flex column"
+                    <div class="edited-model-container flex no-wrap column"
                          v-if="editedSpecificSynchronicModel">
                       <q-toolbar class="row toolbar">
                         <div>
