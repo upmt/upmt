@@ -102,12 +102,14 @@
           } as Note
       })
       const moments = store.getMomentsByProject(props.projectId)
+      const momentId2interview = Object.fromEntries(moments.map(moment => [ moment.id, store.getInterviewByMoment(moment.id)]))
       const moment_notes = moments.filter(moment => moment.note).map((moment: any) => {
+          const interview = momentId2interview[moment.id]
           return {
               text: moment.note,
               element: moment,
               icon: 'mdi-alpha-m-box-outline',
-              tooltip: `Moment ${moment.name}`
+              tooltip: `Moment ${moment.name} - Interview ${interview?.name}`
           } as Note
       })
       const output = [ ...category_notes, ...moment_notes ]
