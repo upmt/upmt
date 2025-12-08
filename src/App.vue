@@ -17,12 +17,21 @@
       name: 'App'
   })
 
+  function onBeforeUnload (event: Event) {
+      if (istore.isModified) {
+          event.preventDefault()
+          event.returnValue = true
+          return "There are unsaved changes. Really quit?" as string
+      }
+  }
+
   onMounted(() => {
       BaseModel.context = {
           getUsername: istore.getUsername,
           getProjectId: istore.getProjectId,
           setModified: istore.setModified
       }
+      window.addEventListener('beforeunload', onBeforeUnload)
       // Load username
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
       // Load stored projects
