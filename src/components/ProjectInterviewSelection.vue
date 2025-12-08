@@ -98,8 +98,8 @@
               <template v-slot:before>
                 <q-splitter
                   class="fit fullwindow-height flex"
-                  beforeClass="flex overflow-hidden"
-                  afterClass="flex overflow-hidden"
+                  beforeClass="flex"
+                  afterClass="flex"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
@@ -153,7 +153,7 @@
                               </ElementNameInput>
                             </strong>
                           </div>
-                          <span v-if="isEditedModelGeneric">
+                          <span v-if="isEmptyGenericModel">
                             <q-btn
                               @click="updateGenericModel(editedSpecificSynchronicModel)">
                               Generate from dynamic model
@@ -311,6 +311,10 @@
 
   const isEditedModelGeneric = computed(() => {
       return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.genericModelId
+  })
+
+  const isEmptyGenericModel = computed(() => {
+      return isEditedModelGeneric.value && editedSpecificSynchronicModel.value?.categories.length == 0
   })
 
   const editViewMode = ref('horizontal')
