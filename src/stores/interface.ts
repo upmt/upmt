@@ -74,7 +74,19 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   function setEditedSpecificSynchronicModelId (ssmId: string | null) {
-    editedSpecificSynchronicModelId.value = ssmId
+    if (editedSpecificSynchronicModelId.value == ssmId) {
+      editedSpecificSynchronicModelId.value = ""
+    } else {
+      editedSpecificSynchronicModelId.value = ssmId || ""
+    }
+  }
+
+  function setHighlightedMomentId (momentId: string | null) {
+    if (highlightedMomentId.value == momentId) {
+      highlightedMomentId.value = ""
+    } else {
+      highlightedMomentId.value = momentId || ""
+    }
   }
 
   // To make the store act as ContextProvider
@@ -123,6 +135,7 @@ export const useInterfaceStore = defineStore('interface', () => {
     isModified,
     setModified,
     setEditedSpecificSynchronicModelId,
+    setHighlightedMomentId,
     setUsername,
     username
     }

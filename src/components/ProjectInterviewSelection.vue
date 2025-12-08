@@ -300,7 +300,7 @@
       set (value: string) {
           istore.setCurrentInterview(store.getInterview(value))
           istore.setEditedSpecificSynchronicModelId("")
-          highlightedMomentId.value = ""
+          istore.setHighlightedMomentId("")
       }
   })
 

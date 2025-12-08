@@ -82,8 +82,7 @@
   const descriptem = computed(() => store.getDescriptem(props.descriptemId))
 
   const {
-      highlightedDescriptemId,
-      highlightedMomentId
+      highlightedDescriptemId
   } = storeToRefs(istore)
 
   function debug () {
@@ -134,7 +133,7 @@
   })
 
   function jumpToMoment (identifier: string) {
-      highlightedMomentId.value = identifier
+      istore.setHighlightedMomentId(identifier)
   }
 
   import type { NamedAction } from 'components/util.ts'

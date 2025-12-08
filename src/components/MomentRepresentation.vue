@@ -173,8 +173,8 @@
   })
 
   const {
-      highlightedMomentId,
-      editedSpecificSynchronicModelId
+      editedSpecificSynchronicModelId,
+      highlightedMomentId
   } = storeToRefs(istore)
 
   const moment = computed(() => store.getMoment(props.momentId))
@@ -188,9 +188,7 @@
   }
 
   function unhighlight () {
-      if (highlightedMomentId.value) {
-          highlightedMomentId.value = ""
-      }
+      istore.setHighlightedMomentId("")
   }
 
   function showContent () {

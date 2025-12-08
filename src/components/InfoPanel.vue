@@ -59,7 +59,6 @@
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
-  import { storeToRefs } from 'pinia'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import BaseModel from 'stores/models/basemodel'
@@ -83,8 +82,6 @@
       icon: string,
       tooltip: string
   }
-
-  const { highlightedMomentId } = storeToRefs(istore)
 
   const infoTab = ref('notes')
 
@@ -126,7 +123,9 @@
 
   function onNoteClick (note: Note) {
       if (note.icon == 'mdi-alpha-m-box-outline') {
-          highlightedMomentId.value = note.element.id
+          istore.setHighlightedMomentId(note.element.id)
+      } else if (note.icon == 'mdi-source-branch') {
+          istore.setEditedSpecificSynchronicModelId(note.element.id)
       }
   }
 

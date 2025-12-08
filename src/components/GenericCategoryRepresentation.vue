@@ -124,7 +124,6 @@
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
-  import { storeToRefs } from 'pinia'
   import { useRouter } from 'vue-router'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
@@ -137,8 +136,6 @@
   import type { GenericCategory, GraphInfo } from 'stores/projectStore'
 
   const istore = useInterfaceStore()
-
-  const { highlightedMomentId } = storeToRefs(istore)
 
   const store = useProjectStore()
 
@@ -203,11 +200,7 @@
   })
 
   function highlightMoment (momentId: string) {
-      if (highlightedMomentId.value === momentId) {
-          highlightedMomentId.value = ""
-      } else {
-          highlightedMomentId.value = momentId
-      }
+      istore.setHighlightedMomentId(momentId)
   }
 
   function editMomentSpecificSynchronicModel (modelId: string) {
