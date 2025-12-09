@@ -339,6 +339,18 @@
   })
 
 
+  watch(editedSpecificSynchronicModel, () => {
+      // Make sure a tab is active
+      if (editedSpecificSynchronicModel.value?.moment) {
+          currentInterviewId.value = editedSpecificSynchronicModel.value.moment.interviewId
+      } else {
+          // Generic model - if there is no current interview, activate the first one
+          if (!currentInterviewId.value) {
+              currentInterviewId.value = project.value?.interviews[0]?.id ?? ""
+          }
+      }
+  })
+
   watch(highlightedMomentId, () => {
       // Make sure the right interview is selected
       // If no highlight, do not change anything
