@@ -70,7 +70,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject, getProjectInfo } from 'stores/storage'
-  import { timestampAdd, stripIds } from 'stores/util'
+  import { timestampAdd } from 'stores/util'
 
   import ElementMenu from './ElementMenu.vue'
   import StorageList from './StorageList.vue'
@@ -122,16 +122,21 @@
       exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
   }
 
+  function doStrippedExport (projectId: string) {
+      const data = store.hydrateAndStripProject(projectId)
+      exportFile(timestampAdd(`${projectId}-stripped.json`), JSON.stringify(data, null, 2))
+  }
+
   function droppedProject (sourceProjectId: string) {
       // Import another project into this project
-      const source = stripIds(store.hydrateProject(sourceProjectId))
+      const source = store.hydrateAndStripProject(sourceProjectId)
 
       // Build an importable subset that will not overwrite the main
       // project metadata
 
       // We can directly reference the "original" items since they
-      // were deep cloned by the hydrateProject function, and are thus
-      // only data decoupled from the original instances.
+      // were deep cloned by the hydrateProject function, and we removed all ids.
+      // Clone data is thus  decoupled from the original instances.
 
       // Add a suffix to interview name if they conflict
       for (const interview of source.interviews) {
@@ -149,7 +154,7 @@
           id: props.projectId,
           interviews: source.interviews,
           modelfolder: source.modelfolder,
-          genericmodels: source.genericmodels
+          genericmodels: source.genericmodels ?? []
       }
 
       store.importProject(sourceSubset, "imported project", false)
@@ -197,6 +202,7 @@
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
       [ "Download project file", () => doUpmtExport(props.projectId) ],
+      [ "Download stripped file", () => doStrippedExport(props.projectId) ],
       [ "Export as CSV", () => doCsvExport(props.projectId) ],
       [ "Delete", () =>  $q.notify({
           type: 'error',

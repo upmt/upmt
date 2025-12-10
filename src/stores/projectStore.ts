@@ -13,7 +13,7 @@ import Moment from './models/moment'
 import Project from './models/project'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
-import { stringToId, groupBy } from './util'
+import { stringToId, groupBy, stripFields } from './util'
 import { isStoredProject, getStoredProject } from './storage'
 import { useInterfaceStore } from 'stores/interface'
 
@@ -359,13 +359,33 @@ export const useProjectStore = defineStore('projectStore', () => {
   function clearProjectData (projectId: string) {
     Object.values(repo).forEach(r => (r as any).where('projectId', projectId).delete())
   }
-  function fixTextAttributeFromAnnotations(annotations: any[]) {
+  function clearTextAttributeFromAnnotations(annotations: any[]) {
     annotations.forEach(annotation => {
       delete annotation.text
     })
   }
+
+  // Recursively reset descriptem's interviewId for SpecificSynchronicCategory elements
+  function fixCategoryDescriptems (category: SpecificSynchronicCategory, interviewId: string) {
+    (category.justification?.descriptems || []).forEach(descriptem => descriptem.interviewId = interviewId);
+    (category.children || []).forEach(child => fixCategoryDescriptems(child, interviewId));
+    // For some reason the serialization contains a "parent" item with
+    // a copy of the parent element, which messes things up on
+    // reload. Remove the parent element (since we are building the
+    // category from the parent, pinia-orm will rebuild this relation
+    // anyway)
+    category.parent = null
+  }
+
+  // Make sure all childIndexes are appropriately set
+  // And set the interviewId property for each element that uses it (moment, specificsynchroniccategory)
   function fixChildIndexAndInterview (moment: Moment, interviewId: string) {
-    moment.interviewId = interviewId
+    moment.interviewId = interviewId;
+
+    // For every moment: we want to also fix interviewId reference for all descriptems,
+    // and also for descriptems of specificsynchroniccategory elements (which we need to go through recursively)
+    (moment.justification?.descriptems || [] as Descriptem[]).forEach(descriptem => descriptem.interviewId = interviewId);
+    (moment.specificsynchronicmodel?.categories || []).forEach(category => fixCategoryDescriptems(category, interviewId));
     if (Array.isArray(moment.children) && moment.children.length > 0) {
         moment.children
         // Sort along possible existing childIndex info
@@ -393,19 +413,37 @@ export const useProjectStore = defineStore('projectStore', () => {
         clearProjectData(data.id)
       }
 
-      // The currentProjectId is used when loading to properly
-      // initialize the property for every element
-      const istore = useInterfaceStore()
-      istore.setCurrentProjectId(data.id)
+      // Remove the ids so that if we load twice the same dataset, it does not mess with existing elements.
+      // WARNING: since we strip id from interviews, then descriptems's interviewId  become invalid and we need to restore it
+      const projectId = data.id
+      // data = stripIds(data)
+      // Restore projectId
+      data.id = projectId
 
-      // Fix wrongly initialized childIndex for Moments
-      // and remove text attribute from annotations
+      // - fix wrongly initialized childIndex for Moments
+      // - remove text attribute from annotations
+      // - reset interviewId
       for (const interview of data.interviews) {
+        // Generate a unique interview id - so that we are sure we
+        // will not conflict with possibly existing data
+        interview.id = crypto.randomUUID()
         fixChildIndexAndInterview(interview.analysis.rootMoment, interview.id)
-        fixTextAttributeFromAnnotations(interview.annotations)
+        clearTextAttributeFromAnnotations(interview.annotations)
+      }
+      if (data.genericmodels === undefined) {
+        data.genericmodels = []
+      }
+      for (const model of data.genericmodels) {
+        // Fix the genericmodel proxies
+        (model.proxy?.categories || []).forEach((category: SpecificSynchronicCategory) => fixCategoryDescriptems(category, ""));
       }
 
       console.log("Loaded", data, " from ", url)
+      // The currentProjectId is used when loading to properly
+      // initialize the property when instanciating model elements
+      const istore = useInterfaceStore()
+      istore.setCurrentProjectId(data.id)
+
       out = repo.Project.save(data as Project)
       // We must remap models
     } else {
