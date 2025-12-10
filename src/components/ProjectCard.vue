@@ -143,11 +143,12 @@
       // Clone data is thus  decoupled from the original instances.
 
       // Add a suffix to interview name if they conflict
+      const interviewNames = project.value?.interviews.map(interview => interview.name) ?? []
       for (const interview of source.interviews) {
           const basename = interview.name
           let name = basename
           let suffix = 1
-          while (project.value?.interviews[name]) {
+          while (interviewNames.includes(name)) {
               name = `${basename} - ${suffix}`
               suffix += 1
           }
