@@ -38,7 +38,10 @@
           <ul v-if="isGeneric"
               class="justification-descriptems">
             <li v-for="descriptem in categoryDescriptems" :key="descriptem.id">
-              <DescriptemRepresentation :descriptemId="descriptem.id">
+              <DescriptemRepresentation
+                :descriptemId="descriptem.id"
+                :withMenu="false"
+                :isReadonly="true">
               </DescriptemRepresentation>
             </li>
           </ul>

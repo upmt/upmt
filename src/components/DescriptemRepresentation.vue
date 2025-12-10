@@ -17,6 +17,7 @@
       <span>
         <span class="descriptem-label">{{ descriptem.text }}</span>
         <q-popup-edit title="Select the appropriate text fragment"
+                      v-if="!isReadonly"
                       buttons
                       v-model="descriptemJson"
                       v-slot="scope">
@@ -76,7 +77,8 @@
   const props = defineProps({
       descriptemId: { type: String, default: "" },
       withContext: { type: Boolean, default: false },
-      withMenu: { type: Boolean, default: true }
+      withMenu: { type: Boolean, default: true },
+      isReadonly: { type: Boolean, default: false }
   })
 
   const descriptem = computed(() => store.getDescriptem(props.descriptemId))
