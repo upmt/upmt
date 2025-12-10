@@ -168,8 +168,58 @@ const stripFields = <T>(obj: T, fields: string[]): T => {
   return newObj as T
 }
 
+// Define a generic type for the objects we are caching.
+// This assumes the objects found will generally have an 'id' property.
+interface Identifiable {
+  id?: string | number
+  [key: string]: any
+}
+
+/**
+ * Recursively traverses a data structure and maps IDs to object instances.
+ *
+ * @param node - The current object or array to inspect.
+ * @param cache - The dictionary to populate (id -> object).
+ * @param visited - (Internal) Tracks visited objects to prevent circular loops.
+ * @returns The populated cache.
+ */
+function buildIdCache<T = any>(
+  node: any,
+  cache: Record<string | number, T> = {},
+  visited: Set<any> = new Set()
+): Record<string | number, T> {
+  // 1. Base Case: If node is not an object or is null, stop.
+  if (!node || typeof node !== 'object') {
+    return cache
+  }
+
+  // 2. Cycle Detection: If we've seen this object before, skip it.
+  if (visited.has(node)) {
+    return cache
+  }
+  visited.add(node)
+
+  // 3. Populate Cache: If the object has an 'id', add it to the map.
+  // We explicitly check if the property exists to be safe.
+  if ('id' in node) {
+    const id = (node as Identifiable).id
+    if (id !== undefined && id !== null) {
+        cache[id] = node as T
+    }
+  }
+
+  // 4. Recurse: Iterate over all keys (works for Arrays and Objects)
+  // Object.keys is safer than for...in for iteration in TS to avoid prototype pollution issues
+  Object.keys(node).forEach((key) => {
+    buildIdCache(node[key], cache, visited)
+  })
+
+  return cache
+}
+
 export {
 basename,
+buildIdCache,
 ellipsize,
 groupBy,
 stringToId,
