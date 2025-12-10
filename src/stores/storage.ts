@@ -31,8 +31,8 @@ function getProjectFiles(id: string)  {
   let versions: string[] = []
   try {
     versions = fs.readdirSync(projectPath).sort().reverse()
-  } catch (error) {
-    console.log("No such stored project", id, error)
+  } catch (_error) {
+    console.log("No such stored project", id)
   }
   return versions.map(basename => {
     return {
