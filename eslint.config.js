@@ -96,7 +96,19 @@ export default [
 
        // The core 'no-unused-vars' rules (in the eslint:recommended ruleset)
        // does not work with type definitions
-       'no-unused-vars': 'off',
+        'no-unused-vars': 'off',
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "caughtErrors": "all",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_",
+                "ignoreRestSiblings": true
+            }
+        ],
        'array-bracket-spacing': 'off',
        "key-spacing": "off",
        "@typescript-eslint/restrict-template-expressions": [ "off" ],

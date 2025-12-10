@@ -243,7 +243,7 @@
           },
           */
       // Do not activate mouseover/leave for the moment, it has a small performance cost
-      mouseover: (event: Event, annotations: BaseAnnotation[]) => {
+      mouseover: (_event: Event, annotations: BaseAnnotation[]) => {
           activeDescriptems.value = (annotations.filter(a => a.class === 'descriptem').map(a => store.getDescriptem(a.id))) as Descriptem[]
           activeAnnotations.value = (annotations.filter(a => a.class !== 'descriptem').map(a => store.getAnnotation(a.id))) as Annotation[]
       }

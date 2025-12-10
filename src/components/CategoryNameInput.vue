@@ -157,7 +157,7 @@
       name.value = value
   }
 
-  function filterNames (val: string, update: (cb: () => void) => void): void {
+  function filterNames (_val: string, update: (cb: () => void) => void): void {
       // console.log("filterNames", val, context.value?.completions)
       update(() => {
           completions.value = context.value?.completions ?? []
