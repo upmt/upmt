@@ -16,14 +16,18 @@
           type="project"
           class="project-header flex column"
           :data="projectId">
-          <div
-            :title="`Loaded from ${project.filename}`"
-            class="text-h6">
-            <q-icon
-              size="xs"
-              name="mdi-semantic-web" />
-            {{ project.name }}
-          </div>
+          <router-link
+            style="text-decoration: none; color: inherit;"
+            :to="{ name: 'project', params: { id: projectId } }">
+            <div
+              :title="`Loaded from ${project.filename}`"
+              class="text-h6">
+              <q-icon
+                size="xs"
+                name="mdi-semantic-web" />
+              {{ project.name }}
+            </div>
+          </router-link>
         </DragElement>
         <div class="text-subtitle2">{{ project.interviews.length }} interviews</div>
         <div class="text-subtitle2" v-if="last_saved_date">Last saved {{ last_saved_date }}</div>
