@@ -299,9 +299,12 @@
           return currentInterview?.value?.id ?? ""
       },
       set (value: string) {
-          istore.setCurrentInterview(store.getInterview(value))
-          istore.setEditedSpecificSynchronicModelId("")
-          istore.setHighlightedMomentId("")
+          const current = currentInterview?.value?.id ?? ""
+          if (value !== current) {
+              istore.setCurrentInterview(store.getInterview(value))
+              istore.setEditedSpecificSynchronicModelId("")
+              istore.setHighlightedMomentId("")
+          }
       }
   })
 
