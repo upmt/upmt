@@ -306,7 +306,7 @@
 
   const currentInterviewId = computed({
       get () {
-          return _currentInterviewId.value
+          return _currentInterviewId.value || ""
       },
       set (value: string) {
           const current = _currentInterviewId.value
