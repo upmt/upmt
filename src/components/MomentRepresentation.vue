@@ -55,7 +55,7 @@
               <q-icon
                 size="xs"
                 @click="unhighlight"
-                name="mdi-alpha-m-box-outline">
+                name="mdi-alpha-d-box-outline">
               </q-icon>
               <span class="moment-name">{{ momentName }}
                 <q-popup-edit v-model="momentName" auto-save v-slot="scope">

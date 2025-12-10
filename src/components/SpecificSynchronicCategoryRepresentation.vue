@@ -112,7 +112,7 @@
             @click.meta="debug">
             <q-icon
               size="xs"
-              name="mdi-source-branch">
+              :name="categoryIcon">
             </q-icon>
             <span class="specificsynchroniccategory-name">{{ categoryName }}
               <q-popup-edit v-model="categoryName"
@@ -233,6 +233,8 @@
           store.updateSpecificSynchronicCategory(props.categoryId, { color })
       }
   })
+
+  const categoryIcon = computed(() => props.isGeneric ?  "mdi-alpha-s-box" : "mdi-alpha-s-box-outline")
 
   const criterion = computed({
       get: () => category.value?.criterion ?? '',

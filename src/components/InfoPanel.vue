@@ -39,7 +39,7 @@
             <span class="category-title">
               <q-icon
                                            size="xs"
-                                           name="mdi-source-branch">
+                                           name="mdi-alpha-s-box-outline">
               </q-icon>
               {{ category.name }}
             </span>
@@ -94,7 +94,7 @@
           return {
               text: category.note,
               element: category,
-              icon: 'mdi-source-branch',
+              icon: 'mdi-alpha-s-box-outline',
               tooltip: `Category ${category.name}`
           } as Note
       })
@@ -105,7 +105,7 @@
           return {
               text: moment.note,
               element: moment,
-              icon: 'mdi-alpha-m-box-outline',
+              icon: 'mdi-alpha-d-box-outline',
               tooltip: `Moment ${moment.name} - Interview ${interview?.name}`
           } as Note
       })
@@ -122,9 +122,9 @@
   })
 
   function onNoteClick (note: Note) {
-      if (note.icon == 'mdi-alpha-m-box-outline') {
+      if (note.icon == 'mdi-alpha-d-box-outline') {
           istore.setHighlightedMomentId(note.element.id)
-      } else if (note.icon == 'mdi-source-branch') {
+      } else if (note.icon == 'mdi-alpha-s-box-outline') {
           istore.setEditedSpecificSynchronicModelId(note.element.id)
       }
   }

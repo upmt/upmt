@@ -28,7 +28,7 @@
             ref="handle"
             class="genericsynchroniccategory-handle"
             size="xs"
-            name="mdi-source-branch-check" />
+            name="mdi-alpha-s-box-outline-check" />
           <q-icon
             v-if="isSpecialization"
             size="xs"
@@ -60,7 +60,7 @@
                     @click="highlightMoment(moment.id)"
                     size="sm"
                     :style="{ backgroundColor: moment.color }"
-                    icon="mdi-alpha-m-box-outline">
+                    icon="mdi-alpha-d-box-outline">
                   </q-btn>
                   <q-btn
                     icon="edit"

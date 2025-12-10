@@ -33,7 +33,7 @@
               v-if="context.specificsynchroniccategory">
           <q-icon
             size="xs"
-            name="mdi-source-branch"></q-icon>
+            name="mdi-alpha-s-box-outline"></q-icon>
           <div class="property-name">{{ context.specificsynchroniccategory.name }}</div>
         </span>
         <span
@@ -42,7 +42,7 @@
           v-if="context.moment">
           <q-icon
             size="xs"
-            name="mdi-alpha-m-box-outline"></q-icon>
+            name="mdi-alpha-d-box-outline"></q-icon>
           <span class="moment-name">{{ context.moment.name }}</span>
         </span>
       </div>

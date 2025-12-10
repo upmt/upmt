@@ -144,7 +144,7 @@
                             <q-icon
                               @click="istore.setHighlightedMomentId(editedSpecificSynchronicModel.moment.id)"
                               size="xs"
-                              name="mdi-alpha-m-box-outline">
+                              name="mdi-alpha-d-box-outline">
                             </q-icon>
                             <strong>{{ editedSpecificSynchronicModel.moment.name }}
                               <q-popup-edit v-model="editedSpecificSynchronicModelName" auto-save v-slot="scope">
