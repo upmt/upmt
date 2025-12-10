@@ -107,11 +107,6 @@
 <script setup lang="ts">
   import { useQuasar, QFile } from 'quasar'
   import { computed, ref, Ref } from 'vue'
-  import Interview from 'stores/models/interview'
-
-  const props = defineProps({
-      interview: { type: Interview, required: false }
-  })
 
   export type InterviewInfo = {
       name: string
@@ -120,6 +115,10 @@
       date: string
       text: string
   }
+
+  const props = defineProps<{
+      interview?: InterviewInfo
+  }>()
 
   const emit = defineEmits([ 'validate', 'cancel' ])
 

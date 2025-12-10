@@ -33,11 +33,10 @@
                 </ElementMenu>
               </template>
             </q-route-tab>
-            <q-route-tab :to="{ query: { tab: newInterview } }"
+            <q-route-tab :to="{ query: { tab: newInterviewId } }"
                          :label="newInterviewLabel"
                          class="new-interview"
-                         :name="newInterview"
-                         :key="newInterview"
+                         :name="newInterviewId"
                          icon="add">
             </q-route-tab>
           </q-tabs>
@@ -85,7 +84,16 @@
           vertical
           transition-prev="jump-up"
           transition-next="jump-up"
-        >
+          >
+
+          <q-tab-panel :name="newInterviewId">
+            <InterviewMetadataForm
+              :interview="newInterviewTemplate"
+              @validate="onInterviewCreate"
+              @cancel="onInterviewCancel">
+            </InterviewMetadataForm>
+          </q-tab-panel>
+
           <q-tab-panel v-for="interview in project.interviews"
                        :name="interview.id"
                        :key="interview.id">
@@ -190,13 +198,6 @@
 
           </q-tab-panel>
 
-          <q-tab-panel :name="newInterview"
-                       :key="newInterview">
-            <InterviewMetadataForm
-              @validate="onInterviewCreate"
-              @cancel="onInterviewCancel">
-            </InterviewMetadataForm>
-          </q-tab-panel>
         </q-tab-panels>
       </template>
 
@@ -278,13 +279,20 @@
 
   const $q = useQuasar()
 
-  const newInterview = "New interview"
+  const newInterviewId = "New_interview"
 
   const newInterviewLabel = computed(() => project.value && project.value.interviews.length ? "" : "Add a first interview")
 
+  const newInterviewTemplate = {
+      name: "",
+      participantName: "",
+      note: "",
+      date: "",
+      text: ""
+  }
+
   const {
       editedSpecificSynchronicModelId,
-      currentInterview,
       highlightedMomentId
   } = storeToRefs(istore)
 
@@ -294,13 +302,16 @@
 
   const infoPanelDisplay = ref(false)
 
+  const _currentInterviewId = ref("")
+
   const currentInterviewId = computed({
       get () {
-          return currentInterview?.value?.id ?? ""
+          return _currentInterviewId.value
       },
       set (value: string) {
-          const current = currentInterview?.value?.id ?? ""
-          if (value !== current) {
+          const current = _currentInterviewId.value
+          _currentInterviewId.value = value
+          if (value !== current && value !== newInterviewId) {
               istore.setCurrentInterview(store.getInterview(value))
               // Do not reset editedSpecificSynchronicModelId - it may be a generic model that we want to keep
               // istore.setEditedSpecificSynchronicModelId("")
@@ -371,7 +382,7 @@
       if (project.value && project.value.interviews[0]) {
           currentInterviewId.value = project.value.interviews[0].id || ""
       } else {
-          currentInterviewId.value = newInterview || ""
+          currentInterviewId.value = newInterviewId || ""
       }
       // We changed project - reset newSSC/newMoment indexes
       istore.resetIndexes (store.getSpecificSynchronicCategoryNamesByPrefix(props.projectId, istore.SSCPrefix),
