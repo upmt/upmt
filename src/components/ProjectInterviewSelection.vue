@@ -302,7 +302,8 @@
           const current = currentInterview?.value?.id ?? ""
           if (value !== current) {
               istore.setCurrentInterview(store.getInterview(value))
-              istore.setEditedSpecificSynchronicModelId("")
+              // Do not reset editedSpecificSynchronicModelId - it may be a generic model that we want to keep
+              // istore.setEditedSpecificSynchronicModelId("")
               istore.setHighlightedMomentId("")
           }
       }
