@@ -158,7 +158,7 @@
           id: props.projectId,
           interviews: source.interviews,
           modelfolder: source.modelfolder,
-          genericmodels: source.genericmodels ?? []
+          detachedmodels: source.detachedmodels ?? []
       }
 
       store.importProject(sourceSubset, "imported project", false)

@@ -29,7 +29,7 @@
          v-if="project"
          >
       <div class="detached-model-item"
-           v-for="model in project.genericmodels"
+           v-for="model in project.detachedmodels"
            :key="model.id">
         <q-btn
           class="detached-model-name"

@@ -153,9 +153,9 @@
                               </ElementNameInput>
                             </strong>
                           </div>
-                          <span v-if="isEmptyGenericModel">
+                          <span v-if="isDetachedModelEmpty">
                             <q-btn
-                              @click="updateGenericModel(editedSpecificSynchronicModel)">
+                              @click="updateDetachedModel(editedSpecificSynchronicModel)">
                               Generate from dynamic model
                             </q-btn>
                           </span>
@@ -172,7 +172,7 @@
                            >
                         <SpecificSynchronicModelRepresentation
                           :layout="editViewMode"
-                          :isGeneric="isEditedModelGeneric"
+                          :isGeneric="isEditedModelDetached"
                           :modelId="editedSpecificSynchronicModelId" />
                       </div>
                     </div>
@@ -313,12 +313,12 @@
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
   })
 
-  const isEditedModelGeneric = computed(() => {
-      return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.genericModelId
+  const isEditedModelDetached = computed(() => {
+      return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.detachedModelId
   })
 
-  const isEmptyGenericModel = computed(() => {
-      return isEditedModelGeneric.value && editedSpecificSynchronicModel.value?.categories.length == 0
+  const isDetachedModelEmpty = computed(() => {
+      return isEditedModelDetached.value && editedSpecificSynchronicModel.value?.categories.length == 0
   })
 
   const editViewMode = ref('horizontal')
@@ -450,7 +450,7 @@
       }
   }
 
-  function updateGenericModel (model: SpecificSynchronicModel) {
+  function updateDetachedModel (model: SpecificSynchronicModel) {
       store.buildSynchronicModelFromGraphs (model, genericGraphs.value)
   }
 

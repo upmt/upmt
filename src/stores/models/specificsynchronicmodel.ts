@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import GenericSynchronicModel from './genericsynchronicmodel'
+import DetachedSynchronicModel from './detachedsynchronicmodel'
 import Moment from './moment'
 import SpecificSynchronicCategory from './specificsynchroniccategory'
 import { Attr, BelongsTo, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
@@ -21,13 +21,13 @@ export default class SpecificSynchronicModel extends BaseModel {
   @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') declare categories: SpecificSynchronicCategory[]
 
   /* A SpecificSynchronicmodel belongs either to a Moment (true SSM)
-     or to a genericModel (Generic Synchronic Category disguised as
+     or to a detachedModel (containing Generic Synchronic Category disguised as
      SSC) */
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string
 
-  @BelongsTo(() => GenericSynchronicModel, 'genericModelId') declare genericModel: GenericSynchronicModel | null
-  @Attr() genericModelId!: string
+  @BelongsTo(() => DetachedSynchronicModel, 'detachedModelId') declare detachedModel: DetachedSynchronicModel | null
+  @Attr() detachedModelId!: string
 
   toJSON (shallow=false): any {
     const base = {

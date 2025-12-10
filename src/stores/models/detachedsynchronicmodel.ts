@@ -2,8 +2,8 @@ import BaseModel from './basemodel'
 import SpecificSynchronicModel from './specificsynchronicmodel'
 import { Str, Uid, HasOne } from 'pinia-orm/dist/decorators'
 
-export default class GenericSynchronicModel extends BaseModel {
-  static override entity = 'genericsynchronicmodel'
+export default class DetachedSynchronicModel extends BaseModel {
+  static override entity = 'detachedsynchronicmodel'
 
   @Uid() declare id: string
 
@@ -16,7 +16,7 @@ export default class GenericSynchronicModel extends BaseModel {
   @Str('') declare name: string
   @Str('') declare color: string
   @Str('') declare note: string
-  @HasOne(() => SpecificSynchronicModel, 'genericModelId') declare proxy: SpecificSynchronicModel
+  @HasOne(() => SpecificSynchronicModel, 'detachedModelId') declare proxy: SpecificSynchronicModel
 
   toJSON (shallow=false): any {
     const base = {

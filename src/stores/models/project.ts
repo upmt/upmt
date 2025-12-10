@@ -1,6 +1,6 @@
 import BaseModel from './basemodel'
 import { HasMany, HasOne, Num, Str, Uid } from 'pinia-orm/dist/decorators'
-import GenericSynchronicModel from './genericsynchronicmodel'
+import DetachedSynchronicModel from './detachedsynchronicmodel'
 import Interview from './interview'
 import ModelFolder from './modelfolder'
 
@@ -11,7 +11,7 @@ export default class Project extends BaseModel {
 
   // Version number, used to discriminate between various versions of
   // the format and adapt accordingly
-  @Num(2) declare version: number
+  @Num(3) declare version: number
 
   @Str('') declare creator: string
   @Str('') declare contributor: string
@@ -23,7 +23,7 @@ export default class Project extends BaseModel {
   @Str('') declare note: string
   @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
   @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
-  @HasMany(() => GenericSynchronicModel, 'projectId') declare genericmodels: GenericSynchronicModel[]
+  @HasMany(() => DetachedSynchronicModel, 'projectId') declare detachedmodels: DetachedSynchronicModel[]
 
   get label (): string {
     if (this.name) {
@@ -45,7 +45,7 @@ export default class Project extends BaseModel {
       name: this.name,
       modelfolder: this.modelfolder?.toJSON(shallow),
       interviews: this.interviews?.map(i => i.toJSON(shallow)),
-      genericmodels: this.genericmodels?.map(m => m.toJSON(shallow))
+      detachedmodels: this.detachedmodels?.map(m => m.toJSON(shallow))
     }
   }
 }

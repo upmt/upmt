@@ -5,7 +5,7 @@ import Analysis from './models/analysis'
 import Annotation from './models/annotation'
 import BaseModel from './models/basemodel'
 import Descriptem from './models/descriptem'
-import GenericSynchronicModel from './models/genericsynchronicmodel'
+import DetachedSynchronicModel from './models/detachedsynchronicmodel'
 import Interview from './models/interview'
 import Justification from './models/justification'
 import ModelFolder from './models/modelfolder'
@@ -42,7 +42,7 @@ export type GenericCategory = {
 }
 export type ContainerInfo = {
   momentId: string,
-  genericModelId: string
+  detachedModelId: string
 }
 export type GraphInfo = {
   categories: GenericCategory[],
@@ -66,7 +66,7 @@ const repo = {
   Analysis:         useRepo(Analysis),
   Annotation:       useRepo(Annotation),
   Descriptem:       useRepo(Descriptem),
-  GenericSynchronicModel: useRepo(GenericSynchronicModel),
+  DetachedSynchronicModel: useRepo(DetachedSynchronicModel),
   Interview:        useRepo(Interview),
   Justification:    useRepo(Justification),
   ModelFolder:      useRepo(ModelFolder),
@@ -106,7 +106,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getProject (id: string): Project | null {
     return repo.Project
       .with('modelfolder')
-      .with('genericmodels')
+      .with('detachedmodels')
       .with('interviews')
       .find(id)
   }
@@ -117,7 +117,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function getFullProject (id: string): Project | null {
     return repo.Project
       .with('modelfolder')
-      .with('genericmodels',
+      .with('detachedmodels',
         query => query.with('proxy', qp => qp.with('categories'))
       )
       .with('interviews',
@@ -420,6 +420,12 @@ export const useProjectStore = defineStore('projectStore', () => {
       // Restore projectId
       data.id = projectId
 
+      // v2 models had a .genericmodels that has been renamed to .detachedmodels
+      if (data.genericmodels && data.detachedmodels === undefined) {
+        data.detachedmodels = data.genericmodels
+        delete data.genericmodels
+      }
+
       // - fix wrongly initialized childIndex for Moments
       // - remove text attribute from annotations
       // - reset interviewId
@@ -430,11 +436,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         fixChildIndexAndInterview(interview.analysis.rootMoment, interview.id)
         clearTextAttributeFromAnnotations(interview.annotations)
       }
-      if (data.genericmodels === undefined) {
-        data.genericmodels = []
+      if (data.detachedmodels === undefined) {
+        data.detachedmodels = []
       }
-      for (const model of data.genericmodels) {
-        // Fix the genericmodel proxies
+      for (const model of data.detachedmodels) {
+        // Fix the detachedmodel proxies
         (model.proxy?.categories || []).forEach((category: SpecificSynchronicCategory) => fixCategoryDescriptems(category, ""));
       }
 
@@ -522,8 +528,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       return moment
     }
 
-    for (const genericmodel of (project.genericmodels ?? [])) {
-      hydrateSpecificSynchronicModel(genericmodel.proxy)
+    for (const detachedmodel of (project.detachedmodels ?? [])) {
+      hydrateSpecificSynchronicModel(detachedmodel.proxy)
     }
 
     if (project.modelfolder) {
@@ -558,7 +564,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function hydrateAndStripProject (projectId: string): any {
     const data = stripFields(hydrateProject(projectId),
       [ 'id', 'projectId', 'ownerId', 'parentId',
-        'momentId', 'genericModelId', 'specificsynchronicmodelId',
+        'momentId', 'detachedModelId', 'specificsynchronicmodelId',
         'interviewId', 'analysisId', 'justificationId' ])
     // Restore the project id
     data.id = projectId
@@ -963,11 +969,11 @@ export const useProjectStore = defineStore('projectStore', () => {
     // console.log({ children, names, genericCategories })
 
     // Memoizing moment/model info - structure of
-    // { momentId, genericModelId } (exclusive) indexed by ssc id (instance)
+    // { momentId, detachedModelId } (exclusive) indexed by ssc id (instance)
 
     const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
 
-    // We have to make 1 tree traversal to build the instance to container (moment or generic model) relationship
+    // We have to make 1 tree traversal to build the instance to container (moment or detached model) relationship
     // It may be factorizable with the nameToGeneric traversal, but
     // they are against different trees with potentially different
     // roots, so it is not that simple
@@ -976,13 +982,13 @@ export const useProjectStore = defineStore('projectStore', () => {
         if (ssc.model) {
           containerInfo = {
             momentId: ssc.model.momentId,
-            genericModelId: ssc.model.genericModelId
+            detachedModelId: ssc.model.detachedModelId
           }
         } else {
           console.log(`Error: could not get containerInfo for ${ssc.id}`)
           containerInfo = {
             momentId: "",
-            genericModelId: ""
+            detachedModelId: ""
           }
         }
       }
@@ -993,7 +999,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     // We know have a fully-initialized instanceIdToContainerInfo structure
 
-    // Re-build the children graph + add momentIds/genericModelIds info to every category
+    // Re-build the children graph + add momentIds/detachedModelIds info to every category
     const nameToGeneric = (name: string,
       ancestors: Set<string> | null = null): GenericCategory => {
         const generic: GenericCategory | undefined = genericCategories[name]
@@ -1074,25 +1080,23 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function createDetachedModel(projectId: string, name: string = "Detached model"): GenericSynchronicModel {
+  function createDetachedModel(projectId: string, name: string = "Detached model"): DetachedSynchronicModel {
     // create detached model
-    const detachedModel = repo.GenericSynchronicModel.save({ name, projectId, proxy: { name }})
+    const detachedModel = repo.DetachedSynchronicModel.save({ name, projectId, proxy: { name }})
     return detachedModel
   }
 
-  function getDetachedModels(projectId: string): GenericSynchronicModel[] {
-    const detachedModels = repo.GenericSynchronicModel
+  function getDetachedModels(projectId: string): DetachedSynchronicModel[] {
+    const detachedModels = repo.DetachedSynchronicModel
       .where('projectId', projectId)
       .with('proxy')
       .get()
     return detachedModels
   }
 
-  function getDetachedModel(projectId: string, name: string): GenericSynchronicModel | null {
-    // get or create generic model
-    // FIXME: pass model as parameter?
-    // FIXME: handle updating existing model (at least adds)
-    const detachedModel = repo.GenericSynchronicModel
+  function getDetachedModel(projectId: string, name: string): DetachedSynchronicModel | null {
+    // get or create detached model
+    const detachedModel = repo.DetachedSynchronicModel
       .where('projectId', projectId)
       .where('name', name)
       .with('proxy')
@@ -1103,12 +1107,12 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   function deleteDetachedModel (modelId: string) {
     // FIXME: check cascade deletion
-    repo.GenericSynchronicModel
+    repo.DetachedSynchronicModel
       .where('id', modelId)
       .delete()
   }
 
-  // Build a GenericSynchronicModel from the given graphs.
+  // Build a DetachedSynchronicModel from the given graphs.
   // It builds it from the graph.categories, which can be filtered if needed
   function buildSynchronicModelFromGraphs (specificModel: SpecificSynchronicModel,
     graphs: GraphInfo): SpecificSynchronicModel | null {
@@ -1116,7 +1120,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       name: string,
       abstractionType: string,
       children: SpecificSynchronicCategoryBasicType[],
-      genericModelId?: string,
+      detachedModelId?: string,
       model?: SpecificSynchronicModel
     }
     function jsonifyGenericCategory (gc: GenericCategory, model: SpecificSynchronicModel | null): SpecificSynchronicCategoryBasicType {
@@ -1125,7 +1129,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         abstractionType: gc.abstractionType,
         // Do not transmit model info to children: only the root category should have it.
         children: gc.children?.map(child => jsonifyGenericCategory(child, null)) ?? [],
-        genericModelId: specificModel.genericModelId
+        detachedModelId: specificModel.detachedModelId
       }
       if (model) {
         data.model = model
