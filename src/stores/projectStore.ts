@@ -512,6 +512,21 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  /**
+   * Return a project structure with all relationships hydrated, and all *Id attributes stripped
+   * so that it can be imported without overwriting existing elements
+   * Preserve the project id
+   */
+  function hydrateAndStripProject (projectId: string): any {
+    const data = stripFields(hydrateProject(projectId),
+      [ 'id', 'projectId', 'ownerId', 'parentId',
+        'momentId', 'genericModelId', 'specificsynchronicmodelId',
+        'interviewId', 'analysisId', 'justificationId' ])
+    // Restore the project id
+    data.id = projectId
+    return data
+  }
+
   function updateElement (element: BaseModel, values: object) {
     repoByEntity[element.$entity()].where('id', (element.id as any)).update(values)
   }
@@ -1111,6 +1126,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     duplicateDescriptem,
     importProject,
     hydrateProject,
+    hydrateAndStripProject,
     getAllProjects,
     getProject,
     getFullProject,
