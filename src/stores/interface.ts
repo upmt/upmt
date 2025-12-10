@@ -74,11 +74,7 @@ export const useInterfaceStore = defineStore('interface', () => {
   }
 
   function setEditedSpecificSynchronicModelId (ssmId: string | null) {
-    if (editedSpecificSynchronicModelId.value == ssmId) {
-      editedSpecificSynchronicModelId.value = ""
-    } else {
-      editedSpecificSynchronicModelId.value = ssmId || ""
-    }
+    editedSpecificSynchronicModelId.value = ssmId || ""
   }
 
   function setHighlightedMomentId (momentId: string | null) {
