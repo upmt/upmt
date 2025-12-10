@@ -116,11 +116,64 @@ const stripIds = <T>(obj: T): T => {
   return newObj as T
 }
 
+/**
+ * Recursively strip the given properties from an object and its nested children.
+ *
+ * @param {object} obj - The hierarchical object structure.
+ * @param {fields} string[]
+ * @returns {object} A new object with 'id' properties removed.
+ */
+const stripFields = <T>(obj: T, fields: string[]): T => {
+  // 1. Handle non-object types (primitives, null)
+  if (typeof obj !== 'object' || obj === null) {
+    return obj
+  }
+
+  // Cast for safer access within the function
+  const currentObj = obj as HierarchicalObject | unknown[]
+
+  // 2. Handle arrays
+  if (Array.isArray(currentObj)) {
+    // Map over the array and recursively call stripIds on each element.
+    // The result is cast back to T (which should be an array type)
+    return currentObj.map(o => stripFields(o, fields)) as T
+  }
+
+  // 3. Handle standard objects
+  const newObj: HierarchicalObject = {}
+
+  for (const key in currentObj) {
+    // Check if the key is actually a property of the object (not inherited)
+    if (Object.prototype.hasOwnProperty.call(currentObj, key)) {
+
+      // Skip the censored properties
+      if (fields.includes(key)) {
+        continue
+      }
+
+      const value = currentObj[key]
+
+      // Recursively process nested objects or arrays
+      if (typeof value === 'object' && value !== null) {
+        // We call stripIds recursively and cast the result back to unknown for assignment
+        newObj[key] = stripFields(value, fields)
+      } else {
+        // Copy all other properties (primitives, functions, etc.)
+        newObj[key] = value
+      }
+    }
+  }
+
+  // Cast the final result back to the expected return type T
+  return newObj as T
+}
+
 export {
 basename,
 ellipsize,
 groupBy,
 stringToId,
+stripFields,
 stripIds,
 timestampAdd,
 timestampGet,
