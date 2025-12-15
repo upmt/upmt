@@ -38,8 +38,8 @@
               :key="category.name">
             <span class="category-title">
               <q-icon
-                                           size="xs"
-                                           name="mdi-alpha-s-box-outline">
+                size="xs"
+                name="mdi-alpha-s-box-outline">
               </q-icon>
               {{ category.name }}
             </span>
