@@ -106,8 +106,8 @@
               <template v-slot:before>
                 <q-splitter
                   class="fit fullwindow-height flex"
-                  beforeClass="flex"
-                  afterClass="flex"
+                  beforeClass="flex column no-scroll"
+                  afterClass="flex column no-scroll"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
@@ -122,68 +122,22 @@
                   </template>
 
                   <template v-slot:after>
-                    <div class="edited-model-container flex no-wrap column"
-                         v-if="editedSpecificSynchronicModel">
-                      <q-toolbar class="row toolbar">
-                        <div>
-                          <q-btn
-                            icon="mdi-close"
-                              flat
-                            round
-                            dense
-                              size="md"
-                            class="float-right"
-                            @click="closeEditedModel">
-                          </q-btn>
-                          </div>
 
-                        <q-toolbar-title class="row">
-                          <div>Editing&nbsp;</div>
-                          <div v-if="editedSpecificSynchronicModel.moment">
-                            synchronic description of
-                            <q-icon
-                              @click="istore.setHighlightedMomentId(editedSpecificSynchronicModel.moment.id)"
-                              size="xs"
-                              name="mdi-alpha-d-box-outline">
-                            </q-icon>
-                            <strong>{{ editedSpecificSynchronicModel.moment.name }}
-                              <q-popup-edit v-model="editedSpecificSynchronicModelName" auto-save v-slot="scope">
-                                <MomentNameInput @change="scope.cancel"
-                                                 :moment="editedSpecificSynchronicModel.moment" />
-                              </q-popup-edit>
-                            </strong>
-                          </div>
-                          <div v-else>
-                            <strong>
-                              <ElementNameInput
-                                :element="editedSpecificSynchronicModel"
-                                label="Name">
-                              </ElementNameInput>
-                            </strong>
-                          </div>
-                          <span v-if="isDetachedModelEmpty">
-                            <q-btn
-                              @click="updateDetachedModel(editedSpecificSynchronicModel)">
-                              Generate from dynamic model
-                            </q-btn>
-                          </span>
-                          <q-btn-toggle
-                            size="xs"
-                            v-model="editViewMode"
-                            :options="[ { icon: 'mdi-pan-horizontal', value: 'horizontal' },
-                                      { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
-                          </q-btn-toggle>
-                        </q-toolbar-title>
-                      </q-toolbar>
-                      <div v-if="editedSpecificSynchronicModelId"
-                           class="model-representation"
-                           >
-                        <SpecificSynchronicModelRepresentation
-                          :layout="editViewMode"
-                          :isGeneric="isEditedModelDetached"
-                          :modelId="editedSpecificSynchronicModelId" />
-                      </div>
-                    </div>
+                    <q-tab-panels
+                      v-model="detailedViewTab"
+                      >
+
+                      <q-tab-panel name="SSCTab">
+
+                        <SpecificSynchronicCategoryEditor
+                          v-if="editedSpecificSynchronicModelId"
+                          :modelId="editedSpecificSynchronicModelId"
+                          :genericGraphs="genericGraphs"
+                          />
+
+                      </q-tab-panel>
+                    </q-tab-panels>
+
                   </template>
                 </q-splitter>
               </template>
@@ -246,21 +200,18 @@
 
   import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
   import ElementMenu from './ElementMenu.vue'
-  import ElementNameInput from './ElementNameInput.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
   import InfoPanel from './InfoPanel.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
-  import MomentNameInput from './MomentNameInput.vue'
-//  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
+  //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
+  import SpecificSynchronicCategoryEditor from './SpecificSynchronicCategoryEditor.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
-  import SpecificSynchronicModelRepresentation from './SpecificSynchronicModelRepresentation.vue'
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import SpecificSynchronicModel from 'stores/models/specificsynchronicmodel'
 
   const istore = useInterfaceStore()
 
@@ -304,6 +255,8 @@
 
   const _currentInterviewId = ref("")
 
+  const detailedViewTab = ref("SSCTab")
+
   const currentInterviewId = computed({
       get () {
           return _currentInterviewId.value || ""
@@ -320,41 +273,13 @@
       }
   })
 
+  const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
+
   const editedSpecificSynchronicModel = computed(() => {
       return store.getSpecificSynchronicModel(editedSpecificSynchronicModelId.value)
   })
 
-  const isEditedModelDetached = computed(() => {
-      return !!editedSpecificSynchronicModel.value && !!editedSpecificSynchronicModel.value.detachedModelId
-  })
-
-  const isDetachedModelEmpty = computed(() => {
-      return isEditedModelDetached.value && editedSpecificSynchronicModel.value?.categories.length == 0
-  })
-
-  const editViewMode = ref('horizontal')
-
-  const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
-
-  const editedSpecificSynchronicModelName = computed({
-      get () {
-          if (editedSpecificSynchronicModel.value?.moment) {
-              return editedSpecificSynchronicModel.value.moment.name
-          } else {
-              return editedSpecificSynchronicModel.value?.name ?? ""
-          }
-      },
-      set (value: string) {
-          if (editedSpecificSynchronicModel.value?.moment) {
-              store.updateMoment(editedSpecificSynchronicModel.value.moment.id, { name:value })
-          } else if (editedSpecificSynchronicModel.value) {
-              store.updateElement(editedSpecificSynchronicModel.value, { name:value })
-          }
-      }
-  })
-
-
-  watch(editedSpecificSynchronicModel, () => {
+  watch(editedSpecificSynchronicModelId, () => {
       // Make sure a tab is active
       if (editedSpecificSynchronicModel.value?.moment) {
           currentInterviewId.value = editedSpecificSynchronicModel.value.moment.interviewId
@@ -459,14 +384,6 @@
              console.log(`Error when switching view: ${e}`)
           })
       }
-  }
-
-  function updateDetachedModel (model: SpecificSynchronicModel) {
-      store.buildSynchronicModelFromGraphs (model, genericGraphs.value)
-  }
-
-  function closeEditedModel () {
-      istore.setEditedSpecificSynchronicModelId("")
   }
 
   onUnmounted(() => {
