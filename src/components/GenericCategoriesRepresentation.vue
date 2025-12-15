@@ -9,6 +9,7 @@
         dense
         size="xs"
         icon="info"
+        @click="debug"
         no-caps>
         <q-tooltip>This is the dynamically generated model resulting from the combination of all synchronic models from interviews and all detached synchronic models.
         </q-tooltip>
@@ -30,13 +31,17 @@
 
   import type { GraphInfo } from 'stores/projectStore'
 
-  defineProps<{
+  const props = defineProps<{
       projectId: string,
       genericGraphs: GraphInfo,
       currentInterviewId: string,
       title?: string
   }>()
 
+  function debug () {
+      console.log("currentInterviewId", props.currentInterviewId)
+      console.log("genericGraphs", props.genericGraphs)
+  }
 </script>
 
 <style scoped>
