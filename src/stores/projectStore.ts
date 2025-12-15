@@ -329,10 +329,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Annotation.where('interviewId', interviewId).with('interview').get()
   }
 
-  function getJustificationParent (id: string) {
+  function getJustificationParent (parentId: string) {
     // Parent can be either SpecificSynchronicCategory or Moment
-    const parent: Moment | SpecificSynchronicCategory | null = (getMoment(id)
-      ??  getSpecificSynchronicCategory(id)
+    const parent: Moment | SpecificSynchronicCategory | null = (getMoment(parentId)
+      ??  getSpecificSynchronicCategory(parentId)
     )
     return parent
   }
@@ -369,6 +369,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   function fixCategoryDescriptems (category: SpecificSynchronicCategory, interviewId: string) {
     (category.justification?.descriptems || []).forEach(descriptem => descriptem.interviewId = interviewId);
     (category.children || []).forEach(child => fixCategoryDescriptems(child, interviewId));
+    category.interviewId = interviewId
     // For some reason the serialization contains a "parent" item with
     // a copy of the parent element, which messes things up on
     // reload. Remove the parent element (since we are building the
@@ -742,6 +743,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         specificsynchronicmodelId,
         childIndex,
         abstractionType,
+        interviewId: "",
         parentId: null as string | null,
         justification: {
           name: "",
@@ -756,6 +758,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         if (model) {
           children = [ ...model.categories ]
           data.childIndex = children.length
+          if (model.moment) {
+            data.interviewId = model.moment.interviewId
+          }
+          // else it must be a generic category proxy, which means the interviewId is ""
+
           // parentId remains null, since we are at the top.
           repo.SpecificSynchronicCategory.save(data)
         } else {
@@ -771,6 +778,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           data.parentId = destination.id
           // It is not at the root of the model since it has a parent
           data.specificsynchronicmodelId = ""
+          data.interviewId = destination.interviewId
           repo.SpecificSynchronicCategory.save(data)
         }
       } else if (where.startsWith('before:')) {
@@ -786,6 +794,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           }
           (data.children as any) = [ { id: child.id } ]
           data.specificsynchronicmodelId = child.specificsynchronicmodelId
+          data.interviewId = child.interviewId
           // Remove the child from the list of children of the model
           updateSpecificSynchronicCategory(child.id, { specificsynchronicmodelId: null })
           const ssc = repo.SpecificSynchronicCategory.save(data)

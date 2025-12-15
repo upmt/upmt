@@ -35,6 +35,8 @@ export default class SpecificSynchronicCategory extends Justifiable {
   @BelongsTo(() => SpecificSynchronicModel, 'specificsynchronicmodelId') declare model: SpecificSynchronicModel | null
   @Attr() specificsynchronicmodelId!: string
 
+  // Shortcut for easier access - has to be maintained by the runtime
+  @Attr() interviewId!: string
 
   get asContext () {
     return { specificsynchroniccategory: this }
