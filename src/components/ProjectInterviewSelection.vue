@@ -106,8 +106,8 @@
               <template v-slot:before>
                 <q-splitter
                   class="fit fullwindow-height flex"
-                  beforeClass="flex column no-scroll"
-                  afterClass="flex column no-scroll"
+                  beforeClass="flex column no-scroll no-wrap"
+                  afterClass="flex column no-scroll no-wrap"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
