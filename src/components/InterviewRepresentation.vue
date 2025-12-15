@@ -1,5 +1,5 @@
 <template>
-  <div class="interview flex column"
+  <div class="interview flex column no-wrap no-scroll"
        v-if="interview"
        :data-interview="interviewId">
 
