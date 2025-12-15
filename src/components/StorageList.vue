@@ -68,7 +68,8 @@
   const refreshKey = ref(1)
 
   const filenames = computed(() => {
-      console.log(refreshKey.value)
+      // Introduce a dependency on refreshKey so that it gets updated on refreshKey update
+      const _key = refreshKey.value
       if (fs.existsSync(props.dir)) {
           return fs.readdirSync(props.dir).toSorted().reverse()
       } else {
@@ -78,7 +79,6 @@
 
   function doRefresh () {
       refreshKey.value++
-      console.log("Do Refresh", refreshKey)
   }
 
   function absolute (filename: string) {
