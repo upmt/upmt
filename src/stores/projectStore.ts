@@ -1004,7 +1004,10 @@ export const useProjectStore = defineStore('projectStore', () => {
       instanceIdToContainerInfo[ssc.id] = containerInfo;
       (children[ssc.id] || []).forEach((child: SpecificSynchronicCategory) => propagateContainerInfo(child, containerInfo))
     }
-    rootInstances.forEach(ssc => propagateContainerInfo(ssc))
+    // rootInstances only whose all instances are root. We want here
+    // to add container info to all categories, starting from their
+    // roots.
+    categories.filter(ssc => !!ssc.specificsynchronicmodelId).forEach(ssc => propagateContainerInfo(ssc))
 
     // We know have a fully-initialized instanceIdToContainerInfo structure
 
