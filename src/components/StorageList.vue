@@ -58,8 +58,14 @@
   import { useQuasar, exportFile } from 'quasar'
   import { computed, ref } from 'vue'
   import { fs } from '@zenfs/core'
+  import { useProjectStore } from 'stores/projectStore'
+  import { useInterfaceStore } from 'stores/interface'
 
   const $q = useQuasar()
+
+  const store = useProjectStore()
+
+  const istore = useInterfaceStore()
 
   const props = defineProps({
       dir: { type: String, default: "/" }
@@ -99,7 +105,6 @@
   }
 
   function doDelete (filename: string) {
-      console.log("Delete", filename)
       const absolutePath = absolute(filename)
       fs.unlinkSync(absolutePath)
       doRefresh()
@@ -110,7 +115,16 @@
   }
 
   function doOpen (filename: string) {
-      console.log("Open", filename)
+      const jsonData = fs.readFileSync(absolute(filename))
+      if (jsonData) {
+          store.importProject(jsonData, filename)
+          istore.setModified(false)
+      }
+      $q.notify({
+          type: 'info',
+          message: `Loaded version ${filename}`
+      })
+
   }
 </script>
 
