@@ -187,18 +187,21 @@
       }
       const data = categories.map(category => {
           const catName = categoryName(category)
-          // FIXME: for each category, we would like to have moment + interview
-          // But we need to rebuld this info: for each category, get to its root category for which category.model is defined.
-          // Then we have access to category.model.moment
+          const interviews = Object.fromEntries(store.getInterviewsByProject(projectId).map(interview => [ interview.id, interview ]))
+
           if (category.justification?.descriptems) {
               return category.justification.descriptems.map(descriptem =>
-                  [ catName, descriptem.text, descriptem.startIndex, descriptem.endIndex ])
+                  [ catName,
+                    interviews[category.interviewId]?.name ?? "",
+                    descriptem.text,
+                    descriptem.startIndex,
+                    descriptem.endIndex ])
           } else {
               return []
           }
       }).flat()
       // Define CSV columns
-      data.unshift([ "Category", "Descriptem", "Start", "End" ])
+      data.unshift([ "Category", "Interview", "Descriptem", "Start", "End" ])
 
       exportFile(timestampAdd(`${projectId}.csv`),
                  data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
