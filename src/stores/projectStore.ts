@@ -42,7 +42,8 @@ export type GenericCategory = {
 }
 export type ContainerInfo = {
   momentId: string,
-  detachedModelId: string
+  detachedModelId: string,
+  specificSynchronicModelId: string
 }
 export type GraphInfo = {
   categories: GenericCategory[],
@@ -1010,13 +1011,15 @@ export const useProjectStore = defineStore('projectStore', () => {
         if (ssc.model) {
           containerInfo = {
             momentId: ssc.model.momentId,
-            detachedModelId: ssc.model.detachedModelId
+            detachedModelId: ssc.model.detachedModelId,
+            specificSynchronicModelId: ssc.model.id
           }
         } else {
           console.log(`Error: could not get containerInfo for ${ssc.id}`)
           containerInfo = {
             momentId: "",
-            detachedModelId: ""
+            detachedModelId: "",
+            specificSynchronicModelId: ""
           }
         }
       }
