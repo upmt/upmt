@@ -1,5 +1,5 @@
 <template>
-  <div class="edited-model-container flex no-wrap column"
+  <div class="edited-model-container flex no-wrap column col-grow"
        v-if="editedSpecificSynchronicModel">
     <q-toolbar class="row toolbar">
       <div>
@@ -52,7 +52,7 @@
         </q-btn-toggle>
       </q-toolbar-title>
     </q-toolbar>
-    <div class="model-representation">
+    <div class="model-representation flex col-grow">
       <SpecificSynchronicModelRepresentation
         :layout="editViewMode"
         :isGeneric="isEditedModelDetached"

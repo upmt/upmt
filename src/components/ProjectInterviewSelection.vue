@@ -107,7 +107,7 @@
                 <q-splitter
                   class="fit fullwindow-height flex"
                   beforeClass="flex column no-scroll no-wrap"
-                  afterClass="flex column no-scroll no-wrap"
+                  afterClass="flex column no-scroll no-wrap col-grow"
                   unit="px"
                   horizontal
                   separator-class="bg-grey-4"
@@ -123,20 +123,12 @@
 
                   <template v-slot:after>
 
-                    <q-tab-panels
-                      v-model="detailedViewTab"
-                      >
-
-                      <q-tab-panel name="SSCTab">
-
-                        <SpecificSynchronicCategoryEditor
-                          v-if="editedSpecificSynchronicModelId"
-                          :modelId="editedSpecificSynchronicModelId"
-                          :genericGraphs="genericGraphs"
-                          />
-
-                      </q-tab-panel>
-                    </q-tab-panels>
+                    <SpecificSynchronicCategoryEditor
+                      class="flex col-grow"
+                      v-if="editedSpecificSynchronicModelId"
+                      :modelId="editedSpecificSynchronicModelId"
+                      :genericGraphs="genericGraphs"
+                      />
 
                   </template>
                 </q-splitter>
@@ -254,8 +246,6 @@
   const infoPanelDisplay = ref(false)
 
   const _currentInterviewId = ref("")
-
-  const detailedViewTab = ref("SSCTab")
 
   const currentInterviewId = computed({
       get () {

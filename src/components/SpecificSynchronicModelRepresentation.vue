@@ -4,6 +4,7 @@
        v-if="model"
        :data-specificsynchronicmodel="modelId">
     <DropZone :data="`inmodel:${modelId}`"
+              class="editor-toolbar flex"
               types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
               @specificsynchroniccategory="droppedSpecificSynchronicCategory"
               @genericsynchroniccategory="droppedGenericSynchronicCategory"
