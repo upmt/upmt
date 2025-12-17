@@ -352,6 +352,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     // there)
     descriptems.forEach(descriptem => Object.assign(descriptem,
       getJustificationParent(descriptem.justification?.parentId ?? "")?.asContext ?? {}))
+    // We now have descriptems extended with moment/specificsynchroniccategory attributes
     return descriptems
   }
 

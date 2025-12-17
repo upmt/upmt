@@ -5,7 +5,7 @@
       dense
       flat bordered
       title="Descriptems"
-      :rows="descriptems"
+      :rows="filteredDescriptems"
       :columns="columns"
       color="primary"
       row-key="id"
@@ -13,6 +13,18 @@
       :rows-per-page-options="[0]"
     >
       <template v-slot:top-right>
+        <q-input
+          dense
+          clearable
+          type="search"
+          label="Filter text"
+          v-model="textFilter" />
+        <q-input
+          dense
+          clearable
+          type="search"
+          label="Filter moment"
+          v-model="momentFilter" />
         <q-btn
           color="primary"
           icon-right="archive"
@@ -37,7 +49,24 @@
       projectId: string | null,
   }>()
 
+  const textFilter = ref("")
+
+  const momentFilter = ref("")
+
   const descriptems = computed(() => store.getDescriptemsByProject(props.projectId ?? ""))
+
+  const filteredDescriptems = computed(() => {
+      let output = descriptems.value
+      const textFilterValue = textFilter.value
+      const momentFilterValue = momentFilter.value
+      if (textFilterValue) {
+          output = output.filter(descriptem => descriptem.text.includes(textFilterValue))
+      }
+      if (momentFilterValue) {
+          output = output.filter(descriptem => (descriptem as any).moment?.name?.includes(momentFilterValue) || false)
+      }
+      return output
+  })
 
   const columns = [
       { name: 'interview',
