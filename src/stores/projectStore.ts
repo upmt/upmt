@@ -186,6 +186,14 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
   }
 
+  function getInterviewsByProject (projectId: string) {
+    return repo.Interview
+      .with('annotations')
+      .with('analysis')
+      .where('projectId', projectId)
+      .get()
+  }
+
   function getJustification (id: string) {
     return repo.Justification
       .with('descriptems', qd => qd.orderBy('startIndex'))
@@ -1198,6 +1206,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getInterviewAnnotations,
     getInterviewByMoment,
     getInterviewDescriptems,
+    getInterviewsByProject,
     getJustification,
     getJustificationParent,
     getMoment,
