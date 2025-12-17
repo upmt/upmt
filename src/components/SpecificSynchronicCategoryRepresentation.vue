@@ -325,7 +325,8 @@
           where = `in:${props.categoryId}`
       }
       if (category.value) {
-          const abstractionType = genericElement.value?.abstractionType || ''
+          const genericSource = props.genericGraph ? props.genericGraph.byName[categoryName] : {}
+          const abstractionType = genericSource.abstractionType || ''
 
           store.addSpecificSynchronicCategory(categoryName,
                                               category.value.specificsynchronicmodelId,

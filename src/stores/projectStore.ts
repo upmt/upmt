@@ -739,7 +739,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     textselection: TextSelection | null = null,
     abstractionType: string = '') {
       console.log("addSSC", name, where, specificsynchronicmodelId, "with", textselection)
-      if (![ '', 'classification', 'aggregation'].includes(abstractionType)) {
+      if (![ '', 'specialization', 'aggregation'].includes(abstractionType)) {
         console.log(`Wrong abstractionType in addSpecificSynchronicCategory: ${abstractionType}. Fix code.`)
         return null
       }
