@@ -4,7 +4,7 @@
     flat
     round
     :class="noteClass"
-    icon="mdi-chat-outline">
+    :icon="noteIcon">
     <q-popup-edit v-model="note"
                   auto-save
                   buttons
@@ -54,6 +54,8 @@
   const noteClass = computed(() => {
       return note.value ? [ "note" ] : [ "note", "note-is-empty" ]
   })
+
+  const noteIcon = computed(() => note.value ? 'mdi-chat' : 'mdi-chat-outline')
 </script>
 
 <style scoped>
