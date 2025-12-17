@@ -125,7 +125,11 @@
       if (note.icon == 'mdi-alpha-d-box-outline') {
           istore.setHighlightedMomentId(note.element.id)
       } else if (note.icon == 'mdi-alpha-s-box-outline') {
-          istore.setEditedSpecificSynchronicModelId(note.element.id)
+          // We have a SSC, we have to find the root category, get its model and use its id
+          const info = props.genericGraphs.instanceIdToContainerInfo[note.element.id]
+          if (info) {
+              istore.setEditedSpecificSynchronicModelId(info.specificSynchronicModelId)
+          }
       }
   }
 
