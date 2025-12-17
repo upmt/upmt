@@ -364,6 +364,7 @@
       margin: 0;
       display: flex;
       flex-direction: column;
+      width: 100%;
       border: 1px solid transparent;
       position: relative;
   }
@@ -376,6 +377,7 @@
   .moment-body {
       border: 1px solid grey;
       display: flex;
+      justify-content: center;
       flex-grow: 1;
   }
   .moment-body .q-item {
