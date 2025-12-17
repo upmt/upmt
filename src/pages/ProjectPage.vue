@@ -3,7 +3,7 @@
     <ProjectInterviewSelection
       class="col-grow"
       v-if="project"
-      :projectId="project.id">
+      :projectId="projectId">
     </ProjectInterviewSelection>
   </q-page>
 </template>
@@ -21,7 +21,7 @@
       name: 'ProjectPage'
   })
   const props = defineProps({
-      id: {
+      projectId: {
           type: String,
           default: null
       }
@@ -33,9 +33,9 @@
   const istore = useInterfaceStore()
 
   const project = computed(() => {
-      if (props.id) {
-          const p = store.getProject(props.id)
-          istore.setCurrentProjectId(props.id)
+      if (props.projectId) {
+          const p = store.getProject(props.projectId)
+          istore.setCurrentProjectId(props.projectId)
           return p
       } else {
           return null

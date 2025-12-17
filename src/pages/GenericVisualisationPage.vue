@@ -20,7 +20,7 @@
   })
 
   const props = defineProps({
-      id: {
+      projectId: {
           type: String,
           default: null
       }
@@ -30,9 +30,9 @@
   const istore = useInterfaceStore()
 
   const project = computed(() => {
-      if (props.id) {
-          const p = store.getFullProject(props.id)
-          istore.setCurrentProjectId(props.id)
+      if (props.projectId) {
+          const p = store.getFullProject(props.projectId)
+          istore.setCurrentProjectId(props.projectId)
           return p
       } else {
           return null

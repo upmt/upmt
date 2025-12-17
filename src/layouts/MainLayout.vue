@@ -176,6 +176,12 @@
               icon: 'mdi-table',
               link: `/spreadsheet/${currentProjectId.value}`
           })
+          menu.push({
+              label: "Descriptems",
+              icon: 'mdi-format-quote-close-outline',
+              link: `/descriptems/${currentProjectId.value}`
+          })
+
       }
       menu = menu.concat([
           {

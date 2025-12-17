@@ -18,7 +18,7 @@
           :data="projectId">
           <router-link
             style="text-decoration: none; color: inherit;"
-            :to="{ name: 'project', params: { id: projectId } }">
+            :to="{ name: 'project', params: { projectId: projectId } }">
             <div
               :title="`Loaded from ${project.filename}`"
               class="text-h6">
@@ -38,7 +38,7 @@
       <p>{{ project.note }}</p>
 
       <q-card-actions align="right">
-        <q-btn :to="{ name: 'project', params: { id: projectId } }" flat>Edit</q-btn>
+        <q-btn :to="{ name: 'project', params: { projectId: projectId } }" flat>Edit</q-btn>
         <q-btn title="Save project in browser database"
                @click="doStoreProject(projectId)"
                v-if="isCurrentProject"

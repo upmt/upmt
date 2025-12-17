@@ -114,7 +114,6 @@
           // Category: ${category.moment.name} | ${category.name}
           // Property: ${property.categoryinstance.moment.name} | ${property.categoryinstance.name} | ${property.name}: ${property.value}
           if (parent) {
-              console.log("Context", parent, parent.asContext)
               return parent.asContext
           } else {
               return { }
