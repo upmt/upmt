@@ -255,9 +255,6 @@
   // Initial state for displayJustification
   // Hide by default
   const displayJustification = ref(false)
-  if (isLeaf.value) {
-      displayJustification.value = ! props.hideJustifications
-  }
 
   const isJustificationVisible = computed(() => {
       return displayJustification.value
@@ -279,6 +276,10 @@
   const categoryDescriptemCount = computed(() => {
       return categoryDescriptems.value.length
   })
+
+  if (isLeaf.value) {
+      displayJustification.value = ! props.hideJustifications || categoryDescriptemCount.value > 0
+  }
 
   const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
 
