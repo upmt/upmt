@@ -18,7 +18,7 @@
         <div class="specificsynchronicmodel-title">
           <q-icon
             ref="handle"
-          class="specificsynchronicmodel-handle"
+            class="specificsynchronicmodel-handle"
             size="xs"
             @click.meta="debug"
             name="mdi-graph-outline"></q-icon>

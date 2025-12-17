@@ -52,18 +52,20 @@
                                          dense>
               <q-menu class="column">
                 <div  v-for="moment in currentMoments"
+                      class="flex row justify-between"
                       :key="moment.id">
                   <q-btn
                     :label="moment.name"
                     align="left"
                     no-caps
+                    flat
                     @click="highlightMoment(moment.id)"
                     size="sm"
                     :style="{ backgroundColor: moment.color }"
                     icon="mdi-alpha-d-box-outline">
                   </q-btn>
                   <q-btn
-                    icon="edit"
+                    icon="mdi-graph-outline"
                     flat
                     dense
                     size="sm"
