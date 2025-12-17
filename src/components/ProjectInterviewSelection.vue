@@ -123,7 +123,7 @@
 
                   <template v-slot:after>
 
-                    <SpecificSynchronicCategoryEditor
+                    <SpecificSynchronicModelEditor
                       class="flex col-grow"
                       v-if="editedSpecificSynchronicModelId"
                       :modelId="editedSpecificSynchronicModelId"
@@ -197,7 +197,7 @@
   import InfoPanel from './InfoPanel.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'
-  import SpecificSynchronicCategoryEditor from './SpecificSynchronicCategoryEditor.vue'
+  import SpecificSynchronicModelEditor from './SpecificSynchronicModelEditor.vue'
   import TextAnnotation from 'components/TextAnnotation.vue'
   import InterviewMetadataForm from 'components/InterviewMetadataForm.vue'
   import type { InterviewInfo } from 'components/InterviewMetadataForm.vue'
