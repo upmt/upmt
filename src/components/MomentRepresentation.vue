@@ -27,27 +27,27 @@
          v-if="moment"
          :data-moment="moment.id">
 
-      <q-expansion-item
-        class="moment-body pa-md-xs"
-        dense
-        dense-toggle
-        :duration="0"
-        expand-icon-toggle
-        switch-toggle-side
-        v-model="expand"
-        header-class="header-class q-pa-xs"
-        expand-icon-class="icon-class q-pa-xs"
-        :title="moment.note"
-        >
+      <DropZone data="header"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color"
+                class="row full-width justify-center moment-header q-pa-xs"
+                @annotation="droppedAnnotation"
+                @selection="droppedSelection"
+                @descriptem="droppedDescriptem"
+                @color="droppedColor">
+        <q-expansion-item
+          class="moment-body pa-md-xs"
+          dense
+          dense-toggle
+          :duration="0"
+          expand-icon-toggle
+          switch-toggle-side
+          v-model="expand"
+          header-class="header-class q-pa-xs"
+          expand-icon-class="icon-class q-pa-xs"
+          :title="moment.note"
+          >
 
-        <template v-slot:header>
-          <DropZone data="header"
-                    types="upmt/descriptem upmt/annotation upmt/selection upmt/color"
-                    class="row full-width justify-center moment-header q-pa-xs"
-                    @annotation="droppedAnnotation"
-                    @selection="droppedSelection"
-                    @descriptem="droppedDescriptem"
-                    @color="droppedColor">
+          <template v-slot:header>
             <DragElement
               type="moment"
               :data="momentId"
@@ -60,7 +60,7 @@
               <span class="moment-name">{{ momentName }}
                 <q-popup-edit v-model="momentName" auto-save v-slot="scope">
                   <MomentNameInput @change="scope.cancel"
-                                     :moment="moment" />
+                                   :moment="moment" />
                 </q-popup-edit>
               </span>
             </DragElement>
@@ -73,37 +73,37 @@
               <ElementMenu
                 :actions="menuActions" />
             </div>
-          </DropZone>
-        </template>
+          </template>
 
-        <div class="moment-justification">
-          <JustificationRepresentation
-            v-if="moment"
-            :justificationId="moment.justification?.id ?? ''">
-          </JustificationRepresentation>
-        </div>
+          <div class="moment-justification">
+            <JustificationRepresentation
+              v-if="moment"
+              :justificationId="moment.justification?.id ?? ''">
+            </JustificationRepresentation>
+          </div>
 
-        <div class="moment-synchronic-specific-model flex row"
-             :class="{ 'moment-synchronic-specific-model-edited': isEditedModel }">
-          <SpecificSynchronicModelOverview
-            :modelId="moment?.specificsynchronicmodel?.id ?? ''">
-          </SpecificSynchronicModelOverview>
+          <div class="moment-synchronic-specific-model flex row"
+               :class="{ 'moment-synchronic-specific-model-edited': isEditedModel }">
+            <SpecificSynchronicModelOverview
+              :modelId="moment?.specificsynchronicmodel?.id ?? ''">
+            </SpecificSynchronicModelOverview>
 
-          <q-btn
-            flat
-            dense
-            v-if="moment"
-            size="xs"
-            title="Edit specific synchronic model"
-            class="absolute-bottom-right"
-            @click="editModel(moment.specificsynchronicmodel?.id || '')"
-            icon="mdi-graph-outline"
-            no-caps>
-          </q-btn>
+            <q-btn
+              flat
+              dense
+              v-if="moment"
+              size="xs"
+              title="Edit specific synchronic model"
+              class="absolute-bottom-right"
+              @click="editModel(moment.specificsynchronicmodel?.id || '')"
+              icon="mdi-graph-outline"
+              no-caps>
+            </q-btn>
 
-        </div>
+          </div>
 
-      </q-expansion-item>
+        </q-expansion-item>
+      </DropZone>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
