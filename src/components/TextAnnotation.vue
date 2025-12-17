@@ -198,7 +198,7 @@
               class: annotation2class(a)
           }
       })
-      const interviewDescriptems: BaseAnnotation[] = store.getInterviewDescriptems(interviewId).map(d => {
+      const interviewDescriptems: BaseAnnotation[] = store.getDescriptemsByInterview(interviewId).map(d => {
           return {
               interviewId: d.interviewId,
               id: d.id,

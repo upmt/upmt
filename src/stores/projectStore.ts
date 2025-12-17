@@ -327,11 +327,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function getInterviewDescriptems (interviewId: string) {
-    // Return the descriptems defined on a specific interview
-    return repo.Descriptem.where('interviewId', interviewId).with('interview').get()
-  }
-
   function getInterviewAnnotations (interviewId: string) {
     // Return the annotations defined on a specific interview
     return repo.Annotation.where('interviewId', interviewId).with('interview').get()
@@ -343,6 +338,21 @@ export const useProjectStore = defineStore('projectStore', () => {
       ??  getSpecificSynchronicCategory(parentId)
     )
     return parent
+  }
+
+  function getDescriptemsByInterview (interviewId: string) {
+    // Return the descriptems defined on a specific interview
+    return repo.Descriptem.where('interviewId', interviewId).with('interview').get()
+  }
+
+  function getDescriptemsByProject (projectId: string) {
+    const descriptems = repo.Descriptem.where('projectId', projectId).with('interview').with('justification').get()
+    // We want to have the parent information. This could be made more
+    // efficient (fetch all moment/ssc with ids, then enrich from
+    // there)
+    descriptems.forEach(descriptem => Object.assign(descriptem,
+      getJustificationParent(descriptem.justification?.parentId ?? "")?.asContext ?? {}))
+    return descriptems
   }
 
   function createProject (projectData: Subset<Project>) {
@@ -1198,6 +1208,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getAnalysis,
     getAnnotation,
     getDescriptem,
+    getDescriptemsByProject,
     getGenericSynchronicGraphs,
     createDetachedModel,
     getDetachedModel,
@@ -1205,7 +1216,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getInterview,
     getInterviewAnnotations,
     getInterviewByMoment,
-    getInterviewDescriptems,
+    getDescriptemsByInterview,
     getInterviewsByProject,
     getJustification,
     getJustificationParent,
