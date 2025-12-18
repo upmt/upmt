@@ -15,13 +15,15 @@
       </span>
 
       <div class="moment-children"
+           :class="layout"
            v-if="momentDepth < maximumDepth">
         <div v-for="m in moment.children"
              :key="m.id">
           <MomentShortRepresentation
             :maximumDepth="maximumDepth"
             :momentDepth="momentDepth + 1"
-            :momentId="m.id">
+            :momentId="m.id"
+            :layout="layout">
           </MomentShortRepresentation>
         </div>
       </div>
@@ -42,7 +44,8 @@
   const props = defineProps({
       momentId: { type: String, default: "" },
       momentDepth: { type: Number, default: 0 },
-      maximumDepth: { type: Number, default: 0 }
+      maximumDepth: { type: Number, default: 0 },
+      layout: { type: String, default: "horizontal" }
   })
 
   const moment = computed(() => store.getMoment(props.momentId))
@@ -67,6 +70,9 @@
       display: flex;
       flex-direction: row;
   }
+  .moment-children.vertical {
+      flex-direction: column;
+  }
   .moment-container {
       display: flex;
       flex-direction: row;
@@ -75,7 +81,7 @@
   .moment {
       min-width: var(--moment-minimum-width);
       min-height: 40px;
-      margin: 0;
+      margin: 4px;
       display: flex;
       flex-direction: column;
       border: 1px solid grey;
