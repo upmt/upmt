@@ -62,10 +62,11 @@
           <div class="specificsynchroniccategory-criterion">
             {{ criterion }}
             <q-tooltip
-              v-if="criterion"
               flat
               dense>
-              <div class="criterion-tooltip">{{ criterion }}</div>
+              <div v-if="criterion"
+                   class="criterion-tooltip">{{ criterion }}</div>
+              Criterion
             </q-tooltip>
             <q-popup-edit v-model="criterion"
                         auto-save
@@ -623,5 +624,8 @@
     flex-direction: column;
     margin: 0;
     padding-left: 8px;
+  }
+  .specificsynchroniccategory-criterion {
+      cursor: text;
   }
 </style>
