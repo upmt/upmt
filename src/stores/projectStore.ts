@@ -135,6 +135,17 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
+  /**
+   * Strip the given data from ids so that they get restored correctly upon load
+   * Caution: the project id itself will be removed
+   */
+  function stripProjectData (data: any) {
+    return stripFields(data,
+      [ 'id', 'projectId', 'ownerId', 'parentId',
+        'momentId', 'detachedModelId', 'specificsynchronicmodelId',
+        'interviewId', 'analysisId', 'justificationId' ])
+  }
+
   function getProjectByName (name: string): Project | null {
     return repo.Project.where('name', name).first()
   }
@@ -435,9 +446,9 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
 
       // Remove the ids so that if we load twice the same dataset, it does not mess with existing elements.
-      // WARNING: since we strip id from interviews, then descriptems's interviewId  become invalid and we need to restore it
+      // WARNING: since we strip id from interviews, then descriptems's interviewId  become invalid and we need to restore them
       const projectId = data.id
-      // data = stripIds(data)
+      data = stripProjectData(data)
       // Restore projectId
       data.id = projectId
 
@@ -583,10 +594,7 @@ export const useProjectStore = defineStore('projectStore', () => {
    * Preserve the project id
    */
   function hydrateAndStripProject (projectId: string): any {
-    const data = stripFields(hydrateProject(projectId),
-      [ 'id', 'projectId', 'ownerId', 'parentId',
-        'momentId', 'detachedModelId', 'specificsynchronicmodelId',
-        'interviewId', 'analysisId', 'justificationId' ])
+    const data = stripProjectData(hydrateProject(projectId))
     // Restore the project id
     data.id = projectId
     return data
