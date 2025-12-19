@@ -133,7 +133,7 @@
               </div>
             </q-tooltip>
             <q-tooltip v-else>
-              {{ categoryName }}
+              {{ categoryName }} ({{ isGeneric ? 'Generic Synchronic Category' : 'Specific Synchronic Category' }}
             </q-tooltip>
           </DragElement>
           <div class="element-toolbar">
