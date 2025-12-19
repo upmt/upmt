@@ -71,7 +71,7 @@
   const columns = [
       { name: 'interview',
         label: 'Interview',
-        field: (row: any) => row.interview.name,
+        field: (row: any) => row.interview.label,
         sortable: true },
       { name: 'text',
         label: 'Text',
