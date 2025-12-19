@@ -217,6 +217,41 @@ function buildIdCache<T = any>(
   return cache
 }
 
+// From https://quasar.dev/vue-components/table#exporting-data
+function wrapCsvValue (val: any, formatFn: any = null, row: any = null) {
+  let formatted = formatFn !== null
+    ? formatFn(val, row)
+    : val
+
+  formatted = formatted === void 0 || formatted === null
+    ? ''
+    : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
+
+function exportDataAsCsv (columns: any, rows: any): string {
+  // naive encoding to csv format
+  const content = [columns.map((col: any) => wrapCsvValue(col.label))].concat(
+    rows.map((row: any) => columns.map((col: any) => wrapCsvValue(
+      typeof col.field === 'function'
+        ? col.field(row)
+        : row[ col.field === void 0 ? col.name : col.field ],
+      col.format,
+      row
+    )).join(','))
+  ).join('\n')
+  return content
+}
+
 export {
 basename,
 buildIdCache,
@@ -228,5 +263,7 @@ stripIds,
 timestampAdd,
 timestampGet,
 timestampStrip,
+wrapCsvValue,
+exportDataAsCsv,
 ANNOTATION_COLORS
 }

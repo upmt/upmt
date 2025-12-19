@@ -40,8 +40,10 @@
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
-
+  import { exportFile } from 'quasar'
   import { useProjectStore } from 'stores/projectStore'
+
+  import { exportDataAsCsv } from 'stores/util'
 
   const store = useProjectStore()
 
@@ -110,8 +112,16 @@
   })
 
   function exportTable () {
-      console.log(descriptems.value)
-  }
+      console.log(filteredDescriptems.value)
+
+      const content = exportDataAsCsv(columns, filteredDescriptems.value)
+      exportFile(
+          'table-export.csv',
+          content,
+          'text/csv'
+      )
+}
+
 </script>
 
 <style>
