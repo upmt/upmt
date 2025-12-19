@@ -172,7 +172,7 @@
               link: `/project/${currentProjectId.value}`
           })
           menu.push({
-              label: "Generic Model",
+              label: "Global diachronic",
               icon: 'mdi-table',
               link: `/spreadsheet/${currentProjectId.value}`
           })
