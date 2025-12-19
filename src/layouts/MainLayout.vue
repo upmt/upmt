@@ -49,14 +49,24 @@
             dense
             flat
             round
+            :class="{ 'needs-save': isModified }"
             @click="doStoreProject()"
             icon="mdi-content-save">
+            <q-tooltip
+              v-if="isModified">
+              Data has been modified. Click to save it in the browser storage.
+            </q-tooltip>
           </q-btn>
           <q-btn
             dense
             flat
             round
+            :class="{ 'anonymous': isAnonymous }"
             icon="mdi-account">
+            <q-tooltip
+              v-if="isAnonymous">
+              Click and enter a username
+            </q-tooltip>
             <q-popup-edit
               v-model="username"
               auto-save
@@ -200,6 +210,8 @@
       leftDrawerOpen.value = !leftDrawerOpen.value
   }
 
+  const isAnonymous = computed(() => (username.value == '' || username.value == 'anonymous'))
+
   function doStoreProject () {
       if (currentProjectId.value) {
           const basename = storeProject(currentProjectId.value)
@@ -215,3 +227,11 @@
       rightDrawerOpen.value = false
   })
 </script>
+<style scoped>
+.anonymous {
+    color: red;
+}
+.needs-save {
+    color: red;
+}
+</style>
