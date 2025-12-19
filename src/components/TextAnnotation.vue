@@ -39,6 +39,9 @@
       @cancel="isMetadataVisible = false"
       @validate="metadataValidate"
       />
+    <div v-if="isMetadataVisible">
+      <em>Interview text below is not modifiable</em>
+    </div>
     <AnnotatedText
       class="textAnnotationComponent q-pt-lg q-pa-md"
       v-if="interview"
