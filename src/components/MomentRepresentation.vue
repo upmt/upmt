@@ -64,12 +64,12 @@
                 </q-popup-edit>
               </span>
             </DragElement>
+            <NoteIcon
+              :element="moment" />
             <div class="element-toolbar on-name-hover">
               <ColorizeIcon
                 class="on-name-hover"
                 v-model="momentColor" />
-              <NoteIcon
-                :element="moment" />
               <ElementMenu
                 :actions="menuActions" />
             </div>
