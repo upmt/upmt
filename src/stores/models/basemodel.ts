@@ -53,6 +53,9 @@ export default class BaseModel extends Model {
 
   static override updating (model: BaseModel) {
     model.modified = (new Date()).toISOString()
+    if (this.context?.setModified) {
+      this.context.setModified(true)
+    }
     if (this.context?.getUsername) {
       model.contributor = this.context.getUsername()
     }
