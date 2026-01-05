@@ -215,6 +215,7 @@
   function doStoreProject () {
       if (currentProjectId.value) {
           const basename = storeProject(currentProjectId.value)
+          istore.setModified(false)
           $q.notify({
               type: 'info',
               message: `Stored as ${basename}`
