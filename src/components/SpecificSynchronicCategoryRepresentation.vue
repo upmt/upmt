@@ -518,6 +518,8 @@
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      /* Since we display a border on hover, match the space in non-hover state */
+      border: 1px solid transparent;
   }
   .specificsynchroniccategory-name:hover {
       border: 1px dashed #ccccccee;
