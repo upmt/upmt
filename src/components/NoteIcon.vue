@@ -36,7 +36,7 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      element: { type: BaseModel, default: null },
+      element: { type: Object, default: null },
       elementType: { type: String, default: "" }
   })
 
@@ -46,7 +46,7 @@
       },
       set: (value) => {
           if (props.element) {
-              store.updateElement(props.element, { note: value })
+              store.updateElement(props.element as BaseModel, { note: value })
           }
       }
   })
