@@ -136,7 +136,7 @@
             </q-card-section>
             <q-separator />
             <q-card-section>
-              See the <a href="https://github.com/upmt/upmt/wiki">documentation wiki</a>
+              See the <a href="https://github.com/upmt/upmt/wiki/%CE%BCPMT-documentation">documentation wiki</a>
             </q-card-section>
           </q-card>
 
