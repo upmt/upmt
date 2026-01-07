@@ -31,18 +31,20 @@
           <q-card-section class="bg-primary text-white">
             <div class="text-h4">Available projects <q-btn flat no-caps>(Where is my data?)
                 <q-tooltip>
-                  <p>
-                    No data is stored by the application or exchanged with a
-                    server. The application runs on your computer, in your
-                    browser.</p>
+                  <p>The application is downloaded from the web each
+                    time you access it, but it runs on your computer, in
+                    your browser.</p>
 
-                  <p>
-                    No data at all is automatically stored by the
-                    application. You can open a file from your computer, and
-                    save/download the modified data as a file. If you close
-                    your browser without saving/downloading the data, your
-                    changes will be lost.
-                  </p>
+                  <p>The data never leaves your computer, it is
+                    versioned and stored in the permanent storage space
+                    of your web browser when you use the "Save" command,
+                    that is why you can access it again when you open
+                    μPMT in your browser.</p>
+
+                  <p>To save the data in a file on your hard drive,
+                    you need to use the "Download" command, which will
+                    create a .upmt file that you can exchange with
+                    colleagues.</p>
                 </q-tooltip>
               </q-btn>
               <q-btn
