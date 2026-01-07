@@ -902,14 +902,18 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', momentId).delete()
   }
 
-  function deleteSpecificSynchronicCategory (categoryId: string) {
+  function deleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
     const category = getSpecificSynchronicCategory(categoryId)
     if (category) {
       category.children.forEach(child => {
-        updateSpecificSynchronicCategory(child.id, {
-          parentId: category.parentId,
-          specificsynchronicmodelId: category.specificsynchronicmodelId
-        })
+        if (recursive) {
+          deleteSpecificSynchronicCategory(child.id, recursive)
+        } else {
+          updateSpecificSynchronicCategory(child.id, {
+            parentId: category.parentId,
+            specificsynchronicmodelId: category.specificsynchronicmodelId
+          })
+        }
       })
       repo.SpecificSynchronicCategory.where('id', categoryId).delete()
     }

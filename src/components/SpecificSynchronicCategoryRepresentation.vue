@@ -416,7 +416,8 @@
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
-      [ "Delete", () => store.deleteSpecificSynchronicCategory(props.categoryId) ],
+      [ "Delete this category only", () => store.deleteSpecificSynchronicCategory(props.categoryId, false) ],
+      [ "Delete this category and its children", () => store.deleteSpecificSynchronicCategory(props.categoryId, true) ],
   ]
 
   const relationActions: NamedAction[] = [
