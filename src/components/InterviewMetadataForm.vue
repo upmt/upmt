@@ -70,7 +70,6 @@
         />
 
       <q-input
-        v-if="!interview"
         filled
         label-slot
         autogrow
