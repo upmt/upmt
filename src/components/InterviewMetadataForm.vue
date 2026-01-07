@@ -70,10 +70,10 @@
         />
 
       <q-input
+        v-if="!metadataOnly"
         filled
         label-slot
         autogrow
-        counter
         :input-style="{ minHeight: '4em', maxHeight: '30em' }"
         hint="Please provide the interview text by pasting it here, uploading a file with the upload button or by dragging it here."
         type="textarea"
@@ -115,9 +115,14 @@
       text: string
   }
 
-  const props = defineProps<{
-      interview?: InterviewInfo
-  }>()
+  interface Props {
+      interview?: InterviewInfo,
+      metadataOnly?: boolean
+  }
+
+  const props =   withDefaults(defineProps<Props>(), {
+      metadataOnly: false
+  })
 
   const emit = defineEmits([ 'validate', 'cancel' ])
 
@@ -142,7 +147,7 @@
               note: note.value,
               date: date.value,
               // If we are editing an existing interview, the text cannot be modified (and the text ref will always be "")
-              text: props.interview ? props.interview.text : text.value
+              text: text.value
           } as InterviewInfo)
       }
   }

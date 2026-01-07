@@ -36,6 +36,7 @@
     <InterviewMetadataForm
       v-if="isMetadataVisible"
       :interview="interview"
+      :metadataOnly="true"
       @cancel="isMetadataVisible = false"
       @validate="metadataValidate"
       />
