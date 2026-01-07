@@ -117,20 +117,20 @@
 
                   <template v-slot:before>
                     <InterviewRepresentation
+                      class="flex col-grow"
                       :interviewId="interview.id">
                     </InterviewRepresentation>
                   </template>
 
                   <template v-slot:after>
-
                     <SpecificSynchronicModelEditor
                       class="flex col-grow"
                       v-if="editedSpecificSynchronicModelId"
                       :modelId="editedSpecificSynchronicModelId"
                       :genericGraphs="genericGraphs"
                       />
-
                   </template>
+
                 </q-splitter>
               </template>
 
@@ -328,6 +328,7 @@
                   children: [
                       {
                           name: "Moment 1",
+                          isExpanded: true,
                           specificsynchronicmodel: {
                               name: "Initial",
                               categories: []
