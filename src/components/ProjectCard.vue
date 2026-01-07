@@ -43,7 +43,7 @@
                @click="doStoreProject(projectId)"
                v-if="isCurrentProject"
                :disable="!isModified"
-               flat>Save</q-btn>
+               flat>{{ isModified ? "Save" : "Saved" }} </q-btn>
         <ElementMenu
           :actions="menuActions" />
       </q-card-actions>
@@ -211,7 +211,7 @@
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
       [ "Download project file", () => doUpmtExport(props.projectId) ],
-      [ "Download stripped file", () => doStrippedExport(props.projectId) ],
+      [ "Download stripped file (dev)", () => doStrippedExport(props.projectId) ],
       [ "Export as CSV", () => doCsvExport(props.projectId) ],
       [ "Delete", () =>  $q.notify({
           type: 'error',
