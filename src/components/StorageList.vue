@@ -2,11 +2,11 @@
   <q-list
     :key="refreshKey"
     class="storage">
-    <strong>{{ dir }}</strong>
+    <strong title="{{ dir }}">Stored files</strong>
     <q-btn
       @click="doRefresh"
       size="xs"
-      title="Refresh"
+      title="Refresh the list of stored files"
       icon="mdi-refresh"/>
     <q-item
       class="column"
