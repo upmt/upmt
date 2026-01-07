@@ -232,9 +232,20 @@
       }
   }
 
+  function onGlobalKeydown (e: KeyboardEvent) {
+      if (e.ctrlKey && e.keyCode === 83 /* S */) {
+          e.preventDefault()
+          if (isModified.value) {
+              doStoreProject()
+          }
+      }
+  }
+
   onMounted(() => {
       leftDrawerOpen.value = false
       rightDrawerOpen.value = false
+      // From https://github.com/quasarframework/quasar/blob/dev/docs/src/layouts/doc-layout/DocSearch.vue#L296
+      window.addEventListener('keydown', onGlobalKeydown)
   })
 </script>
 <style scoped>
