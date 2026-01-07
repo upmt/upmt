@@ -28,11 +28,12 @@
          :data-moment="moment.id">
 
       <DropZone data="header"
-                types="upmt/descriptem upmt/annotation upmt/selection upmt/color"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory"
                 class="row full-width justify-center moment-header q-pa-xs"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
+                @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @color="droppedColor">
         <q-expansion-item
           class="moment-body pa-md-xs"
@@ -245,6 +246,14 @@
 
   function droppedColor (color: string) {
       store.updateMoment(props.momentId, { color: color })
+  }
+
+  function droppedSpecificSynchronicCategory (sscId: string) {
+      // A SSC was dropped - add it and its children to the model
+      const modelId = moment.value?.specificsynchronicmodel?.id
+      if (modelId) {
+          store.copySpecificSynchronicCategoryToModel(sscId, modelId, true)
+      }
   }
 
   // Dropped selections to create a moment. data is before or after
