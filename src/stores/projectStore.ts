@@ -521,6 +521,43 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  /*
+   * Hydrate functions - they are used to hydrate recursive structures
+   */
+  const hydrateFolder = (id: string) => {
+    const folder = getFolder(id)
+    if (folder) {
+      // folder.categorymodels = folder.categorymodels.map(cm => getCategoryModel(cm.id) as CategoryModel)
+      // folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
+      folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
+    }
+    return folder
+  }
+
+  const hydrateSpecificSynchronicCategory = (id: string) => {
+    const ssc = getSpecificSynchronicCategory(id)
+    // justification is already hydrate by the getSpecificSynchronicCategory method
+    if (ssc) {
+      ssc.children = ssc.children.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
+    }
+    return ssc
+  }
+
+  const hydrateSpecificSynchronicModel = (model: SpecificSynchronicModel | null) => {
+    if (model) {
+      model.categories = model.categories.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
+    }
+  }
+
+  const hydrateMoment = (id: string) => {
+    const moment = getMoment(id)
+    if (moment) {
+      moment.children = moment.children.map(m => hydrateMoment(m.id) as Moment)
+      hydrateSpecificSynchronicModel(moment.specificsynchronicmodel)
+    }
+    return moment
+  }
+
   /**
    * Return a project structure with all relationships hydrated
    */
@@ -528,37 +565,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     const project = { ...getFullProject(id) }
     /* Go through all related elements and fetch them */
     console.log("Export project", project)
-    const hydrateFolder = (id: string) => {
-      const folder = getFolder(id)
-      if (folder) {
-        // folder.categorymodels = folder.categorymodels.map(cm => getCategoryModel(cm.id) as CategoryModel)
-        // folder.momentmodels = folder.momentmodels.map(mm => getMomentModel(mm.id))
-        folder.folders = folder.folders.map(f => hydrateFolder(f.id) as ModelFolder)
-      }
-      return folder
-    }
-    const hydrateSpecificSynchronicCategory = (id: string) => {
-      const ssc = getSpecificSynchronicCategory(id)
-      // justification is already hydrate by the getSpecificSynchronicCategory method
-      if (ssc) {
-        ssc.children = ssc.children.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
-      }
-      return ssc
-    }
-    const hydrateSpecificSynchronicModel = (model: SpecificSynchronicModel | null) => {
-        if (model) {
-          model.categories = model.categories.map(c => hydrateSpecificSynchronicCategory(c.id) as SpecificSynchronicCategory)
-        }
-    }
-
-    const hydrateMoment = (id: string) => {
-      const moment = getMoment(id)
-      if (moment) {
-        moment.children = moment.children.map(m => hydrateMoment(m.id) as Moment)
-        hydrateSpecificSynchronicModel(moment.specificsynchronicmodel)
-      }
-      return moment
-    }
 
     for (const detachedmodel of (project.detachedmodels ?? [])) {
       hydrateSpecificSynchronicModel(detachedmodel.proxy)
@@ -843,6 +849,31 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
        */
     }
+
+  function copySpecificSynchronicCategoryToModel (sscId: string, modelId: string, recursive: boolean = false) {
+    const sourceCategory = hydrateSpecificSynchronicCategory(sscId)
+    const destinationModel = getSpecificSynchronicModel(modelId)
+    if (sourceCategory && destinationModel) {
+      const data = sourceCategory.toJSON(!recursive)
+      // Strip ids fields to make the structure generic
+      const strippedData = stripFields(data,
+        [ 'id', 'ownerId', 'parentId',
+          'detachedModelId', 'specificsynchronicmodelId',
+          'interviewId', 'analysisId', 'justificationId',
+          'descriptems', 'created', 'modified'
+        ])
+      const children = [ ...destinationModel.categories ]
+      strippedData.childIndex = children.length
+      if (destinationModel.moment) {
+        strippedData.interviewId = destinationModel.moment.interviewId
+      }
+      strippedData.specificsynchronicmodelId = modelId
+      console.log("Stripped data", JSON.stringify(strippedData, null, 2))
+      // parentId remains null, since we are at the top.
+      console.log(repo.SpecificSynchronicCategory.save(strippedData))
+      console.log("Stripped data", strippedData)
+    }
+  }
 
   function addModelFolder (parentId: string, name: string) {
     return repo.ModelFolder.save({ parentId, name })
@@ -1196,6 +1227,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     addModelFolder,
     addMoment,
     addSpecificSynchronicCategory,
+    copySpecificSynchronicCategoryToModel,
     addTextSelectionToMoment,
     addTextSelectionToSpecificSynchronicCategory,
     buildSynchronicModelFromGraphs,
@@ -1209,6 +1241,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     deleteSpecificSynchronicCategory,
     duplicateDescriptem,
     importProject,
+    hydrateFolder,
+    hydrateMoment,
+    hydrateSpecificSynchronicCategory,
+    hydrateSpecificSynchronicModel,
     hydrateProject,
     hydrateAndStripProject,
     getAllProjects,
