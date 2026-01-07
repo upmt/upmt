@@ -868,10 +868,8 @@ export const useProjectStore = defineStore('projectStore', () => {
         strippedData.interviewId = destinationModel.moment.interviewId
       }
       strippedData.specificsynchronicmodelId = modelId
-      console.log("Stripped data", JSON.stringify(strippedData, null, 2))
       // parentId remains null, since we are at the top.
-      console.log(repo.SpecificSynchronicCategory.save(strippedData))
-      console.log("Stripped data", strippedData)
+      console.log("Copied", repo.SpecificSynchronicCategory.save(strippedData))
     }
   }
 
