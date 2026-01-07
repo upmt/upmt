@@ -85,6 +85,7 @@
           <div class="moment-synchronic-specific-model flex row"
                :class="{ 'moment-synchronic-specific-model-edited': isEditedModel }">
             <SpecificSynchronicModelOverview
+              @click="editModel(moment.specificsynchronicmodel?.id || '')"
               :modelId="moment?.specificsynchronicmodel?.id ?? ''">
             </SpecificSynchronicModelOverview>
 
