@@ -54,7 +54,7 @@
               @click.meta="debug">
               <q-icon
                 size="xs"
-                @click="unhighlight"
+                @click="highlightToggle"
                 name="mdi-alpha-d-box-outline">
               </q-icon>
               <span class="moment-name">{{ momentName }}
@@ -188,8 +188,12 @@
       console.log("Children:\n", moment.value?.children.map(c => `${c.childIndex}: ${c.name}`).join("\n  "))
   }
 
-  function unhighlight () {
-      istore.setHighlightedMomentId("")
+  function highlightToggle () {
+      if (highlightedMomentId.value == props.momentId) {
+          istore.setHighlightedMomentId("")
+      } else {
+          istore.setHighlightedMomentId(props.momentId)
+      }
   }
 
   function showContent () {
