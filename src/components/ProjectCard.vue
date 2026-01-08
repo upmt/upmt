@@ -35,7 +35,7 @@
 
       <q-separator />
 
-      <p>{{ project.note }}</p>
+      <p class="q-pa-sm">{{ project.note }}</p>
 
       <q-card-actions align="right">
         <q-btn :to="{ name: 'project', params: { projectId: projectId } }" flat>Edit</q-btn>
@@ -236,3 +236,8 @@
       [ "Delete project", () => doDeleteProject(props.projectId) ]
   ]
 </script>
+<style scoped>
+.project-card {
+    width: var(--project-width);
+}
+</style>
