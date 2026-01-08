@@ -40,11 +40,12 @@
                 :element="currentInterview" />
             </span>
             <q-btn v-if="isModified"
+                   class="q-ml-xl"
                    outline
                    @click="doStoreProject()"
                    color="warning"
                    no-caps>
-              Modified - Save now
+              Modified - Click here to save
             </q-btn>
           </span>
         </q-toolbar-title>
