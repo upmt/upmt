@@ -297,7 +297,8 @@
   const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
 
   const proposedChildrenNames = computed(() => {
-      const childrenNames = [ ...genericElement.value.childrenNames ].toSorted()
+      const currentChildren = new Set((category.value?.children || []).map(child => child.name))
+      const childrenNames = [ ...genericElement.value.childrenNames.difference(currentChildren) ].toSorted()
       if (childrenNames.length) {
           return [ ["New element", ""],
                    ...childrenNames.map((name: string) => [ name, name ]) ]
