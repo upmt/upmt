@@ -35,7 +35,9 @@
             <NoteIcon
               :element="currentProject" />
             <span v-if="currentInterview">
-              - {{ currentInterview.label }}
+              - Interview {{ currentInterview.label }}
+              <NoteIcon
+                :element="currentInterview" />
             </span>
             <q-btn v-if="isModified"
                    outline
