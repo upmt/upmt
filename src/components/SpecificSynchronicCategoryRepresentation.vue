@@ -89,12 +89,24 @@
             :actions="relationActions" />
           <q-btn
             size="xs"
-            @click.stop="createChildCategory"
             flat
             round
             dense
             title="Create a new child category"
             icon="mdi-plus">
+            <q-menu
+              touch-position>
+              <q-list dense style="min-width: 100px">
+                <q-item
+                  v-for="([label, name], i) in proposedChildrenNames"
+                  clickable
+                  :key="i"
+                  @click.stop="createChildCategory(name)"
+                  v-close-popup>
+                  {{ label }}
+                </q-item>
+              </q-list>
+            </q-menu>
           </q-btn>
         </div>
       </div>
@@ -284,6 +296,16 @@
 
   const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
 
+  const proposedChildrenNames = computed(() => {
+      const childrenNames = [ ...genericElement.value.childrenNames ].toSorted()
+      if (childrenNames.length) {
+          return [ ["New element", ""],
+                   ...childrenNames.map((name: string) => [ name, name ]) ]
+      } else {
+          return [ ["New element", ""] ]
+      }
+  })
+
   function debug () {
       (window as any).category = category.value;
       console.log("SpecificSynchronicCategory", { category: category.value })
@@ -294,9 +316,12 @@
       console.log("Should expand SSC")
   }
 
-  function createSpecificSynchronicCategory (where: string) {
+  function createSpecificSynchronicCategory (where: string, name: string = "") {
       if (category.value) {
-          store.addSpecificSynchronicCategory(istore.newSSCId(),
+          if (! name) {
+              name = istore.newSSCId()
+          }
+          store.addSpecificSynchronicCategory(name,
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               null)
@@ -409,8 +434,8 @@
       store.updateSpecificSynchronicCategory(props.categoryId, { abstractionType: value })
   }
 
-  function createChildCategory () {
-      createSpecificSynchronicCategory(`in:${props.categoryId}`)
+  function createChildCategory (name: string = "") {
+      createSpecificSynchronicCategory(`in:${props.categoryId}`, name)
   }
 
   import type { NamedAction } from 'components/util.ts'
