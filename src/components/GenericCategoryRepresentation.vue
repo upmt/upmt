@@ -69,7 +69,7 @@
                     flat
                     dense
                     size="sm"
-                    @click="editMomentSpecificSynchronicModel(moment.specificsynchronicmodel?.id ?? '')">
+                    @click="editSpecificSynchronicModel(moment.specificsynchronicmodel?.id ?? '')">
                   </q-btn>
                 </div>
               </q-menu>
@@ -85,14 +85,27 @@
                   <q-btn class="full-width justify-content-between"
                          align="left"
                          no-caps
+                         :label="name"
+                         icon="mdi-comment-text-outline"
                          @click="switchTab(name)"
                          size="sm">
-                    <span class="interview-name">{{name}}</span>
+                  </q-btn>
+                  <strong class="interview-moment-count">{{ count }}</strong>
+                </div>
+                <div class="row items-left no-wrap"
+                     :key="name"
+                     v-for="[ name, modelId, count ] in byDetachedModel(detachedModelInfos)">
+                  <q-btn class="full-width justify-content-between"
+                         align="left"
+                         no-caps
+                         :label="name"
+                         @click="editSpecificSynchronicModel(modelId)"
+                         size="sm">
                   </q-btn>
                   <strong class="interview-moment-count">{{ count }}</strong>
                 </div>
               </q-menu>
-              {{ moments.length }}</q-btn>
+              {{ moments.length + detachedModelInfos.length }}</q-btn>
             <q-popup-edit
               ref="popupEdit"
               v-model="genericcategoryName"
@@ -131,13 +144,14 @@
 
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
+  import SpecificSynchronicModel from 'stores/models/specificsynchronicmodel'
   import Moment from 'stores/models/moment'
   import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { groupBy } from './util'
 
-  import type { GenericCategory, GraphInfo } from 'stores/projectStore'
+  import type { GenericCategory, GraphInfo, ContainerInfo } from 'stores/projectStore'
 
   const istore = useInterfaceStore()
 
@@ -169,6 +183,13 @@
             .map(ssc => props.genericGraphs.instanceIdToContainerInfo[ssc.id]?.momentId)
             .filter(id => !!id) as string[]
       return store.getMoments(momentIds)
+  })
+
+  const detachedModelInfos = computed(() => {
+      const modelInfos = props.genericcategory.instances
+            .map(ssc => props.genericGraphs.instanceIdToContainerInfo[ssc.id])
+            .filter(info => info && info.detachedModelId) as ContainerInfo[]
+      return modelInfos
   })
 
   const currentMoments = computed(() => moments.value?.filter((m: Moment) => m.interviewId === props.currentInterviewId) || [])
@@ -211,19 +232,25 @@
   })
 
   const momentsLabel = computed(() => {
+      let output = ""
       const count = moments.value.length
       if (count) {
-          return `Present in ${count} moments`
+          output = `Present in ${count} moments`
       } else {
-          return "Not present in any interview"
+          output = "Not present in any interview"
       }
+      const countModel = detachedModelInfos.value.length
+      if (countModel) {
+          output = `${output} and in ${countModel} detached models`
+      }
+      return output
   })
 
   function highlightMoment (momentId: string) {
       istore.setHighlightedMomentId(momentId)
   }
 
-  function editMomentSpecificSynchronicModel (modelId: string) {
+  function editSpecificSynchronicModel (modelId: string) {
       istore.setEditedSpecificSynchronicModelId(modelId)
   }
 
@@ -233,6 +260,16 @@
 
       return Object.entries(groupBy(moments, 'interviewId'))
           .map(([id, arr]) => [ names[id], (arr as Array<any>).length ])
+  }
+
+  function byDetachedModel (modelInfos: Array<ContainerInfo>) {
+      const repo = store.getRepo()
+      // ! Detached model name is taken from the SSM proxy name, not directly the DetachedModel instance
+      const specificSynchronicModelIds = modelInfos.map(info => info.specificSynchronicModelId)
+      const names = Object.fromEntries(repo.SpecificSynchronicModel
+          .find(specificSynchronicModelIds)
+          .map((i: SpecificSynchronicModel) => [ i.id, i.name ]))
+      return specificSynchronicModelIds.map((modelId: string) => [names[modelId], modelId, 1] as [string, string, number] )
   }
 
   function switchTab (interviewName: string) {

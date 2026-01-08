@@ -13,6 +13,7 @@ export default class DetachedSynchronicModel extends BaseModel {
   @Str('') declare created: string
   @Str('') declare modified: string
 
+  // Warning: for the moment, the model name is stored in the proxy model
   @Str('') declare name: string
   @Str('') declare color: string
   @Str('') declare note: string
