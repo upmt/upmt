@@ -127,6 +127,8 @@
 
   import { computed, ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import { useQuasar } from 'quasar'
+
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import Moment from 'stores/models/moment'
@@ -150,6 +152,8 @@
   const props = withDefaults(defineProps<Props>(), {
       currentInterviewId: ""
   })
+
+  const $q = useQuasar()
 
   const popupEdit = ref(null)
 
@@ -177,9 +181,23 @@
           return props.genericcategory ? props.genericcategory.name : ""
       },
       set (value: string) {
+          const instances = props.genericcategory.instances
           console.log(`Renaming ${props.genericcategory.name} to ${value}`)
-          // FIXME:
-          // store.updateGenericCategoryName(props.genericcategory.name, { name: value })
+          $q.dialog({
+              title: 'Confirm category renaming',
+              html: true,
+              message: `Do you confirm the renaming of ${instances.length} Specific Synchronic Categories from <strong>${props.genericcategory.name}</strong> to <strong>${value}</strong>?`,
+              cancel: true,
+              persistent: true
+          }).onOk(() => {
+              instances.forEach(ssc => {
+                  store.updateElement(ssc, { name: value })
+              })
+              $q.notify({
+                  type: 'info',
+                  message: `Renamed ${instances.length} categories as "${value}"`
+              })
+           })
       }
   })
 
