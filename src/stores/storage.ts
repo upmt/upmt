@@ -72,6 +72,21 @@ function getStoredProject(id: string)  {
 }
 
 /**
+ * Delete project (moving to trash)
+ */
+function deleteStoredProject(id: string)  {
+  const projectPath = id2path(id)
+  try {
+    fs.rmSync(projectPath)
+    console.log(`Project ${projectPath} deleted`)
+    return null
+  } catch (error) {
+    console.log("Error when deleting project", id, error)
+    return null
+  }
+}
+
+/**
  * Get the latest info of project id as JSON object
  */
 function getProjectInfo(id: string)  {
@@ -108,5 +123,6 @@ export {
    getStoredProject,
    isStoredProject,
    listStoredProjects,
+   deleteStoredProject,
    storeProject
 }

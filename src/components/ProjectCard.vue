@@ -73,7 +73,7 @@
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { storeProject, getProjectInfo } from 'stores/storage'
+  import { storeProject, getProjectInfo, deleteStoredProject } from 'stores/storage'
   import { timestampAdd } from 'stores/util'
 
   import ElementMenu from './ElementMenu.vue'
@@ -130,6 +130,26 @@
   function doStrippedExport (projectId: string) {
       const data = store.hydrateAndStripProject(projectId)
       exportFile(timestampAdd(`${projectId}-stripped.json`), JSON.stringify(data, null, 2))
+  }
+
+  /* Ask for confirmation then delete project */
+  function doDeleteProject (projectId: string) {
+      $q.dialog({
+          title: `Confirm project deletion`,
+          html: true,
+          message: `Do you confirm the deletion of project <strong>${projectId}</strong>?`,
+          cancel: true,
+          persistent: true
+      }).onOk(() => {
+          // Make a last copy for safety
+          doUpmtExport(projectId)
+          deleteStoredProject(projectId)
+          store.deleteProject(projectId)
+          $q.notify({
+              type: 'info',
+              message: `Deleted project ${projectId}`
+          })
+      })
   }
 
   function droppedProject (sourceProjectId: string) {
@@ -213,9 +233,6 @@
       [ "Download project file", () => doUpmtExport(props.projectId) ],
       [ "Download stripped file (dev)", () => doStrippedExport(props.projectId) ],
       [ "Export as CSV", () => doCsvExport(props.projectId) ],
-      [ "Delete", () =>  $q.notify({
-          type: 'error',
-          message: `Not implemented yet`
-          }) ]
+      [ "Delete project", () => doDeleteProject(props.projectId) ]
   ]
 </script>

@@ -902,6 +902,21 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', momentId).delete()
   }
 
+  function deleteProject (projectId: string) {
+    // Typescript prevents doing a simple for loop without going through shenanigans
+    repo.Moment.where('projectId', projectId).delete()
+    repo.SpecificSynchronicModel.where('projectId', projectId).delete()
+    repo.SpecificSynchronicCategory.where('projectId', projectId).delete()
+    repo.Justification.where('projectId', projectId).delete()
+    repo.Descriptem.where('projectId', projectId).delete()
+    repo.DetachedSynchronicModel.where('projectId', projectId).delete()
+    repo.Interview.where('projectId', projectId).delete()
+    repo.ModelFolder.where('projectId', projectId).delete()
+    repo.Annotation.where('projectId', projectId).delete()
+    repo.Analysis.where('projectId', projectId).delete()
+    repo.Project.where('id', projectId).delete()
+  }
+
   function deleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
     const category = getSpecificSynchronicCategory(categoryId)
     if (category) {
@@ -1240,6 +1255,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deleteInterview,
     deleteModelFolder,
     deleteMoment,
+    deleteProject,
     deleteSpecificSynchronicCategory,
     duplicateDescriptem,
     importProject,
