@@ -326,10 +326,13 @@
           if (! name) {
               name = istore.newSSCId()
           }
+          const genericSource = props.genericGraph ? props.genericGraph.byName[name] : {}
+          const abstractionType = genericSource.abstractionType || ''
           store.addSpecificSynchronicCategory(name,
                                               category.value.specificsynchronicmodelId,
                                               where,
-                                              null)
+                                              null,
+                                              abstractionType)
           showContent()
       }
   }

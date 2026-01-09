@@ -113,9 +113,13 @@
       }
 
       newChildren.value.forEach(n => {
+          const genericSource = props.genericGraph ? props.genericGraph.byName[n] : {}
+          const abstractionType = genericSource.abstractionType || ''
           store.addSpecificSynchronicCategory(n,
                                               props.category.specificsynchronicmodelId,
-                                              `in:${props.category.id}`)
+                                              `in:${props.category.id}`,
+                                              null,
+                                              abstractionType)
       })
       // Since validate may be called twice, reset the newChildren array
       newChildren.value = []
