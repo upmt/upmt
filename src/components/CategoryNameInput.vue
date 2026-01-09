@@ -90,7 +90,8 @@
   const emit = defineEmits([ 'change' ])
 
   const props = defineProps({
-      category: { type: SpecificSynchronicCategory, default: null }
+      category: { type: SpecificSynchronicCategory, default: null },
+      genericGraph: { type: Object, default: null }
   })
 
   const name = ref(props.category.name)
@@ -105,7 +106,10 @@
       // If the select has focus, then use the selected name. Else use the input name value.
 
       if (props.category) {
-          store.updateElement(props.category, { name: name.value })
+          /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
+          const genericSource = props.genericGraph ? props.genericGraph.byName[name.value] : {}
+          const abstractionType = genericSource.abstractionType || ''
+          store.updateElement(props.category, { name: name.value, abstractionType })
       }
 
       newChildren.value.forEach(n => {

@@ -135,6 +135,7 @@
                             v-slot="scope"
                             auto-save>
                 <CategoryNameInput @change="scope.cancel"
+                                   :genericGraph="genericGraph"
                                    :category="category" />
               </q-popup-edit>
             </span>
@@ -237,7 +238,10 @@
           return category.value ? category.value.name : ""
       },
       set (value: string) {
-          store.updateSpecificSynchronicCategory(props.categoryId, { name:value })
+          /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
+          const genericSource = props.genericGraph ? props.genericGraph.byName[value] : {}
+          const abstractionType = genericSource.abstractionType || ''
+          store.updateSpecificSynchronicCategory(props.categoryId, { name: value, abstractionType: abstractionType })
       }
   })
 
