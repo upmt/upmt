@@ -1,723 +1,3076 @@
 {
-    "interview_list": [{
-        "date": "24/09/2024",
-        "@model": "interview",
-        "interviewText": {
-            "annotation_list": [
-                {
-                    "startIndex": 51,
-                    "@model": "annotation",
-                    "interviewText": {
-                        "@model": "interviewText",
-                        "@id": 1991376677
-                    },
-                    "color": "0x7084b0ff",
-                    "endIndex": 106,
-                    "@version": 1,
-                    "@id": 464076799
-                },
-                {
-                    "startIndex": 107,
-                    "@model": "annotation",
-                    "interviewText": {
-                        "@model": "interviewText",
-                        "@id": 1991376677
-                    },
-                    "color": "0x7bcf7bff",
-                    "endIndex": 183,
-                    "@version": 1,
-                    "@id": 1088967186
-                },
-                {
-                    "startIndex": 184,
-                    "@model": "annotation",
-                    "interviewText": {
-                        "@model": "interviewText",
-                        "@id": 1991376677
-                    },
-                    "color": "0x7bcf7bff",
-                    "endIndex": 254,
-                    "@version": 1,
-                    "@id": 1311716335
-                },
-                {
-                    "startIndex": 255,
-                    "@model": "annotation",
-                    "interviewText": {
-                        "@model": "interviewText",
-                        "@id": 1991376677
-                    },
-                    "color": "0x7bcf7bff",
-                    "endIndex": 339,
-                    "@version": 1,
-                    "@id": 924759512
-                },
-                {
-                    "startIndex": 0,
-                    "@model": "annotation",
-                    "interviewText": {
-                        "@model": "interviewText",
-                        "@id": 1991376677
-                    },
-                    "color": "0x7084b0ff",
-                    "endIndex": 50,
-                    "@version": 1,
-                    "@id": 1696215555
-                }
-            ],
-            "@model": "interviewText",
-            "@version": 1,
-            "@id": 1991376677,
-            "text": "It was in Puiseaux one April morning, last spring. I just hung up the phone after a conversation with Tom. I feel sad. My heart is tight, like a frozen ball in the middle of my chest. At one point, the song of a turtle-dove comes through the open window. And suddenly, this ball begins to melt, to dilute, a new heat invades my whole body."
-        },
-        "color": "b97a57",
-        "@version": 1,
+  "id": "Example",
+  "version": 3,
+  "creator": "Nicolas",
+  "contributor": "Nicolas",
+  "created": "2026-01-08T13:56:54.227Z",
+  "modified": "2026-01-08T13:56:54.227Z",
+  "filename": "2026-01-08T182650-Example.upmt",
+  "name": "Example",
+  "note": "This a basic example project to illustrate the tool. It will be reset any time μPMT launches.",
+  "modelfolder": {
+    "id": "kIu2H6BU_YoZeduKrF5tA",
+    "creator": "Nicolas",
+    "contributor": "Nicolas",
+    "projectId": "Example",
+    "created": "2026-01-08T13:56:54.227Z",
+    "modified": "2026-01-08T13:56:54.227Z",
+    "name": "Model",
+    "color": "",
+    "note": "",
+    "isExpanded": true,
+    "ownerId": "Example",
+    "parentId": null,
+    "folders": []
+  },
+  "detachedmodels": [],
+  "interviews": [
+    {
+      "id": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+      "creator": "Nicolas",
+      "contributor": "Nicolas",
+      "projectId": "Example",
+      "created": "2026-01-08T13:58:41.571Z",
+      "modified": "2026-01-08T13:58:41.571Z",
+      "name": "Interview 1",
+      "color": "",
+      "note": "This is a mockup interview content to illustrate micro-phenological modeling, taken from Petitmengin, Claire, Anne Remillieux, et Camila Valenzuela-Moguillansky. « Discovering the Structures of Lived Experience ». Phenomenology and the Cognitive Sciences 18, nᵒ 4 (2019): 691‑730. https://doi.org/10.1007/s11097-018-9597-4",
+      "date": "2018-06-12",
+      "text": "\nIt was in Puiseaux one April morning, last spring. I just hung up the phone after a conversation with Tom. \nI feel sad. \nMy heart is tight, like a frozen ball in the middle of my chest.\nAt onepoint, the song of a turtle-dove comes through the open window. \nAnd suddenly, this ball begins to melt, to dilute, a new heat invades my whole body. ",
+      "participantName": "John",
+      "parentId": "Example",
+      "annotations": [
+        {
+          "id": "MiWila-hGM5hBTAnsEuUf",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T16:43:37.345Z",
+          "modified": "2026-01-08T16:43:37.345Z",
+          "color": "#7bcf7b",
+          "startIndex": 1,
+          "endIndex": 343,
+          "note": "",
+          "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+        }
+      ],
+      "analysis": {
+        "id": "xowCxugwZ9YK2eWEZfqU7",
+        "creator": "Nicolas",
+        "contributor": "Nicolas",
+        "projectId": "Example",
+        "created": "2026-01-08T13:58:41.571Z",
+        "modified": "2026-01-08T13:58:41.571Z",
+        "name": "",
+        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
         "rootMoment": {
-            "moment_list": [{
-                "moment_list": [
-                    {
-                        "moment_list": [],
-                        "@model": "moment",
-                        "isCollapsed": false,
-                        "color": "ffffff",
-                        "isCommentVisible": false,
-                        "concreteCategory_list": [
-                            {
-                                "@model": "concreteCategory",
-                                "@version": 1,
-                                "concreteProperty_list": [
+          "id": "yXwmMsr42y1CISnZBGnlz",
+          "creator": "Nicolas",
+          "contributor": "Nicolas",
+          "projectId": "Example",
+          "created": "2026-01-08T13:58:41.571Z",
+          "modified": "2026-01-08T13:58:41.571Z",
+          "name": "Root moment",
+          "color": "",
+          "note": "",
+          "isExpanded": false,
+          "isTransitional": false,
+          "analysisId": "xowCxugwZ9YK2eWEZfqU7",
+          "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+          "parentId": null,
+          "childIndex": 0,
+          "children": [
+            {
+              "id": "0h6t9QbqCjQl3Gf-lZBiB",
+              "creator": "Nicolas",
+              "contributor": "Nicolas",
+              "projectId": "Example",
+              "created": "2026-01-08T13:58:41.570Z",
+              "modified": "2026-01-08T13:58:41.570Z",
+              "name": "One april morning",
+              "color": "",
+              "note": "",
+              "isExpanded": true,
+              "isTransitional": false,
+              "analysisId": null,
+              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+              "parentId": "yXwmMsr42y1CISnZBGnlz",
+              "childIndex": 0,
+              "children": [
+                {
+                  "id": "h97u_bx7zDSYnpRWhMCND",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T13:59:12.558Z",
+                  "modified": "2026-01-08T13:59:12.558Z",
+                  "name": "Hung up the phone",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                  "parentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                  "childIndex": 0,
+                  "children": [],
+                  "justification": {
+                    "id": "OBYnrTjm0r6HtUGTSx9x4",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T13:59:12.558Z",
+                    "modified": "2026-01-08T13:59:12.558Z",
+                    "name": "",
+                    "parentId": "h97u_bx7zDSYnpRWhMCND",
+                    "descriptems": [
+                      {
+                        "id": "KX0Tk6dShQbIQAQH9LQcM",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T13:59:12.558Z",
+                        "modified": "2026-01-08T13:59:12.558Z",
+                        "startIndex": 51,
+                        "endIndex": 108,
+                        "note": "",
+                        "justificationId": "OBYnrTjm0r6HtUGTSx9x4",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "nfrkhGO12rbVAiseOa9Pt",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T13:59:12.558Z",
+                    "modified": "2026-01-08T13:59:12.558Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "h97u_bx7zDSYnpRWhMCND",
+                    "detachedModelId": null,
+                    "categories": []
+                  }
+                },
+                {
+                  "id": "WdrKciFKmfnOfgyvWAwYX",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:17:11.601Z",
+                  "modified": "2026-01-08T14:17:11.601Z",
+                  "name": "Tightness phase",
+                  "color": "#4a86e8",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                  "parentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                  "childIndex": 1,
+                  "children": [],
+                  "justification": {
+                    "id": "LPAqvQsOZRXQzv_IIvFUt",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:11.599Z",
+                    "modified": "2026-01-08T14:17:11.599Z",
+                    "name": "",
+                    "parentId": "WdrKciFKmfnOfgyvWAwYX",
+                    "descriptems": [
+                      {
+                        "id": "2nze0v91v1yfQPHywSxEm",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:17:11.599Z",
+                        "modified": "2026-01-08T14:17:11.599Z",
+                        "startIndex": 109,
+                        "endIndex": 121,
+                        "note": "",
+                        "justificationId": "LPAqvQsOZRXQzv_IIvFUt",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                      },
+                      {
+                        "id": "O-PpkpkFSYH9FM29x_oFF",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:17:18.155Z",
+                        "modified": "2026-01-08T14:17:18.155Z",
+                        "startIndex": 122,
+                        "endIndex": 186,
+                        "note": "",
+                        "justificationId": "LPAqvQsOZRXQzv_IIvFUt",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "j046eXxhiSBae_Qm8IT5m",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:11.600Z",
+                    "modified": "2026-01-08T14:17:11.600Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "WdrKciFKmfnOfgyvWAwYX",
+                    "detachedModelId": null,
+                    "categories": [
+                      {
+                        "id": "9Lm6E_piR4SQw4DLFbyCu",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:25:00.548Z",
+                        "modified": "2026-01-08T14:25:00.548Z",
+                        "name": "Bodily feeling",
+                        "color": "",
+                        "note": "",
+                        "abstractionType": "aggregation",
+                        "criterion": "",
+                        "parentId": null,
+                        "childIndex": 0,
+                        "specificsynchronicmodelId": "j046eXxhiSBae_Qm8IT5m",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                        "parent": null,
+                        "children": [
+                          {
+                            "id": "uZ5mCycCv0wp8Q1fSA-ix",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:25:18.007Z",
+                            "modified": "2026-01-08T14:25:18.007Z",
+                            "name": "Location",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "9Lm6E_piR4SQw4DLFbyCu",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:00.548Z",
+                              "modified": "2026-01-08T14:25:00.548Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "j046eXxhiSBae_Qm8IT5m",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "eeySxfN4TNfw_CtNxDdZk",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:26:06.775Z",
+                                "modified": "2026-01-08T14:26:06.775Z",
+                                "name": "Chest",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "uZ5mCycCv0wp8Q1fSA-ix",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "uZ5mCycCv0wp8Q1fSA-ix",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:25:18.007Z",
+                                  "modified": "2026-01-08T14:25:18.007Z",
+                                  "name": "Location",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "ApXhqhLkPk6t0oy5mmYjf",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:26:06.774Z",
+                                  "modified": "2026-01-08T14:26:06.774Z",
+                                  "name": "",
+                                  "parentId": "eeySxfN4TNfw_CtNxDdZk",
+                                  "descriptems": [
                                     {
-                                        "@model": "concreteProperty",
-                                        "@version": 1,
-                                        "schemaProperty": {
-                                            "@model": "schemaProperty",
-                                            "@id": 652411295
-                                        },
-                                        "@id": 1946739193,
-                                        "justification": {
-                                            "@model": "justification",
-                                            "descripteme_list": [{
-                                                "startIndex": 138,
-                                                "@model": "descripteme",
-                                                "interviewText": {
-                                                    "@model": "interviewText",
-                                                    "@id": 1991376677
-                                                },
-                                                "endIndex": 156,
-                                                "@version": 1,
-                                                "@id": 998786407
-                                            }],
-                                            "@version": 1,
-                                            "@id": 772764353
-                                        },
-                                        "value": "cold"
+                                      "id": "0yMEYB-5VFLEMYXT2Ndj3",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:26:37.605Z",
+                                      "modified": "2026-01-08T14:26:37.605Z",
+                                      "startIndex": 122,
+                                      "endIndex": 139,
+                                      "note": "",
+                                      "justificationId": "ApXhqhLkPk6t0oy5mmYjf",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
                                     },
                                     {
-                                        "@model": "concreteProperty",
-                                        "@version": 1,
-                                        "schemaProperty": {
-                                            "@model": "schemaProperty",
-                                            "@id": 1137765583
-                                        },
-                                        "@id": 1178838103,
-                                        "justification": {
-                                            "@model": "justification",
-                                            "descripteme_list": [{
-                                                "startIndex": 151,
-                                                "@model": "descripteme",
-                                                "interviewText": {
-                                                    "@model": "interviewText",
-                                                    "@id": 1991376677
-                                                },
-                                                "endIndex": 156,
-                                                "@version": 1,
-                                                "@id": 549158730
-                                            }],
-                                            "@version": 1,
-                                            "@id": 1979159119
-                                        },
-                                        "value": "round"
-                                    },
-                                    {
-                                        "@model": "concreteProperty",
-                                        "@version": 1,
-                                        "schemaProperty": {
-                                            "@model": "schemaProperty",
-                                            "@id": 1955507762
-                                        },
-                                        "@id": 1499575623,
-                                        "justification": {
-                                            "@model": "justification",
-                                            "descripteme_list": [
-                                                {
-                                                    "startIndex": 157,
-                                                    "@model": "descripteme",
-                                                    "interviewText": {
-                                                        "@model": "interviewText",
-                                                        "@id": 1991376677
-                                                    },
-                                                    "endIndex": 183,
-                                                    "@version": 1,
-                                                    "@id": 1266113758
-                                                },
-                                                {
-                                                    "startIndex": 119,
-                                                    "@model": "descripteme",
-                                                    "interviewText": {
-                                                        "@model": "interviewText",
-                                                        "@id": 1991376677
-                                                    },
-                                                    "endIndex": 127,
-                                                    "@version": 1,
-                                                    "@id": 105303639
-                                                }
-                                            ],
-                                            "@version": 1,
-                                            "@id": 47960864
-                                        },
-                                        "value": "chest"
-                                    },
-                                    {
-                                        "@model": "concreteProperty",
-                                        "@version": 1,
-                                        "schemaProperty": {
-                                            "@model": "schemaProperty",
-                                            "@id": 225186599
-                                        },
-                                        "@id": 1683127062,
-                                        "justification": {
-                                            "@model": "justification",
-                                            "descripteme_list": [{
-                                                "startIndex": 131,
-                                                "@model": "descripteme",
-                                                "interviewText": {
-                                                    "@model": "interviewText",
-                                                    "@id": 1991376677
-                                                },
-                                                "endIndex": 156,
-                                                "@version": 1,
-                                                "@id": 1227672580
-                                            }],
-                                            "@version": 1,
-                                            "@id": 952952431
-                                        },
-                                        "value": "compact"
+                                      "id": "sVbzM68lIuKjIKzXAHAmF",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:26:26.749Z",
+                                      "modified": "2026-01-08T14:26:26.749Z",
+                                      "startIndex": 159,
+                                      "endIndex": 186,
+                                      "note": "",
+                                      "justificationId": "ApXhqhLkPk6t0oy5mmYjf",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
                                     }
-                                ],
-                                "@id": 290490455,
-                                "justification": {
-                                    "@model": "justification",
-                                    "descripteme_list": [{
-                                        "startIndex": 119,
-                                        "@model": "descripteme",
-                                        "interviewText": {
-                                            "@model": "interviewText",
-                                            "@id": 1991376677
-                                        },
-                                        "endIndex": 136,
-                                        "@version": 1,
-                                        "@id": 810363861
-                                    }],
-                                    "@version": 1,
-                                    "@id": 1878153361
-                                },
-                                "schemaCategory": {
-                                    "@model": "schemaCategory",
-                                    "@id": 1109066827
+                                  ]
                                 }
-                            },
-                            {
-                                "@model": "concreteCategory",
-                                "@version": 1,
-                                "concreteProperty_list": [{
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 2001674432
-                                    },
-                                    "@id": 391699531,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 106,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 118,
-                                            "@version": 1,
-                                            "@id": 170324124
-                                        }],
-                                        "@version": 1,
-                                        "@id": 901250602
-                                    },
-                                    "value": "sadness"
-                                }],
-                                "@id": 283526519,
-                                "justification": {
-                                    "@model": "justification",
-                                    "descripteme_list": [{
-                                        "startIndex": 106,
-                                        "@model": "descripteme",
-                                        "interviewText": {
-                                            "@model": "interviewText",
-                                            "@id": 1991376677
-                                        },
-                                        "endIndex": 138,
-                                        "@version": 1,
-                                        "@id": 951810996
-                                    }],
-                                    "@version": 1,
-                                    "@id": 1738213046
-                                },
-                                "schemaCategory": {
-                                    "@model": "schemaCategory",
-                                    "@id": 868029676
-                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "mZNiwIHGc-mxqbkTugMzU",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:18.007Z",
+                              "modified": "2026-01-08T14:25:18.007Z",
+                              "name": "",
+                              "parentId": "uZ5mCycCv0wp8Q1fSA-ix",
+                              "descriptems": []
                             }
+                          },
+                          {
+                            "id": "-qEztWsBxSRaQXud6k2Yc",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:25:40.347Z",
+                            "modified": "2026-01-08T14:25:40.347Z",
+                            "name": "Density",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "9Lm6E_piR4SQw4DLFbyCu",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:00.548Z",
+                              "modified": "2026-01-08T14:25:00.548Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "j046eXxhiSBae_Qm8IT5m",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "9MVgWp9nVhv64vaBSOmBA",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:26:44.211Z",
+                                "modified": "2026-01-08T14:26:44.211Z",
+                                "name": "Compact",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "-qEztWsBxSRaQXud6k2Yc",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "-qEztWsBxSRaQXud6k2Yc",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:25:40.347Z",
+                                  "modified": "2026-01-08T14:25:40.347Z",
+                                  "name": "Density",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "-qjStySwQRn-OUVAtgfgb",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:26:44.210Z",
+                                  "modified": "2026-01-08T14:26:44.210Z",
+                                  "name": "",
+                                  "parentId": "9MVgWp9nVhv64vaBSOmBA",
+                                  "descriptems": [
+                                    {
+                                      "id": "c1ijkRzPsGEhTYrr1pXIE",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:27:00.875Z",
+                                      "modified": "2026-01-08T14:27:00.875Z",
+                                      "startIndex": 133,
+                                      "endIndex": 139,
+                                      "note": "",
+                                      "justificationId": "-qjStySwQRn-OUVAtgfgb",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    },
+                                    {
+                                      "id": "uJ4nmI9ghFfo0gm3CQazC",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:27:06.749Z",
+                                      "modified": "2026-01-08T14:27:06.749Z",
+                                      "startIndex": 148,
+                                      "endIndex": 154,
+                                      "note": "",
+                                      "justificationId": "-qjStySwQRn-OUVAtgfgb",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "FlOJP0qJNr4oJka5R1Nkb",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:40.346Z",
+                              "modified": "2026-01-08T14:25:40.346Z",
+                              "name": "",
+                              "parentId": "-qEztWsBxSRaQXud6k2Yc",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "iVLeomjNRrWr29LyomQOe",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:25:50.538Z",
+                            "modified": "2026-01-08T14:25:50.538Z",
+                            "name": "Temperature",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "9Lm6E_piR4SQw4DLFbyCu",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:00.548Z",
+                              "modified": "2026-01-08T14:25:00.548Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "j046eXxhiSBae_Qm8IT5m",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "RKM5RbkuUE-WBshZbg1mb",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:27:11.190Z",
+                                "modified": "2026-01-08T14:27:11.190Z",
+                                "name": "Cold",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "iVLeomjNRrWr29LyomQOe",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "iVLeomjNRrWr29LyomQOe",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:25:50.538Z",
+                                  "modified": "2026-01-08T14:25:50.538Z",
+                                  "name": "Temperature",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "eX576ySvjOMr7Uf9y9E_-",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:27:11.189Z",
+                                  "modified": "2026-01-08T14:27:11.189Z",
+                                  "name": "",
+                                  "parentId": "RKM5RbkuUE-WBshZbg1mb",
+                                  "descriptems": [
+                                    {
+                                      "id": "dHVBxBRgCtVn7FlIpEyBq",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:27:30.485Z",
+                                      "modified": "2026-01-08T14:27:30.485Z",
+                                      "startIndex": 148,
+                                      "endIndex": 154,
+                                      "note": "",
+                                      "justificationId": "eX576ySvjOMr7Uf9y9E_-",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "NDVT4vUoBi9RdhCiwe7Nw",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:50.538Z",
+                              "modified": "2026-01-08T14:25:50.538Z",
+                              "name": "",
+                              "parentId": "iVLeomjNRrWr29LyomQOe",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "XawqsmYivwYjx8jXlRIHR",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:25:57.387Z",
+                            "modified": "2026-01-08T14:25:57.387Z",
+                            "name": "Shape",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "9Lm6E_piR4SQw4DLFbyCu",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:00.548Z",
+                              "modified": "2026-01-08T14:25:00.548Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "j046eXxhiSBae_Qm8IT5m",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "933VCZTt4qnxwe4WZz-go",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:27:35.625Z",
+                                "modified": "2026-01-08T14:27:35.625Z",
+                                "name": "Sphere",
+                                "color": "#fff2cc",
+                                "note": "This category was not present in the first analysis. This was added after the analysis of the other partitipant's interview where 'Sphere' was found first.",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "XawqsmYivwYjx8jXlRIHR",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "XawqsmYivwYjx8jXlRIHR",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:25:57.387Z",
+                                  "modified": "2026-01-08T14:25:57.387Z",
+                                  "name": "Shape",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "VPFsiavAjUXoOa5JkNRhb",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:27:35.624Z",
+                                  "modified": "2026-01-08T14:27:35.624Z",
+                                  "name": "",
+                                  "parentId": "933VCZTt4qnxwe4WZz-go",
+                                  "descriptems": [
+                                    {
+                                      "id": "fFE5tNEE7ks0iSuTZypiw",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:28:03.876Z",
+                                      "modified": "2026-01-08T14:28:03.876Z",
+                                      "startIndex": 141,
+                                      "endIndex": 159,
+                                      "note": "",
+                                      "justificationId": "VPFsiavAjUXoOa5JkNRhb",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "-myjTpMz9BRZS8-TIUY7v",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:25:57.387Z",
+                              "modified": "2026-01-08T14:25:57.387Z",
+                              "name": "",
+                              "parentId": "XawqsmYivwYjx8jXlRIHR",
+                              "descriptems": []
+                            }
+                          }
                         ],
-                        "transitional": false,
-                        "@version": 3,
-                        "name": "TIghtening phase",
-                        "@id": 58915237,
                         "justification": {
-                            "@model": "justification",
-                            "descripteme_list": [{
-                                "startIndex": 106,
-                                "@model": "descripteme",
-                                "interviewText": {
-                                    "@model": "interviewText",
-                                    "@id": 1991376677
-                                },
-                                "endIndex": 183,
-                                "@version": 1,
-                                "@id": 782145641
-                            }],
-                            "@version": 1,
-                            "@id": 1158401347
+                          "id": "UsifrlXgaLF8hZpdv22KU",
+                          "creator": "Nicolas",
+                          "contributor": "Nicolas",
+                          "projectId": "Example",
+                          "created": "2026-01-08T14:25:00.547Z",
+                          "modified": "2026-01-08T14:25:00.547Z",
+                          "name": "",
+                          "parentId": "9Lm6E_piR4SQw4DLFbyCu",
+                          "descriptems": []
                         }
-                    },
-                    {
-                        "moment_list": [],
-                        "@model": "moment",
-                        "isCollapsed": false,
-                        "color": "ffffff",
-                        "isCommentVisible": false,
-                        "concreteCategory_list": [{
-                            "@model": "concreteCategory",
-                            "@version": 1,
-                            "concreteProperty_list": [
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 930091828
-                                    },
-                                    "@id": 292765662,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 212,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 223,
-                                            "@version": 1,
-                                            "@id": 1325772416
-                                        }],
-                                        "@version": 1,
-                                        "@id": 1201588897
-                                    },
-                                    "value": "turtle dove"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "iw6salRHqmnRzPHWej2WM",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:17:47.697Z",
+                  "modified": "2026-01-08T14:17:47.697Z",
+                  "name": "Auditory event",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": true,
+                  "analysisId": null,
+                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                  "parentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                  "childIndex": 2,
+                  "children": [],
+                  "justification": {
+                    "id": "otFRBbHlRq2O536puRMlU",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:47.696Z",
+                    "modified": "2026-01-08T14:17:47.696Z",
+                    "name": "",
+                    "parentId": "iw6salRHqmnRzPHWej2WM",
+                    "descriptems": [
+                      {
+                        "id": "2pc4d02xhzvE1jO26fz4B",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:17:47.695Z",
+                        "modified": "2026-01-08T14:17:47.695Z",
+                        "startIndex": 187,
+                        "endIndex": 257,
+                        "note": "",
+                        "justificationId": "otFRBbHlRq2O536puRMlU",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "sRPDW28W5OZgZiYFk2vM_",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:47.696Z",
+                    "modified": "2026-01-08T14:17:47.696Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "iw6salRHqmnRzPHWej2WM",
+                    "detachedModelId": null,
+                    "categories": []
+                  }
+                },
+                {
+                  "id": "u_MBuIP2Ile5XnWqu4dVt",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:17:57.490Z",
+                  "modified": "2026-01-08T14:17:57.490Z",
+                  "name": "Loosening phase",
+                  "color": "#f9cb9c",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                  "parentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                  "childIndex": 3,
+                  "children": [],
+                  "justification": {
+                    "id": "hJ-cHBfSkxQCrhDEHV0Yc",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:57.489Z",
+                    "modified": "2026-01-08T14:17:57.489Z",
+                    "name": "",
+                    "parentId": "u_MBuIP2Ile5XnWqu4dVt",
+                    "descriptems": [
+                      {
+                        "id": "TOCOZ-0mzGAjh9bVUh4vk",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:18:53.299Z",
+                        "modified": "2026-01-08T14:18:53.299Z",
+                        "startIndex": 258,
+                        "endIndex": 343,
+                        "note": "",
+                        "justificationId": "hJ-cHBfSkxQCrhDEHV0Yc",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "qN9ZZk_skdWQMlvYTct6c",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:17:57.490Z",
+                    "modified": "2026-01-08T14:17:57.490Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "u_MBuIP2Ile5XnWqu4dVt",
+                    "detachedModelId": null,
+                    "categories": [
+                      {
+                        "id": "IVzwKoOmTCoKv2g8anADl",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:38:31.311Z",
+                        "modified": "2026-01-08T14:38:31.311Z",
+                        "name": "Bodily feeling",
+                        "color": "",
+                        "note": "",
+                        "abstractionType": "aggregation",
+                        "criterion": "",
+                        "parentId": null,
+                        "childIndex": 0,
+                        "specificsynchronicmodelId": "qN9ZZk_skdWQMlvYTct6c",
+                        "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                        "parent": null,
+                        "children": [
+                          {
+                            "id": "wYgqISciHILaJeJ8WG1BD",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:38:31.310Z",
+                            "modified": "2026-01-08T14:38:31.310Z",
+                            "name": "Location",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "IVzwKoOmTCoKv2g8anADl",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "IVzwKoOmTCoKv2g8anADl",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.311Z",
+                              "modified": "2026-01-08T14:38:31.311Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "qN9ZZk_skdWQMlvYTct6c",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "81lYoaZ4x9hs-ZDON3YV6",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:38:31.310Z",
+                                "modified": "2026-01-08T14:38:31.310Z",
+                                "name": "Whole body",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "wYgqISciHILaJeJ8WG1BD",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "wYgqISciHILaJeJ8WG1BD",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.310Z",
+                                  "modified": "2026-01-08T14:38:31.310Z",
+                                  "name": "Location",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "IVzwKoOmTCoKv2g8anADl",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
                                 },
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 794478636
-                                    },
-                                    "@id": 1978898022,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 223,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 253,
-                                            "@version": 1,
-                                            "@id": 1284299780
-                                        }],
-                                        "@version": 1,
-                                        "@id": 2104937161
-                                    },
-                                    "value": "outside"
+                                "children": [],
+                                "justification": {
+                                  "id": "g9HgldmukjoY4MohVbVo2",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.310Z",
+                                  "modified": "2026-01-08T14:38:31.310Z",
+                                  "name": "",
+                                  "parentId": "81lYoaZ4x9hs-ZDON3YV6",
+                                  "descriptems": [
+                                    {
+                                      "id": "WHLZxzG-m1Us8FmEgXgNv",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:38:58.920Z",
+                                      "modified": "2026-01-08T14:38:58.920Z",
+                                      "startIndex": 328,
+                                      "endIndex": 343,
+                                      "note": "",
+                                      "justificationId": "g9HgldmukjoY4MohVbVo2",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
                                 }
+                              }
                             ],
-                            "@id": 253441037,
                             "justification": {
-                                "@model": "justification",
-                                "descripteme_list": [{
-                                    "startIndex": 198,
-                                    "@model": "descripteme",
-                                    "interviewText": {
-                                        "@model": "interviewText",
-                                        "@id": 1991376677
-                                    },
-                                    "endIndex": 255,
-                                    "@version": 1,
-                                    "@id": 124233083
-                                }],
-                                "@version": 1,
-                                "@id": 2083424189
-                            },
-                            "schemaCategory": {
-                                "@model": "schemaCategory",
-                                "@id": 67297312
+                              "id": "-HB4a-rsxwtAxIeYh6ZKd",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.310Z",
+                              "modified": "2026-01-08T14:38:31.310Z",
+                              "name": "",
+                              "parentId": "wYgqISciHILaJeJ8WG1BD",
+                              "descriptems": []
                             }
-                        }],
-                        "transitional": true,
-                        "@version": 3,
-                        "name": "Transitional event",
-                        "@id": 1030512606,
-                        "justification": {
-                            "@model": "justification",
-                            "descripteme_list": [
-                                {
-                                    "startIndex": 259,
-                                    "@model": "descripteme",
-                                    "interviewText": {
-                                        "@model": "interviewText",
-                                        "@id": 1991376677
-                                    },
-                                    "endIndex": 267,
-                                    "@version": 1,
-                                    "@id": 944271180
+                          },
+                          {
+                            "id": "ffXjo_m7s14Q5n-UrnOiS",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:38:31.311Z",
+                            "modified": "2026-01-08T14:38:31.311Z",
+                            "name": "Density",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "IVzwKoOmTCoKv2g8anADl",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "IVzwKoOmTCoKv2g8anADl",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.311Z",
+                              "modified": "2026-01-08T14:38:31.311Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "qN9ZZk_skdWQMlvYTct6c",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "ybXZRtsTK_N964uiE2O2l",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:38:31.311Z",
+                                "modified": "2026-01-08T14:38:31.311Z",
+                                "name": "Fluid",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "ffXjo_m7s14Q5n-UrnOiS",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "ffXjo_m7s14Q5n-UrnOiS",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.311Z",
+                                  "modified": "2026-01-08T14:38:31.311Z",
+                                  "name": "Density",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "IVzwKoOmTCoKv2g8anADl",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
                                 },
-                                {
-                                    "startIndex": 184,
-                                    "@model": "descripteme",
-                                    "interviewText": {
-                                        "@model": "interviewText",
-                                        "@id": 1991376677
-                                    },
-                                    "endIndex": 197,
-                                    "@version": 1,
-                                    "@id": 839155905
+                                "children": [],
+                                "justification": {
+                                  "id": "GI31sDcdspTScIPIvAHOh",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.310Z",
+                                  "modified": "2026-01-08T14:38:31.310Z",
+                                  "name": "",
+                                  "parentId": "ybXZRtsTK_N964uiE2O2l",
+                                  "descriptems": [
+                                    {
+                                      "id": "pgNhw438LtmDgXeHKc1If",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:39:40.029Z",
+                                      "modified": "2026-01-08T14:39:40.029Z",
+                                      "startIndex": 272,
+                                      "endIndex": 307,
+                                      "note": "",
+                                      "justificationId": "GI31sDcdspTScIPIvAHOh",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
                                 }
+                              }
                             ],
-                            "@version": 1,
-                            "@id": 1772313783
-                        }
-                    },
-                    {
-                        "moment_list": [],
-                        "@model": "moment",
-                        "isCollapsed": false,
-                        "color": "ffffff",
-                        "isCommentVisible": false,
-                        "concreteCategory_list": [{
-                            "@model": "concreteCategory",
-                            "@version": 1,
-                            "concreteProperty_list": [
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 652411295
-                                    },
-                                    "@id": 1879531212,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 306,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 316,
-                                            "@version": 1,
-                                            "@id": 1722793010
-                                        }],
-                                        "@version": 1,
-                                        "@id": 9175757
-                                    },
-                                    "value": "warm"
-                                },
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 1137765583
-                                    },
-                                    "@id": 517954291,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [],
-                                        "@version": 1,
-                                        "@id": 1415874266
-                                    },
-                                    "value": ""
-                                },
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 1955507762
-                                    },
-                                    "@id": 882797809,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 317,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 338,
-                                            "@version": 1,
-                                            "@id": 1269286836
-                                        }],
-                                        "@version": 1,
-                                        "@id": 801839228
-                                    },
-                                    "value": "body"
-                                },
-                                {
-                                    "@model": "concreteProperty",
-                                    "@version": 1,
-                                    "schemaProperty": {
-                                        "@model": "schemaProperty",
-                                        "@id": 225186599
-                                    },
-                                    "@id": 990239308,
-                                    "justification": {
-                                        "@model": "justification",
-                                        "descripteme_list": [{
-                                            "startIndex": 317,
-                                            "@model": "descripteme",
-                                            "interviewText": {
-                                                "@model": "interviewText",
-                                                "@id": 1991376677
-                                            },
-                                            "endIndex": 338,
-                                            "@version": 1,
-                                            "@id": 189021994
-                                        }],
-                                        "@version": 1,
-                                        "@id": 2092679225
-                                    },
-                                    "value": "fluid"
-                                }
-                            ],
-                            "@id": 215831317,
                             "justification": {
-                                "@model": "justification",
-                                "descripteme_list": [{
-                                    "startIndex": 269,
-                                    "@model": "descripteme",
-                                    "interviewText": {
-                                        "@model": "interviewText",
-                                        "@id": 1991376677
-                                    },
-                                    "endIndex": 338,
-                                    "@version": 1,
-                                    "@id": 1203169704
-                                }],
-                                "@version": 1,
-                                "@id": 639357558
-                            },
-                            "schemaCategory": {
-                                "@model": "schemaCategory",
-                                "@id": 1109066827
+                              "id": "z0nrFwwvgbFD5sYw-T8MV",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.310Z",
+                              "modified": "2026-01-08T14:38:31.310Z",
+                              "name": "",
+                              "parentId": "ffXjo_m7s14Q5n-UrnOiS",
+                              "descriptems": []
                             }
-                        }],
-                        "transitional": false,
-                        "@version": 3,
-                        "name": "Loosening phase",
-                        "@id": 1954753760,
-                        "justification": {
-                            "@model": "justification",
-                            "descripteme_list": [{
-                                "startIndex": 269,
-                                "@model": "descripteme",
-                                "interviewText": {
-                                    "@model": "interviewText",
-                                    "@id": 1991376677
+                          },
+                          {
+                            "id": "snjYGJcniB5V8NI9JAEyN",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:38:31.311Z",
+                            "modified": "2026-01-08T14:38:31.311Z",
+                            "name": "Temperature",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "IVzwKoOmTCoKv2g8anADl",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                            "parent": {
+                              "id": "IVzwKoOmTCoKv2g8anADl",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.311Z",
+                              "modified": "2026-01-08T14:38:31.311Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "qN9ZZk_skdWQMlvYTct6c",
+                              "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                            },
+                            "children": [
+                              {
+                                "id": "XdGmX-dND3HhhPh01d0rW",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:38:31.311Z",
+                                "modified": "2026-01-08T14:38:31.311Z",
+                                "name": "Warm",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "snjYGJcniB5V8NI9JAEyN",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515",
+                                "parent": {
+                                  "id": "snjYGJcniB5V8NI9JAEyN",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.311Z",
+                                  "modified": "2026-01-08T14:38:31.311Z",
+                                  "name": "Temperature",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "IVzwKoOmTCoKv2g8anADl",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
                                 },
-                                "endIndex": 338,
-                                "@version": 1,
-                                "@id": 1983921768
-                            }],
-                            "@version": 1,
-                            "@id": 782179003
+                                "children": [],
+                                "justification": {
+                                  "id": "Wtjr0af7in4fodPeBjOHr",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:38:31.310Z",
+                                  "modified": "2026-01-08T14:38:31.310Z",
+                                  "name": "",
+                                  "parentId": "XdGmX-dND3HhhPh01d0rW",
+                                  "descriptems": [
+                                    {
+                                      "id": "KTULuWSdTXDHl90Md2aAq",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:39:23.965Z",
+                                      "modified": "2026-01-08T14:39:23.965Z",
+                                      "startIndex": 309,
+                                      "endIndex": 319,
+                                      "note": "",
+                                      "justificationId": "Wtjr0af7in4fodPeBjOHr",
+                                      "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "ppgleyAYOEazFvCdfhz7b",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:38:31.310Z",
+                              "modified": "2026-01-08T14:38:31.310Z",
+                              "name": "",
+                              "parentId": "snjYGJcniB5V8NI9JAEyN",
+                              "descriptems": []
+                            }
+                          }
+                        ],
+                        "justification": {
+                          "id": "fnsFwEkdu6ccICQk2MC-3",
+                          "creator": "Nicolas",
+                          "contributor": "Nicolas",
+                          "projectId": "Example",
+                          "created": "2026-01-08T14:38:31.309Z",
+                          "modified": "2026-01-08T14:38:31.309Z",
+                          "name": "",
+                          "parentId": "IVzwKoOmTCoKv2g8anADl",
+                          "descriptems": []
                         }
-                    }
-                ],
-                "@model": "moment",
-                "isCollapsed": true,
-                "color": "ffffff",
-                "isCommentVisible": false,
-                "concreteCategory_list": [],
-                "transitional": false,
-                "@version": 3,
-                "name": "April morning episode",
-                "@id": 2084556129,
-                "justification": {
-                    "@model": "justification",
-                    "descripteme_list": [
-                        {
-                            "startIndex": 0,
-                            "@model": "descripteme",
-                            "interviewText": {
-                                "@model": "interviewText",
-                                "@id": 1991376677
-                            },
-                            "endIndex": 51,
-                            "@version": 1,
-                            "@id": 311803033
-                        },
-                        {
-                            "startIndex": 51,
-                            "@model": "descripteme",
-                            "interviewText": {
-                                "@model": "interviewText",
-                                "@id": 1991376677
-                            },
-                            "endIndex": 105,
-                            "@version": 1,
-                            "@id": 640360162
-                        }
-                    ],
-                    "@version": 1,
-                    "@id": 1348956984
+                      }
+                    ]
+                  }
                 }
-            }],
-            "@model": "rootMoment",
-            "@version": 1,
-            "@id": 1734382704
-        },
-        "comment": "Based on an example from the paper \"Discovering the structures of lived experience: Towards a micro-phenomenological analysis method\" by Petitmengin, Remillieux & Valenzuela (2019)",
-        "@id": 305012213,
-        "participantName": "participant"
-    }],
-    "@model": "project",
-    "momentTypeController_list": [],
-    "selectedInterview": {
-        "@model": "interview",
-        "@id": 305012213
+              ],
+              "justification": {
+                "id": "CUQvtm6pBv7K0f6Hr2Wx8",
+                "creator": "Nicolas",
+                "contributor": "Nicolas",
+                "projectId": "Example",
+                "created": "2026-01-08T13:58:41.569Z",
+                "modified": "2026-01-08T13:58:41.569Z",
+                "name": "",
+                "parentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                "descriptems": [
+                  {
+                    "id": "8H5VFakZja56aBJNTLm3F",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T13:58:59.922Z",
+                    "modified": "2026-01-08T13:58:59.922Z",
+                    "startIndex": 1,
+                    "endIndex": 51,
+                    "note": "",
+                    "justificationId": "CUQvtm6pBv7K0f6Hr2Wx8",
+                    "interviewId": "1b9c3e11-a3f3-40fb-b372-b4e8b17df515"
+                  }
+                ]
+              },
+              "specificsynchronicmodel": {
+                "id": "XsDxA3EbljiyErEas8J76",
+                "creator": "Nicolas",
+                "contributor": "Nicolas",
+                "projectId": "Example",
+                "created": "2026-01-08T13:58:41.570Z",
+                "modified": "2026-01-08T13:58:41.570Z",
+                "name": "Initial",
+                "color": "",
+                "note": "",
+                "momentId": "0h6t9QbqCjQl3Gf-lZBiB",
+                "detachedModelId": null,
+                "categories": []
+              }
+            }
+          ],
+          "justification": null,
+          "specificsynchronicmodel": null
+        }
+      }
     },
-    "@version": 2,
-    "name": "Basic example - V1.0",
-    "@id": 1225402137,
-    "schemaTreeRoot": {
-        "schemaMomentType_list": [],
-        "expanded": true,
-        "@model": "schemaTreeRoot",
-        "@version": 1,
-        "name": "Basic example - V1.0",
-        "schemaCategory_list": [],
-        "@id": 55663652,
-        "schemaFolder_list": [{
-            "schemaMomentType_list": [],
-            "expanded": true,
-            "@model": "schemaFolder",
-            "@version": 1,
-            "name": "Sensation",
-            "schemaCategory_list": [
+    {
+      "id": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+      "creator": "Nicolas",
+      "contributor": "Nicolas",
+      "projectId": "Example",
+      "created": "2026-01-08T14:20:04.638Z",
+      "modified": "2026-01-08T14:20:04.638Z",
+      "name": "Interview 2",
+      "color": "",
+      "note": "This a mockup interview content, generated to demonstrate micro-phenomenological modeling.",
+      "date": "2017-06-12",
+      "text": "Interviewee: I’m sitting in the hospital lobby, late in the afternoon. I’m waiting for news after my sister’s surgery.\n\nInterviewer: When you are sitting, what do you feel?\n\nInterviewee: I feel a heaviness in my stomach, like a cold stone that makes it hard to breathe fully. My shoulders are tense, my gaze fixed on the floor.\n\nInterviewer: What happened next?\n\nInterviewee: At one point, I hear a child’s laughter behind me. I notice my breathing lengthen slightly, the stone seems to crack. A faint warmth begins to rise along my chest. Then, when the doctor appears at the end of the corridor with a reassuring smile, everything shifts: my shoulders loosen, my eyes fill with tears, and a wave of gentle warmth spreads through my whole body, as if the stone had turned into warm water.",
+      "participantName": "Jane",
+      "parentId": "Example",
+      "annotations": [
+        {
+          "id": "AWc8P7RpLTznjEZ5xUMBW",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T16:43:47.636Z",
+          "modified": "2026-01-08T16:43:47.636Z",
+          "color": "#7bcf7b",
+          "startIndex": 13,
+          "endIndex": 118,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "o1iSiit8Y5Ywc9YWS8WOX",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T16:47:22.470Z",
+          "modified": "2026-01-08T16:47:22.470Z",
+          "color": "#7084b0",
+          "startIndex": 132,
+          "endIndex": 172,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "aoCG6NGgjZruu9zGJUKvj",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T16:48:40.935Z",
+          "modified": "2026-01-08T16:48:40.935Z",
+          "color": "#7084b0",
+          "startIndex": 342,
+          "endIndex": 361,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "_PWNF6XzKNVc0TXhmX9N6",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T16:54:11.346Z",
+          "modified": "2026-01-08T16:54:11.346Z",
+          "color": "#7bcf7b",
+          "startIndex": 187,
+          "endIndex": 327,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "niCn0POwUhsxdXMuLrjTi",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T17:17:40.096Z",
+          "modified": "2026-01-08T17:17:40.096Z",
+          "color": "#7bcf7b",
+          "startIndex": 376,
+          "endIndex": 540,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "3m14z-VZNAJgyBWPIfjTB",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T17:17:42.245Z",
+          "modified": "2026-01-08T17:17:42.245Z",
+          "color": "#7bcf7b",
+          "startIndex": 376,
+          "endIndex": 540,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "mrNmTJSqZX77xqxxl3eaL",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T17:18:05.174Z",
+          "modified": "2026-01-08T17:18:05.174Z",
+          "color": "#7bcf7b",
+          "startIndex": 540,
+          "endIndex": 597,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "TiZDTnpvqgbxlGHT2mBrp",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T17:18:10.675Z",
+          "modified": "2026-01-08T17:18:10.675Z",
+          "color": "#ffdc97",
+          "startIndex": 597,
+          "endIndex": 620,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        },
+        {
+          "id": "IFS-ok1u0wVeMXGAbSxJV",
+          "creator": "YP",
+          "contributor": "YP",
+          "projectId": "Example",
+          "created": "2026-01-08T17:18:20.791Z",
+          "modified": "2026-01-08T17:18:20.791Z",
+          "color": "#7bcf7b",
+          "startIndex": 622,
+          "endIndex": 789,
+          "note": "",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+        }
+      ],
+      "analysis": {
+        "id": "ewebQKtrGI47AQVSwhCA9",
+        "creator": "Nicolas",
+        "contributor": "Nicolas",
+        "projectId": "Example",
+        "created": "2026-01-08T14:20:04.638Z",
+        "modified": "2026-01-08T14:20:04.638Z",
+        "name": "",
+        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+        "rootMoment": {
+          "id": "hwDb2YOD-dYootGXPIO5m",
+          "creator": "Nicolas",
+          "contributor": "Nicolas",
+          "projectId": "Example",
+          "created": "2026-01-08T14:20:04.637Z",
+          "modified": "2026-01-08T14:20:04.637Z",
+          "name": "Root moment",
+          "color": "",
+          "note": "",
+          "isExpanded": true,
+          "isTransitional": false,
+          "analysisId": "ewebQKtrGI47AQVSwhCA9",
+          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+          "parentId": null,
+          "childIndex": 0,
+          "children": [
+            {
+              "id": "kgqluTZB2H4rF9JCBo9l4",
+              "creator": "Nicolas",
+              "contributor": "Nicolas",
+              "projectId": "Example",
+              "created": "2026-01-08T14:20:04.637Z",
+              "modified": "2026-01-08T14:20:04.637Z",
+              "name": "At the hospital waiting for news after sister",
+              "color": "",
+              "note": "",
+              "isExpanded": true,
+              "isTransitional": false,
+              "analysisId": null,
+              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+              "parentId": "hwDb2YOD-dYootGXPIO5m",
+              "childIndex": 0,
+              "children": [
                 {
-                    "expanded": true,
-                    "@model": "schemaCategory",
-                    "color": "efe4b0",
-                    "schemaProperty_list": [
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "source",
-                            "@id": 930091828
-                        },
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "location",
-                            "@id": 794478636
+                  "id": "OX_POIyGYWv7olRfqWI6Y",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:20:54.976Z",
+                  "modified": "2026-01-08T14:20:54.976Z",
+                  "name": "Heaviness phase",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                  "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                  "childIndex": 0,
+                  "children": [],
+                  "justification": {
+                    "id": "r6dQzxOIh6XKzmKBkjgLG",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:20:54.976Z",
+                    "modified": "2026-01-08T14:20:54.976Z",
+                    "name": "",
+                    "parentId": "OX_POIyGYWv7olRfqWI6Y",
+                    "descriptems": [
+                      {
+                        "id": "AouRB6JSuYig-IgH9BlEn",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:20:54.975Z",
+                        "modified": "2026-01-08T14:20:54.975Z",
+                        "startIndex": 187,
+                        "endIndex": 327,
+                        "note": "",
+                        "justificationId": "r6dQzxOIh6XKzmKBkjgLG",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "WXfQGqOWGV-1cm5nVb8n5",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:20:54.976Z",
+                    "modified": "2026-01-08T14:20:54.976Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "OX_POIyGYWv7olRfqWI6Y",
+                    "detachedModelId": null,
+                    "categories": [
+                      {
+                        "id": "zZNeNlehD10TnX3EjS-1K",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:30:50.345Z",
+                        "modified": "2026-01-08T14:30:50.345Z",
+                        "name": "Bodily feeling",
+                        "color": "",
+                        "note": "",
+                        "abstractionType": "aggregation",
+                        "criterion": "",
+                        "parentId": null,
+                        "childIndex": 0,
+                        "specificsynchronicmodelId": "WXfQGqOWGV-1cm5nVb8n5",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                        "parent": null,
+                        "children": [
+                          {
+                            "id": "uxhOn7-axPYX4HoVNbG9T",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:30:57.935Z",
+                            "modified": "2026-01-08T14:30:57.935Z",
+                            "name": "Location",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "zZNeNlehD10TnX3EjS-1K",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "zZNeNlehD10TnX3EjS-1K",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:30:50.345Z",
+                              "modified": "2026-01-08T14:30:50.345Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WXfQGqOWGV-1cm5nVb8n5",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "cYfn7ptcm6M8Oh70v_jYl",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:31:16.307Z",
+                                "modified": "2026-01-08T14:31:16.307Z",
+                                "name": "Stomach",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "uxhOn7-axPYX4HoVNbG9T",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "uxhOn7-axPYX4HoVNbG9T",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:30:57.935Z",
+                                  "modified": "2026-01-08T14:30:57.935Z",
+                                  "name": "Location",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "zZNeNlehD10TnX3EjS-1K",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "C3yiIggDW_fDHknFZ9_W7",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:31:16.306Z",
+                                  "modified": "2026-01-08T14:31:16.306Z",
+                                  "name": "",
+                                  "parentId": "cYfn7ptcm6M8Oh70v_jYl",
+                                  "descriptems": [
+                                    {
+                                      "id": "1uIlzOREctqlb6VDYLBzs",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:31:38.845Z",
+                                      "modified": "2026-01-08T14:31:38.846Z",
+                                      "startIndex": 206,
+                                      "endIndex": 219,
+                                      "note": "",
+                                      "justificationId": "C3yiIggDW_fDHknFZ9_W7",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "id": "EbWGwZpe1se3IZ8g_lCEa",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:31:25.521Z",
+                                "modified": "2026-01-08T14:31:25.521Z",
+                                "name": "Shoulder",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "uxhOn7-axPYX4HoVNbG9T",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "uxhOn7-axPYX4HoVNbG9T",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:30:57.935Z",
+                                  "modified": "2026-01-08T14:30:57.935Z",
+                                  "name": "Location",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "zZNeNlehD10TnX3EjS-1K",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "PlYClQbKGUFPZ-E5uACWk",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:31:25.520Z",
+                                  "modified": "2026-01-08T14:31:25.520Z",
+                                  "name": "",
+                                  "parentId": "EbWGwZpe1se3IZ8g_lCEa",
+                                  "descriptems": [
+                                    {
+                                      "id": "plD_BWoLykrPjEbdTphjQ",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:31:44.779Z",
+                                      "modified": "2026-01-08T14:31:44.779Z",
+                                      "startIndex": 276,
+                                      "endIndex": 298,
+                                      "note": "",
+                                      "justificationId": "PlYClQbKGUFPZ-E5uACWk",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "4htxd6-rPq_gBPco5YO06",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:30:57.935Z",
+                              "modified": "2026-01-08T14:30:57.935Z",
+                              "name": "",
+                              "parentId": "uxhOn7-axPYX4HoVNbG9T",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "y8DZhV5Jq0JxtKpJHx672",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:31:00.249Z",
+                            "modified": "2026-01-08T14:31:00.249Z",
+                            "name": "Density",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "zZNeNlehD10TnX3EjS-1K",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "zZNeNlehD10TnX3EjS-1K",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:30:50.345Z",
+                              "modified": "2026-01-08T14:30:50.345Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WXfQGqOWGV-1cm5nVb8n5",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "YiK9-u5k7AWWgVX4jQfLU",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:32:07.848Z",
+                                "modified": "2026-01-08T14:32:07.848Z",
+                                "name": "Compact",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "y8DZhV5Jq0JxtKpJHx672",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "y8DZhV5Jq0JxtKpJHx672",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:31:00.249Z",
+                                  "modified": "2026-01-08T14:31:00.249Z",
+                                  "name": "Density",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "zZNeNlehD10TnX3EjS-1K",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "mu8_QhxfxSq_qmIMShu6Y",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:32:07.846Z",
+                                  "modified": "2026-01-08T14:32:07.846Z",
+                                  "name": "",
+                                  "parentId": "YiK9-u5k7AWWgVX4jQfLU",
+                                  "descriptems": [
+                                    {
+                                      "id": "l_UNsO1KPLyQ4O91p-BoN",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:35:29.928Z",
+                                      "modified": "2026-01-08T14:35:29.928Z",
+                                      "startIndex": 221,
+                                      "endIndex": 238,
+                                      "note": "",
+                                      "justificationId": "mu8_QhxfxSq_qmIMShu6Y",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    },
+                                    {
+                                      "id": "QrfzOdlRrtEQXpVU0gW-n",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:32:42.186Z",
+                                      "modified": "2026-01-08T14:32:42.186Z",
+                                      "startIndex": 276,
+                                      "endIndex": 298,
+                                      "note": "",
+                                      "justificationId": "mu8_QhxfxSq_qmIMShu6Y",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "CHlp0r3igOO0jiohDp-55",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:31:00.249Z",
+                              "modified": "2026-01-08T14:31:00.249Z",
+                              "name": "",
+                              "parentId": "y8DZhV5Jq0JxtKpJHx672",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "mwQdc7NabjYZk4If6BcRg",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:31:03.466Z",
+                            "modified": "2026-01-08T14:31:03.466Z",
+                            "name": "Temperature",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "zZNeNlehD10TnX3EjS-1K",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "zZNeNlehD10TnX3EjS-1K",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:30:50.345Z",
+                              "modified": "2026-01-08T14:30:50.345Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WXfQGqOWGV-1cm5nVb8n5",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "pMq5qv0o3dxhTlAkJ_MSY",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:32:54.377Z",
+                                "modified": "2026-01-08T14:32:54.377Z",
+                                "name": "Cold",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "mwQdc7NabjYZk4If6BcRg",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "mwQdc7NabjYZk4If6BcRg",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:31:03.466Z",
+                                  "modified": "2026-01-08T14:31:03.466Z",
+                                  "name": "Temperature",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "zZNeNlehD10TnX3EjS-1K",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "mLyiWWZacu4mAAskNCdeN",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:32:54.377Z",
+                                  "modified": "2026-01-08T14:32:54.377Z",
+                                  "name": "",
+                                  "parentId": "pMq5qv0o3dxhTlAkJ_MSY",
+                                  "descriptems": [
+                                    {
+                                      "id": "hdzy3e1Ww-OHriS_y5L68",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:35:24.010Z",
+                                      "modified": "2026-01-08T14:35:24.010Z",
+                                      "startIndex": 221,
+                                      "endIndex": 238,
+                                      "note": "",
+                                      "justificationId": "mLyiWWZacu4mAAskNCdeN",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "ZyuF7fcRKFsHVGQdpa3BN",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:31:03.466Z",
+                              "modified": "2026-01-08T14:31:03.466Z",
+                              "name": "",
+                              "parentId": "mwQdc7NabjYZk4If6BcRg",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "nqx_wTnKiYXS1nI2VvPD-",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:31:05.281Z",
+                            "modified": "2026-01-08T14:31:05.281Z",
+                            "name": "Shape",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "zZNeNlehD10TnX3EjS-1K",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "zZNeNlehD10TnX3EjS-1K",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:30:50.345Z",
+                              "modified": "2026-01-08T14:30:50.345Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WXfQGqOWGV-1cm5nVb8n5",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "2uro1HjwpXyXHFzlNolGo",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:34:58.761Z",
+                                "modified": "2026-01-08T14:34:58.761Z",
+                                "name": "Sphere",
+                                "color": "#990000",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "nqx_wTnKiYXS1nI2VvPD-",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "nqx_wTnKiYXS1nI2VvPD-",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:31:05.281Z",
+                                  "modified": "2026-01-08T14:31:05.281Z",
+                                  "name": "Shape",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "zZNeNlehD10TnX3EjS-1K",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "bB4sgmnerjKmIW-DhYHfM",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:34:58.761Z",
+                                  "modified": "2026-01-08T14:34:58.761Z",
+                                  "name": "",
+                                  "parentId": "2uro1HjwpXyXHFzlNolGo",
+                                  "descriptems": [
+                                    {
+                                      "id": "KeuMeUW7JcGJotA2i6kn5",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:32:48.072Z",
+                                      "modified": "2026-01-08T14:32:48.072Z",
+                                      "startIndex": 221,
+                                      "endIndex": 238,
+                                      "note": "",
+                                      "justificationId": "bB4sgmnerjKmIW-DhYHfM",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "jBMF5Q8RdduJPWEgV1-bq",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:31:05.279Z",
+                              "modified": "2026-01-08T14:31:05.279Z",
+                              "name": "",
+                              "parentId": "nqx_wTnKiYXS1nI2VvPD-",
+                              "descriptems": []
+                            }
+                          }
+                        ],
+                        "justification": {
+                          "id": "PrJ4-7ihaNIyYZncXrIT2",
+                          "creator": "Nicolas",
+                          "contributor": "Nicolas",
+                          "projectId": "Example",
+                          "created": "2026-01-08T14:30:50.345Z",
+                          "modified": "2026-01-08T14:30:50.345Z",
+                          "name": "",
+                          "parentId": "zZNeNlehD10TnX3EjS-1K",
+                          "descriptems": []
                         }
-                    ],
-                    "@version": 2,
-                    "name": "Auditory sensation",
-                    "@id": 67297312
+                      }
+                    ]
+                  }
                 },
                 {
-                    "expanded": false,
-                    "@model": "schemaCategory",
-                    "color": "d1eb81",
-                    "schemaProperty_list": [
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "temperature",
-                            "@id": 652411295
-                        },
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "shape",
-                            "@id": 1137765583
-                        },
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "location",
-                            "@id": 1955507762
-                        },
-                        {
-                            "expanded": true,
-                            "@model": "schemaProperty",
-                            "@version": 1,
-                            "name": "density",
-                            "@id": 225186599
-                        }
-                    ],
-                    "@version": 2,
-                    "name": "Bodily feeling",
-                    "@id": 1109066827
+                  "id": "bTfxOYUBHBWdb1uu_TYnZ",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:21:09.232Z",
+                  "modified": "2026-01-08T14:21:09.232Z",
+                  "name": "Hearing hild laugth",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": true,
+                  "analysisId": null,
+                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                  "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                  "childIndex": 1,
+                  "children": [],
+                  "justification": {
+                    "id": "c0G5-lxtp4qGMqIdncEE9",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:21:09.232Z",
+                    "modified": "2026-01-08T14:21:09.232Z",
+                    "name": "",
+                    "parentId": "bTfxOYUBHBWdb1uu_TYnZ",
+                    "descriptems": [
+                      {
+                        "id": "VyuVQxY6I-ahpbLY3zVX4",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:21:09.231Z",
+                        "modified": "2026-01-08T14:21:09.231Z",
+                        "startIndex": 376,
+                        "endIndex": 426,
+                        "note": "",
+                        "justificationId": "c0G5-lxtp4qGMqIdncEE9",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "f6ji2hZyVXaDE-pJiAfrP",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:21:09.232Z",
+                    "modified": "2026-01-08T14:21:09.232Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "bTfxOYUBHBWdb1uu_TYnZ",
+                    "detachedModelId": null,
+                    "categories": []
+                  }
                 },
                 {
-                    "expanded": true,
-                    "@model": "schemaCategory",
-                    "color": "efe4b0",
-                    "schemaProperty_list": [{
-                        "expanded": true,
-                        "@model": "schemaProperty",
-                        "@version": 1,
-                        "name": "type",
-                        "@id": 2001674432
-                    }],
-                    "@version": 2,
-                    "name": "Emotion",
-                    "@id": 868029676
+                  "id": "D4VTheFYvw1BtyWLvkjbu",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:21:41.408Z",
+                  "modified": "2026-01-08T14:21:41.408Z",
+                  "name": "Loosening phase",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                  "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                  "childIndex": 2,
+                  "children": [],
+                  "justification": {
+                    "id": "g3Jw121tbeZouyQXqwMuH",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:21:41.408Z",
+                    "modified": "2026-01-08T14:21:41.408Z",
+                    "name": "",
+                    "parentId": "D4VTheFYvw1BtyWLvkjbu",
+                    "descriptems": [
+                      {
+                        "id": "cc7BRPk0a8sMrOJLgZuH6",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:21:41.407Z",
+                        "modified": "2026-01-08T14:21:41.407Z",
+                        "startIndex": 427,
+                        "endIndex": 540,
+                        "note": "",
+                        "justificationId": "g3Jw121tbeZouyQXqwMuH",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "WFneOcrUJxFaTyZ3nFlHj",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:21:41.408Z",
+                    "modified": "2026-01-08T14:21:41.408Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "D4VTheFYvw1BtyWLvkjbu",
+                    "detachedModelId": null,
+                    "categories": [
+                      {
+                        "id": "yzhsUC8Zu9X8GMBA3O_eN",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:35:43.681Z",
+                        "modified": "2026-01-08T14:35:43.681Z",
+                        "name": "Bodily feeling",
+                        "color": "",
+                        "note": "",
+                        "abstractionType": "aggregation",
+                        "criterion": "",
+                        "parentId": null,
+                        "childIndex": 0,
+                        "specificsynchronicmodelId": "WFneOcrUJxFaTyZ3nFlHj",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                        "parent": null,
+                        "children": [
+                          {
+                            "id": "TYNNrzQT-ep6672tPKmJJ",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:35:56.528Z",
+                            "modified": "2026-01-08T14:35:56.528Z",
+                            "name": "Density",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "yzhsUC8Zu9X8GMBA3O_eN",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:43.681Z",
+                              "modified": "2026-01-08T14:35:43.681Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WFneOcrUJxFaTyZ3nFlHj",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "BiFVrXJ3IJmZZhHT1C58S",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:36:21.502Z",
+                                "modified": "2026-01-08T14:36:21.502Z",
+                                "name": "Fragmented",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "TYNNrzQT-ep6672tPKmJJ",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "TYNNrzQT-ep6672tPKmJJ",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:35:56.528Z",
+                                  "modified": "2026-01-08T14:35:56.528Z",
+                                  "name": "Density",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "f04FwZ1i7IYBhZ1vyDWHC",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:36:21.501Z",
+                                  "modified": "2026-01-08T14:36:21.501Z",
+                                  "name": "",
+                                  "parentId": "BiFVrXJ3IJmZZhHT1C58S",
+                                  "descriptems": [
+                                    {
+                                      "id": "E1cmRE54qcJj3lyJgTVKK",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:40:58.279Z",
+                                      "modified": "2026-01-08T14:40:58.279Z",
+                                      "startIndex": 468,
+                                      "endIndex": 492,
+                                      "note": "",
+                                      "justificationId": "f04FwZ1i7IYBhZ1vyDWHC",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "H9terSN-ObWFFRmmRULWZ",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:56.527Z",
+                              "modified": "2026-01-08T14:35:56.527Z",
+                              "name": "",
+                              "parentId": "TYNNrzQT-ep6672tPKmJJ",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "sNHqyelNFV-o4A8DYYJXb",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:35:56.537Z",
+                            "modified": "2026-01-08T14:35:56.537Z",
+                            "name": "Location",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "yzhsUC8Zu9X8GMBA3O_eN",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:43.681Z",
+                              "modified": "2026-01-08T14:35:43.681Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WFneOcrUJxFaTyZ3nFlHj",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "_uYIlXztVso5Vzroo6bT-",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:36:37.298Z",
+                                "modified": "2026-01-08T14:36:37.298Z",
+                                "name": "Chest",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "sNHqyelNFV-o4A8DYYJXb",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "sNHqyelNFV-o4A8DYYJXb",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:35:56.537Z",
+                                  "modified": "2026-01-08T14:35:56.537Z",
+                                  "name": "Location",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "IqQ1K9tT_J3ZOiE0HAXVW",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:36:37.297Z",
+                                  "modified": "2026-01-08T14:36:37.297Z",
+                                  "name": "",
+                                  "parentId": "_uYIlXztVso5Vzroo6bT-",
+                                  "descriptems": [
+                                    {
+                                      "id": "LZE3Cs7O3dDC-OzZ9d3S7",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:41:20.983Z",
+                                      "modified": "2026-01-08T14:41:20.983Z",
+                                      "startIndex": 524,
+                                      "endIndex": 538,
+                                      "note": "",
+                                      "justificationId": "IqQ1K9tT_J3ZOiE0HAXVW",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "PMV5N-GwLnMlpiWmKmKRN",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:56.536Z",
+                              "modified": "2026-01-08T14:35:56.536Z",
+                              "name": "",
+                              "parentId": "sNHqyelNFV-o4A8DYYJXb",
+                              "descriptems": []
+                            }
+                          },
+                          {
+                            "id": "Fu7Api6L-r7xky_hptpUV",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:35:56.543Z",
+                            "modified": "2026-01-08T14:35:56.543Z",
+                            "name": "Temperature",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "specialization",
+                            "criterion": "",
+                            "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": null,
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": {
+                              "id": "yzhsUC8Zu9X8GMBA3O_eN",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:43.681Z",
+                              "modified": "2026-01-08T14:35:43.681Z",
+                              "name": "Bodily feeling",
+                              "color": "",
+                              "note": "",
+                              "abstractionType": "aggregation",
+                              "criterion": "",
+                              "parentId": null,
+                              "childIndex": 0,
+                              "specificsynchronicmodelId": "WFneOcrUJxFaTyZ3nFlHj",
+                              "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                            },
+                            "children": [
+                              {
+                                "id": "5j7EzfU2z8TsryEmRCeNv",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:36:53.353Z",
+                                "modified": "2026-01-08T14:36:53.353Z",
+                                "name": "Warm",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "",
+                                "criterion": "",
+                                "parentId": "Fu7Api6L-r7xky_hptpUV",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "Fu7Api6L-r7xky_hptpUV",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:35:56.543Z",
+                                  "modified": "2026-01-08T14:35:56.543Z",
+                                  "name": "Temperature",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "specialization",
+                                  "criterion": "",
+                                  "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": null,
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [],
+                                "justification": {
+                                  "id": "DicTZ_QLkx9Rq_CUNQtxL",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:36:53.353Z",
+                                  "modified": "2026-01-08T14:36:53.353Z",
+                                  "name": "",
+                                  "parentId": "5j7EzfU2z8TsryEmRCeNv",
+                                  "descriptems": [
+                                    {
+                                      "id": "xCGXISYT3pxA7cIt1CvF0",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:41:09.446Z",
+                                      "modified": "2026-01-08T14:41:09.446Z",
+                                      "startIndex": 494,
+                                      "endIndex": 509,
+                                      "note": "",
+                                      "justificationId": "DicTZ_QLkx9Rq_CUNQtxL",
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "U1XMYGgqsXxoz0XcL4s_R",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:35:56.542Z",
+                              "modified": "2026-01-08T14:35:56.542Z",
+                              "name": "",
+                              "parentId": "Fu7Api6L-r7xky_hptpUV",
+                              "descriptems": []
+                            }
+                          }
+                        ],
+                        "justification": {
+                          "id": "JpZxNqjz_-RGaJeTStX-b",
+                          "creator": "Nicolas",
+                          "contributor": "Nicolas",
+                          "projectId": "Example",
+                          "created": "2026-01-08T14:35:43.681Z",
+                          "modified": "2026-01-08T14:35:43.681Z",
+                          "name": "",
+                          "parentId": "yzhsUC8Zu9X8GMBA3O_eN",
+                          "descriptems": []
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "26PAydjpJkBOCjlwmBxii",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:22:34.471Z",
+                  "modified": "2026-01-08T14:22:34.471Z",
+                  "name": "Doctor arrival",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": true,
+                  "analysisId": null,
+                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                  "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                  "childIndex": 3,
+                  "children": [],
+                  "justification": {
+                    "id": "Gyw04Ie24eNQ7vkv-1qwr",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:22:34.470Z",
+                    "modified": "2026-01-08T14:22:34.470Z",
+                    "name": "",
+                    "parentId": "26PAydjpJkBOCjlwmBxii",
+                    "descriptems": [
+                      {
+                        "id": "Iwy4ESbOAJTuul7H9WbFm",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:22:34.470Z",
+                        "modified": "2026-01-08T14:22:34.470Z",
+                        "startIndex": 540,
+                        "endIndex": 640,
+                        "note": "",
+                        "justificationId": "Gyw04Ie24eNQ7vkv-1qwr",
+                        "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                      }
+                    ]
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "3GQp6CT7w--Cfr1i-wFmz",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:22:34.471Z",
+                    "modified": "2026-01-08T14:22:34.471Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "26PAydjpJkBOCjlwmBxii",
+                    "detachedModelId": null,
+                    "categories": []
+                  }
+                },
+                {
+                  "id": "zym7yNzipxpfeLLP23EIi",
+                  "creator": "Nicolas",
+                  "contributor": "Nicolas",
+                  "projectId": "Example",
+                  "created": "2026-01-08T14:22:54.152Z",
+                  "modified": "2026-01-08T14:22:54.152Z",
+                  "name": "Relieve phase",
+                  "color": "",
+                  "note": "",
+                  "isExpanded": true,
+                  "isTransitional": false,
+                  "analysisId": null,
+                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                  "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                  "childIndex": 4,
+                  "children": [
+                    {
+                      "id": "LYnRQq5y6vYPzTfGjwxJE",
+                      "creator": "Nicolas",
+                      "contributor": "Nicolas",
+                      "projectId": "Example",
+                      "created": "2026-01-08T14:43:14.121Z",
+                      "modified": "2026-01-08T14:43:14.121Z",
+                      "name": "Shoulders loosen",
+                      "color": "",
+                      "note": "",
+                      "isExpanded": true,
+                      "isTransitional": false,
+                      "analysisId": null,
+                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                      "parentId": "zym7yNzipxpfeLLP23EIi",
+                      "childIndex": 0,
+                      "children": [],
+                      "justification": {
+                        "id": "qgtJGQ5pQhkNWfbN5GBgk",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:43:14.119Z",
+                        "modified": "2026-01-08T14:43:14.119Z",
+                        "name": "",
+                        "parentId": "LYnRQq5y6vYPzTfGjwxJE",
+                        "descriptems": [
+                          {
+                            "id": "2QFktyG6oY_UTPZ2io9R_",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:43:14.118Z",
+                            "modified": "2026-01-08T14:43:14.118Z",
+                            "startIndex": 641,
+                            "endIndex": 789,
+                            "note": "",
+                            "justificationId": "qgtJGQ5pQhkNWfbN5GBgk",
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                          }
+                        ]
+                      },
+                      "specificsynchronicmodel": {
+                        "id": "hqjDK3MdAQW34aCGVp082",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:43:14.119Z",
+                        "modified": "2026-01-08T14:43:14.119Z",
+                        "name": "Initial",
+                        "color": "",
+                        "note": "",
+                        "momentId": "LYnRQq5y6vYPzTfGjwxJE",
+                        "detachedModelId": null,
+                        "categories": []
+                      }
+                    },
+                    {
+                      "id": "lIpri-NK5EQFdF34itcoH",
+                      "creator": "Nicolas",
+                      "contributor": "Nicolas",
+                      "projectId": "Example",
+                      "created": "2026-01-08T14:41:48.316Z",
+                      "modified": "2026-01-08T14:41:48.316Z",
+                      "name": "Warmth wave",
+                      "color": "",
+                      "note": "",
+                      "isExpanded": true,
+                      "isTransitional": false,
+                      "analysisId": null,
+                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                      "parentId": "zym7yNzipxpfeLLP23EIi",
+                      "childIndex": 1,
+                      "children": [],
+                      "justification": {
+                        "id": "Eo3s4ilps6T4v74rFnJGc",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:41:48.314Z",
+                        "modified": "2026-01-08T14:41:48.314Z",
+                        "name": "",
+                        "parentId": "lIpri-NK5EQFdF34itcoH",
+                        "descriptems": [
+                          {
+                            "id": "EdAr-kZJ9QnX9nhilQZp9",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:43:36.757Z",
+                            "modified": "2026-01-08T14:43:36.757Z",
+                            "startIndex": 691,
+                            "endIndex": 744,
+                            "note": "",
+                            "justificationId": "Eo3s4ilps6T4v74rFnJGc",
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                          }
+                        ]
+                      },
+                      "specificsynchronicmodel": {
+                        "id": "CY57gaSH3fA21Vj8B0shI",
+                        "creator": "Nicolas",
+                        "contributor": "Nicolas",
+                        "projectId": "Example",
+                        "created": "2026-01-08T14:41:48.316Z",
+                        "modified": "2026-01-08T14:41:48.316Z",
+                        "name": "Initial",
+                        "color": "",
+                        "note": "",
+                        "momentId": "lIpri-NK5EQFdF34itcoH",
+                        "detachedModelId": null,
+                        "categories": [
+                          {
+                            "id": "nz48OPTF_395WS-1Qr_7N",
+                            "creator": "Nicolas",
+                            "contributor": "Nicolas",
+                            "projectId": "Example",
+                            "created": "2026-01-08T14:42:06.310Z",
+                            "modified": "2026-01-08T14:42:06.310Z",
+                            "name": "Bodily feeling",
+                            "color": "",
+                            "note": "",
+                            "abstractionType": "aggregation",
+                            "criterion": "",
+                            "parentId": null,
+                            "childIndex": 0,
+                            "specificsynchronicmodelId": "CY57gaSH3fA21Vj8B0shI",
+                            "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                            "parent": null,
+                            "children": [
+                              {
+                                "id": "Z4iG2OO3sFNPIXshLxXke",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:42:06.310Z",
+                                "modified": "2026-01-08T14:42:06.310Z",
+                                "name": "Density",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "specialization",
+                                "criterion": "",
+                                "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "nz48OPTF_395WS-1Qr_7N",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.310Z",
+                                  "modified": "2026-01-08T14:42:06.310Z",
+                                  "name": "Bodily feeling",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "aggregation",
+                                  "criterion": "",
+                                  "parentId": null,
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": "CY57gaSH3fA21Vj8B0shI",
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [
+                                  {
+                                    "id": "8268bB8BmOp7V31qLbtyO",
+                                    "creator": "Nicolas",
+                                    "contributor": "Nicolas",
+                                    "projectId": "Example",
+                                    "created": "2026-01-08T14:42:06.310Z",
+                                    "modified": "2026-01-08T14:42:06.310Z",
+                                    "name": "Fluid",
+                                    "color": "",
+                                    "note": "",
+                                    "abstractionType": "",
+                                    "criterion": "",
+                                    "parentId": "Z4iG2OO3sFNPIXshLxXke",
+                                    "childIndex": 0,
+                                    "specificsynchronicmodelId": null,
+                                    "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                    "parent": {
+                                      "id": "Z4iG2OO3sFNPIXshLxXke",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.310Z",
+                                      "modified": "2026-01-08T14:42:06.310Z",
+                                      "name": "Density",
+                                      "color": "",
+                                      "note": "",
+                                      "abstractionType": "specialization",
+                                      "criterion": "",
+                                      "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                      "childIndex": 0,
+                                      "specificsynchronicmodelId": null,
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    },
+                                    "children": [],
+                                    "justification": {
+                                      "id": "S4iQ43AfBUBQ4JrLwrk0V",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.309Z",
+                                      "modified": "2026-01-08T14:42:06.309Z",
+                                      "name": "",
+                                      "parentId": "8268bB8BmOp7V31qLbtyO",
+                                      "descriptems": [
+                                        {
+                                          "id": "uYM57vmNgYSaC2cMU4VTS",
+                                          "creator": "Nicolas",
+                                          "contributor": "Nicolas",
+                                          "projectId": "Example",
+                                          "created": "2026-01-08T14:42:43.388Z",
+                                          "modified": "2026-01-08T14:42:43.388Z",
+                                          "startIndex": 752,
+                                          "endIndex": 789,
+                                          "note": "",
+                                          "justificationId": "S4iQ43AfBUBQ4JrLwrk0V",
+                                          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "justification": {
+                                  "id": "8tSjkuQ8VXG-Ty-rI4Nxe",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.309Z",
+                                  "modified": "2026-01-08T14:42:06.309Z",
+                                  "name": "",
+                                  "parentId": "Z4iG2OO3sFNPIXshLxXke",
+                                  "descriptems": []
+                                }
+                              },
+                              {
+                                "id": "En01zQjU0BALv1xGHnOOK",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:42:06.310Z",
+                                "modified": "2026-01-08T14:42:06.310Z",
+                                "name": "Location",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "specialization",
+                                "criterion": "",
+                                "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "nz48OPTF_395WS-1Qr_7N",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.310Z",
+                                  "modified": "2026-01-08T14:42:06.310Z",
+                                  "name": "Bodily feeling",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "aggregation",
+                                  "criterion": "",
+                                  "parentId": null,
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": "CY57gaSH3fA21Vj8B0shI",
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [
+                                  {
+                                    "id": "7d4XZwuXkmPztyS6LuvA-",
+                                    "creator": "Nicolas",
+                                    "contributor": "Nicolas",
+                                    "projectId": "Example",
+                                    "created": "2026-01-08T14:42:06.310Z",
+                                    "modified": "2026-01-08T14:42:06.310Z",
+                                    "name": "Whole body",
+                                    "color": "",
+                                    "note": "",
+                                    "abstractionType": "",
+                                    "criterion": "",
+                                    "parentId": "En01zQjU0BALv1xGHnOOK",
+                                    "childIndex": 0,
+                                    "specificsynchronicmodelId": null,
+                                    "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                    "parent": {
+                                      "id": "En01zQjU0BALv1xGHnOOK",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.310Z",
+                                      "modified": "2026-01-08T14:42:06.310Z",
+                                      "name": "Location",
+                                      "color": "",
+                                      "note": "",
+                                      "abstractionType": "specialization",
+                                      "criterion": "",
+                                      "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                      "childIndex": 0,
+                                      "specificsynchronicmodelId": null,
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    },
+                                    "children": [],
+                                    "justification": {
+                                      "id": "xLIsN16LKpY8UV_Kvwucf",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.309Z",
+                                      "modified": "2026-01-08T14:42:06.309Z",
+                                      "name": "",
+                                      "parentId": "7d4XZwuXkmPztyS6LuvA-",
+                                      "descriptems": [
+                                        {
+                                          "id": "GMmGkDMFM0D1Gd-F74OA3",
+                                          "creator": "Nicolas",
+                                          "contributor": "Nicolas",
+                                          "projectId": "Example",
+                                          "created": "2026-01-08T14:42:55.976Z",
+                                          "modified": "2026-01-08T14:42:55.976Z",
+                                          "startIndex": 723,
+                                          "endIndex": 744,
+                                          "note": "",
+                                          "justificationId": "xLIsN16LKpY8UV_Kvwucf",
+                                          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "justification": {
+                                  "id": "Z3GA7FihMT1MXvDeOQsUx",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.309Z",
+                                  "modified": "2026-01-08T14:42:06.309Z",
+                                  "name": "",
+                                  "parentId": "En01zQjU0BALv1xGHnOOK",
+                                  "descriptems": []
+                                }
+                              },
+                              {
+                                "id": "szqsj7tZVykraj80EUg6w",
+                                "creator": "Nicolas",
+                                "contributor": "Nicolas",
+                                "projectId": "Example",
+                                "created": "2026-01-08T14:42:06.310Z",
+                                "modified": "2026-01-08T14:42:06.310Z",
+                                "name": "Temperature",
+                                "color": "",
+                                "note": "",
+                                "abstractionType": "specialization",
+                                "criterion": "",
+                                "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                "childIndex": 0,
+                                "specificsynchronicmodelId": null,
+                                "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                "parent": {
+                                  "id": "nz48OPTF_395WS-1Qr_7N",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.310Z",
+                                  "modified": "2026-01-08T14:42:06.310Z",
+                                  "name": "Bodily feeling",
+                                  "color": "",
+                                  "note": "",
+                                  "abstractionType": "aggregation",
+                                  "criterion": "",
+                                  "parentId": null,
+                                  "childIndex": 0,
+                                  "specificsynchronicmodelId": "CY57gaSH3fA21Vj8B0shI",
+                                  "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                },
+                                "children": [
+                                  {
+                                    "id": "q3HtSO3QZOv7v2j01neTw",
+                                    "creator": "Nicolas",
+                                    "contributor": "Nicolas",
+                                    "projectId": "Example",
+                                    "created": "2026-01-08T14:42:06.310Z",
+                                    "modified": "2026-01-08T14:42:06.310Z",
+                                    "name": "Warm",
+                                    "color": "",
+                                    "note": "",
+                                    "abstractionType": "",
+                                    "criterion": "",
+                                    "parentId": "szqsj7tZVykraj80EUg6w",
+                                    "childIndex": 0,
+                                    "specificsynchronicmodelId": null,
+                                    "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a",
+                                    "parent": {
+                                      "id": "szqsj7tZVykraj80EUg6w",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.310Z",
+                                      "modified": "2026-01-08T14:42:06.310Z",
+                                      "name": "Temperature",
+                                      "color": "",
+                                      "note": "",
+                                      "abstractionType": "specialization",
+                                      "criterion": "",
+                                      "parentId": "nz48OPTF_395WS-1Qr_7N",
+                                      "childIndex": 0,
+                                      "specificsynchronicmodelId": null,
+                                      "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                    },
+                                    "children": [],
+                                    "justification": {
+                                      "id": "LzQWvEG4CwE7rSR3IUnUa",
+                                      "creator": "Nicolas",
+                                      "contributor": "Nicolas",
+                                      "projectId": "Example",
+                                      "created": "2026-01-08T14:42:06.310Z",
+                                      "modified": "2026-01-08T14:42:06.310Z",
+                                      "name": "",
+                                      "parentId": "q3HtSO3QZOv7v2j01neTw",
+                                      "descriptems": [
+                                        {
+                                          "id": "xc7wGnLy9X1vt3vDZ-w9y",
+                                          "creator": "Nicolas",
+                                          "contributor": "Nicolas",
+                                          "projectId": "Example",
+                                          "created": "2026-01-08T14:42:49.052Z",
+                                          "modified": "2026-01-08T14:42:49.052Z",
+                                          "startIndex": 778,
+                                          "endIndex": 788,
+                                          "note": "",
+                                          "justificationId": "LzQWvEG4CwE7rSR3IUnUa",
+                                          "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "justification": {
+                                  "id": "s71UTQfZld0RKn4dyeFpX",
+                                  "creator": "Nicolas",
+                                  "contributor": "Nicolas",
+                                  "projectId": "Example",
+                                  "created": "2026-01-08T14:42:06.310Z",
+                                  "modified": "2026-01-08T14:42:06.310Z",
+                                  "name": "",
+                                  "parentId": "szqsj7tZVykraj80EUg6w",
+                                  "descriptems": []
+                                }
+                              }
+                            ],
+                            "justification": {
+                              "id": "LiwUp-7QXAl0Idy4QIbNJ",
+                              "creator": "Nicolas",
+                              "contributor": "Nicolas",
+                              "projectId": "Example",
+                              "created": "2026-01-08T14:42:06.309Z",
+                              "modified": "2026-01-08T14:42:06.309Z",
+                              "name": "",
+                              "parentId": "nz48OPTF_395WS-1Qr_7N",
+                              "descriptems": []
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "justification": {
+                    "id": "-K-pCmESLfCrkHPHROENw",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:22:54.152Z",
+                    "modified": "2026-01-08T14:22:54.152Z",
+                    "name": "",
+                    "parentId": "zym7yNzipxpfeLLP23EIi",
+                    "descriptems": []
+                  },
+                  "specificsynchronicmodel": {
+                    "id": "Ogu1xF_t3C4s1yE7U9lyl",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:22:54.152Z",
+                    "modified": "2026-01-08T14:22:54.152Z",
+                    "name": "Initial",
+                    "color": "",
+                    "note": "",
+                    "momentId": "zym7yNzipxpfeLLP23EIi",
+                    "detachedModelId": null,
+                    "categories": []
+                  }
                 }
-            ],
-            "@id": 954967987,
-            "schemaFolder_list": []
-        }]
+              ],
+              "justification": {
+                "id": "iUUyfVlC6lEtYcjgXqfwJ",
+                "creator": "Nicolas",
+                "contributor": "Nicolas",
+                "projectId": "Example",
+                "created": "2026-01-08T14:20:04.636Z",
+                "modified": "2026-01-08T14:20:04.636Z",
+                "name": "",
+                "parentId": "kgqluTZB2H4rF9JCBo9l4",
+                "descriptems": [
+                  {
+                    "id": "slOElv7yJCQwHnR1L1XWv",
+                    "creator": "Nicolas",
+                    "contributor": "Nicolas",
+                    "projectId": "Example",
+                    "created": "2026-01-08T14:20:46.302Z",
+                    "modified": "2026-01-08T14:20:46.302Z",
+                    "startIndex": 13,
+                    "endIndex": 119,
+                    "note": "",
+                    "justificationId": "iUUyfVlC6lEtYcjgXqfwJ",
+                    "interviewId": "e9b1a0ad-fca0-434a-bdae-c4661349660a"
+                  }
+                ]
+              },
+              "specificsynchronicmodel": {
+                "id": "vnFzuWoHQn3Kpm61rwde8",
+                "creator": "Nicolas",
+                "contributor": "Nicolas",
+                "projectId": "Example",
+                "created": "2026-01-08T14:20:04.637Z",
+                "modified": "2026-01-08T14:20:04.637Z",
+                "name": "Initial",
+                "color": "",
+                "note": "",
+                "momentId": "kgqluTZB2H4rF9JCBo9l4",
+                "detachedModelId": null,
+                "categories": []
+              }
+            }
+          ],
+          "justification": null,
+          "specificsynchronicmodel": null
+        }
+      }
     }
+  ]
 }
