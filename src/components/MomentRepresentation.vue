@@ -28,12 +28,13 @@
          :data-moment="moment.id">
 
       <DropZone data="header"
-                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory"
                 class="row full-width justify-center moment-header q-pa-xs"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
+                @genericsynchroniccategory="droppedGenericSynchronicCategory"
                 @color="droppedColor">
         <custom-expansion-item
           class="moment-body pa-md-xs relative-position"
@@ -256,6 +257,20 @@
       const modelId = moment.value?.specificsynchronicmodel?.id
       if (modelId) {
           store.copySpecificSynchronicCategoryToModel(sscId, modelId, true)
+      }
+  }
+
+  function droppedGenericSynchronicCategory (name: string) {
+      // A generic category was dropped
+      const modelId = moment.value?.specificsynchronicmodel?.id
+      if (modelId) {
+          const genericInfo = props.genericGraphs ? props.genericGraphs.byName[name] : { abstractionType: '' }
+          store.addSpecificSynchronicCategory(name,
+                                              modelId,
+                                              `inmodel:${modelId}`,
+                                              null,
+                                              genericInfo.abstractionType)
+
       }
   }
 
