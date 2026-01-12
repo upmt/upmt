@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { computed } from 'vue'
 
   interface Props {
       expandIcon?: string,
       expandedIcon?: string,
-      expandIconClass?: string
+      expandIconClass?: object | string
   }
   withDefaults(defineProps<Props>(), {
       expandIcon: "mdi-plus",
@@ -28,7 +28,7 @@
       expandIconClass: ""
   })
 
-  const isExpanded = ref(true)
+  const isExpanded = defineModel({ default: true })
 
   const itemClass = computed(() => {
       return isExpanded.value ? "expansion-item column expanded" : "expansion-item column collapsed"
