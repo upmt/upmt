@@ -34,6 +34,9 @@
       window.addEventListener('beforeunload', onBeforeUnload)
       // Load username
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
+
+      const loadedProjects = []
+
       // Load stored projects
       for (const id of listStoredProjects()) {
           try {
@@ -45,12 +48,16 @@
       // Load sample projects if they were not stored
       for (const id of [ 'example' ]) {
           if (! store.getProject(id)) {
-              void store.loadProject(`./examples/${id}.upmt`).catch((error) => {
+              try {
+                  loadedProjects.push(store.loadProject(`./examples/${id}.upmt`))
+              } catch (error) {
                   console.log(`Cannot load example ${id}:`, error)
-              })
+              }
           }
       }
-      istore.setModified(false);
+      Promise.all(loadedProjects)
+          .then(() => istore.setModified(false))
+          .catch((error) => console.log(error));
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);
