@@ -36,7 +36,7 @@
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @color="droppedColor">
         <custom-expansion-item
-          class="moment-body pa-md-xs"
+          class="moment-body pa-md-xs relative-position"
           dense
           dense-toggle
           :duration="0"
@@ -90,19 +90,19 @@
               :modelId="moment?.specificsynchronicmodel?.id ?? ''">
             </SpecificSynchronicModelOverview>
 
-            <q-btn
-              flat
-              dense
-              v-if="moment"
-              size="xs"
-              title="Edit specific synchronic model"
-              class="absolute-bottom-right"
-              @click="editModel(moment.specificsynchronicmodel?.id || '')"
-              icon="mdi-graph-outline"
-              no-caps>
-            </q-btn>
-
           </div>
+
+          <q-btn
+            flat
+            dense
+            v-if="moment"
+            size="xs"
+            title="Edit specific synchronic model"
+            class="absolute-bottom-right"
+            @click="editModel(moment.specificsynchronicmodel?.id || '')"
+            icon="mdi-graph-outline"
+            no-caps>
+          </q-btn>
 
         </custom-expansion-item>
       </DropZone>
