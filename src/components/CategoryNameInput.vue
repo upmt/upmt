@@ -70,11 +70,11 @@
     <q-btn
       flat
       size="sm"
-      @click="validate">OK</q-btn>
+      @click="cancel">Cancel</q-btn>
     <q-btn
       flat
       size="sm"
-      @click="cancel">Cancel</q-btn>
+      @click="validate">OK</q-btn>
   </div>
 </template>
 

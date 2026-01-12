@@ -31,11 +31,11 @@
     <q-btn
       flat
       size="sm"
-      @click="validate">Set</q-btn>
+      @click="cancel">Cancel</q-btn>
     <q-btn
       flat
       size="sm"
-      @click="cancel">Cancel</q-btn>
+      @click="validate">Set</q-btn>
   </div>
 </template>
 
