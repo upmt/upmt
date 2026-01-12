@@ -119,6 +119,13 @@
             </q-card-section>
             <q-separator />
             <q-card-section>
+              <q-list dense bordered padding>
+                <q-item v-ripple>
+                  <q-item-section>
+                    10/01/2026 - Basic example added
+                  </q-item-section>
+                </q-item>
+              </q-list>
             </q-card-section>
           </q-card>
 
