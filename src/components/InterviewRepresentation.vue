@@ -13,7 +13,7 @@
           @click="createMoment">
           New moment
           <q-tooltip anchor="top middle"
-                     :offset="[0,30]">Drag this button to create a new moment></q-tooltip>
+                     :offset="[0,30]">Click or drag this button to create a new moment></q-tooltip>
         </q-btn>
       </DragElement>
 
@@ -129,6 +129,11 @@
                                       lastMoment.id,
                                       "after")
                   }
+              } else {
+                  // No moments - create in rootMoment
+                  store.addMoment(istore.newMomentId(),
+                                  analysis.rootMoment.id,
+                                  `in:${analysis.rootMoment.id}`)
               }
           }
       }
