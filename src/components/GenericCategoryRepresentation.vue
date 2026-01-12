@@ -2,18 +2,9 @@
   <div class="genericsynchroniccategory-container row"
        v-if="genericcategory"
        :data-genericcategory="genericcategory.name">
-    <q-expansion-item
+    <custom-expansion-item
       class="genericsynchroniccategory-body"
-      dense
-      dense-toggle
-      :duration="0"
-      expand-icon-toggle
       :expand-icon-class="{ 'invisible': genericcategory.children?.length == 0 }"
-      switch-toggle-side
-      no-v-model="expand"
-      header-class="header-class"
-      :title="genericcategory.name"
-      :content-inset-level="0.2"
       >
 
       <template v-slot:header>
@@ -28,7 +19,7 @@
             ref="handle"
             class="genericsynchroniccategory-handle"
             size="xs"
-            name="mdi-alpha-s-box-outline-check" />
+            name="mdi-alpha-s-box-outline" />
           <q-icon
             v-if="isSpecialization"
             size="xs"
@@ -132,7 +123,7 @@
           :currentInterviewId="currentInterviewId"
           />
       </div>
-    </q-expansion-item>
+    </custom-expansion-item>
   </div>
 </template>
 
@@ -142,6 +133,7 @@
   import { useRouter } from 'vue-router'
   import { useQuasar } from 'quasar'
 
+  import CustomExpansionItem from './CustomExpansionItem.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import SpecificSynchronicModel from 'stores/models/specificsynchronicmodel'

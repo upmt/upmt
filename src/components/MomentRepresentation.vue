@@ -35,7 +35,7 @@
                 @descriptem="droppedDescriptem"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @color="droppedColor">
-        <q-expansion-item
+        <custom-expansion-item
           class="moment-body pa-md-xs"
           dense
           dense-toggle
@@ -104,7 +104,7 @@
 
           </div>
 
-        </q-expansion-item>
+        </custom-expansion-item>
       </DropZone>
 
       <div :class="[ 'moment-children', 'horizontal' ]">
@@ -153,6 +153,7 @@
   import { storeToRefs } from 'pinia'
 
   import ColorizeIcon from './ColorizeIcon.vue'
+  import CustomExpansionItem from './CustomExpansionItem.vue'
   import DragElement from './DragElement.vue'
   import DropZone from './DropZone.vue'
   import ElementMenu from './ElementMenu.vue'
