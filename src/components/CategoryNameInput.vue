@@ -91,7 +91,7 @@
 
   const props = defineProps({
       category: { type: SpecificSynchronicCategory, default: null },
-      genericGraph: { type: Object, default: null }
+      genericGraphs: { type: Object, default: null }
   })
 
   const name = ref(props.category.name)
@@ -107,13 +107,13 @@
 
       if (props.category) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
-          const genericSource = props.genericGraph ? props.genericGraph.byName[name.value] : {}
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[name.value] : {}
           const abstractionType = genericSource.abstractionType || ''
           store.updateElement(props.category, { name: name.value, abstractionType })
       }
 
       newChildren.value.forEach(n => {
-          const genericSource = props.genericGraph ? props.genericGraph.byName[n] : {}
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[n] : {}
           const abstractionType = genericSource.abstractionType || ''
           store.addSpecificSynchronicCategory(n,
                                               props.category.specificsynchronicmodelId,

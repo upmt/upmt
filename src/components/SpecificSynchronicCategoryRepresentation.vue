@@ -18,7 +18,7 @@
           v-for="c in category.children"
           :key="c.id"
           :isGeneric="isGeneric"
-          :genericGraph="genericGraph"
+          :genericGraphs="genericGraphs"
           :layout="layout"
           :withChildren="withChildren"
           :hideJustifications="hideJustifications"
@@ -135,7 +135,7 @@
                             v-slot="scope"
                             auto-save>
                 <CategoryNameInput @change="scope.cancel"
-                                   :genericGraph="genericGraph"
+                                   :genericGraphs="genericGraphs"
                                    :category="category" />
               </q-popup-edit>
             </span>
@@ -224,7 +224,7 @@
 
   const props = defineProps({
       categoryId: { type: String, default: "" },
-      genericGraph: { type: Object, default: null },
+      genericGraphs: { type: Object, default: null },
       layout: { type: String, default: "horizontal" }, // horizontal or vertical
       hideJustifications: { type: Boolean, default: false },
       isGeneric: { type: Boolean, default: false },
@@ -239,7 +239,7 @@
       },
       set (value: string) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
-          const genericSource = props.genericGraph ? props.genericGraph.byName[value] : {}
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[value] : {}
           const abstractionType = genericSource.abstractionType || ''
           store.updateSpecificSynchronicCategory(props.categoryId, { name: value, abstractionType: abstractionType })
       }
@@ -298,7 +298,7 @@
       displayJustification.value = ! props.hideJustifications || categoryDescriptemCount.value > 0
   }
 
-  const genericElement = computed(() => props.genericGraph ? props.genericGraph.byName[categoryName.value] : {})
+  const genericElement = computed(() => props.genericGraphs ? props.genericGraphs.byName[categoryName.value] : {})
 
   const proposedChildrenNames = computed(() => {
       const currentChildren = new Set((category.value?.children || []).map(child => child.name))
@@ -326,7 +326,7 @@
           if (! name) {
               name = istore.newSSCId()
           }
-          const genericSource = props.genericGraph ? props.genericGraph.byName[name] : {}
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[name] : {}
           const abstractionType = genericSource.abstractionType || ''
           store.addSpecificSynchronicCategory(name,
                                               category.value.specificsynchronicmodelId,
@@ -360,7 +360,7 @@
           where = `in:${props.categoryId}`
       }
       if (category.value) {
-          const genericSource = props.genericGraph ? props.genericGraph.byName[categoryName] : {}
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[categoryName] : {}
           const abstractionType = genericSource.abstractionType || ''
 
           store.addSpecificSynchronicCategory(categoryName,

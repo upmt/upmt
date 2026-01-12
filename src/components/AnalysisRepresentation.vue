@@ -5,6 +5,7 @@
     <div class="analysis-content moment-children">
       <div v-for="m in analysis.rootMoment.children" :key="m.id">
         <MomentRepresentation
+          :genericGraphs="genericGraphs"
           :momentId="m.id">
         </MomentRepresentation>
       </div>
@@ -25,7 +26,8 @@
   const istore = useInterfaceStore()
 
   const props = defineProps({
-      analysisId: { type: String, default: "" }
+      analysisId: { type: String, default: "" },
+      genericGraphs: { type: Object, default: null }
   })
 
   const { highlightedMomentId } = storeToRefs(istore)

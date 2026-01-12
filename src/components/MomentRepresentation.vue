@@ -110,6 +110,7 @@
       <div :class="[ 'moment-children', 'horizontal' ]">
         <div v-for="m in moment.children" :key="m.id">
           <MomentRepresentation
+            :genericGraphs="genericGraphs"
             :momentId="m.id">
           </MomentRepresentation>
         </div>
@@ -172,7 +173,8 @@
 
   const props = defineProps({
       momentId: { type: String, default: "" },
-      layout: { type: String, default: "vertical" }
+      layout: { type: String, default: "vertical" },
+      genericGraphs: { type: Object, default: null }
   })
 
   const {

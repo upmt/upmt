@@ -46,7 +46,7 @@
           :key="c.id"
           :isGeneric="isGeneric"
           :layout="layout"
-          :genericGraph="genericGraph"
+          :genericGraphs="genericGraphs"
           :hideJustifications="!model.momentId"
           :categoryId="c.id" />
       </div>
@@ -56,11 +56,9 @@
 
 <script setup lang="ts">
 
-  import { computed, ComputedRef } from 'vue'
+  import { computed } from 'vue'
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
-
-  import type { GraphInfo } from 'stores/projectStore'
 
   import VueZoomable from "vue-zoomable"
   import "vue-zoomable/dist/style.css"
@@ -76,12 +74,11 @@
       modelId: { type: String, default: null },
       isGeneric: { type: Boolean, default: false },
       hideJustifications: { type: Boolean, default: false },
-      layout: { type: String, default: 'horizontal' }
+      layout: { type: String, default: 'horizontal' },
+      genericGraphs: { type: Object, default: null }
   })
 
   const model = computed(() => store.getSpecificSynchronicModel(props.modelId))
-
-  const genericGraph: ComputedRef<GraphInfo> = computed(() => model.value ? store.getGenericSynchronicGraphs(model.value.projectId) : {} as GraphInfo)
 
   function showContent () {
       // Make sure the Model/Category is displayed
@@ -95,7 +92,7 @@
 
   // Dropped selection to create a SpecificSynchronicModel. where is before or after or in:
   function droppedGenericSynchronicCategory (categoryName: string, where: string) {
-      const genericInfo = genericGraph.value ? genericGraph.value.byName[categoryName] : { abstractionType: '' }
+      const genericInfo = props.genericGraphs ? props.genericGraphs.byName[categoryName] : { abstractionType: '' }
 
       store.addSpecificSynchronicCategory(categoryName,
                                           props.modelId,
@@ -109,7 +106,7 @@
       // Get the name from the id
       const category = store.getSpecificSynchronicCategory(categoryId)
       if (category) {
-          const genericInfo = genericGraph.value ? genericGraph.value.byName[category.name] : { abstractionType: '' }
+          const genericInfo = props.genericGraphs ? props.genericGraphs.byName[category.name] : { abstractionType: '' }
 
           store.addSpecificSynchronicCategory(category.name,
                                               props.modelId,

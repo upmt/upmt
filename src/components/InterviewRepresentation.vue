@@ -64,6 +64,7 @@
         ref="analysis"
         class="analysis"
         v-if="interview.analysis"
+        :genericGraphs="genericGraphs"
         :analysisId="interview.analysis.id">
       </AnalysisRepresentation>
     </VueZoomable>
@@ -89,7 +90,8 @@
   const store = useProjectStore()
 
   const props = defineProps({
-      interviewId: { type: String, default: "" }
+      interviewId: { type: String, default: "" },
+      genericGraphs: { type: Object, default: null }
   })
 
   const interview = computed(() => store.getInterview(props.interviewId))

@@ -56,6 +56,7 @@
       <SpecificSynchronicModelRepresentation
         :layout="editViewMode"
         :isGeneric="isEditedModelDetached"
+        :genericGraphs="genericGraphs"
         :modelId="modelId" />
     </div>
   </div>

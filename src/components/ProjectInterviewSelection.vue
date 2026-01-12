@@ -118,6 +118,7 @@
                   <template v-slot:before>
                     <InterviewRepresentation
                       class="flex col-grow"
+                      :genericGraphs="genericGraphs"
                       :interviewId="interview.id">
                     </InterviewRepresentation>
                   </template>
