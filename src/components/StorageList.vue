@@ -9,6 +9,13 @@
       title="Refresh the list of stored files"
       icon="mdi-refresh"/>
     <q-item
+      v-if="!filenames.length">
+        <q-icon
+          size="xs"
+          name="mdi-semantic-web" />
+        No version stored in the browser storage.
+    </q-item>
+    <q-item
       class="column"
       v-for="filename in filenames"
       :key="filename">
