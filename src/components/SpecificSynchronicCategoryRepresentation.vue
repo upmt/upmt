@@ -274,7 +274,7 @@
   const displayJustification = ref(false)
 
   const isJustificationVisible = computed(() => {
-      return displayJustification.value
+      return category.value?.justification?.descriptems?.length && displayJustification.value
   })
 
   const categoryDescriptems = computed(() => {
