@@ -61,13 +61,12 @@
   import { computed, ref } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
 
   const istore = useInterfaceStore()
 
-  import type { GraphInfo } from 'stores/projectStore'
+  import type { GraphInfo, Note } from 'stores/projectStore'
 
   const props = defineProps<{
       projectId: string,
@@ -76,40 +75,12 @@
       title?: string
   }>()
 
-  type Note = {
-      text: string,
-      element: BaseModel,
-      icon: string,
-      tooltip: string
-  }
-
   const infoTab = ref('notes')
 
   const notes_filter = ref('')
 
   const notes = computed(() => {
-      // FIXME: get into pinia to optimize
-      const categories = store.getSpecificSynchronicCategoriesByProject(props.projectId)
-      const category_notes = categories.filter(category => category.note).map((category: any) => {
-          return {
-              text: category.note,
-              element: category,
-              icon: 'mdi-alpha-s-box-outline',
-              tooltip: `Category ${category.name}`
-          } as Note
-      })
-      const moments = store.getMomentsByProject(props.projectId)
-      const momentId2interview = Object.fromEntries(moments.map(moment => [ moment.id, store.getInterviewByMoment(moment.id)]))
-      const moment_notes = moments.filter(moment => moment.note).map((moment: any) => {
-          const interview = momentId2interview[moment.id]
-          return {
-              text: moment.note,
-              element: moment,
-              icon: 'mdi-alpha-d-box-outline',
-              tooltip: `Moment ${moment.name} - Interview ${interview?.name}`
-          } as Note
-      })
-      const output = [ ...category_notes, ...moment_notes ]
+      const output = store.getNotes(props.projectId)
       if (notes_filter.value) {
           return output.filter(note => note.text.includes(notes_filter.value))
       } else {

@@ -51,6 +51,15 @@ export type GraphInfo = {
   instanceIdToContainerInfo: Record<string, ContainerInfo>
 }
 
+export type Note = {
+    text: string,
+    element: BaseModel,
+    elementType: string,
+    icon: string,
+    tooltip: string
+  }
+
+
 /* Should find how to dynamically inject typescript definitions here:
 const repo = Object.fromEntries([
   Analysis,
@@ -253,6 +262,88 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.Moment
       .where('projectId', projectId)
       .get()
+  }
+
+  function getNotes (projectId: string): Note[] {
+    // Return a list of all notes that exist in the document
+    const ssc_notes = repo.SpecificSynchronicCategory
+      .where('projectId', projectId)
+      .whereNotIn('note', [ '' ])
+      .get()
+      .map((category: any) => {
+          return {
+            text: category.note,
+            element: category,
+            elementType: 'specificsynchroniccategory',
+            icon: 'mdi-alpha-s-box-outline',
+            tooltip: `Category ${category.name}`
+          } as Note
+    })
+
+    const moments = repo.Moment
+      .where('projectId', projectId)
+      .whereNotIn('note', [ '' ])
+      .get()
+    const momentId2interview = Object.fromEntries(moments.map(moment => [ moment.id, repo.Interview.find(moment.interviewId) ]))
+    const moment_notes = moments
+      .map((moment: any) => {
+          const interview = momentId2interview[moment.id]
+          return {
+            text: moment.note,
+            element: moment,
+            elementType: 'moment',
+            icon: 'mdi-alpha-d-box-outline',
+            tooltip: `Moment ${moment.name} - Interview ${interview?.name}`
+          } as Note
+      })
+
+    const interview_notes = repo.Interview
+      .where('projectId', projectId)
+      .whereNotIn('note', [ '' ])
+      .get()
+      .map((interview: any) => {
+          return {
+            text: interview.note,
+            element: interview,
+            elementType: 'interview',
+            icon: 'mdi-chat-outline',
+            tooltip: `Interview ${interview.label}`
+          } as Note
+    })
+
+    const synchronicmodel_notes = repo.SpecificSynchronicModel
+      .where('projectId', projectId)
+      .whereNotIn('note', [ '' ])
+      .get()
+      .map((model: any) => {
+          return {
+            text: model.note,
+            element: model,
+            elementType: 'specificsynchronicmodel',
+            icon: 'mdi-graph-outline',
+            tooltip: `Synchronic Model ${model.name}`
+          } as Note
+    })
+
+    const project_notes = []
+    const project = getProject(projectId)
+    if (project && project.note) {
+      project_notes.push({
+        text: project.note,
+        element: project,
+        elementType: 'project',
+        icon: 'mdi-semantic-web',
+        tooltip: `Project ${project.name}`
+      } as Note)
+    }
+
+    return [
+      ...ssc_notes,
+      ...moment_notes,
+      ...interview_notes,
+      ...synchronicmodel_notes,
+      ...project_notes
+    ]
   }
 
   function getSpecificSynchronicCategory (id: string) {
@@ -1291,6 +1382,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getMomentsByName,
     getMomentsByPrefix,
     getMomentsByProject,
+    getNotes,
     getSpecificSynchronicCategory,
     getSpecificSynchronicCategoriesByName,
     getSpecificSynchronicCategoriesByProject,
