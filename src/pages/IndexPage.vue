@@ -131,11 +131,12 @@
 
           <q-card class="col-md-4 col-12">
             <q-card-section class="bg-primary text-white">
-              <div class="text-h4">Forum</div>
+              <div class="text-h4">Discussions</div>
             </q-card-section>
             <q-separator />
             <q-card-section>
-              Ask questions and make suggestions on the <a href="https://github.com/upmt/upmt/discussions">discussions forum</a>.
+              <p>Ask questions and make suggestions on the <a href="https://github.com/upmt/upmt/discussions">discussions forum</a>.<br>
+              If you find an issue, please <a href="https://github.com/upmt/upmt/issues/new">file a bug report</a>.</p>
             </q-card-section>
           </q-card>
 
@@ -155,6 +156,7 @@
             </q-card-section>
             <q-separator />
             <q-card-section>
+              You can <a href="mailto:upmt-contact@univ-nantes.fr">contact us by e-mail</a>.
             </q-card-section>
           </q-card>
 
@@ -359,5 +361,10 @@
     width: 100%;
     max-width: 250px;
   }
-
+  a {
+      text-decoration: none;
+   }
+  a:hover {
+      text-decoration: underline;
+   }
 </style>
