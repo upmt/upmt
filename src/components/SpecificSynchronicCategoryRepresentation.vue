@@ -240,7 +240,7 @@
       set (value: string) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[value] : {}
-          const abstractionType = genericSource.abstractionType || ''
+          const abstractionType = genericSource?.abstractionType || ''
           store.updateSpecificSynchronicCategory(props.categoryId, { name: value, abstractionType: abstractionType })
       }
   })
@@ -323,7 +323,7 @@
               name = istore.newSSCId()
           }
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[name] : {}
-          const abstractionType = genericSource.abstractionType || ''
+          const abstractionType = genericSource?.abstractionType || ''
           store.addSpecificSynchronicCategory(name,
                                               category.value.specificsynchronicmodelId,
                                               where,
@@ -357,7 +357,7 @@
       }
       if (category.value) {
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[categoryName] : {}
-          const abstractionType = genericSource.abstractionType || ''
+          const abstractionType = genericSource?.abstractionType || ''
 
           store.addSpecificSynchronicCategory(categoryName,
                                               category.value.specificsynchronicmodelId,

@@ -108,13 +108,13 @@
       if (props.category) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[name.value] : {}
-          const abstractionType = genericSource.abstractionType || ''
+          const abstractionType = genericSource?.abstractionType || ''
           store.updateElement(props.category, { name: name.value, abstractionType })
       }
 
       newChildren.value.forEach(n => {
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[n] : {}
-          const abstractionType = genericSource.abstractionType || ''
+          const abstractionType = genericSource?.abstractionType || ''
           store.addSpecificSynchronicCategory(n,
                                               props.category.specificsynchronicmodelId,
                                               `in:${props.category.id}`,
