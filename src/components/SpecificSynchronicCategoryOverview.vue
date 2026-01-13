@@ -102,6 +102,9 @@
       width: 10px;
       line-height: calc(var(--overview-height) + 2px);
       align-self: center;
+      display: flex;
+      height: -webkit-fill-available;
+      height: -moz-available;
   }
   .specificsynchroniccategory-filler {
       height: calc(var(--overview-height) + 2px);

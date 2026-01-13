@@ -119,6 +119,9 @@
       padding: 0;
       width: 10px;
       line-height: calc(var(--overview-height) + 2px);
+      display: flex;
+      height: -webkit-fill-available;
+      height: -moz-available;
   }
   .genericsynchroniccategory-filler {
       height: calc(var(--overview-height) + 2px);
