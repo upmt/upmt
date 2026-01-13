@@ -19,7 +19,7 @@
             ref="handle"
             class="genericsynchroniccategory-handle"
             size="xs"
-            name="mdi-alpha-s-box-outline" />
+            name="mdi-alpha-s-box" />
           <q-icon
             v-if="isSpecialization"
             size="xs"
