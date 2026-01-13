@@ -303,12 +303,8 @@
   const proposedChildrenNames = computed(() => {
       const currentChildren = new Set((category.value?.children || []).map(child => child.name))
       const childrenNames = [ ...genericElement.value.childrenNames.difference(currentChildren) ].toSorted()
-      if (childrenNames.length) {
-          return [ ["New element", ""],
-                   ...childrenNames.map((name: string) => [ name, name ]) ]
-      } else {
-          return [ ["New element", ""] ]
-      }
+      return [ ["New category", ""],
+               ...childrenNames.map((name: string) => [ name, name ]) ]
   })
 
   function debug () {
