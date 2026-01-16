@@ -306,7 +306,7 @@ export const useProjectStore = defineStore('projectStore', () => {
             text: interview.note,
             element: interview,
             elementType: 'interview',
-            icon: 'mdi-chat-outline',
+            icon: 'mdi-comment-text-outline',
             tooltip: `Interview ${interview.label}`
           } as Note
     })
