@@ -114,8 +114,16 @@
              class="col-5 q-pa-sm q-gutter-sm">
 
           <q-card class="col-md-4 col-12">
-            <q-card-section class="bg-primary text-white">
+            <q-card-section class="bg-primary text-white row">
               <div class="text-h4">News</div>
+              <q-btn
+                class="q-ml-md"
+                outline
+                target="_blank"
+                href="https://sympa.univ-nantes.fr/sympa/subscribe/upmt-users"
+                title="Subscribe to the upmt-users mailing-list to get notified of news"
+                no-caps>Subscribe
+              </q-btn>
             </q-card-section>
             <q-separator />
             <q-card-section>
