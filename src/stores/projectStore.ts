@@ -721,6 +721,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.SpecificSynchronicCategory.where('id', identifier).update(values)
   }
 
+  function updateSynchronicCategoryColor (projectId: string | undefined, name: string | undefined, color: string) {
+    if (projectId && name) {
+      repo.SpecificSynchronicCategory.where('projectId', projectId).where('name', name).update({ color })
+    }
+  }
+
   function recursiveUpdateMoment (identifier: string, values: object) {
     updateMoment(identifier, values)
     // Recursively call method on children
@@ -1126,10 +1132,9 @@ export const useProjectStore = defineStore('projectStore', () => {
           rootCategoryNames.add(name)
           rootInstances.push(...roots)
         }
-        const colors = instances
-          .map((ssc: SpecificSynchronicCategory) => ssc.color)
-          .filter((color: string | undefined) => !!color)
-        const color = colors[0] ?? ""
+        // We maintain color consistency across categories with the same name,
+        // so we can just use the first item color
+        const color = instances[0]?.color || ''
 
         const types = new Set(instances
           // ignore abstraction type for ssc without child
@@ -1410,6 +1415,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateMoment,
     recursiveUpdateMoment,
     updateModelFolder,
-    updateSpecificSynchronicCategory
+    updateSpecificSynchronicCategory,
+    updateSynchronicCategoryColor
   }
 })

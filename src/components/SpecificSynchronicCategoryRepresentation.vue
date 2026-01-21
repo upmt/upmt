@@ -257,7 +257,7 @@
           if (color == '#ffffff') {
               color = ''
           }
-          store.updateSpecificSynchronicCategory(props.categoryId, { color })
+          store.updateSynchronicCategoryColor(category.value?.projectId, category.value?.name, color)
       }
   })
 
@@ -400,7 +400,7 @@
   }
 
   function droppedColor (color: string) {
-      store.updateSpecificSynchronicCategory(props.categoryId, { color: color })
+      store.updateSynchronicCategoryColor(category.value?.projectId, category.value?.name, color)
   }
 
   // Dropped selections to create a SSCategory. data is before or after
