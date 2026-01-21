@@ -1171,6 +1171,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     // they are against different trees with potentially different
     // roots, so it is not that simple
     function propagateContainerInfo (ssc: SpecificSynchronicCategory, containerInfo: ContainerInfo | null = null) {
+      if (instanceIdToContainerInfo[ssc.id] !== undefined) {
+        // We already went through this ssc - circular reference somehow. Do not continue
+        return
+      }
       if (! containerInfo) {
         if (ssc.model) {
           containerInfo = {
