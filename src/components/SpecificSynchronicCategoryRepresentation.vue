@@ -350,6 +350,12 @@
       if (categoryId !== props.categoryId && source) {
           // It was maybe a root category. Remove it from the root
           // categories and reparent.
+          const specificsynchronicmodelId = source.specificsynchronicmodelId
+          if (specificsynchronicmodelId) {
+              // It was a root category - move all its children as root categories
+              source.children.forEach(child => store.updateSpecificSynchronicCategory(child.id, { specificsynchronicmodelId,
+                                                                                                  parentId: null }))
+          }
           store.updateSpecificSynchronicCategory(categoryId, {
               specificsynchronicmodelId: null,
               parentId: props.categoryId
