@@ -8,7 +8,7 @@
        :data-specificsynchroniccategory="categoryId">
 
     <div :class="[ 'specificsynchroniccategory' ]"
-         :style="{ backgroundColor: category.color }"
+         :style="{ backgroundColor: category.color || 'transparent' }"
          v-if="category"
          :data-specificsynchroniccategory="categoryId">
 
@@ -254,6 +254,9 @@
           return category.value ? category.value.color : ""
       },
       set (color: string) {
+          if (color == '#ffffff') {
+              color = ''
+          }
           store.updateSpecificSynchronicCategory(props.categoryId, { color })
       }
   })

@@ -55,6 +55,9 @@
           return moment.value ? moment.value.color : ""
       },
       set (color: string) {
+          if (color == '#ffffff') {
+              color = ''
+          }
           store.updateMoment(props.momentId, { color })
       }
   })

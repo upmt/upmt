@@ -44,6 +44,15 @@
     height: 8% !important;
     border-radius: 50%;
     margin: 2px;
+    position: relative;
+  }
+  .q-color-picker__cube:last-of-type::after  {
+      content: "";
+      position: absolute;
+      inset: 0; /* Fills the entire div */
+      background-color: red;
+      /* The Polygon Points for an 'X' shape */
+      clip-path: polygon(10% 0%, 0% 10%, 40% 50%, 0% 90%, 10% 100%, 50% 60%, 90% 100%, 100% 90%, 60% 50%, 100% 10%, 90% 0%, 50% 40%);
   }
   .q-color-picker__cube:hover  {
       transform: scale(1.1);
