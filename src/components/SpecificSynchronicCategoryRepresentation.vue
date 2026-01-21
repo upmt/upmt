@@ -88,6 +88,7 @@
             class="specificsynchroniccategory-relationmenu"
             :actions="relationActions" />
           <q-btn
+            class="print-removed"
             size="xs"
             flat
             round
@@ -204,6 +205,7 @@
 
   import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
+  import { useQuasar } from 'quasar'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
@@ -215,6 +217,8 @@
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
+
+  const $q = useQuasar()
 
   const istore = useInterfaceStore()
 
@@ -442,6 +446,25 @@
       createSpecificSynchronicCategory(`in:${props.categoryId}`, name)
   }
 
+  function criterionPopup () {
+      const criterion = category.value?.criterion || ""
+      $q.dialog({
+          title: 'Enter a criterion for this relation',
+          html: true,
+          message: 'You can specify a criterion for this relation or the associated category.',
+          prompt: {
+              model: criterion,
+              type: 'text' // optional
+          },
+          cancel: true,
+          persistent: true
+      }).onOk(newValue => {
+          if (newValue) {
+              store.updateSpecificSynchronicCategory(props.categoryId, { criterion: newValue })
+          }
+      })
+  }
+
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
@@ -450,10 +473,11 @@
   ]
 
   const relationActions: NamedAction[] = [
+      [ "Create a new child category", () => createChildCategory() ],
       [ "Set as generic abstraction", () => updateAbstractionType('') ],
       [ "Set as aggregation abstraction ⋄", () => updateAbstractionType('aggregation') ],
       [ "Set as specialization abstraction ⧍", () => updateAbstractionType('specialization') ],
-      [ "Create a new child category", () => createChildCategory() ]
+      [ "Define a criterion for this abstraction relation", () => criterionPopup() ]
   ]
 </script>
 
@@ -586,14 +610,13 @@
       bottom: calc(50% + 10px);
       width: var(--synchronic-category-relation-width);
       left: 0;
-      opacity: 0.1;
+      opacity: 0.2;
   }
   .vertical .specificsynchroniccategory-relationinfo {
       position: absolute;
       top: 0;
       width: var(--synchronic-category-relation-width);
       left: calc(50% - 40px);
-      opacity: 0.1;
   }
 
   .specificsynchroniccategory-relation:hover   .specificsynchroniccategory-relationinfo {
