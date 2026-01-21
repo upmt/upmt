@@ -1,6 +1,6 @@
 const ANNOTATION_COLORS = [
   '#ff9797',
-  '#7084b0',
+  '#9eb2dd',
   '#ffdc97',
   '#7bcf7b'
 ]
