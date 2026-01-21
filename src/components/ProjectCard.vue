@@ -137,7 +137,7 @@
       $q.dialog({
           title: `Confirm project deletion`,
           html: true,
-          message: `Do you confirm the deletion of project <strong>${projectId}</strong>?`,
+          message: `<p>Do you confirm the deletion of project <strong>${projectId}</strong>?</p><p>Note that it will download the latest version on your computer, so that you have a last trace.</p>`,
           cancel: true,
           persistent: true
       }).onOk(() => {
