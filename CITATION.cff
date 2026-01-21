@@ -1,0 +1,40 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: μPMT
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Yannick
+    family-names: Prié
+    email: yannick.prie@univ-nantes.fr
+    affiliation: Nantes Université
+    orcid: 'https://orcid.org/0000-0002-7068-0836'
+  - given-names: Olivier
+    family-names: Aubert
+    email: contact@olivieraubert.net
+    affiliation: Nantes Université
+    orcid: 'https://orcid.org/0000-0001-8204-1567'
+repository-code: 'https://github.com/upmt/upmt/'
+url: 'https://upmt.github.io/'
+abstract: >-
+  μPMT is aimed at researchers using microphenomenology
+  interviews (also known as explicitation interviews) to
+  study lived experience. It has been designed to help
+  analyze the micro-dynamics of experience as described in
+  interview transcriptions, by modelling and formalizing the
+  sequential unfolding of "experience moments" described
+  with categories and properties, and linked to the
+  descriptemes - excerpts of the transcript - that justify
+  them. 
+keywords:
+  - microphenomenology
+  - interview
+  - analysis
+license: AGPL-3.0
+commit: HEAD
+version: v1-rolling-release
+date-released: '2026-01-21'
