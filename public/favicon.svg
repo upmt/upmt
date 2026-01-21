@@ -1,5 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="24" fill="#CCE5CF" />
-  <circle cx="32" cy="32" r="18" fill="#AACCFF" />
-  <circle cx="32" cy="32" r="12" fill="#82C2FF" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="favicon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.1989714"
+     inkscape:cx="33.936883"
+     inkscape:cy="-0.71446069"
+     inkscape:window-width="1680"
+     inkscape:window-height="1015"
+     inkscape:window-x="1922"
+     inkscape:window-y="31"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     inkscape:antialias-rendering="true" />
+  <defs
+     id="defs1">
+    <rect
+       x="718.98468"
+       y="327.63858"
+       width="341.29019"
+       height="263.93109"
+       id="rect1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-680.34557,-293.61647)">
+    <circle
+       style="fill:#1976d2;fill-opacity:1;stroke:none;paint-order:stroke fill markers"
+       id="path1"
+       cx="730.89081"
+       cy="344.16171"
+       r="44.545238" />
+    <path
+       d="m 720.05104,338.17598 q 0.18667,1.39999 1.45333,1.39999 1.22666,0 1.82666,-1.41333 v 0.14667 q 0,0.6 0.26667,0.92 0.28,0.32 0.70666,0.32 1.01333,0 1.49333,-1.06667 0.14667,-0.33333 0.2,-0.58666 0.0667,-0.26667 0.0667,-0.38667 0,-0.24 -0.17334,-0.24 -0.08,0 -0.13333,0.0933 -0.0533,0.0933 -0.10667,0.24 -0.04,0.13334 -0.10666,0.32 -0.0533,0.17334 -0.17333,0.34667 -0.29334,0.45333 -0.76,0.45333 -0.26667,0 -0.44,-0.18667 -0.16,-0.19999 -0.16,-0.51999 0,-0.17334 0.0267,-0.38667 0.04,-0.21333 0.10666,-0.50667 l 0.74667,-3.45332 h -0.97333 l -0.72,3.31999 q -0.38667,1.74666 -1.68,1.74666 -0.49333,0 -0.77333,-0.29333 -0.26667,-0.29333 -0.26667,-0.84 0,-0.33333 0.08,-0.73333 l 0.68,-3.19999 h -0.95999 l -0.70667,3.34666 q -0.2,0.94666 -0.4,1.70666 -0.2,0.74667 -0.34666,1.30666 -0.16,0.57334 -0.25334,0.96 -0.10666,0.38667 -0.10666,0.58667 0,0.26666 0.14666,0.41333 0.13334,0.16 0.37333,0.16 0.28,0 0.41334,-0.25333 0.13333,-0.24 0.21333,-0.74667 0.08,-0.49333 0.16,-1.24 0.08,-0.73333 0.28,-1.73332 z"
+       id="text1"
+       style="font-size:13.3333px;line-height:125%;font-family:'Apple Garamond';-inkscape-font-specification:'Apple Garamond, Normal';white-space:pre;stroke:#000000;paint-order:stroke fill markers"
+       transform="matrix(6.0307552,0,0,7.23993,-3622.9098,-2101.6255)"
+       aria-label="μ" />
+  </g>
 </svg>
