@@ -78,5 +78,17 @@
     --synchronic-category-relation-width: 60px;
     --overview-height: 12px;
     --overview-width: 50px;
-  }
+    }
+
+@media print {
+    .print-hidden {
+        visibility: hidden;
+    }
+    .print-removed {
+        display: none;
+    }
+    .print-nobreak {
+        break-inside: avoid-page;
+    }
+}
 </style>

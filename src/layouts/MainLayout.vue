@@ -6,7 +6,7 @@
           to="/">
           <q-btn
             flat
-            class="text-white"
+            class="text-white print-hidden"
             dense
             round
             icon="mdi-home-outline"
@@ -14,6 +14,7 @@
             />
         </router-link>
         <q-btn
+          class="print-hidden"
           flat
           dense
           round
@@ -50,7 +51,9 @@
           </span>
         </q-toolbar-title>
 
-        <div>
+        <div
+          class="print-hidden"
+          >
           <q-btn
             v-if="currentProject"
             dense
@@ -197,6 +200,16 @@
               label: "Global diachronic",
               icon: 'mdi-table',
               link: `/spreadsheet/${currentProjectId.value}`
+          })
+          menu.push({
+              label: "Synchronic Models",
+              icon: 'mdi-graph',
+              link: `/models/${currentProjectId.value}`
+          })
+          menu.push({
+              label: "Specific Synchronic Categories",
+              icon: 'mdi-table',
+              link: `/specificsynchroniccategories/${currentProjectId.value}`
           })
           menu.push({
               label: "Descriptems",
