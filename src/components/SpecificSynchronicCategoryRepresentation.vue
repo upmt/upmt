@@ -182,7 +182,7 @@
         <q-btn
           @click="createSpecificSynchronicCategory(`before:${categoryId}`)"
           dense
-          class="newssc-button"
+          class="newssc-button print-hidden"
           :icon="isVertical ? 'mdi-menu-up' : 'mdi-menu-right'">
           <q-tooltip>Create a parent category</q-tooltip>
         </q-btn>

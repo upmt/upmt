@@ -5,6 +5,7 @@
 
     <q-splitter
       v-model="splitterModel"
+      beforeClass="print-removed"
       :limits="[10,90]">
 
       <template v-slot:before>
@@ -100,6 +101,7 @@
 
             <q-splitter
               class="fit fullwindow-height"
+              afterClass="print-removed"
               v-model="splitterTranscript"
               :limits="[2,98]">
 
@@ -174,6 +176,7 @@
     <q-page-sticky position="top-right">
       <q-btn
         flat
+        class="print-removed"
         square
         @click="infoPanelDisplay = !infoPanelDisplay"
         size="md"

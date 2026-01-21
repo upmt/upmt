@@ -41,7 +41,7 @@
                 :element="currentInterview" />
             </span>
             <q-btn v-if="isModified"
-                   class="q-ml-xl"
+                   class="q-ml-xl print-hidden"
                    outline
                    @click="doStoreProject()"
                    color="warning"

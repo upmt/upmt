@@ -3,7 +3,7 @@
        v-if="interview"
        :data-interview="interviewId">
 
-    <q-toolbar class="interview-toolbar row">
+    <q-toolbar class="interview-toolbar row print-removed">
 
       <DragElement
         type="moment"

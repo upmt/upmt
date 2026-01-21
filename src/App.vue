@@ -90,5 +90,9 @@
     .print-nobreak {
         break-inside: avoid-page;
     }
+    /* Remove VueZoomable controls */
+    .controll__buttons {
+        display: none;
+    }
 }
 </style>
