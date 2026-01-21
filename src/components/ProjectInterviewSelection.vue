@@ -54,7 +54,8 @@
             title="Merged global generic model"
             :projectId="projectId"
             :genericGraphs="genericGraphs"
-            :currentInterviewId="currentInterviewId" />
+            :currentInterviewId="currentInterviewId"
+            />
           <q-expansion-item
             dense
             dense-toggle
@@ -67,7 +68,9 @@
             <GenericCategoriesOverview
               :projectId="projectId"
               :currentInterviewId="currentInterviewId"
-              :categories="genericGraphs.categories" />
+              :categories="genericGraphs.categories"
+              layout="horizontal"
+              />
 
           </q-expansion-item>
 

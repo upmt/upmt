@@ -1,5 +1,6 @@
 <template>
   <div class="genericcategories-container"
+       :class="layout"
        :key="projectId"
        :data-project="projectId">
 
@@ -7,6 +8,7 @@
       v-for="category in categories"
       :key="category.name"
       :projectId="projectId"
+      :layout="layout"
       :currentInterviewId="currentInterviewId"
       :category="category">
     </GenericSynchronicCategoryOverview>
@@ -23,12 +25,14 @@
   interface Props {
       projectId: string,
       categories: GenericCategory[],
-      currentInterviewId: string
+      currentInterviewId: string,
+      layout: string
   }
 
   withDefaults(defineProps<Props>(), {
       projectId: "",
-      currentInterviewId: ""
+      currentInterviewId: "",
+      layout: 'horizontal'
   })
 
 </script>

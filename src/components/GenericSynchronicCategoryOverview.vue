@@ -13,6 +13,7 @@
         <div v-for="c in category.children" :key="c.name">
           <GenericSynchronicCategoryOverview
             :projectId="projectId"
+            :layout="layout"
             :currentInterviewId="currentInterviewId"
             :category="c">
           </GenericSynchronicCategoryOverview>
@@ -23,18 +24,20 @@
            v-if="category.children?.length">
         <SpecificSynchronicCategoryRelation
           :type="abstractionType"
+          :direction="layout"
           :childrenCount="category.children?.length">
-           </SpecificSynchronicCategoryRelation>
+        </SpecificSynchronicCategoryRelation>
       </div>
 
       <div class="genericsynchroniccategory-header"
            :class="{ 'has-error': category.errors?.length }">
-          <DragElement
-            type="genericsynchroniccategory"
-            :data="category.name">
-            <span class="genericsynchroniccategory-name">{{ category.name }}
-            </span>
-          </DragElement>
+        <DragElement
+          class="flex justify-center items-center content-center"
+          type="genericsynchroniccategory"
+          :data="category.name">
+          <span class="genericsynchroniccategory-name">{{ category.name }}
+          </span>
+        </DragElement>
           <q-tooltip  class="bg-red-5" anchor="top right" self="top left" v-if="category.errors?.length">
             {{ category.name }}
             <div v-for="error, key in category.errors"
@@ -51,7 +54,9 @@
         v-if="!category.isRoot"
         class="genericsynchroniccategory-filler"
         >
-        <SpecificSynchronicCategoryRelation :childrenCount="1" />
+        <SpecificSynchronicCategoryRelation
+          :direction="layout"
+          :childrenCount="1" />
       </div>
     </div>
 
@@ -69,11 +74,14 @@
   // import { useProjectStore } from 'stores/projectStore'
   // const store = useProjectStore()
 
-  const props = defineProps<{
+  const props = withDefaults(defineProps<{
       projectId: string,
       category:  GenericCategory,
-      currentInterviewId: string | null
-  }>()
+      currentInterviewId: string | null,
+      layout: string
+  }>(), {
+      layout: 'horizontal'
+  })
 
   // FIXME: detect inconsistencies
   const abstractionType = computed(() => props.category.instances[0]?.abstractionType || "")
@@ -88,16 +96,27 @@
        flex: 1;
        height: 100%;
   }
+  .vertical .genericsynchroniccategory {
+      flex-direction: column-reverse;
+      align-items: center;
+  }
   .genericsynchroniccategory-children {
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-self: center;
-  }
+      }
+  .vertical .genericsynchroniccategory-children {
+      flex-direction: row;
+      position: relative;
+      }
   .genericsynchroniccategory-container {
       display: flex;
       flex-direction: row;
+      }
+  .vertical .genericsynchroniccategory-container {
+      margin: 0 4px;
   }
   .genericsynchroniccategory-name {
      align-self: center;
@@ -108,8 +127,8 @@
   .genericsynchroniccategory-header {
       border: 1px solid black;
       overflow: hidden;
-      font-size: 8px;
-      width: 50px !important;
+      font-size: var(--overview-font-size);
+      width: var(--overview-width);
       height: var(--overview-height) !important;
       align-self: center;
   }
@@ -123,10 +142,17 @@
       height: -webkit-fill-available;
       height: -moz-available;
   }
+  .vertical .genericsynchroniccategory-relation {
+      width: 80%;
+      height: calc(var(--overview-height) + 2px);
+  }
   .genericsynchroniccategory-filler {
       height: calc(var(--overview-height) + 2px);
       align-self: center;
       flex: 1;
+  }
+  .vertical .genericsynchroniccategory-filler {
+      flex-direction: column;
   }
   .genericsynchroniccategory-header.has-error {
       border: 2px solid red;

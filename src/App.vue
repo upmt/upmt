@@ -78,6 +78,7 @@
     --synchronic-category-relation-width: 60px;
     --overview-height: 12px;
     --overview-width: 50px;
+    --overview-font-size: 8px;
     }
 
 @media print {
