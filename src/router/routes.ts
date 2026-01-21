@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'home', redirect: '/' },
       { path: 'spreadsheet/:projectId', name: 'spreadsheet', component: () => import('pages/GenericVisualisationPage.vue'), props: true },
       { path: 'descriptems/:projectId', name: 'descriptems', component: () => import('pages/DescriptemPage.vue'), props: true },
+      { path: 'models/:projectId', name: 'models', component: () => import('pages/SynchronicModelsPage.vue'), props: true },
       { path: 'project/:projectId', name: 'project', component: () => import('pages/ProjectPage.vue'), props: true },
       { path: 'init', name: 'init', component: () => import('pages/InitPage.vue'), props: { source: './OPEVA-G1.upmt' } },
       { path: 'example', name: 'example', component: () => import('pages/InitPage.vue'), props: { source: './assets/example.upmt' } },

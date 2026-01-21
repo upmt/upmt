@@ -258,7 +258,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       .get()
   }
 
-  function getMomentsByProject (projectId: string) {
+  function getMomentsByProject (projectId: string): Moment[] {
     return repo.Moment
       .where('projectId', projectId)
       .get()
@@ -427,6 +427,18 @@ export const useProjectStore = defineStore('projectStore', () => {
         .find(id)
     } else {
       return null
+    }
+  }
+
+  function getSpecificSynchronicModels (projectId: string) {
+    if (projectId) {
+      return repo.SpecificSynchronicModel
+        .where('projectId', projectId)
+        .with('categories')
+        .with('moment')
+        .get()
+    } else {
+      return []
     }
   }
 
@@ -1389,6 +1401,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getSpecificSynchronicCategoriesByModel,
     getSpecificSynchronicCategoryNamesByPrefix,
     getSpecificSynchronicModel,
+    getSpecificSynchronicModels,
     loadProject,
     loadStoredProject,
     moveMoment,
