@@ -15,6 +15,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/SynchronicCategoriesPage.vue'),
         props: true
       },
+      { path: 'diachronic/:projectId',
+        name: 'diachronic',
+        component: () => import('pages/BpmnPage.vue'),
+        props: true
+      },
       { path: 'project/:projectId', name: 'project', component: () => import('pages/ProjectPage.vue'), props: true },
       { path: 'init', name: 'init', component: () => import('pages/InitPage.vue'), props: { source: './OPEVA-G1.upmt' } },
       { path: 'example', name: 'example', component: () => import('pages/InitPage.vue'), props: { source: './assets/example.upmt' } },
