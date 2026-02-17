@@ -156,37 +156,47 @@
       // Import another project into this project
       const source = store.hydrateAndStripProject(sourceProjectId)
 
-      // Build an importable subset that will not overwrite the main
-      // project metadata
+      $q.dialog({
+          title: `Confirm project merge`,
+          html: true,
+          message: `<p>Do you confirm the merging of project <strong>${sourceProjectId}</strong> into <strong>${props.projectId}</strong>?</p>`,
+          cancel: true,
+          persistent: true
+      }).onOk(() => {
+          // proceed with merging
 
-      // We can directly reference the "original" items since they
-      // were deep cloned by the hydrateProject function, and we removed all ids.
-      // Clone data is thus  decoupled from the original instances.
+          // Build an importable subset that will not overwrite the main
+          // project metadata
 
-      // Add a suffix to interview name if they conflict
-      const interviewNames = project.value?.interviews.map(interview => interview.name) ?? []
-      for (const interview of source.interviews) {
-          const basename = interview.name
-          let name = basename
-          let suffix = 1
-          while (interviewNames.includes(name)) {
-              name = `${basename} - ${suffix}`
-              suffix += 1
+          // We can directly reference the "original" items since they
+          // were deep cloned by the hydrateProject function, and we removed all ids.
+          // Clone data is thus  decoupled from the original instances.
+
+          // Add a suffix to interview name if they conflict
+          const interviewNames = project.value?.interviews.map(interview => interview.name) ?? []
+          for (const interview of source.interviews) {
+              const basename = interview.name
+              let name = basename
+              let suffix = 1
+              while (interviewNames.includes(name)) {
+                  name = `${basename} - ${suffix}`
+                  suffix += 1
+              }
+              interview.name = name
           }
-          interview.name = name
-      }
-      const sourceSubset = {
-          // Set the project id to the destination project id
-          id: props.projectId,
-          interviews: source.interviews,
-          modelfolder: source.modelfolder,
-          detachedmodels: source.detachedmodels ?? []
-      }
+          const sourceSubset = {
+              // Set the project id to the destination project id
+              id: props.projectId,
+              interviews: source.interviews,
+              modelfolder: source.modelfolder,
+              detachedmodels: source.detachedmodels ?? []
+          }
 
-      store.importProject(sourceSubset, "imported project", false)
-      $q.notify({
-          type: 'info',
-          message: `Imported ${source.interviews.length} interviews from ${sourceProjectId} into ${props.projectId}`
+          store.importProject(sourceSubset, "imported project", false)
+          $q.notify({
+              type: 'info',
+              message: `Imported ${source.interviews.length} interviews from ${sourceProjectId} into ${props.projectId}`
+          })
       })
   }
 
