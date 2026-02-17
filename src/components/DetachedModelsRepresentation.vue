@@ -92,7 +92,12 @@
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
-      [ "Delete", (model) => store.deleteDetachedModel(model.id) ],
+      [ "Delete", (model) => {
+          if (istore.editedSpecificSynchronicModelId === model.proxy.id) {
+              editDetachedModel('')
+          }
+          store.deleteDetachedModel(model.id)
+      }],
   ]
 </script>
 
