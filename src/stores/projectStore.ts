@@ -863,10 +863,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     where = "", // before, after, or in:<ssc-id> for inside
     textselection: TextSelection | null = null,
     abstractionType: string = '') {
-      console.log("addSSC", name, where, specificsynchronicmodelId, "with", textselection)
+      console.log("addSSC", name, where, specificsynchronicmodelId, "as", abstractionType, "with", textselection)
+      if (abstractionType == 'generic') {
+        abstractionType = ''
+      }
       if (![ '', 'specialization', 'aggregation'].includes(abstractionType)) {
-        console.log(`Wrong abstractionType in addSpecificSynchronicCategory: ${abstractionType}. Fix code.`)
-        return null
+        console.log(`Wrong abstractionType ${abstractionType} in addSpecificSynchronicCategory. Fix code.`)
+        // In case of error, fallback to generic abstractionType
+        abstractionType = ''
       }
       let destination = null // if it remains null, then it will be added to the model itself.
       let childIndex = 0
