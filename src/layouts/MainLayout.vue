@@ -102,6 +102,7 @@
 
             <q-item
               clickable
+              @click="leftDrawerOpen = false"
               v-ripple
               :to="item.link"
               :href="item.href"
