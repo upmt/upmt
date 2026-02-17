@@ -8,7 +8,10 @@
   "private": true,
   "scripts": {
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
-    "test": "echo \"No test specified\" && exit 0",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
     "dev": "quasar dev --host",
     "build": "quasar build",
     "postinstall": "quasar prepare"
@@ -35,16 +38,22 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
+    "@pinia/testing": "^1.0.3",
     "@quasar/app-vite": "^2.3.0",
     "@types/node": "^20.19.25",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitest/ui": "^4.0.18",
     "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.22",
     "baseline-browser-mapping": "^2.9.4",
     "eslint": "^9.39.1",
     "eslint-plugin-vue": "^9.33.0",
     "globals": "^15.15.0",
+    "happy-dom": "^20.6.1",
     "typescript": "~5.5.3",
     "vite-plugin-checker": "^0.8.0",
+    "vitest": "^4.0.18",
     "vue-tsc": "^2.1.10"
   },
   "engines": {
