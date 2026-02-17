@@ -12,6 +12,8 @@
         <ColorizeIcon
           class="on-name-hover"
           v-model="momentColor" />
+        <NoteIcon
+          :element="moment" />
       </span>
 
       <div class="moment-children"
@@ -38,6 +40,7 @@
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import ColorizeIcon from './ColorizeIcon.vue'
+  import NoteIcon from './NoteIcon.vue'
 
   const store = useProjectStore()
 
@@ -88,6 +91,10 @@
       display: flex;
       flex-direction: column;
       border: 1px solid grey;
+  }
+  .moment-name {
+      display: inline-flex;
+      flex-direction: row;
   }
   .moment-body {
       border: 1px solid grey;
