@@ -32,3 +32,23 @@ npx quasar dev
 ```bash
 npx quasar build
 ```
+
+### Run tests
+```bash
+# Run all tests once
+npm test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Run tests with UI
+npm run test:ui
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+The test suite includes:
+- **Storage tests**: Verify file system operations, project storage, and retrieval
+- **Utility tests**: Test helper functions for timestamps, string manipulation, data transformations
+- **Component tests**: Validate GUI component structure and business logic
