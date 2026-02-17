@@ -39,3 +39,7 @@ yarn-error.log*
 .config/
 .lesshst
 .tmux.conf
+
+# Test coverage
+coverage
+.nyc_output
