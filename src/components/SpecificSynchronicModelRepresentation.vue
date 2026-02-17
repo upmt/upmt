@@ -49,6 +49,15 @@
           :genericGraphs="genericGraphs"
           :hideJustifications="!model.momentId"
           :categoryId="c.id" />
+        <DropZone :data="`inmodel:${modelId}`"
+                  class="flex empty_padding default-height"
+                  types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
+                  @specificsynchroniccategory="droppedSpecificSynchronicCategory"
+                  @genericsynchroniccategory="droppedGenericSynchronicCategory"
+                  @annotation="droppedCreatingAnnotation"
+                  @selection="droppedCreatingSelection"
+                  @descriptem="droppedCreatingDescriptem">
+        </DropZone>
       </div>
     </VueZoomable>
   </div>

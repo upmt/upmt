@@ -90,6 +90,9 @@
       margin-bottom: 4px;
       padding: 4px;
   }
+  .dropzone.default-height {
+      min-height: var(--header-height);
+  }
   .is_droppable {
       background-color: #eee;
       border: 1px dashed grey;
