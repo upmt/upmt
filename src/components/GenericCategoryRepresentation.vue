@@ -110,6 +110,9 @@
           <q-space />
           <ElementMenu
             :actions="menuActions" />
+          <ColorizeIcon
+            class="on-name-hover"
+            v-model="categoryColor" />
         </DragElement>
 
       </template>
@@ -134,6 +137,7 @@
   import { useQuasar } from 'quasar'
 
   import CustomExpansionItem from './CustomExpansionItem.vue'
+  import ColorizeIcon from './ColorizeIcon.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
   import SpecificSynchronicModel from 'stores/models/specificsynchronicmodel'
@@ -214,6 +218,15 @@
       }
   })
 
+  const categoryColor = computed({
+      get () {
+          return props.genericcategory.color
+      },
+      set (color: string) {
+          store.updateSynchronicCategoryColor (props.genericcategory.projectId, props.genericcategory.name, color)
+      }
+  })
+
   const currentInterviewMomentsLabel = computed(() => {
       const count = currentMoments.value.length
       if (count) {
@@ -291,6 +304,9 @@
   .genericsynchroniccategory-name {
       align-items: center;
   }
+  .on-name-hover {
+      opacity: 0;
+  }
   .genericsynchroniccategory-name:hover .on-name-hover {
       opacity: 1;
   }
@@ -307,5 +323,5 @@
   }
   .has-error {
       border: 2px solid red;
-  }
+      }
 </style>
