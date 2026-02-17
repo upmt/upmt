@@ -14,11 +14,22 @@ import { ref } from 'vue';
 // import { storeToRefs } from 'pinia'
 // import { useInterfaceStore } from 'stores/interface'
 
+import { useProjectStore } from 'stores/projectStore'
+
 import BpmnEditor from 'components/BpmnEditor.vue'
 // @ts-ignore
 import { BpmnModdle } from 'bpmn-moddle';
 // @ts-ignore
 import { layoutProcess } from 'bpmn-auto-layout'
+
+const props = defineProps({
+    projectId: {
+        type: String,
+        default: ""
+    }
+})
+
+const store = useProjectStore()
 
 const bpmnXml = ref('')
 
@@ -27,6 +38,7 @@ interface TreeNode {
   children?: TreeNode[];
 }
 
+/*
 const treeData: TreeNode = {
   name: "Root Task",
   children: [
@@ -34,77 +46,95 @@ const treeData: TreeNode = {
       { name: "Child B" }
   ]
 }
+*/
 
 const moddle = new BpmnModdle()
 
-/**
- * Converts a tree to BPMN XML with automatic layout
- */
 async function convertTreeToBpmn(tree: TreeNode): Promise<string> {
-  // 1. Setup the basic BPMN structure
   const definitions = moddle.create('bpmn:Definitions', {
-    targetNamespace: 'http://bpmn.io/schema/bpmn',
-    rootElements: []
+    targetNamespace: 'http://bpmn.io/schema/bpmn'
   });
 
-  const process = moddle.create('bpmn:Process', { id: 'Process_1', isExecutable: true });
-  definitions.get('rootElements').push(process);
-  const flowElements = process.get('flowElements');
+  const process = moddle.create('bpmn:Process', {
+    id: 'Process_1',
+    isExecutable: true
+  });
 
-  // 2. Helper to create Sequence Flows
-  const createFlow = (source: any, target: any) => {
+  definitions.rootElements = [process];
+  process.flowElements = [];
+
+  /**
+   * FIX: This helper now explicitly populates the incoming/outgoing
+   * arrays of the source and target elements.
+   */
+  const createFlow = (source: any, target: any): void => {
     const flow = moddle.create('bpmn:SequenceFlow', {
       id: `Flow_${source.id}_${target.id}`,
       sourceRef: source,
       targetRef: target
-    });
-    flowElements.push(flow);
-    return flow;
+    }) as any;
+
+    // Ensure the nodes know about the flow
+    if (!source.outgoing) source.outgoing = [];
+    if (!target.incoming) target.incoming = [];
+
+    source.outgoing.push(flow);
+    target.incoming.push(flow);
+
+    process.flowElements.push(flow);
   };
 
-  // 3. Recursive traversal to build the logical graph
   let nodeCount = 0;
 
-  const buildGraph = (node: any, parentElement = null) => {
-    const taskId = `Activity_${++nodeCount}`;
-    const task = moddle.create('bpmn:Task', { id: taskId, name: node.name });
-    flowElements.push(task);
+  const buildGraph = (node: TreeNode, parentElement = null): void => {
+    const task = moddle.create('bpmn:Task', {
+      id: `Activity_${++nodeCount}`,
+      name: node.name
+    })
+    process.flowElements.push(task);
 
     if (parentElement) {
       createFlow(parentElement, task);
     }
 
     if (node.children && node.children.length > 0) {
-      // If multiple children, optionally insert a Gateway
-      const gateway = moddle.create('bpmn:ExclusiveGateway', { id: `Gateway_${++nodeCount}` });
-      flowElements.push(gateway);
+      const gateway = moddle.create('bpmn:ExclusiveGateway', {
+        id: `Gateway_${++nodeCount}`
+      })
+        process.flowElements.push(gateway);
+
       createFlow(task, gateway);
 
-      node.children.forEach((child: any) => {
+      node.children.forEach(child => {
         buildGraph(child, gateway);
       });
     }
   };
 
-  // Initialize with a Start Event
-  const startEvent = moddle.create('bpmn:StartEvent', { id: 'StartEvent_1' });
-  flowElements.push(startEvent);
+  const startEvent = moddle.create('bpmn:StartEvent', { id: 'StartEvent_1' })
+  process.flowElements.push(startEvent);
 
-  // Map the tree
-  buildGraph(tree, startEvent)
+  buildGraph(tree, startEvent);
 
-  // 4. Export to XML first (without DI)
-  const { xml: rawXml } = await moddle.toXML(definitions)
+  const { xml: rawXml } = await moddle.toXML(definitions);
 
-  // 5. Apply Auto-Layout
-  // The layout engine parses the XML and calculates the X/Y coordinates
-  const diagramXml = await layoutProcess(rawXml)
-
-  return diagramXml
+  // The layout engine now has a complete graph to calculate DI
+  return await layoutProcess(rawXml);
 }
 
+import type { GenericCategory } from 'stores/projectStore'
+
 async function handleGenerate () {
-    bpmnXml.value = await convertTreeToBpmn(treeData)
+    const projectGraphs = store.getGenericSynchronicGraphs(props.projectId)
+
+    const genericCategoryToNode =  (category: GenericCategory): TreeNode => ({
+        name: category.name,
+        children: category.children?.map((child: GenericCategory) => genericCategoryToNode(child)) || []
+    })
+    bpmnXml.value = await convertTreeToBpmn({
+        name: "root",
+        children: projectGraphs.categories.map(genericCategoryToNode)
+    })
 }
       /*
 const bpmnXml = ref(`<?xml version="1.0" encoding="UTF-8"?>
