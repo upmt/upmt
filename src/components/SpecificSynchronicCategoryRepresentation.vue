@@ -57,7 +57,7 @@
         <SpecificSynchronicCategoryRelation
           :type="category.abstractionType"
           :direction="layout"
-          :childrenCount="isLeaf ? 1 : category.children.length" />
+          :childrenCount="isLeaf ? 0 : category.children.length" />
         <div class="specificsynchroniccategory-relationinfo">
           <div class="specificsynchroniccategory-criterion">
             {{ criterion }}

@@ -7,7 +7,8 @@
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg">
-      <g :class="direction">
+      <g :class="direction"
+         :data-children-count="childrenCount">
         <line
           v-if="childrenCount > 1"
           vector-effect="non-scaling-stroke"
@@ -17,6 +18,7 @@
           :y2="dimensions.height - barPosition.y"
           stroke="black"
           :stroke-width="strokeWidth"
+          class="relation-perpendicular"
           />
         <line
           vector-effect="non-scaling-stroke"
@@ -26,6 +28,7 @@
           :y2="parentPosition.y"
           stroke="black"
           :stroke-width="strokeWidth"
+          class="relation-line"
           />
         <path
           vector-effect="non-scaling-stroke"
@@ -102,5 +105,8 @@
       transform: rotate(-90deg);
       transform-origin: center center;
       transform-box: fill-box;
+  }
+  .relation-line[data-children-count=0] {
+      stroke-dasharray: 5;
   }
 </style>
