@@ -32,6 +32,7 @@ type Subset<K> = {
 
 export type GenericCategory = {
   name: string,
+  projectId: string,
   isRoot: boolean,
   errors?: string[],
   children?: GenericCategory[],
@@ -1154,6 +1155,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
         return [ name, {
           name,
+          projectId,
           isRoot,
           errors,
           color,
@@ -1222,6 +1224,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           }
           return {
             name: `${name}`,
+            projectId,
             errors: [ error ],
             isRoot: true,
             color: '',
@@ -1259,6 +1262,7 @@ export const useProjectStore = defineStore('projectStore', () => {
           console.log(error)
           return {
             name,
+            projectId,
             errors: [ error ],
             isRoot: true,
             color: '',
