@@ -28,13 +28,14 @@
          :data-moment="moment.id">
 
       <DropZone data="header"
-                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/specificsynchronicmodel"
                 class="row full-width justify-center moment-header q-pa-xs"
                 @annotation="droppedAnnotation"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @genericsynchroniccategory="droppedGenericSynchronicCategory"
+                @specificsynchronicmodel="droppedSpecificSynchronicModel"
                 @color="droppedColor">
         <custom-expansion-item
           class="moment-body pa-md-xs relative-position"
@@ -93,17 +94,22 @@
 
           </div>
 
-          <q-btn
-            flat
-            dense
-            v-if="moment"
-            size="xs"
-            title="Edit specific synchronic model"
-            class="absolute-bottom-right"
-            @click="editModel(moment.specificsynchronicmodel?.id || '')"
-            icon="mdi-graph-outline"
-            no-caps>
-          </q-btn>
+          <DragElement
+            type="specificsynchronicmodel"
+            :data="moment.specificsynchronicmodel?.id || ''"
+            @click.meta="debug">
+            <q-btn
+              flat
+              dense
+              v-if="moment"
+              size="xs"
+              title="Edit specific synchronic model"
+              class="absolute-bottom-right"
+              @click="editModel(moment.specificsynchronicmodel?.id || '')"
+              icon="mdi-graph-outline"
+              no-caps>
+            </q-btn>
+          </DragElement>
 
         </custom-expansion-item>
       </DropZone>
@@ -245,6 +251,14 @@
       } else {
           store.moveMoment(momentId, props.momentId, where)
           showContent()
+      }
+  }
+
+  function droppedSpecificSynchronicModel (ssmId: string) {
+      // A SSModel was dropped - copy it into the moment
+      const modelId = moment.value?.specificsynchronicmodel?.id
+      if (modelId) {
+          store.copySpecificSynchronicModelToModel(ssmId, modelId)
       }
   }
 

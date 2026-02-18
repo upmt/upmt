@@ -962,11 +962,11 @@ export const useProjectStore = defineStore('projectStore', () => {
         })
       }
        */
-    }
+  }
 
-  function copySpecificSynchronicCategoryToModel (sscId: string, modelId: string, recursive: boolean = false) {
+  function copySpecificSynchronicCategoryToModelInstance (sscId: string, model: SpecificSynchronicModel, recursive: boolean = false) {
     const sourceCategory = hydrateSpecificSynchronicCategory(sscId)
-    const destinationModel = getSpecificSynchronicModel(modelId)
+    const destinationModel = model
     if (sourceCategory && destinationModel) {
       const data = sourceCategory.toJSON(!recursive)
       // Strip ids fields to make the structure generic
@@ -981,9 +981,33 @@ export const useProjectStore = defineStore('projectStore', () => {
       if (destinationModel.moment) {
         strippedData.interviewId = destinationModel.moment.interviewId
       }
-      strippedData.specificsynchronicmodelId = modelId
+      strippedData.specificsynchronicmodelId = destinationModel.id
       // parentId remains null, since we are at the top.
-      console.log("Copied", repo.SpecificSynchronicCategory.save(strippedData))
+      const category = repo.SpecificSynchronicCategory.save(strippedData)
+      console.log("Copied", category)
+    }
+  }
+
+  function copySpecificSynchronicCategoryToModel (sscId: string, modelId: string, recursive: boolean = false) {
+    const model = getSpecificSynchronicModel(modelId)
+    if (model) {
+      copySpecificSynchronicCategoryToModelInstance(sscId, model, recursive)
+    } else {
+      console.log(`Error in copySpecificSynchronicCategoryToModel: empty destination model ${modelId}`)
+    }
+  }
+
+  function copySpecificSynchronicModelToModel (ssmId: string, modelId: string) {
+    const sourceModel = getSpecificSynchronicModel(ssmId)
+    const destinationModel = getSpecificSynchronicModel(modelId)
+    if (sourceModel && destinationModel) {
+      // Recursively copy all root categories from source model to destination model
+      sourceModel.categories.forEach(category =>
+        copySpecificSynchronicCategoryToModelInstance(category.id, destinationModel, true))
+    } else {
+      console.log("Error in copySpecificSynchronicModelToModel" ,
+        sourceModel === null ? '' : `empty source model ${ssmId}`,
+        destinationModel === null ? '' : `empty source model ${modelId}`)
     }
   }
 
@@ -1365,6 +1389,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     addMoment,
     addSpecificSynchronicCategory,
     copySpecificSynchronicCategoryToModel,
+    copySpecificSynchronicModelToModel,
     addTextSelectionToMoment,
     addTextSelectionToSpecificSynchronicCategory,
     buildSynchronicModelFromGraphs,
