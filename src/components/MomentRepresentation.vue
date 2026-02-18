@@ -326,6 +326,13 @@
       }
   }
 
+  function clearModel () {
+      // Clear the model
+      if (moment.value && moment.value.specificsynchronicmodel) {
+          store.clearSpecificSynchronicModel(moment.value.specificsynchronicmodel.id)
+      }
+  }
+
   const expand = computed({
       get () {
           return moment.value ? moment.value.isExpanded : true
@@ -378,6 +385,7 @@
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
       [ "Toggle transitional", toggleTransitional ],
+      [ "Clear specific synchronic model", clearModel ],
       [ "Delete", () => store.deleteMoment(props.momentId) ]
   ]
 </script>

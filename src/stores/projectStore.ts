@@ -1072,6 +1072,15 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function clearSpecificSynchronicModel (ssmId: string) {
+    const model = getSpecificSynchronicModel(ssmId)
+    if (model) {
+      model.categories.forEach(category => deleteSpecificSynchronicCategory(category.id, true))
+    } else {
+      console.log(`Error in clearSpecificSynchronicModel: empty model ${ssmId}`)
+    }
+  }
+
   function duplicateDescriptem (descriptemId: string) {
     // Duplicate a Descriptem with the same parent
     const descriptem = getDescriptem(descriptemId)
@@ -1402,6 +1411,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deleteMoment,
     deleteProject,
     deleteSpecificSynchronicCategory,
+    clearSpecificSynchronicModel,
     duplicateDescriptem,
     importProject,
     hydrateFolder,
