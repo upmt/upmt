@@ -1310,14 +1310,14 @@ export const useProjectStore = defineStore('projectStore', () => {
         const newAncestors = ancestors.union(new Set([ name ]))
         return Object.assign({},
           generic,
-          { children: [...generic.childrenNames.values()].map(cname => nameToGeneric(cname, newAncestors)) })
+          { children: [...generic.childrenNames.values()].toSorted().map(cname => nameToGeneric(cname, newAncestors)) })
       }
 
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
     // and also the mapping by name
     return {
-      categories: [ ...rootCategoryNames.values() ].map(name => nameToGeneric(name, null)),
+      categories: [ ...rootCategoryNames.values() ].toSorted().map(name => nameToGeneric(name, null)),
       byName: genericCategories,
       instanceIdToContainerInfo
     }
