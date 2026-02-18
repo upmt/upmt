@@ -173,7 +173,7 @@
       <DropZone :data="`before:${categoryId}`"
                 v-if="category.specificsynchronicmodelId"
                 types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
-                class="empty_padding newssc-dropzone"
+                class="empty-padding newssc-dropzone"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @genericsynchroniccategory="droppedGenericSynchronicCategory"
                 @annotation="droppedCreatingAnnotation"

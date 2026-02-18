@@ -4,7 +4,7 @@
        :data-moment="momentId">
 
     <DropZone data="before"
-              class="empty_padding"
+              class="empty-padding"
               types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
               @moment="droppedMoment"
               @annotation="droppedCreatingAnnotation"
@@ -118,7 +118,7 @@
       </div>
 
       <DropZone :data="`in:${momentId}`"
-                class="empty_padding"
+                class="empty-padding"
                 types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
                 @moment="droppedMoment"
                 @annotation="droppedCreatingAnnotation"
@@ -128,7 +128,7 @@
     </div>
 
     <DropZone data="after"
-              class="empty_padding"
+              class="empty-padding"
               types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
               @moment="droppedMoment"
               @annotation="droppedCreatingAnnotation"

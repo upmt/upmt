@@ -19,7 +19,7 @@
 
       <template v-slot:header>
         <DropZone data="header"
-                  class="empty_padding"
+                  class="empty-padding"
                   types="upmt/modelfolder"
                   @modelfolder="droppedModelFolder">
           <DragElement

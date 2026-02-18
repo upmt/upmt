@@ -86,7 +86,7 @@
     display: flex;
     flex-direction: row;
   }
-  .dropzone.empty_padding {
+  .dropzone.empty-padding {
       margin-bottom: 4px;
       padding: 4px;
   }
