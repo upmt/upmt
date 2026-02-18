@@ -29,7 +29,40 @@
           </div>
 
           <q-card-section class="bg-primary text-white">
-            <div class="text-h4">Available projects <q-btn flat no-caps>(Where is my data?)
+            <div class="text-h4 flex row">
+
+              <span class="self-center">Available projects</span>
+
+              <q-fab class="self-center q-pl-md"
+                     color="info"
+                     push
+                     icon="add"
+                     direction="right">
+
+                <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
+                  <q-tooltip>
+                    Create a new blank project
+                  </q-tooltip>
+                </q-fab-action>
+
+                <q-fab-action color="primary" @click="loadProject" icon="mdi-upload-circle-outline">
+                  <q-tooltip>
+                    Load a local .upmt file
+                  </q-tooltip>
+                </q-fab-action>
+
+              </q-fab>
+
+              <q-file label="Load File"
+                      ref="filepicker"
+                      class="hidden"
+                      v-model="filename"
+                      accept=".upmt"
+                      filled
+                      @input="uploadFile"/>
+
+              <q-space />
+              <q-btn flat no-caps>(Where is my data?)
                 <q-tooltip>
                   <p>The application is downloaded from the web each
                     time you access it, but it runs on your computer, in
@@ -62,6 +95,7 @@
                   </p>
                 </q-tooltip>
               </q-btn>
+
             </div>
           </q-card-section>
 
@@ -76,34 +110,6 @@
                 v-for="project in projects"
                 :key="project.id"
                 :projectId="project.id" />
-
-              <q-fab class="self-center"
-                     color="secondary"
-                     push
-                     icon="add"
-                     direction="right">
-
-                <q-fab-action color="primary" @click="newProject" icon="mdi-book-open-blank-variant-outline">
-                  <q-tooltip>
-                    Create a new blank project
-                  </q-tooltip>
-                </q-fab-action>
-
-                <q-fab-action color="primary" @click="loadProject" icon="mdi-upload-circle-outline">
-                  <q-tooltip>
-                    Load a local .upmt file
-                  </q-tooltip>
-                </q-fab-action>
-
-              </q-fab>
-
-              <q-file label="Load File"
-                      ref="filepicker"
-                      class="hidden"
-                      v-model="filename"
-                      accept=".upmt"
-                      filled
-                      @input="uploadFile"/>
 
             </div>
 
