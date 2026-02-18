@@ -203,6 +203,11 @@
               link: `/spreadsheet/${currentProjectId.value}`
           })
           menu.push({
+              label: "Diachronic graph",
+              icon: 'mdi-graph',
+              link: `/diachronic/${currentProjectId.value}`
+          })
+          menu.push({
               label: "Synchronic Models",
               icon: 'mdi-graph',
               link: `/models/${currentProjectId.value}`
