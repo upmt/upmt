@@ -65,20 +65,27 @@
               <q-space />
               <q-btn flat no-caps>(Where is my data?)
                 <q-tooltip>
+                  <p>The <strong>data never leaves your
+                    computer</strong>, it is versioned and stored in
+                    the permanent storage space of your web browser
+                    when you use the "Save" command, that is why you
+                    can access it again when you open μPMT in your
+                    browser.</p>
+
                   <p>The application is downloaded from the web each
-                    time you access it, but it runs on your computer, in
-                    your browser.</p>
+                    time you access it, but it runs on your computer,
+                    in your browser, and does not transmit any
+                    information on the net.</p>
 
-                  <p>The data never leaves your computer, it is
-                    versioned and stored in the permanent storage space
-                    of your web browser when you use the "Save" command,
-                    that is why you can access it again when you open
-                    μPMT in your browser.</p>
-
-                  <p>To save the data in a file on your hard drive,
+                  <p>To save a project data in a file on your hard drive,
                     you need to use the "Download" command, which will
                     create a .upmt file that you can exchange with
                     colleagues.</p>
+
+                  <p>You can also download all of the stored data as a
+                  single Zip file using the Download button just on
+                  the right.</p>
+
                 </q-tooltip>
               </q-btn>
               <q-btn
