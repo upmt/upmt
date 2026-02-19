@@ -35,6 +35,7 @@
 
               <q-fab class="self-center q-pl-md"
                      color="info"
+                     padding="sm"
                      push
                      icon="add"
                      direction="right">
