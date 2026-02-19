@@ -13,7 +13,7 @@ import Moment from './models/moment'
 import Project from './models/project'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
-import { stringToId, groupBy, stripFields } from './util'
+import { stringToId, groupBy, stripFields, timestampGet } from './util'
 import { isStoredProject, getStoredProject } from './storage'
 import { useInterfaceStore } from 'stores/interface'
 
@@ -110,7 +110,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     // Beware
     // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
       // this does not process relations (i.e. withAll will not work)
-    return repo.Project.all()
+    return repo.Project.orderBy('modified', 'desc').get()
   }
 
   // Return the project and just the first level of child information
@@ -120,6 +120,10 @@ export const useProjectStore = defineStore('projectStore', () => {
       .with('detachedmodels')
       .with('interviews')
       .find(id)
+  }
+
+  function updateProject (identifier: string, values: object) {
+    repo.Project.where('id', identifier).update(values)
   }
 
   // Return the project and its children with their information.  It
@@ -620,6 +624,11 @@ export const useProjectStore = defineStore('projectStore', () => {
   function loadStoredProject (id: string) {
     const data = getStoredProject(id)
     if (data) {
+      const modified = timestampGet(id)
+      if (modified !==  null) {
+        // Set modified date as save date in the serialized version
+        data.modified = modified.toISOString()
+      }
       const p = importProject(data, data.filename)
       return p
     }
@@ -1460,6 +1469,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateDescriptem,
     updateElement,
     updateMoment,
+    updateProject,
     recursiveUpdateMoment,
     updateModelFolder,
     updateSpecificSynchronicCategory,
