@@ -194,6 +194,7 @@
 
   import { stringToId } from 'stores/util'
 
+  import { storeProject } from 'stores/storage'
   import Project from 'stores/models/project'
 
   import { useInterfaceStore } from 'stores/interface'
@@ -250,6 +251,8 @@
 
               try {
                   store.importProject(jsonData, sourceName)
+                  // Save in local store
+                  storeProject(jsonData.id)
                   istore.setModified(false)
               } catch (error) {
                   console.log(`Import error: ${error}`, jsonData)
@@ -303,6 +306,8 @@
                   } else {
                       // No existing project. We can load it with the current id
                       store.importProject(jsonData, sourceFile.name)
+                      // Save in local store
+                      storeProject(jsonData.id)
                       istore.setModified(false)
                   }
               }
@@ -381,5 +386,5 @@
    }
   a:hover {
       text-decoration: underline;
-   }
+  }
 </style>
