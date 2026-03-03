@@ -38,7 +38,18 @@
 </script>
 
 <style scoped>
-  .genericcategories-container div {
-    margin: 8px;
-  }
+    .genericcategories-container div {
+        margin: 8px;
+    }
+    .genericcategories-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .genericcategories-container.vertical {
+        flex-direction: row;
+        flex-wrap: wrap;
+     }
+     .genericcategories-container > * {
+         padding: 1em;
+     }
 </style>
