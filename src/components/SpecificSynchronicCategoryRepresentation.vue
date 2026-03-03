@@ -53,64 +53,69 @@
 
       </DropZone>
 
-      <div class="specificsynchroniccategory-relation">
-        <SpecificSynchronicCategoryRelation
-          :type="category.abstractionType"
-          :direction="layout"
-          :childrenCount="isLeaf ? 0 : category.children.length" />
-        <div class="specificsynchroniccategory-relationinfo">
-          <div class="specificsynchroniccategory-criterion">
-            {{ criterion }}
-            <q-tooltip
+      <DropZone :data="`in:${categoryId}`"
+                types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation"
+                @annotation="droppedCreatingAnnotation"
+                @selection="droppedCreatingSelection"
+                @descriptem="droppedCreatingDescriptem">
+        <div class="specificsynchroniccategory-relation">
+          <SpecificSynchronicCategoryRelation
+            :type="category.abstractionType"
+            :direction="layout"
+            :childrenCount="category.children.length" />
+          <div class="specificsynchroniccategory-relationinfo">
+            <div class="specificsynchroniccategory-criterion">
+              {{ criterion }}
+              <q-tooltip
+                flat
+                dense>
+                <div v-if="criterion"
+                     class="criterion-tooltip">{{ criterion }}</div>
+                Criterion
+              </q-tooltip>
+              <q-popup-edit v-model="criterion"
+                            auto-save
+                            buttons
+                            v-slot="scope">
+                <q-input
+                  label="Criterion"
+                  type="textarea"
+                  v-model="scope.value"
+                  @keyup.ctrl.enter="scope.set"
+                  @keyup.esc="scope.cancel"
+                  dense
+                  autogrow
+                  autofocus />
+              </q-popup-edit>
+            </div>
+            <ElementMenu
+              class="specificsynchroniccategory-relationmenu"
+              :actions="relationActions" />
+            <q-btn
+              class="print-removed"
+              size="xs"
               flat
-              dense>
-              <div v-if="criterion"
-                   class="criterion-tooltip">{{ criterion }}</div>
-              Criterion
-            </q-tooltip>
-            <q-popup-edit v-model="criterion"
-                        auto-save
-                          buttons
-                          v-slot="scope">
-              <q-input
-                label="Criterion"
-                type="textarea"
-                v-model="scope.value"
-                @keyup.ctrl.enter="scope.set"
-                @keyup.esc="scope.cancel"
-                dense
-                autogrow
-                autofocus />
-            </q-popup-edit>
+              round
+              dense
+              title="Create a new child category"
+              icon="mdi-plus">
+              <q-menu
+                touch-position>
+                <q-list dense style="min-width: 100px">
+                  <q-item
+                    v-for="([label, name], i) in proposedChildrenNames"
+                    clickable
+                    :key="i"
+                    @click.stop="createChildCategory(name)"
+                    v-close-popup>
+                    {{ label }}
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </div>
-          <ElementMenu
-            v-if="! isLeaf"
-            class="specificsynchroniccategory-relationmenu"
-            :actions="relationActions" />
-          <q-btn
-            class="print-removed"
-            size="xs"
-            flat
-            round
-            dense
-            title="Create a new child category"
-            icon="mdi-plus">
-            <q-menu
-              touch-position>
-              <q-list dense style="min-width: 100px">
-                <q-item
-                  v-for="([label, name], i) in proposedChildrenNames"
-                  clickable
-                  :key="i"
-                  @click.stop="createChildCategory(name)"
-                  v-close-popup>
-                  {{ label }}
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
         </div>
-      </div>
+      </DropZone>
 
       <DropZone data="add"
                 types="upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/selection upmt/descriptem upmt/annotation upmt/color"
@@ -389,10 +394,15 @@
       }
   }
 
-  function droppedAnnotation (annotationId: string) {
-      const annotation = store.getAnnotation(annotationId)
-      if (annotation) {
-          store.addTextSelectionToSpecificSynchronicCategory(annotation.toJSON(), props.categoryId)
+  function droppedAnnotation (annotationId: string, data: string) {
+      if (data === 'addChild') {
+          // Dropped on relation - create a child
+          
+      } else {
+          const annotation = store.getAnnotation(annotationId)
+          if (annotation) {
+              store.addTextSelectionToSpecificSynchronicCategory(annotation.toJSON(), props.categoryId)
+          }
       }
   }
 
