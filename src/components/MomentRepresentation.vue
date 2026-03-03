@@ -104,7 +104,7 @@
               v-if="moment"
               size="xs"
               title="Edit specific synchronic model"
-              class="absolute-bottom-right"
+              class="absolute-bottom-left"
               @click="editModel(moment.specificsynchronicmodel?.id || '')"
               icon="mdi-graph-outline"
               no-caps>
