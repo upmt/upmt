@@ -39,7 +39,7 @@
     display: none;
 }
 .expansion-body {
-    margin-left: 10px;
+    margin-left: 16px;
 }
 .expansion-header {
     border: 1px solid transparent;
