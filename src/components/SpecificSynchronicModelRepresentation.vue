@@ -69,6 +69,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
 
+  import { stripHashname } from './util'
   import VueZoomable from "vue-zoomable"
   import "vue-zoomable/dist/style.css"
 
@@ -99,11 +100,11 @@
       console.log("specificsynchronicmodel", model.value)
   }
 
-  // Dropped selection to create a SpecificSynchronicModel. where is before or after or in:
+  // Dropped Generic category to create a SpecificSynchronicModel. where is before or after or in:
   function droppedGenericSynchronicCategory (categoryName: string, where: string) {
       const genericInfo = props.genericGraphs ? props.genericGraphs.byName[categoryName] : { abstractionType: '' }
 
-      store.addSpecificSynchronicCategory(categoryName,
+      store.addSpecificSynchronicCategory(stripHashname(categoryName),
                                           props.modelId,
                                           where,
                                           null,
@@ -115,7 +116,7 @@
       // Get the name from the id
       const category = store.getSpecificSynchronicCategory(categoryId)
       if (category) {
-          const genericInfo = props.genericGraphs ? props.genericGraphs.byName[category.name] : { abstractionType: '' }
+          const genericInfo = props.genericGraphs ? props.genericGraphs.byName[category.fullName] : { abstractionType: '' }
 
           store.addSpecificSynchronicCategory(category.name,
                                               props.modelId,

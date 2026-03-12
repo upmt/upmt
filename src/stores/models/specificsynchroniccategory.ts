@@ -42,6 +42,20 @@ export default class SpecificSynchronicCategory extends Justifiable {
     return { specificsynchroniccategory: this }
   }
 
+  get fullName () {
+    return this.parentHash(this.name)
+  }
+
+  parentHash (name: string) {
+    // Qualify a name with the parent name as hashname if the name ends with #
+    if (name.endsWith('#')) {
+      const parentName = this.parent ? this.parent.name : this.parentId
+      return `${name}#${parentName}`
+    } else {
+      return name
+    }
+  }
+
   toJSON (shallow=false): any {
     const base = {
       name: this.name,

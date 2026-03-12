@@ -277,7 +277,7 @@
   function droppedGenericSynchronicCategory (name: string) {
       // A generic category was dropped
       const modelId = moment.value?.specificsynchronicmodel?.id
-      if (modelId) {
+      if (modelId && name) {
           const genericInfo = props.genericGraphs ? props.genericGraphs.byName[name] : { abstractionType: '' }
           store.addSpecificSynchronicCategory(name,
                                               modelId,

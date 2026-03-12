@@ -211,6 +211,7 @@
   import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useQuasar } from 'quasar'
+  import { stripHashname } from './util'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
@@ -248,7 +249,8 @@
       },
       set (value: string) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
-          const genericSource = props.genericGraphs ? props.genericGraphs.byName[value] : {}
+          const fullName = category.value?.parentHash(value) ?? value
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[fullName] : {}
           const abstractionType = genericSource?.abstractionType || ''
           store.updateSpecificSynchronicCategory(props.categoryId, { name: value, abstractionType: abstractionType })
       }
@@ -310,13 +312,19 @@
       displayJustification.value = ! props.hideJustifications || categoryDescriptemCount.value > 0
   }
 
-  const genericElement = computed(() => props.genericGraphs ? props.genericGraphs.byName[categoryName.value] : {})
+  const genericElement = computed(() => {
+      if (category.value && props.genericGraphs) {
+          return  props.genericGraphs.byName[category.value.fullName] || { childrenNames: new Set() }
+      }
+      // In all other cases, return empty dict
+      return {}
+  })
 
   const proposedChildrenNames = computed(() => {
-      const currentChildren = new Set((category.value?.children || []).map(child => child.name))
+      const currentChildren = new Set((category.value?.children || []).map(child => child.fullName))
       const childrenNames = [ ...genericElement.value.childrenNames.difference(currentChildren) ].toSorted()
       return [ ["New child category", ""],
-               ...childrenNames.map((name: string) => [ name, name ]) ]
+               ...childrenNames.map((name: string) => [ name, stripHashname(name) ]) ]
   })
 
   function debug () {
@@ -334,7 +342,8 @@
           if (! name) {
               name = istore.newSSCId()
           }
-          const genericSource = props.genericGraphs ? props.genericGraphs.byName[name] : {}
+          const fullName = category.value.parentHash(name)
+          const genericSource = props.genericGraphs ? props.genericGraphs.byName[fullName] : {}
           const abstractionType = genericSource?.abstractionType || ''
           store.addSpecificSynchronicCategory(name,
                                               category.value.specificsynchronicmodelId,
@@ -376,8 +385,7 @@
       if (category.value) {
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[categoryName] : {}
           const abstractionType = genericSource?.abstractionType || ''
-
-          store.addSpecificSynchronicCategory(categoryName,
+          store.addSpecificSynchronicCategory(stripHashname(categoryName),
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               null,
@@ -394,15 +402,10 @@
       }
   }
 
-  function droppedAnnotation (annotationId: string, data: string) {
-      if (data === 'addChild') {
-          // Dropped on relation - create a child
-          
-      } else {
-          const annotation = store.getAnnotation(annotationId)
-          if (annotation) {
-              store.addTextSelectionToSpecificSynchronicCategory(annotation.toJSON(), props.categoryId)
-          }
+  function droppedAnnotation (annotationId: string) {
+      const annotation = store.getAnnotation(annotationId)
+      if (annotation) {
+          store.addTextSelectionToSpecificSynchronicCategory(annotation.toJSON(), props.categoryId)
       }
   }
 

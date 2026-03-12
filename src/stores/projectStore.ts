@@ -1160,11 +1160,25 @@ export const useProjectStore = defineStore('projectStore', () => {
       .get()
 
     // Reconstitute structure
-    //const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
+    const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
     const children: Record<string, SpecificSynchronicCategory[]> = groupBy(categories, 'parentId')
+
+    const genericName = (category: SpecificSynchronicCategory) => {
+      const name = category.name
+      if (name.endsWith('#')) {
+        const parent = mapping[category.parentId]
+        if (parent) {
+          return `${name}${parent.name}`
+        } else {
+          return `${name}`
+        }
+      } else {
+        return name
+      }
+    }
     // console.log({ children, names })
 
-    const names = groupBy(categories, 'name')
+    const names = groupBy(categories, genericName)
 
     // These will be updated during the categories traversal
     const rootCategoryNames: Set<string> = new Set()
@@ -1173,7 +1187,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     const genericCategories: Record<string, GenericCategory> = Object.fromEntries(
       Object.entries(names).map( ([name, instances]) => {
-        const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => c.name)).flat())
+        const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => genericName(c))).flat())
         const errors = []
         const roots = instances.filter(ssc => !!ssc.specificsynchronicmodelId)
         // It is a root in all instances

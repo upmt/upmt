@@ -34,6 +34,18 @@ function clamp (number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
 }
 
+function stripHashname (name: string) {
+  // Strip the hashname from the given string, return with trailing # if there was one.
+  // and do not strip anything if the # is leading
+  const hashIndex = name.indexOf('#')
+  // Do not strip if the name starts with a #
+  if (hashIndex > 1) {
+    return name.substr(0, hashIndex + 1)
+  } else {
+    return name
+  }
+}
+
 export type TextSelection = {
   startIndex: number,
   endIndex: number,
@@ -47,4 +59,4 @@ export type NamedAction = [
   tooltip?: string
 ]
 
-export { ANNOTATION_COLORS, groupBy, clamp }
+export { ANNOTATION_COLORS, groupBy, clamp, stripHashname }
