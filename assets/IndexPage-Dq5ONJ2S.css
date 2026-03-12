@@ -1,0 +1,20 @@
+
+.storage[data-v-890a8f7f] {
+    overflow: auto;
+    max-height: 30vh;
+}
+
+.project-card[data-v-a13b2971] {
+    width: var(--project-width);
+}
+
+.project-card[data-v-a729e56b] {
+    width: 100%;
+    max-width: 250px;
+}
+a[data-v-a729e56b] {
+      text-decoration: none;
+}
+a[data-v-a729e56b]:hover {
+      text-decoration: underline;
+}
