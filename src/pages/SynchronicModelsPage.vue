@@ -136,6 +136,7 @@
 
   const project = computed(() => {
       if (props.projectId) {
+          store.activateProject(props.projectId)
           const p = store.getFullProject(props.projectId)
           return p
       } else {

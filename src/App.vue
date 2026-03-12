@@ -6,7 +6,7 @@
   import { onMounted } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { listStoredProjects } from 'stores/storage'
+  import { getStoredProjectInfo, importProjectFromUrl } from 'stores/storage'
   import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
@@ -35,29 +35,25 @@
       // Load username
       istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
 
-      const loadedProjects = []
-
-      // Load stored projects
-      for (const id of listStoredProjects()) {
+      // Load sample projects if they were not stored
+      for (const id of [ 'example' ]) {
+          if (! getStoredProjectInfo(id)) {
+              try {
+                  void importProjectFromUrl(`./examples/${id}.upmt`, id)
+              } catch (error) {
+                  console.log(`Cannot load example ${id}:`, error)
+              }
+          }
+      }
+      const id = istore.currentProjectId
+      if (id) {
+          // Load currentProjectId
           try {
               store.loadStoredProject(id)
           } catch (error) {
               console.log("Cannot load project", id, error)
           }
       }
-      // Load sample projects if they were not stored
-      for (const id of [ 'example' ]) {
-          if (! store.getProject(id)) {
-              try {
-                  loadedProjects.push(store.loadProject(`./examples/${id}.upmt`))
-              } catch (error) {
-                  console.log(`Cannot load example ${id}:`, error)
-              }
-          }
-      }
-      Promise.all(loadedProjects)
-          .then(() => istore.setModified(false))
-          .catch((error) => console.log(error));
       (window as any).store = store;
       (window as any).repo = store.getRepo();
       console.log("store = ", store);

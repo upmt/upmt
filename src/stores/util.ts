@@ -19,6 +19,8 @@ function basename (path: string) {
   return path.split('/').pop() ?? ""
 }
 
+// FIXME: replace by standard
+// https://tc39.es/ecma262/multipage/fundamental-objects.html#sec-object.groupby
 function groupBy<T>(
   arr: T[],
   f: keyof T | ((item: T) => string)

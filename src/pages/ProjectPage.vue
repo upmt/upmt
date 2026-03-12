@@ -32,13 +32,5 @@
   const store = useProjectStore()
   const istore = useInterfaceStore()
 
-  const project = computed(() => {
-      if (props.projectId) {
-          const p = store.getProject(props.projectId)
-          istore.setCurrentProjectId(props.projectId)
-          return p
-      } else {
-          return null
-      }
-  })
+  const project = computed(() => store.activateProject(props.projectId))
 </script>

@@ -2,14 +2,14 @@
   <q-list
     :key="refreshKey"
     class="storage">
-    <strong title="{{ dir }}">Stored files</strong>
+    <strong :title="`${files.length} versions`">Stored versions</strong>
     <q-btn
       @click="doRefresh"
       size="xs"
-      title="Refresh the list of stored files"
+      title="Refresh the list of stored versions"
       icon="mdi-refresh"/>
     <q-item
-      v-if="!filenames.length">
+      v-if="!files.length">
         <q-icon
           size="xs"
           name="mdi-semantic-web" />
@@ -17,14 +17,13 @@
     </q-item>
     <q-item
       class="column"
-      v-for="filename in filenames"
-      :key="filename">
+      v-for="info in files"
+      :key="info.basename">
       <span>
         <q-icon
           size="xs"
-          :title="filesize(filename)"
           name="mdi-semantic-web" />
-        {{ filename }}
+        {{ info.basename }}
       </span>
       <span align="right">
         <q-btn-dropdown
@@ -32,12 +31,12 @@
           title="Delete"
           dropdown-icon="none"
           icon="mdi-delete">
-          <span>Delete {{ filename }}?</span>
+          <span>Delete {{ info.basename }}?</span>
           <q-list align="right" class="row justify-end">
             <q-btn
               v-close-popup
               class="bg-red q-pa-sm"
-              @click="doDelete(filename)"
+              @click="doDelete(info.filename)"
               icon="mdi-delete" />
             <q-btn
               v-close-popup
@@ -49,12 +48,12 @@
           size="xs"
           title="Download"
           icon="mdi-download"
-          @click="doDownload(filename)" />
+          @click="doDownload(info.basename, info.filename)" />
         <q-btn
           size="xs"
           title="Restore"
           icon="mdi-open-in-app"
-          @click="doOpen(filename)" />
+          @click="doOpen(info.filename)" />
       </span>
     </q-item>
   </q-list>
@@ -68,6 +67,8 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
+  import { getProjectFiles } from 'stores/storage'
+
   const $q = useQuasar()
 
   const store = useProjectStore()
@@ -75,36 +76,23 @@
   const istore = useInterfaceStore()
 
   const props = defineProps({
-      dir: { type: String, default: "/" }
+      projectId: { type: String, default: "" }
   })
 
   const refreshKey = ref(1)
 
-  const filenames = computed(() => {
+  const files = computed(() => {
       // Introduce a dependency on refreshKey so that it gets updated on refreshKey update
       const _key = refreshKey.value
-      if (fs.existsSync(props.dir)) {
-          return fs.readdirSync(props.dir).toSorted().reverse()
-      } else {
-          return []
-      }
+      return getProjectFiles(props.projectId)
   })
 
   function doRefresh () {
       refreshKey.value++
   }
 
-  function absolute (filename: string) {
-      return `${props.dir}/${filename}`
-  }
-
-  function filesize (filename: string) {
-      const stats = fs.statSync(absolute(filename))
-      return stats.size
-  }
-
-  function doDownload (filename: string) {
-      const status = exportFile(filename, fs.readFileSync(absolute(filename)))
+  function doDownload (basename: string, filename: string) {
+      const status = exportFile(basename, fs.readFileSync(filename))
       if (status !== true) {
           // browser denied it
           console.error(`Error: ${status}`)
@@ -112,24 +100,20 @@
   }
 
   function doDelete (filename: string) {
-      const absolutePath = absolute(filename)
-      fs.unlinkSync(absolutePath)
+      fs.unlinkSync(filename)
       doRefresh()
       $q.notify({
           type: 'info',
-          message: `Deleted file ${absolutePath}`
+          message: `Deleted stored file ${filename}`
       })
   }
 
   function doOpen (filename: string) {
-      const jsonData = fs.readFileSync(absolute(filename))
-      if (jsonData) {
-          store.importProject(jsonData, filename)
-          istore.setModified(false)
-      }
+      store.loadStoredProject(props.projectId, filename)
+      istore.setModified(false)
       $q.notify({
           type: 'info',
-          message: `Loaded version ${filename}`
+          message: `Restored version ${filename}`
       })
 
   }

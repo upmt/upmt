@@ -115,9 +115,9 @@
               class="row fit q-pa-md q-gutter-md justify-start content-start">
 
               <ProjectCard
-                v-for="project in projects"
-                :key="project.id"
-                :projectId="project.id" />
+                v-for="projectId in projectIds"
+                :key="projectId"
+                :projectId="projectId" />
 
             </div>
 
@@ -201,8 +201,7 @@
 
   import { stringToId } from 'stores/util'
 
-  import { storeProject } from 'stores/storage'
-  import Project from 'stores/models/project'
+  import { storeProject, getStoredProjectInfo } from 'stores/storage'
 
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
@@ -224,7 +223,7 @@
 
   const filename = ref(null)
 
-  const projects = computed(() => store.getAllProjects())
+  const projectIds = computed(() => listStoredProjects())
 
   const { currentProjectId } = storeToRefs(istore)
 
@@ -235,12 +234,17 @@
       }
   }
 
-  function importWithNewId(existing: Project, jsonData: any, sourceName: string): void | null {
+  function importWithNewId(existingId: string, jsonData: any, sourceName: string): void | null {
+      const existingInfo = getStoredProjectInfo(existingId)
+      if (! existingInfo) {
+          console.error(`Impossible code path importWithNewId with empty ${existingId}`)
+          return
+      }
       // Use a modal dialog to ask for a new id
       $q.dialog({
           title: 'Give a project identifier',
           html: true,
-          message: `The loaded project <strong>${jsonData.name}</strong> (id: <em>${jsonData.id}</em>) has the same identifier as an existing loaded project named <strong>${existing.name}</strong>.<br>Enter a new name (or keep it to overwrite the old data).`,
+          message: `The loaded project <strong>${jsonData.name}</strong> (id: <em>${jsonData.id}</em>) has the same identifier as an existing loaded project named <strong>${existingInfo.name}</strong>.<br>Enter a new name (or keep it to overwrite the old data).`,
           prompt: {
               model: jsonData.name,
               isValid: val => /^[\w -]+$/.test(val), // "Use only alphabetic characters, numbers and _/-",
@@ -276,7 +280,7 @@
           } else {
               $q.notify({
                   type: 'warning',
-                  message: `Cancelled project loading ${existing.name}`
+                  message: `Cancelled project loading ${existingInfo.name}`
               })
           }
       })
@@ -306,10 +310,10 @@
               }
               if (jsonData !== null && sourceFile?.name) {
                   // Check if jsonData.id is an existing id, ask the question if it is the case.
-                  const existing = projects.value.find(project => project.id == jsonData.id)
-                  if (existing) {
+                  const existingId = projectIds.value.find(jsonData.id)
+                  if (existingId) {
                       // Ask the question.
-                      importWithNewId(existing, jsonData, sourceFile.name)
+                      importWithNewId(existingId, jsonData, sourceFile.name)
                   } else {
                       // No existing project. We can load it with the current id
                       store.importProject(jsonData, sourceFile.name)
