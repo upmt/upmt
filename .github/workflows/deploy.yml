@@ -4,21 +4,21 @@ name: Deploy μPMT application
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: "gh-pages"
   cancel-in-progress: false
 
 jobs:
@@ -28,36 +28,53 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - name: Cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: "npm"
+
       - name: Install
         run: npm ci
+
       - name: Build
+        run: npx quasar build -d
+
+      - name: Prepare target dir
         run: |
-          npx quasar build -d
-          /bin/rm -rf public/assets
-          echo ${CI_COMMIT_SHA} > public/version.txt
-          cp -a dist/spa/assets public/assets
-          cp dist/spa/index.html public/index.html
-          cp -a examples/ public/examples/
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+          set -e
+          BRANCH="${GITHUB_REF_NAME}"
+          if [ "$BRANCH" = "main" ]; then
+            TARGET_DIR="."
+          elif [ "$BRANCH" = "dev" ]; then
+            TARGET_DIR="dev"
+          else
+            echo "Unsupported branch: $BRANCH"
+            exit 1
+          fi
+
+          # stage output we want to publish
+          rm -rf publish
+          mkdir -p "publish/${TARGET_DIR}"
+
+          # copy built SPA into publish/${TARGET_DIR}
+          cp -a dist/spa/* "publish/${TARGET_DIR}/"
+
+          # copy examples
+          cp -a examples/ public/${TARGET_DIR}/examples/
+
+          # version file per branch
+          echo "${GITHUB_SHA}" > "publish/${TARGET_DIR}/version.txt"
+
+      - name: Deploy to gh-pages (keep both main + dev)
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          # Upload public directory
-          path: 'public'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: publish
+          # preserve the other branch’s directory when updating one.
+          keep_files: true
