@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { fs } from '@zenfs/core'
 import { timestampAdd, timestampGet } from 'stores/util'
 import { useProjectStore } from 'stores/projectStore'
@@ -44,6 +45,18 @@ function getProjectFiles(id: string)  {
   })
 }
 
+/**
+ * Get the info of the latest version fo project id as JSON object
+ */
+function getProjectFileInfo(id: string)  {
+  const files = getProjectFiles(id)
+  if (files.length) {
+    return files[0]
+  } else {
+    return null
+  }
+}
+
 function isStoredProject (id: string) {
   const projectPath = id2path(id)
   return fs.existsSync(projectPath) && fs.readdirSync(projectPath).length > 0
@@ -51,20 +64,22 @@ function isStoredProject (id: string) {
 
 /**
  * Get the latest version of project id as JSON object
+ *
+ * If filename is provided, then use this (stored) path to load the
+ *  data instead of the last saved version.
  */
-function getStoredProject(id: string)  {
-  const projectPath = id2path(id)
+function getStoredProjectData(id: string, filename: string = "")  {
+  if (! filename) {
+    // Use latest version
+    const info = getProjectFileInfo(id)
+    if (! info)
+      return null
+    filename = info.filename
+  }
   try {
-    const versions = fs.readdirSync(projectPath).sort().reverse()
-    if (versions.length) {
-      const projectFilename = versions[0]
-      const filename = `${projectPath}/${projectFilename}`
-      const data = JSON.parse(fs.readFileSync(filename).toString())
-      data.filename = projectFilename
-      return data
-    }
-    console.log("No version for project", id)
-    return null
+    const data = JSON.parse(fs.readFileSync(filename).toString())
+    data.filename = filename
+    return data
   } catch (error) {
     console.log("No such stored project", id, error)
     return null
@@ -87,16 +102,39 @@ function deleteStoredProject(id: string)  {
 }
 
 /**
- * Get the latest info of project id as JSON object
+ * Get information about a stored projects
+ * @returns ProjectInfo object
  */
-function getProjectInfo(id: string)  {
-  const files = getProjectFiles(id)
-  if (files.length) {
-    return files[0]
-  } else {
+function getStoredProjectInfo (projectId: string) {
+  const data = getStoredProjectData(projectId)
+  if (! data)
     return null
+  const files = getProjectFiles(projectId)
+  const info = files.length ? files[0] : null
+  return {
+    id: projectId,
+    basename: info?.basename ?? "",
+    filename: info?.filename ?? "",
+    date: info?.date ?? null,
+    modified: data.modified,
+    creator: data.creator,
+    contributor: data.contributor,
+    name: data.name,
+    note: data.note,
+    interview_count: data.interviews.length,
+    version_count: files.length
   }
 }
+
+
+/**
+ * Get information about all stored projects
+ * @returns {Array} List of information
+ */
+function listStoredProjectsInfo () {
+  return  listStoredProjects().map(id => getStoredProjectInfo(id))
+}
+
 
 /**
  * Store the project in browser storage
@@ -117,12 +155,38 @@ function storeProject (projectId: string) {
   return basename
 }
 
+/**
+ * Import project from URL directly into storage
+ * @returns Promise<string>: the projectId
+ */
+function importProjectFromUrl (url: string, projectId: string = "") {
+  return axios.get(url).then((response) => {
+    if (response.headers['content-type'] == 'text/html') {
+      console.log(`Invalid data (text/html) from ${url}`)
+      return null
+    } else {
+      response.data.id = projectId
+      const projectDir = id2path(projectId)
+      const basename = timestampAdd(projectId)
+      // Structure: /projects/{project.id}/{timestamp}-{projectId}.upmt
+      if (!fs.existsSync(projectDir)) {
+        fs.mkdirSync(projectDir)
+      }
+      fs.writeFileSync(`${projectDir}/${basename}.upmt`, response.data)
+      return projectId
+    }
+  })
+}
+
 export {
    getProjectFiles,
-   getProjectInfo,
-   getStoredProject,
+   getProjectFileInfo,
+   getStoredProjectData,
+   getStoredProjectInfo,
    isStoredProject,
    listStoredProjects,
+   listStoredProjectsInfo,
    deleteStoredProject,
-   storeProject
+   storeProject,
+   importProjectFromUrl
 }
