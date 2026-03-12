@@ -62,7 +62,7 @@
 
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { storeProject, getStoredProjectInfo, deleteStoredProject } from 'stores/storage'
+  import { storeProject, getStoredProjectInfo, getStoredProjectData, deleteStoredProject } from 'stores/storage'
   import { timestampAdd } from 'stores/util'
 
   import ElementMenu from './ElementMenu.vue'
@@ -84,6 +84,8 @@
 
   const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
 
+  const currentProject = computed(() => store.getProject(currentProjectId.value))
+
   const last_saved_date = computed(() => {
       return projectInfo.value ? moment(projectInfo.value.date).fromNow() : null
   })
@@ -100,11 +102,6 @@
   function doUpmtExport (projectId: string) {
       const data = store.hydrateProject(projectId)
       exportFile(timestampAdd(`${projectId}.upmt`), JSON.stringify(data, null, 2))
-  }
-
-  function doStrippedExport (projectId: string) {
-      const data = store.hydrateAndStripProject(projectId)
-      exportFile(timestampAdd(`${projectId}-stripped.json`), JSON.stringify(data, null, 2))
   }
 
   /* Ask for confirmation then delete project */
@@ -165,13 +162,34 @@
                  data.map(line => line.map(v => `"${v.toString().replace(/\n/g, ' ').replace(/"/g, '\'')}"`).join(",")).join("\n"))
   }
 
+  function doMergeIntoCurrent (projectId: string) {
+      // Merge given projectId file into current project
+      const data = getStoredProjectData(projectId)
+      if (data && currentProject.value) {
+          const result = store.mergeProjectData(data, currentProject.value.id)
+          if (result) {
+              $q.notify({
+                  type: 'error',
+                  message: `Cannot merge data: ${result}`
+              })
+          } else {
+              $q.notify({
+                  type: 'info',
+                  message: `Merged ${data.interviews.length} interviews into ${currentProject.value.name}`
+              })
+          }
+      }
+  }
+
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
       [ "Download project file", () => doUpmtExport(props.projectId) ],
-      [ "Download stripped file (dev)", () => doStrippedExport(props.projectId) ],
       [ "Export as CSV", () => doCsvExport(props.projectId) ],
       [ "Delete project", () => doDeleteProject(props.projectId) ]
   ]
+  if (currentProject.value) {
+      menuActions.push([ `Merge into current project ${currentProject.value.name}`, () => doMergeIntoCurrent(props.projectId) ])
+  }
 </script>
 <style scoped>
 .project-card {

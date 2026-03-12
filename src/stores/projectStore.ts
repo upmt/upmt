@@ -118,7 +118,9 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   // Return the project and just the first level of child information
-  function getProject (id: string): Project | null {
+  function getProject (id: string | null): Project | null {
+    if (! id)
+      return null
     return repo.Project
       .with('modelfolder')
       .with('detachedmodels')
@@ -606,7 +608,7 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   /**
-   * Load a projet file from a URL
+   * Load a project file from a URL
    *
    * Note that this is an async function
    */
@@ -1433,6 +1435,50 @@ export const useProjectStore = defineStore('projectStore', () => {
       }
   }
 
+  /**
+   * Merge a source JSON data structure into the given projectId
+   *
+   * It activates the destination project
+   * Return an empty string if everything is ok
+   * Return an error message in case of a problem
+   */
+  function mergeProjectData (source: any, intoProjectId: string) {
+    // Build an importable subset that will not overwrite the main
+    // project metadata
+
+    const project = activateProject(intoProjectId)
+
+    if (! project) {
+      const message = `Cannot activate ${intoProjectId} for merging`
+      console.log(message)
+      return message
+    }
+
+    // Add a suffix to interview name if they conflict
+    const interviewNames = project.interviews.map(interview => interview.name) ?? []
+    for (const interview of source.interviews) {
+      const basename = interview.name
+      let name = basename
+      let suffix = 1
+      while (interviewNames.includes(name)) {
+        name = `${basename} - ${suffix}`
+        suffix += 1
+      }
+      interview.name = name
+    }
+    const sourceSubset = {
+      // Set the project id to the destination project id
+      id: intoProjectId,
+      interviews: source.interviews,
+      modelfolder: source.modelfolder,
+      detachedmodels: source.detachedmodels ?? []
+    }
+
+    importProject(sourceSubset, "imported project", false)
+    return ""
+  }
+
+
   return {
     activateProject,
     addAnnotation,
@@ -1507,6 +1553,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     recursiveUpdateMoment,
     updateModelFolder,
     updateSpecificSynchronicCategory,
-    updateSynchronicCategoryColor
+    updateSynchronicCategoryColor,
+    mergeProjectData
   }
 })
