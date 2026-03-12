@@ -607,6 +607,8 @@ export const useProjectStore = defineStore('projectStore', () => {
 
   /**
    * Load a projet file from a URL
+   *
+   * Note that this is an async function
    */
   function loadProject (url: string) {
     return axios.get(url).then((response) => {
@@ -622,17 +624,16 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   /**
-   * Load a projet file from the ZenFS managed storage space
+   * Load a project file from the ZenFS managed storage space
    * In this case, we only specify the id
+   *
+   * If filename is specified, then the project  is loaded from the given filename
+   *
+   * This is a synchronous function.
    */
-  function loadStoredProject (id: string) {
-    const data = getStoredProject(id)
+  function loadStoredProject (id: string, filename: string = "") {
+    const data = getStoredProjectData(id, filename)
     if (data) {
-      const modified = timestampGet(id)
-      if (modified !==  null) {
-        // Set modified date as save date in the serialized version
-        data.modified = modified.toISOString()
-      }
       const p = importProject(data, data.filename)
       return p
     }
