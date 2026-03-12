@@ -13,8 +13,8 @@ import Moment from './models/moment'
 import Project from './models/project'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
-import { stringToId, groupBy, stripFields, timestampGet } from './util'
-import { isStoredProject, getStoredProject } from './storage'
+import { stringToId, groupBy, stripFields } from './util'
+import { isStoredProject, getStoredProjectData } from './storage'
 import { useInterfaceStore } from 'stores/interface'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
@@ -111,6 +111,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     // https://pinia-orm.codedredd.de/guide/repository/retrieving-data#retrieving-models
       // this does not process relations (i.e. withAll will not work)
     return repo.Project.orderBy('modified', 'desc').get()
+  }
+
+  function isProjectLoaded (id: string): boolean {
+    return repo.Project.find(id) !== null
   }
 
   // Return the project and just the first level of child information
@@ -1401,7 +1405,21 @@ export const useProjectStore = defineStore('projectStore', () => {
     return specificModel
   }
 
+  function activateProject (projectId: string) {
+      if (! isProjectLoaded(projectId)) {
+        // Load the project
+        const p = loadStoredProject(projectId)
+        // We want to set the loaded project as current,
+        // but this is already done in the importProject called by loadStoredProject
+        // istore.setCurrentProjectId(projectId)
+        return p
+      } else {
+        return getProject(projectId)
+      }
+  }
+
   return {
+    activateProject,
     addAnnotation,
     addModelFolder,
     addMoment,
@@ -1463,6 +1481,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     getSpecificSynchronicCategoryNamesByPrefix,
     getSpecificSynchronicModel,
     getSpecificSynchronicModels,
+    isProjectLoaded,
     loadProject,
     loadStoredProject,
     moveMoment,
