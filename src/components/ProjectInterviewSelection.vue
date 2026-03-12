@@ -195,7 +195,7 @@
   import { useRouter } from 'vue-router'
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { useQuasar } from 'quasar'
+  import { useQuasar, useTimeout } from 'quasar'
 
   import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
   import ElementMenu from './ElementMenu.vue'
@@ -217,6 +217,8 @@
   const router = useRouter()
 
   const store = useProjectStore()
+
+  const { registerTimeout } = useTimeout()
 
   const props = defineProps({
       projectId: { type: String, required: true }
@@ -278,8 +280,18 @@
 
   watch(editedSpecificSynchronicModelId, () => {
       // Make sure a tab is active
-      if (editedSpecificSynchronicModel.value?.moment) {
-          currentInterviewId.value = editedSpecificSynchronicModel.value.moment.interviewId
+      const moment = editedSpecificSynchronicModel.value?.moment
+      if (moment) {
+          currentInterviewId.value = moment.interviewId
+          // Scroll the moment into view
+          registerTimeout(() => {
+              const element = document.querySelector(`[data-moment="${moment.id}"]`)
+              console.log("Scroll to moment", element)
+              if (element) {
+                  /* FIXME: remove 'as any' when the container option has been included in TS spec */
+                  element.scrollIntoView({ block: "center", behavior: "smooth", container: "nearest" } as any)
+              }
+          }, 1000)
       } else {
           // Generic model - if there is no current interview, activate the first one
           if (!currentInterviewId.value) {
@@ -296,6 +308,15 @@
           if (interview && interview.id != currentInterviewId.value) {
               currentInterviewId.value = interview.id
           }
+          // Scroll the moment into view
+          registerTimeout(() => {
+              const element = document.querySelector(`[data-moment="${highlightedMomentId.value}"]`)
+              console.log("Scroll to moment", element)
+              if (element) {
+                  /* FIXME: remove 'as any' when the container option has been included in TS spec */
+                  element.scrollIntoView({ block: "center", behavior: "smooth", container: "nearest" } as any)
+              }
+          }, 1000)
       }
   })
 
