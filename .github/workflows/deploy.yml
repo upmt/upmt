@@ -65,7 +65,7 @@ jobs:
           cp -a dist/spa/* "publish/${TARGET_DIR}/"
 
           # copy examples
-          cp -a examples/ public/${TARGET_DIR}/examples/
+          cp -a examples/ publish/${TARGET_DIR}/examples/
 
           # version file per branch
           echo "${GITHUB_SHA}" > "publish/${TARGET_DIR}/version.txt"
