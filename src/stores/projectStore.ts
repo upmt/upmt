@@ -1426,9 +1426,11 @@ export const useProjectStore = defineStore('projectStore', () => {
       if (! isProjectLoaded(projectId)) {
         // Load the project
         const p = loadStoredProject(projectId)
-        // We want to set the loaded project as current,
-        // but this is already done in the importProject called by loadStoredProject
-        // istore.setCurrentProjectId(projectId)
+        // This is already done in the importProject called by loadStoredProject
+        // but let's be explicit
+        const istore = useInterfaceStore()
+        istore.setCurrentProjectId(projectId)
+        istore.setModified(false)
         return p
       } else {
         return getProject(projectId)
