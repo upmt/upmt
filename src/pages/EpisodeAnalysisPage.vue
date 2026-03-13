@@ -1,15 +1,15 @@
 <template>
   <q-page padding>
-    <DiachronicAnalysis
+    <EpisodeAnalysis
       :projectId="projectId" />
   </q-page>
 </template>
 
 <script setup lang="ts">
-  import DiachronicAnalysis from 'components/DiachronicAnalysis.vue'
+  import EpisodeAnalysis from 'components/EpisodeAnalysis.vue'
 
   defineOptions({
-      name: 'DiachronicAnalysisPage'
+      name: 'EpisodeAnalysisPage'
   })
 
   defineProps<{
