@@ -2,7 +2,7 @@
   <div v-if="project">
     <q-toolbar class="row toolbar">
 
-      <span class="text-h5">{{ project.name }}</span>
+      <span class="text-h5 q-px-md">{{ project.name }}</span>
 
       <q-btn-toggle
         size="xs"
@@ -11,10 +11,10 @@
                   { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
       </q-btn-toggle>
 
+      <span class="q-px-md text-bold">Profondeur&nbsp;:</span>
       <q-slider v-model="maximumDepth"
                 class="col-4"
                 snap
-                label-always
                 markers
                 :min="0"
                 :max="4"
