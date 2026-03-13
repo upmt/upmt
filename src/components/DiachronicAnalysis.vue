@@ -32,12 +32,13 @@
         <q-btn
           dense
           flat
-          no-caps>{{ episode.name }}
+          :to="{ name: 'project', query: { tab: episode.interview.label } }"
+          no-caps>{{ episode.moment.name }}
         </q-btn>
         <div class="episode-children"
              :class="editViewMode">
           <MomentShortRepresentation
-            v-for="moment in episode.children"
+            v-for="moment in episode.moment.children"
             :key="moment.id"
             :maximumDepth="maximumDepth"
             :momentId="moment.id"
@@ -71,7 +72,11 @@
   // information. We fetch children info through the getMoment map and
   // the default value is just here to please TSC checker
   const episodes = computed(() => store.getMomentsByPrefix(props.projectId, '%')
-      .map(moment => store.getMoment(moment.id) || { id: "None", name: "None", children: [] }))
+      .map(moment => ({
+          id: moment.id,
+          moment: store.getMoment(moment.id) || { name: "None", children: [] },
+          interview: store.getInterviewByMoment(moment.id) || { label: "None" }
+      })))
 
 </script>
 
