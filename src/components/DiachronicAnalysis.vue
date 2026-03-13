@@ -1,8 +1,6 @@
 <template>
-  <div v-if="project">
+  <div>
     <q-toolbar class="row toolbar">
-
-      <span class="text-h5 q-px-md">{{ project.name }}</span>
 
       <q-btn-toggle
         size="xs"
@@ -26,21 +24,20 @@
 
     </q-toolbar>
 
-
-    <div class="interviews"
+    <div class="episodes"
          :class="editViewMode">
-      <div v-for="interview in project.interviews"
-           class="interview-moments"
-           :key="interview.id">
+      <div v-for="episode in episodes"
+           class="episode"
+           :key="episode.id">
         <q-btn
-          no-caps
-          :to="{ name: 'project', params: { id: interview.parentId },  query: { tab: interview.label } }">
-          {{ interview.label }}
+          dense
+          flat
+          no-caps>{{ episode.name }}
         </q-btn>
-        <div class="interview-children"
+        <div class="episode-children"
              :class="editViewMode">
           <MomentShortRepresentation
-            v-for="moment in interview?.analysis?.rootMoment?.children"
+            v-for="moment in episode.children"
             :key="moment.id"
             :maximumDepth="maximumDepth"
             :momentId="moment.id"
@@ -54,24 +51,27 @@
 
 <script setup lang="ts">
 
-  import { ref } from 'vue'
-  // import { useProjectStore } from 'stores/projectStore'
-  // import { useInterfaceStore } from 'stores/interface'
+  import { computed, ref } from 'vue'
   import MomentShortRepresentation from './MomentShortRepresentation.vue'
-  import Project from 'stores/models/project'
+  import { useProjectStore } from 'stores/projectStore'
 
-  // const store = useProjectStore()
-  // const istore = useInterfaceStore()
+  const store = useProjectStore()
+
   const editViewMode = ref('horizontal')
 
   const maximumDepth = ref(1)
 
-  defineProps({
-      project: {
-          type: Project,
-          default: null
-      }
-  })
+  const props = defineProps<{
+      projectId: string
+  }>()
+
+  store.activateProject(props.projectId)
+
+  // getMomentsByPrefix returns raw Moments with no children
+  // information. We fetch children info through the getMoment map and
+  // the default value is just here to please TSC checker
+  const episodes = computed(() => store.getMomentsByPrefix(props.projectId, '%')
+      .map(moment => store.getMoment(moment.id) || { id: "None", name: "None", children: [] }))
 
 </script>
 
@@ -86,11 +86,11 @@
     flex-direction: column;
 }
 
-.interviews.vertical {
+.episodes.vertical {
     flex-direction: row;
 }
 
-.interviews.horizontal {
+.episodes.horizontal {
     flex-direction: column;
 }
 </style>

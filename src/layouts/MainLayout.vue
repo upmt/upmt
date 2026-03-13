@@ -214,9 +214,14 @@
               link: `/spreadsheet/${currentProjectId.value}`
           })
           menu.push({
+              label: "Episode analysis",
+              icon: 'mdi-table',
+              link: `/episodes/${currentProjectId.value}`
+          })
+          menu.push({
               label: "Diachronic graph",
               icon: 'mdi-graph',
-              link: `/diachronic/${currentProjectId.value}`
+              link: `/diachronic-graph/${currentProjectId.value}`
           })
           menu.push({
               label: "Synchronic Models",
