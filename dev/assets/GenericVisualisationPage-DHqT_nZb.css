@@ -1,0 +1,15 @@
+
+.horizontal[data-v-62ed1cd8] {
+    display: flex;
+    flex-direction: row;
+}
+.vertical[data-v-62ed1cd8] {
+    display: flex;
+    flex-direction: column;
+}
+.interviews.vertical[data-v-62ed1cd8] {
+    flex-direction: row;
+}
+.interviews.horizontal[data-v-62ed1cd8] {
+    flex-direction: column;
+}

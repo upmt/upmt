@@ -1,0 +1,15 @@
+
+.horizontal[data-v-2bae2b08] {
+    display: flex;
+    flex-direction: row;
+}
+.vertical[data-v-2bae2b08] {
+    display: flex;
+    flex-direction: column;
+}
+.episodes.vertical[data-v-2bae2b08] {
+    flex-direction: row;
+}
+.episodes.horizontal[data-v-2bae2b08] {
+    flex-direction: column;
+}

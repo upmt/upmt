@@ -1,0 +1,13 @@
+
+.specificsynchronicmodel-categories[data-v-93357573] {
+      display:  flex;
+      flex-direction: column;
+}
+.specificsynchronicmodel-categories.vertical[data-v-93357573] {
+      flex-direction: row;
+}
+.genericmodel[data-v-93357573] {
+    --overview-height: 24px;
+    --overview-width: 100px;
+    --overview-font-size: 12px;
+}
