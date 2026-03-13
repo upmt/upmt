@@ -249,7 +249,7 @@
   } = storeToRefs(istore)
 
   const splitterModel = ref(20)
-  const splitterTranscript = ref(90)
+  const splitterTranscript = ref(80)
   const splitterInterview = ref(500)
 
   const infoPanelDisplay = ref(false)
