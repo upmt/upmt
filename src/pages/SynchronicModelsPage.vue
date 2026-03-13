@@ -18,7 +18,7 @@
 
       <q-card-section
         class="bg-secondary">
-        <q-btn>Generic model</q-btn>
+        <q-btn no-caps>Generic model</q-btn>
       </q-card-section>
 
       <GenericCategoriesOverview
@@ -39,7 +39,9 @@
 
       <q-card-section
         class="bg-secondary">
-        <q-btn>{{ interviewLabel }}</q-btn>
+        <q-btn
+          no-caps
+          :to="{ name: 'project', query: { tab: interviewLabel } }">{{ interviewLabel }}</q-btn>
       </q-card-section>
 
       <div class="interview-models">
@@ -48,7 +50,9 @@
                 :key="modelInfo.model.id">
           <q-card-section
             class="bg-primary">
-            <q-btn icon="mdi-alpha-d-box-outline">{{ modelInfo.moment.name }}</q-btn>
+            <q-btn no-caps
+                   :to="{ name: 'project', query: { tab: interviewLabel } }"
+                   icon="mdi-alpha-d-box-outline">{{ modelInfo.moment.name }}</q-btn>
           </q-card-section>
           <div class="specificsynchronicmodel-categories"
                :class="layout"
@@ -85,7 +89,7 @@
           <q-btn>Detached model <strong>{{ model.name }}</strong></q-btn>
         </q-card-section>
         <div class="detached-model">
-          <q-btn icon="mdi-alpha-s-box-outline">{{ model.name }}</q-btn>
+          <q-btn no-caps icon="mdi-alpha-s-box-outline">{{ model.name }}</q-btn>
           <SpecificSynchronicCategoryRepresentation
             v-for="c in model.categories"
             :key="c.id"
@@ -177,7 +181,7 @@
       display:  flex;
       flex-direction: column;
   }
-  .vertical .specificsynchronicmodel-categories {
+  .specificsynchronicmodel-categories.vertical {
       flex-direction: row;
   }
   .genericmodel {
