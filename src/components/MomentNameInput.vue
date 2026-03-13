@@ -72,7 +72,7 @@
 
   const context = computed(() => {
       const moments = store.getMomentsByName(props.moment.projectId, name.value)
-      const completions = store.getMomentsByPrefix(props.moment.projectId, name.value)
+      const completions = [ ...new Set(store.getMomentsByPrefix(props.moment.projectId, name.value).map(c => c.name)) ]
       if (!moments.length) {
           return { original: true,
                    completions }
