@@ -8,7 +8,12 @@
          :data-moment="moment.id">
 
       <span class="moment-name">
-        {{ moment.descriptionLabel }}
+        <span>{{ momentName }}
+          <q-popup-edit v-model="momentName" auto-save v-slot="scope">
+            <MomentNameInput @change="scope.cancel"
+                             :moment="moment" />
+          </q-popup-edit>
+        </span>
         <ColorizeIcon
           class="on-name-hover"
           v-model="momentColor" />
@@ -40,6 +45,7 @@
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import ColorizeIcon from './ColorizeIcon.vue'
+  import MomentNameInput from './MomentNameInput.vue'
   import NoteIcon from './NoteIcon.vue'
 
   const store = useProjectStore()
@@ -52,6 +58,15 @@
   })
 
   const moment = computed(() => store.getMoment(props.momentId))
+
+  const momentName = computed({
+      get () {
+          return moment.value ? moment.value.name : ""
+      },
+      set (value: string) {
+          store.updateMoment(props.momentId, { name: value })
+      }
+  })
 
   const momentColor = computed({
       get () {
