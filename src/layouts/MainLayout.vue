@@ -55,6 +55,14 @@
           class="print-hidden"
           >
           <q-btn
+            v-if="isDevelopment"
+            class="q-ml-xl"
+            outline
+            color="info"
+            no-caps>
+            Development version
+          </q-btn>
+          <q-btn
             v-if="currentProject"
             dense
             flat
@@ -186,6 +194,9 @@
           return null
       }
   })
+
+  const isDevelopment = computed(() => document.location.hostname == 'localhost'
+      || document.location.pathname.includes('/upmt/dev'))
 
   const menuList = computed<MenuItem[]>(() => {
       let menu: MenuItem[] = [
