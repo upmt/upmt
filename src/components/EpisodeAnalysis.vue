@@ -14,6 +14,7 @@
                 class="col-4"
                 snap
                 markers
+                marker-labels
                 :min="0"
                 :max="4"
                 :step="1"
