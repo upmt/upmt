@@ -1,0 +1,40 @@
+
+.moment[data-v-2c34dd2f] {
+      border: 1px solid black;
+      display: flex;
+      margin: 2px;
+      overflow: hidden;
+      font-size: 8px;
+      width: var(--overview-width) !important;
+      height: var(--overview-height) !important;
+      align-self: center;
+}
+.context[data-v-2c34dd2f] {
+      display: flex;
+      flex-direction: row;
+      flex: 0;
+      align-items: center;
+}
+.reference[data-v-2c34dd2f] {
+      font-weight: bold;
+      border: 2px solid black;
+}
+.relation[data-v-2c34dd2f] {
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      min-height: var(--overview-height);
+      line-height: 14px;
+}
+.completions[data-v-2c34dd2f] {
+      display: flex;
+      flex-direction: column;
+      max-height: 5em;
+      overflow-x: hidden;
+      overflow-y: auto;
+}
+.has-child[data-v-2c34dd2f],
+  .has-parent[data-v-2c34dd2f],
+  .is-current[data-v-2c34dd2f] {
+      background-color: lightgreen;
+}
