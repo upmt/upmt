@@ -69,6 +69,7 @@
     --chart-zoom: 1;
     --project-width: 250px;
     --moment-minimum-width: 200px;
+    --moment-maximum-width: 600px;
     --synchronic-category-header-width: var(--moment-minimum-width);
     --synchronic-category-descriptem-width: var(--moment-minimum-width);
     --synchronic-category-relation-width: 60px;

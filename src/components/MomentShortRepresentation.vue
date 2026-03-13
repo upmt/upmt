@@ -101,6 +101,7 @@
   }
   .moment {
       min-width: var(--moment-minimum-width);
+      max-width: var(--moment-maximum-width);
       min-height: 40px;
       margin: 4px;
       display: flex;
