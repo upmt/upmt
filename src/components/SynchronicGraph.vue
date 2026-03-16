@@ -58,7 +58,7 @@ const project = computed(() => {
 })
 
 const ARROWS: Record<string, string> = {
-    "generic": "--->",
+    "generic": "---",
     specialization: "---o",
     aggregation: "--->"
 }
