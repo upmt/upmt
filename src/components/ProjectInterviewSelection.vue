@@ -13,7 +13,8 @@
           <div class="text-bold">Interviews</div>
           <q-tabs
             dense
-            active-class="active-interview-label"
+            class="upmt-interviews"
+            active-class="active-interview-label -"
             align="left"
             no-caps
             :inlineLabel="true"
@@ -45,6 +46,7 @@
           <div class="text-bold"></div>
           <DetachedModelsRepresentation
             title="Detached models"
+            class="upmt-detached-models"
             :projectId="projectId"
             :genericGraphs="genericGraphs"
             :currentInterviewId="currentInterviewId">

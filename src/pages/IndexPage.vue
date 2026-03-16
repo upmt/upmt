@@ -4,7 +4,7 @@
     <q-card>
 
       <q-card-section>
-        <div class="text-h3">μ<span style="font-weight: 400">PMT</span> - micro Phenomenology Modelling Tool</div>
+        <div id="tour-title" class="text-h3">μ<span style="font-weight: 400">PMT</span> - micro Phenomenology Modelling Tool</div>
         <div>A tool to help researchers analyze micro-phenomenology interviews (<a href="https://github.com/upmt/upmt/wiki/About-%CE%BCPMT">more info</a>)</div>
       </q-card-section>
 

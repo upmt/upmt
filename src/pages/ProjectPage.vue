@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-    import { useQuasar } from 'quasar'
+  import { useQuasar } from 'quasar'
   import { computed } from 'vue'
+
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import ProjectInterviewSelection from 'components/ProjectInterviewSelection.vue'
