@@ -15,8 +15,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/SynchronicCategoriesPage.vue'),
         props: true
       },
-      { path: 'diachronic/:projectId',
-        name: 'diachronic',
+      { path: 'diachronic-graph/:projectId',
+        name: 'diachronic-graph',
         component: () => import('pages/BpmnPage.vue'),
         props: true
       },
