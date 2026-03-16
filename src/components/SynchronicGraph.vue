@@ -1,12 +1,22 @@
 <template>
   <div class="synchronic-graph">
+    <q-toolbar
+      class="print-removed">
+      <q-btn-toggle
+        size="xs"
+        v-model="direction"
+        :options="[ { icon: 'mdi-pan-horizontal', value: 'LR' },
+                  { icon: 'mdi-pan-vertical', value: 'TD' } ]">
+      </q-btn-toggle>
+    </q-toolbar>
+
     <vue-mermaid-string :value="diagram" />
     <pre>{{ diagram }}</pre>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import VueMermaidString from 'vue-mermaid-string'
 
 import { stringToId } from 'stores/util'
@@ -17,6 +27,8 @@ const props = defineProps<{
 }>()
 
 const store = useProjectStore()
+
+const direction = ref('TD')
 
 const project = computed(() => {
     if (props.projectId) {
@@ -35,14 +47,14 @@ function genericModelToMermaid () {
         return `---
 ${project.value?.name ?? "No project"} ${Object.values(graphs.byName).length}
 ---
-flowchart LR\n` + Object.values(graphs.byName).map(category => {
+flowchart ${direction.value}\n` + Object.values(graphs.byName).map(category => {
     const children = [ ...category.childrenNames].map(childName => {
         return `  ${stringToId(category.name)}["${category.name}"] ---> ${stringToId(childName)}["${childName}"]`
     }).join("\n")
     return children
 }).filter(line => line).join("\n") }
     else {
-        return "flowchart TD\nNo graph"
+        return "flowchart ${direction.value}\nNo graph"
     }
 }
 
