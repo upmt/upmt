@@ -1,0 +1,19 @@
+
+.episodes[data-v-6bcc08a0] {
+    --moment-maximum-width: 200px;
+    --moment-minimum-width: 200px;
+}
+.horizontal[data-v-6bcc08a0] {
+    display: flex;
+    flex-direction: row;
+}
+.vertical[data-v-6bcc08a0] {
+    display: flex;
+    flex-direction: column;
+}
+.episodes.vertical[data-v-6bcc08a0] {
+    flex-direction: row;
+}
+.episodes.horizontal[data-v-6bcc08a0] {
+    flex-direction: column;
+}
