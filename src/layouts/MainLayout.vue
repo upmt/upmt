@@ -245,6 +245,11 @@
               link: `/diachronic-graph/${currentProjectId.value}`
           })
           menu.push({
+              label: "Synchronic graph",
+              icon: 'mdi-graph',
+              link: `/synchronic-graph/${currentProjectId.value}`
+          })
+          menu.push({
               label: "Synchronic Models",
               icon: 'mdi-graph',
               link: `/models/${currentProjectId.value}`

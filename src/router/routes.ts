@@ -20,6 +20,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/BpmnPage.vue'),
         props: true
       },
+      { path: 'synchronic-graph/:projectId',
+        name: 'synchronic-graph',
+        component: () => import('pages/SynchronicGraphPage.vue'),
+        props: true
+      },
       { path: 'episodes/:projectId', name: 'episodes', component: () => import('pages/EpisodeAnalysisPage.vue'), props: true },
       { path: 'project/:projectId', name: 'project', component: () => import('pages/ProjectPage.vue'), props: true },
       { path: 'init', name: 'init', component: () => import('pages/InitPage.vue'), props: { source: './OPEVA-G1.upmt' } },
