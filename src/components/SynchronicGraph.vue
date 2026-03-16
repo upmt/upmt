@@ -9,7 +9,7 @@
         class="q-mx-md"
         title="Download SVG"
         icon="mdi-download"
-        @click="doDownload()" />
+        @click="doDownload()">Download SVG</q-btn>
 
       <span class="q-pr-sm">Direction</span>
       <q-btn-toggle
