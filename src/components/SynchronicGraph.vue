@@ -71,9 +71,11 @@ ${project.value?.name ?? "No project"} ${Object.values(graphs.byName).length}
 ---
 flowchart ${direction.value}\n` + Object.values(graphs.byName).map(category => {
     const children = [ ...category.childrenNames].map(childName => {
+
           return `  ${stringToId(category.name)}["${category.name}"] ${ARROWS[category.abstractionType]} ${stringToId(childName)}["${childName}"]`
     }).join("\n")
-    return children
+    const color = category.color ? `\n  style ${stringToId(category.name)} fill:${category.color}` : ""
+    return `${children}${color}`
 }).filter(line => line).join("\n") }
     else {
         return "flowchart ${direction.value}\nNo graph"
