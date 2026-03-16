@@ -1,5 +1,6 @@
 <template>
-  <q-layout view="hHr lpr fFr">
+  <q-layout view="hHr lpr fFr"
+            :class="{ 'isExpertMode': isExpertMode }">
     <q-header elevated>
       <q-toolbar>
         <router-link
@@ -79,9 +80,10 @@
             dense
             flat
             round
+            @click.ctrl.capture.stop="isExpertMode = !isExpertMode"
             aria-label="Login"
             :class="{ 'anonymous': isAnonymous }"
-            icon="mdi-account">
+            :icon="isExpertMode ? 'mdi-account-cowboy-hat' : 'mdi-account'">
             <q-tooltip
               v-if="isAnonymous">
               Click and enter a username
@@ -203,7 +205,8 @@
       currentInterview,
       currentProjectId,
       isModified,
-      username
+      username,
+      isExpertMode
   } = storeToRefs(istore)
 
   const vueTour = ref()
@@ -265,13 +268,15 @@
               link: `/descriptems/${currentProjectId.value}`
           })
       }
-      menu = menu.concat([
-          {
-              label: 'Debug',
-              icon: 'mdi-eye',
-              link: '/debug'
-          }
-      ])
+      if (isExpertMode.value) {
+          menu = menu.concat([
+              {
+                  label: 'Debug',
+                  icon: 'mdi-eye',
+                  link: '/debug'
+              }
+              ])
+       }
       return menu
   })
 

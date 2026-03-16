@@ -78,6 +78,14 @@
     --overview-font-size: 8px;
     }
 
+.expertMode {
+    display: none;
+}
+
+.isExpertMode .expertMode {
+    display: unset;
+}
+
 @media print {
     .print-hidden {
         visibility: hidden;

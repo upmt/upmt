@@ -22,7 +22,9 @@
 
     <vue-mermaid-string
       :value="diagram" />
-    <pre>{{ diagram }}</pre>
+    <pre class="expertMode">
+      {{ diagram }}
+    </pre>
   </div>
 </template>
 

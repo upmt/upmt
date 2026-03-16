@@ -13,6 +13,8 @@ export const useInterfaceStore = defineStore('interface', () => {
   const newSSCIndex = ref(1)
   // Is the data modified?
   const isModified = ref(false)
+  // expert mode
+  const isExpertMode = ref(false)
 
   const currentProjectId: Ref<string | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
@@ -128,6 +130,7 @@ export const useInterfaceStore = defineStore('interface', () => {
     resetIndexes,
     setCurrentInterview,
     setCurrentProjectId,
+    isExpertMode,
     isModified,
     setModified,
     setEditedSpecificSynchronicModelId,
