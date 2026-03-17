@@ -26,7 +26,9 @@
         :options="[ { label: 'Diagram', value: 'diagram' },
                   { label: 'Flowchart', value: 'flowchart' } ]">
       </q-btn-toggle>
-</q-toolbar>
+
+       <q-checkbox left-label v-model="projectAsRoot" label="Project as root" />
+    </q-toolbar>
 
     <vue-mermaid-string
       :value="diagram" />
@@ -56,6 +58,8 @@ const container = ref()
 const direction = ref('TD')
 
 const mode = ref('diagram')
+
+const projectAsRoot = ref(false)
 
 const project = computed(() => {
     if (props.projectId) {
@@ -98,7 +102,14 @@ classDiagram
             const color = ""
             return `${className}${children.length ? "\n" : ""}${children}${color}`
         }).join("\n")
-        return `${header}${classInfo}`
+        let rootInfo = ""
+        if (projectAsRoot.value) {
+            // We want to have the project as root -> add a new dependency for all root instances
+            rootInfo = Object.values(graphs.byName).filter(category => category.isRoot).map(category => {
+                return `  Project -- \`${category.name}\``
+            }).join("\n")
+        }
+        return `${header}${classInfo}\n${rootInfo}`
     } else {
         return `classDiagram
   class "No graph"`
