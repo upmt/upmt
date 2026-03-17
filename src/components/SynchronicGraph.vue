@@ -28,6 +28,8 @@
       </q-btn-toggle>
 
        <q-checkbox left-label v-model="projectAsRoot" label="Project as root" />
+
+       <q-checkbox left-label v-model="withDescriptems" label="With descriptems" />
     </q-toolbar>
 
     <vue-mermaid-string
@@ -44,7 +46,7 @@ import { exportFile } from 'quasar'
 
 import VueMermaidString from 'vue-mermaid-string'
 
-import { timestampAdd, stringToId } from 'stores/util'
+import { groupBy, timestampAdd, stringToId } from 'stores/util'
 import { useProjectStore } from 'stores/projectStore'
 
 const props = defineProps<{
@@ -58,6 +60,8 @@ const container = ref()
 const direction = ref('TD')
 
 const mode = ref('diagram')
+
+const withDescriptems = ref(false)
 
 const projectAsRoot = ref(false)
 
@@ -93,14 +97,29 @@ function genericModelToClassDiagram () {
 classDiagram
   direction ${direction.value}
 `
+        // Dict of descriptems arrays indexed by SSC id
+        const descriptems: Record<string, any[]> = {}
+        if (withDescriptems.value) {
+            Object.assign(descriptems, groupBy(store.getDescriptemsByProject(props.projectId).filter(descriptem => (descriptem as any).specificsynchroniccategory), descriptem => (descriptem as any).specificsynchroniccategory.id))
+        }
         const classInfo = Object.values(graphs.byName).map(category => {
-            const className = `   class \`${category.name}\``
+            const className = `  class \`${category.name}\``
+            let descriptemInfo = ""
+            if (withDescriptems.value) {
+                const textsByInstance = category.instances
+                    .map(ssc => (descriptems[ssc.id] ?? []).map(descriptem => descriptem.shorttext))
+                    .flat()
+                    .filter(text => text.length)
+                descriptemInfo = textsByInstance
+                    .map(text => `  \`${category.name}\`: "${text}"`)
+                    .join("\n")
+            }
             const children = [ ...category.childrenNames].map(childName => {
                 return `  \`${category.name}\` ${DIAGRAM_ARROWS[category.abstractionType]} \`${childName}\``
             }).join("\n")
             //const color = category.color ? `\n  style \`${category.name}\` fill:${category.color}` : ""
             const color = ""
-            return `${className}${children.length ? "\n" : ""}${children}${color}`
+            return `${className}${descriptemInfo.length ? "\n" : ""}${descriptemInfo}${children.length ? "\n" : ""}${children}${color}`
         }).join("\n")
         let rootInfo = ""
         if (projectAsRoot.value) {
