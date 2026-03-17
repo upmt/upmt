@@ -18,7 +18,15 @@
         :options="[ { icon: 'mdi-pan-horizontal', value: 'LR' },
                   { icon: 'mdi-pan-vertical', value: 'TD' } ]">
       </q-btn-toggle>
-    </q-toolbar>
+
+      <span class="q-pr-sm">Mode</span>
+      <q-btn-toggle
+        size="xs"
+        v-model="mode"
+        :options="[ { label: 'Diagram', value: 'diagram' },
+                  { label: 'Flowchart', value: 'flowchart' } ]">
+      </q-btn-toggle>
+</q-toolbar>
 
     <vue-mermaid-string
       :value="diagram" />
@@ -47,6 +55,8 @@ const container = ref()
 
 const direction = ref('TD')
 
+const mode = ref('diagram')
+
 const project = computed(() => {
     if (props.projectId) {
         store.activateProject(props.projectId)
@@ -60,10 +70,41 @@ const project = computed(() => {
 const ARROWS: Record<string, string> = {
     "generic": "---",
     specialization: "---o",
-    aggregation: "--->"
+    aggregation: "-->"
+}
+const DIAGRAM_ARROWS: Record<string, string> = {
+    "generic": "---",
+    specialization: "<|--",
+    aggregation: "o--"
 }
 
-function genericModelToMermaid () {
+function genericModelToClassDiagram () {
+    const graphs = store.getGenericSynchronicGraphs (props.projectId)
+    if (graphs && graphs.byName) {
+        const header = `---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
+classDiagram
+`
+        const classInfo = Object.values(graphs.byName).map(category => {
+            const className = `   class \`${category.name}\``
+            const children = [ ...category.childrenNames].map(childName => {
+                return `  \`${category.name}\` ${DIAGRAM_ARROWS[category.abstractionType]} \`${childName}\``
+            }).join("\n")
+            //const color = category.color ? `\n  style \`${category.name}\` fill:${category.color}` : ""
+            const color = ""
+            return `${className}${children.length ? "\n" : ""}${children}${color}`
+        }).join("\n")
+        return `${header}${classInfo}`
+    } else {
+        return `classDiagram
+  class "No graph"`
+    }
+}
+
+function genericModelToFlowchart () {
     const graphs = store.getGenericSynchronicGraphs (props.projectId)
     if (graphs && graphs.byName) {
         return `---
@@ -83,7 +124,10 @@ flowchart ${direction.value}\n` + Object.values(graphs.byName).map(category => {
 }
 
 const diagram = computed(() => {
-    return genericModelToMermaid()
+    if (mode.value == 'diagram')
+        return genericModelToClassDiagram()
+    else
+        return genericModelToFlowchart()
 })
 
 function doDownload() {
