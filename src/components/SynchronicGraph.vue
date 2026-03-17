@@ -73,7 +73,7 @@ const ARROWS: Record<string, string> = {
     aggregation: "-->"
 }
 const DIAGRAM_ARROWS: Record<string, string> = {
-    "generic": "---",
+    "generic": "--",
     specialization: "<|--",
     aggregation: "o--"
 }
@@ -87,6 +87,7 @@ function genericModelToClassDiagram () {
       hideEmptyMembersBox: true
 ---
 classDiagram
+  direction ${direction.value}
 `
         const classInfo = Object.values(graphs.byName).map(category => {
             const className = `   class \`${category.name}\``
