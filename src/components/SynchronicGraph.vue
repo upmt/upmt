@@ -119,17 +119,31 @@ classDiagram
 function genericModelToFlowchart () {
     const graphs = store.getGenericSynchronicGraphs (props.projectId)
     if (graphs && graphs.byName) {
-        return `---
+
+        const header = `---
 ${project.value?.name ?? "No project"} ${Object.values(graphs.byName).length}
 ---
-flowchart ${direction.value}\n` + Object.values(graphs.byName).map(category => {
-    const children = [ ...category.childrenNames].map(childName => {
+flowchart ${direction.value}\n`
 
-          return `  ${stringToId(category.name)}["${category.name}"] ${ARROWS[category.abstractionType]} ${stringToId(childName)}["${childName}"]`
-    }).join("\n")
-    const color = category.color ? `\n  style ${stringToId(category.name)} fill:${category.color}` : ""
-    return `${children}${color}`
-}).filter(line => line).join("\n") }
+        const childInfo = Object.values(graphs.byName).map(category => {
+            const children = [ ...category.childrenNames].map(childName => {
+                return `  ${stringToId(category.name)}["${category.name}"] ${ARROWS[category.abstractionType]} ${stringToId(childName)}["${childName}"]`
+            }).join("\n")
+            const color = category.color ? `\n  style ${stringToId(category.name)} fill:${category.color}` : ""
+            return `${children}${color}`
+        }).filter(line => line).join("\n")
+
+        let rootInfo = ""
+
+        if (projectAsRoot.value) {
+            // We want to have the project as root -> add a new dependency for all root instances
+            rootInfo = "\n" + Object.values(graphs.byName).filter(category => category.isRoot).map(category => {
+                return `  Project --- ${stringToId(category.name)}`
+            }).join("\n")
+        }
+
+        return `${header}${childInfo}${rootInfo}`
+    }
     else {
         return "flowchart ${direction.value}\nNo graph"
     }
