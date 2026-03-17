@@ -1,5 +1,6 @@
 <template>
   <div class="synchronic-graph"
+       v-if="project"
        ref="container">
     <q-toolbar
       class="print-removed">
