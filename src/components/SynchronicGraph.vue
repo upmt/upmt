@@ -179,7 +179,7 @@ const diagram = computed(() => {
 function doDownload() {
     const basename = timestampAdd(`${props.projectId}.svg`)
     if (container.value) {
-        const svgElement = container.value.querySelector("svg")
+        const svgElement = container.value.querySelector("svg[id*='mermaid']")
         if (svgElement) {
             const status = exportFile(basename, svgElement.outerHTML)
             // svgOutput.value.outerHTML)
