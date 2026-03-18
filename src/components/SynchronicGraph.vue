@@ -77,11 +77,13 @@ const project = computed(() => {
 })
 
 const ARROWS: Record<string, string> = {
+    "": "",
     "generic": "---",
     specialization: "---o",
     aggregation: "-->"
 }
 const DIAGRAM_ARROWS: Record<string, string> = {
+    "": "--",
     "generic": "--",
     specialization: "<|--",
     aggregation: "o--"
