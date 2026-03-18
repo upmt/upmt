@@ -31,6 +31,8 @@
        <q-checkbox left-label v-model="projectAsRoot" label="Project as root" />
 
        <q-checkbox left-label v-model="withDescriptems" label="With descriptems" />
+
+       <q-checkbox left-label v-model="shortenDescriptems" label="Shorten descriptems" />
     </q-toolbar>
 
     <vue-mermaid-string
@@ -63,6 +65,8 @@ const direction = ref('TD')
 const mode = ref('diagram')
 
 const withDescriptems = ref(false)
+
+const shortenDescriptems = ref(false)
 
 const projectAsRoot = ref(false)
 
@@ -110,7 +114,7 @@ classDiagram
             let descriptemInfo = ""
             if (withDescriptems.value) {
                 const textsByInstance = category.instances
-                    .map(ssc => (descriptems[ssc.id] ?? []).map(descriptem => descriptem.shorttext))
+                    .map(ssc => (descriptems[ssc.id] ?? []).map(descriptem => shortenDescriptems.value ? descriptem.shorttext : descriptem.text))
                     .flat()
                     .filter(text => text.length)
                 descriptemInfo = textsByInstance
