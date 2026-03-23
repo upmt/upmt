@@ -2,41 +2,46 @@
   <div ref="container"
        :data-moment="momentId">
 
-    <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
-         :style="{ backgroundColor: moment.color }"
-         v-if="moment"
-         :data-moment="moment.id">
+      <DropZone data="header"
+                types="upmt/color"
+                class="row full-width justify-center moment-header q-pa-xs"
+                @color="droppedColor">
 
-      <span class="moment-name">
-        <span>{{ momentName }}
-          <q-popup-edit v-model="momentName" auto-save v-slot="scope">
-            <MomentNameInput @change="scope.cancel"
-                             :moment="moment" />
-          </q-popup-edit>
-        </span>
-        <ColorizeIcon
-          class="on-name-hover"
-          v-model="momentColor" />
-        <NoteIcon
-          :element="moment" />
-      </span>
+        <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
+             :style="{ backgroundColor: moment.color }"
+             v-if="moment"
+             :data-moment="moment.id">
 
-      <div class="moment-children"
-           :class="layout"
-           v-if="momentDepth < maximumDepth">
-        <div v-for="m in moment.children"
+          <span class="moment-name">
+            <span>{{ momentName }}
+              <q-popup-edit v-model="momentName" auto-save v-slot="scope">
+                <MomentNameInput @change="scope.cancel"
+                                 :moment="moment" />
+              </q-popup-edit>
+            </span>
+            <ColorizeIcon
+              class="on-name-hover"
+              v-model="momentColor" />
+            <NoteIcon
+              :element="moment" />
+          </span>
+
+          <div class="moment-children"
+               :class="layout"
+               v-if="momentDepth < maximumDepth">
+            <div v-for="m in moment.children"
              :key="m.id">
-          <MomentShortRepresentation
-            :maximumDepth="maximumDepth"
-            :momentDepth="momentDepth + 1"
-            :momentId="m.id"
+              <MomentShortRepresentation
+                :maximumDepth="maximumDepth"
+                :momentDepth="momentDepth + 1"
+                :momentId="m.id"
             :layout="layout">
-          </MomentShortRepresentation>
+              </MomentShortRepresentation>
+            </div>
+          </div>
+
         </div>
-      </div>
-
-    </div>
-
+      </DropZone>
   </div>
 </template>
 
@@ -45,6 +50,7 @@
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import ColorizeIcon from './ColorizeIcon.vue'
+  import DropZone from './DropZone.vue'
   import MomentNameInput from './MomentNameInput.vue'
   import NoteIcon from './NoteIcon.vue'
 
@@ -79,6 +85,11 @@
           store.updateMoment(props.momentId, { color })
       }
   })
+
+  function droppedColor (color: string) {
+      store.updateMoment(props.momentId, { color: color })
+  }
+
 </script>
 
 <style scoped>
