@@ -6,7 +6,7 @@
     <DropZone data="before"
               class="empty-padding"
               types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
-              @moment="droppedMoment"
+              @moment="droppedNewMoment"
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
@@ -28,9 +28,10 @@
          :data-moment="moment.id">
 
       <DropZone data="header"
-                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/specificsynchronicmodel"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/specificsynchronicmodel upmt/moment"
                 class="row full-width justify-center moment-header q-pa-xs"
                 @annotation="droppedAnnotation"
+                @moment="droppedMoment"
                 @selection="droppedSelection"
                 @descriptem="droppedDescriptem"
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
@@ -126,7 +127,7 @@
       <DropZone :data="`in:${momentId}`"
                 class="empty-padding"
                 types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
-                @moment="droppedMoment"
+                @moment="droppedNewMoment"
                 @annotation="droppedCreatingAnnotation"
                 @selection="droppedCreatingSelection"
                 @descriptem="droppedCreatingDescriptem">
@@ -136,7 +137,7 @@
     <DropZone data="after"
               class="empty-padding"
               types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
-              @moment="droppedMoment"
+              @moment="droppedNewMoment"
               @annotation="droppedCreatingAnnotation"
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
@@ -241,7 +242,13 @@
       }
   }
 
-  function droppedMoment (momentId: string, where: string) {
+  /* Drop moment on moment: copy descriptems and model */
+  function droppedMoment (momentId: string) {
+      store.copyMoment(momentId, props.momentId)
+      showContent()
+  }
+
+  function droppedNewMoment (momentId: string, where: string) {
       console.log("Dropped Moment", momentId, "where", where)
       if (!momentId) {
           store.addMoment(istore.newMomentId(),

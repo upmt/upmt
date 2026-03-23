@@ -1149,6 +1149,26 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  /*
+   * Copy a source moment (descriptems, model) to a destination moment
+   */
+  function copyMoment (sourceMomentId: string, destinationMomentId: string) {
+    // Make sure source and destination exist
+    const source = getMoment(sourceMomentId)
+    const destination = getMoment(destinationMomentId)
+
+    if (source && destination) {
+      for (const descriptem of source.justification?.descriptems || []) {
+        addTextSelectionToMoment(descriptem.toJSON(), destinationMomentId)
+      }
+      if (source.specificsynchronicmodel && destination.specificsynchronicmodel) {
+        copySpecificSynchronicModelToModel(source.specificsynchronicmodel.id, destination.specificsynchronicmodel.id)
+      }
+    } else {
+      console.log(`Cannot copy ${sourceMomentId} (${source?.name}) to ${destinationMomentId} (${destination?.name})`)
+    }
+  }
+
   function getGenericSynchronicGraphs (projectId: string): GraphInfo {
     // Return the generic synchronic graphs for the given projectId
     // It gets all defined specificsynchroniccategories (either from specific model or from template model)
@@ -1546,6 +1566,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     loadProject,
     loadStoredProject,
     moveMoment,
+    copyMoment,
     updateDescriptem,
     updateElement,
     updateMoment,
