@@ -34,7 +34,8 @@
           dense
           flat
           :to="{ name: 'project', query: { tab: episode.interview.label } }"
-          no-caps>{{ episode.moment.name }}
+          no-caps>
+          {{ episode.moment.name }} ({{ episode.interview.label }})
         </q-btn>
         <div class="episode-children"
              :class="editViewMode">
