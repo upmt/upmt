@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { Attr, BelongsTo, Bool, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Bool, HasMany, HasOne, Str, Uid, OnDelete } from 'pinia-orm/dist/decorators'
 import Analysis from './analysis'
 import Annotation from './annotation'
 import Project from './project'
@@ -32,8 +32,8 @@ export default class Interview extends BaseModel {
    */
   @Bool(true) declare isActive: boolean
 
-  @HasMany(() => Annotation, 'interviewId') declare annotations: Annotation[]
-  @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis
+  @HasMany(() => Annotation, 'interviewId') @OnDelete('cascade') declare annotations: Annotation[]
+  @HasOne(() => Analysis, 'interviewId') @OnDelete('cascade') declare analysis: Analysis
 
   @Attr() parentId!: string
   @BelongsTo(() => Project, 'parentId') declare project: Project | null

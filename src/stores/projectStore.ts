@@ -308,7 +308,6 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function deleteDetachedModel (modelId: string) {
-    // FIXME: check cascade deletion
     repo.DetachedSynchronicModel
       .where('id', modelId)
       .delete()

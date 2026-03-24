@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { Attr, Str, Uid, BelongsTo, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, BelongsTo, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 import Descriptem from './descriptem'
 import Justifiable from './justifiable'
 
@@ -16,7 +16,7 @@ export default class Justification extends BaseModel {
 
   @Str('') declare name: string
 
-  @HasMany(() => Descriptem, 'justificationId') declare descriptems: Descriptem[]
+  @HasMany(() => Descriptem, 'justificationId') @OnDelete('cascade') declare descriptems: Descriptem[]
 
   // parent is a Justifiable: either a Moment or a SpecificSynchronicCategory
   @Attr() parentId!: string

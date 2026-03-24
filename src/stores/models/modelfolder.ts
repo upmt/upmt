@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { Attr, Str, Uid, Bool, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Str, Uid, Bool, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 
 export default class ModelFolder extends BaseModel {
   static override entity = 'modelfolders'
@@ -21,7 +21,7 @@ export default class ModelFolder extends BaseModel {
   @Attr() ownerId!: string
 
   @Attr() parentId!: string
-  @HasMany(() => ModelFolder, 'parentId') declare folders: ModelFolder[]
+  @HasMany(() => ModelFolder, 'parentId') @OnDelete('cascade') declare folders: ModelFolder[]
 
   toJSON (shallow = false): any {
     return {

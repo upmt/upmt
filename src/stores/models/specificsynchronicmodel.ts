@@ -2,7 +2,7 @@ import BaseModel from './basemodel'
 import DetachedSynchronicModel from './detachedsynchronicmodel'
 import Moment from './moment'
 import SpecificSynchronicCategory from './specificsynchroniccategory'
-import { Attr, BelongsTo, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Bool, OnDelete, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 
 export default class SpecificSynchronicModel extends BaseModel {
   static override entity = 'specificsynchronicmodel'
@@ -18,7 +18,7 @@ export default class SpecificSynchronicModel extends BaseModel {
   @Str('') declare name: string
   @Str('') declare color: string
   @Str('') declare note: string
-  @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') declare categories: SpecificSynchronicCategory[]
+  @HasMany(() => SpecificSynchronicCategory, 'specificsynchronicmodelId') @OnDelete('cascade') declare categories: SpecificSynchronicCategory[]
 
   /* A SpecificSynchronicmodel belongs either to a Moment (true SSM)
      or to a detachedModel (containing Generic Synchronic Category disguised as

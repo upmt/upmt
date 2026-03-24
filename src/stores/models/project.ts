@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { HasMany, HasOne, Num, Str, Uid } from 'pinia-orm/dist/decorators'
+import { HasMany, HasOne, Num, OnDelete, Str, Uid } from 'pinia-orm/dist/decorators'
 import DetachedSynchronicModel from './detachedsynchronicmodel'
 import Interview from './interview'
 import ModelFolder from './modelfolder'
@@ -22,8 +22,8 @@ export default class Project extends BaseModel {
   @Str('') declare name: string
   @Str('') declare note: string
   @HasOne(() => ModelFolder, 'ownerId') declare modelfolder: ModelFolder
-  @HasMany(() => Interview, 'parentId') declare interviews: Interview[]
-  @HasMany(() => DetachedSynchronicModel, 'projectId') declare detachedmodels: DetachedSynchronicModel[]
+  @HasMany(() => Interview, 'parentId') @OnDelete('cascade') declare interviews: Interview[]
+  @HasMany(() => DetachedSynchronicModel, 'projectId') @OnDelete('cascade') declare detachedmodels: DetachedSynchronicModel[]
 
   get label (): string {
     if (this.name) {

@@ -1,7 +1,7 @@
 import Justifiable from './justifiable'
 import Justification from './justification'
 import SpecificSynchronicModel from './specificsynchronicmodel'
-import { Attr, BelongsTo, Num, Str, Uid, HasMany, HasOne } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Num, Str, Uid, HasMany, HasOne, OnDelete } from 'pinia-orm/dist/decorators'
 
 export default class SpecificSynchronicCategory extends Justifiable {
   static override entity = 'specificsynchroniccategories'
@@ -30,7 +30,7 @@ export default class SpecificSynchronicCategory extends Justifiable {
 
   @Attr() parentId!: string
   @BelongsTo(() => SpecificSynchronicCategory, 'parentId') declare parent: SpecificSynchronicCategory | null
-  @HasMany(() => SpecificSynchronicCategory, 'parentId') declare children: SpecificSynchronicCategory[]
+  @HasMany(() => SpecificSynchronicCategory, 'parentId') @OnDelete('cascade') declare children: SpecificSynchronicCategory[]
 
   @Num(0) declare childIndex: number
 

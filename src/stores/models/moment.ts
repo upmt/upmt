@@ -1,4 +1,4 @@
-import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 import Justifiable from './justifiable'
 import Justification from './justification'
 import SpecificSynchronicModel from './specificsynchronicmodel'
@@ -29,7 +29,7 @@ export default class Moment extends Justifiable {
 
   @Attr() parentId!: string
   @BelongsTo(() => Moment, 'parentId') declare parent: Moment | null
-  @HasMany(() => Moment, 'parentId') declare children: Moment[]
+  @HasMany(() => Moment, 'parentId') @OnDelete('cascade') declare children: Moment[]
 
   @Num(0) declare childIndex: number
 
