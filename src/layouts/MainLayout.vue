@@ -243,11 +243,6 @@
               link: `/episodes/${currentProjectId.value}`
           })
           menu.push({
-              label: "Diachronic graph",
-              icon: 'mdi-graph',
-              link: `/diachronic-graph/${currentProjectId.value}`
-          })
-          menu.push({
               label: "Synchronic graph",
               icon: 'mdi-graph',
               link: `/synchronic-graph/${currentProjectId.value}`
