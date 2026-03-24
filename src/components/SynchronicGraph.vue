@@ -60,7 +60,7 @@ const store = useProjectStore()
 
 const container = ref()
 
-const direction = ref('TD')
+const direction = ref('LR')
 
 const mode = ref('diagram')
 
@@ -199,4 +199,7 @@ function doDownload() {
 </script>
 
 <style>
+.node .divider:last-child {
+    display: none;
+}
 </style>
