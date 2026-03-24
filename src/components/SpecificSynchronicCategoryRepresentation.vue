@@ -211,7 +211,7 @@
   import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useQuasar } from 'quasar'
-  import { stripHashname } from './util'
+  import { stripContextFromName } from './util'
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
@@ -249,7 +249,7 @@
       },
       set (value: string) {
           /* If the new name is from an existing category that has an abstractionType, then also update its abstractionType */
-          const fullName = category.value?.parentHash(value) ?? value
+          const fullName = category.value?.qualifiedName(value) ?? value
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[fullName] : {}
           const abstractionType = genericSource?.abstractionType || ''
           store.updateSpecificSynchronicCategory(props.categoryId, { name: value, abstractionType: abstractionType })
@@ -324,7 +324,7 @@
       const currentChildren = new Set((category.value?.children || []).map(child => child.fullName))
       const childrenNames = [ ...genericElement.value.childrenNames.difference(currentChildren) ].toSorted()
       return [ ["New child category", ""],
-               ...childrenNames.map((name: string) => [ name, stripHashname(name) ]) ]
+               ...childrenNames.map((name: string) => [ name, stripContextFromName(name) ]) ]
   })
 
   function debug () {
@@ -342,7 +342,7 @@
           if (! name) {
               name = istore.newSSCId()
           }
-          const fullName = category.value.parentHash(name)
+          const fullName = category.value.qualifiedName(name)
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[fullName] : {}
           const abstractionType = genericSource?.abstractionType || ''
           store.addSpecificSynchronicCategory(name,
@@ -385,7 +385,7 @@
       if (category.value) {
           const genericSource = props.genericGraphs ? props.genericGraphs.byName[categoryName] : {}
           const abstractionType = genericSource?.abstractionType || ''
-          store.addSpecificSynchronicCategory(stripHashname(categoryName),
+          store.addSpecificSynchronicCategory(stripContextFromName(categoryName),
                                               category.value.specificsynchronicmodelId,
                                               where,
                                               null,

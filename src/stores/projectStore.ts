@@ -1290,7 +1290,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     const genericName = (category: SpecificSynchronicCategory) => {
       const name = category.name
-      if (name.endsWith('#')) {
+      if (name.endsWith('/')) {
         const parent = mapping[category.parentId]
         if (parent) {
           return `${name}${parent.name}`

@@ -69,7 +69,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { useProjectStore } from 'stores/projectStore'
 
-  import { stripHashname } from './util'
+  import { stripContextFromName } from './util'
   import VueZoomable from "vue-zoomable"
   import "vue-zoomable/dist/style.css"
 
@@ -104,7 +104,7 @@
   function droppedGenericSynchronicCategory (categoryName: string, where: string) {
       const genericInfo = props.genericGraphs ? props.genericGraphs.byName[categoryName] : { abstractionType: '' }
 
-      store.addSpecificSynchronicCategory(stripHashname(categoryName),
+      store.addSpecificSynchronicCategory(stripContextFromName(categoryName),
                                           props.modelId,
                                           where,
                                           null,

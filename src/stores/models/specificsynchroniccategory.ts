@@ -6,6 +6,8 @@ import { Attr, BelongsTo, Num, Str, Uid, HasMany, HasOne } from 'pinia-orm/dist/
 export default class SpecificSynchronicCategory extends Justifiable {
   static override entity = 'specificsynchroniccategories'
 
+  static CONTEXT_MARKER = '/'
+
   @Uid() declare id: string
 
   @Str('') declare creator: string
@@ -43,14 +45,14 @@ export default class SpecificSynchronicCategory extends Justifiable {
   }
 
   get fullName () {
-    return this.parentHash(this.name)
+    return this.qualifiedName(this.name)
   }
 
-  parentHash (name: string) {
+  qualifiedName (name: string) {
     // Qualify a name with the parent name as hashname if the name ends with #
-    if (name.endsWith('#')) {
+    if (name.endsWith(SpecificSynchronicCategory.CONTEXT_MARKER)) {
       const parentName = this.parent ? this.parent.name : this.parentId
-      return `${name}#${parentName}`
+      return `${name}${parentName}`
     } else {
       return name
     }
