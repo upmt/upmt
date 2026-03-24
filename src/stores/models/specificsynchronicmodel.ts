@@ -2,7 +2,7 @@ import BaseModel from './basemodel'
 import DetachedSynchronicModel from './detachedsynchronicmodel'
 import Moment from './moment'
 import SpecificSynchronicCategory from './specificsynchroniccategory'
-import { Attr, BelongsTo, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Bool, Str, Uid, HasMany } from 'pinia-orm/dist/decorators'
 
 export default class SpecificSynchronicModel extends BaseModel {
   static override entity = 'specificsynchronicmodel'
@@ -26,6 +26,10 @@ export default class SpecificSynchronicModel extends BaseModel {
   @BelongsTo(() => Moment, 'momentId') declare moment: Moment | null
   @Attr() momentId!: string
 
+  /* An Active model is taken into account in generic graph
+     building */
+  @Bool(true) declare isActive: boolean
+
   @BelongsTo(() => DetachedSynchronicModel, 'detachedModelId') declare detachedModel: DetachedSynchronicModel | null
   @Attr() detachedModelId!: string
 
@@ -37,7 +41,8 @@ export default class SpecificSynchronicModel extends BaseModel {
       created: this.created,
       modified: this.modified,
       color: this.color,
-      note: this.note
+      note: this.note,
+      isActive: this.isActive
     }
     if (shallow) {
       return base

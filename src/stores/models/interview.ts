@@ -1,5 +1,5 @@
 import BaseModel from './basemodel'
-import { Attr, BelongsTo, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
+import { Attr, BelongsTo, Bool, HasMany, HasOne, Str, Uid } from 'pinia-orm/dist/decorators'
 import Analysis from './analysis'
 import Annotation from './annotation'
 import Project from './project'
@@ -21,6 +21,16 @@ export default class Interview extends BaseModel {
   @Str('') declare date: string
   @Str('') declare text: string
   @Str('') declare participantName: string
+  /* An Active model is taken into account in generic graph
+  building. Note that the value here is indicative (for displaying
+  mostly).
+
+  The actual value that is used by the generic graph builder is at the
+  SpecificSynchronicModel level. The application code must make sure
+  to keep the Interview value consistent with its contained
+  Moment.Model values.
+   */
+  @Bool(true) declare isActive: boolean
 
   @HasMany(() => Annotation, 'interviewId') declare annotations: Annotation[]
   @HasOne(() => Analysis, 'interviewId') declare analysis: Analysis

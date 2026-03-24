@@ -44,7 +44,8 @@ export type GenericCategory = {
 export type ContainerInfo = {
   momentId: string,
   detachedModelId: string,
-  specificSynchronicModelId: string
+  specificSynchronicModelId: string,
+  active: boolean
 }
 export type GraphInfo = {
   categories: GenericCategory[],
@@ -267,10 +268,50 @@ export const useProjectStore = defineStore('projectStore', () => {
       .get()
   }
 
+  function getMomentsByInterview (projectId: string, interviewId: string) {
+    return repo.Moment
+      .with('specificsynchronicmodel')
+      .where('projectId', projectId)
+      .where('interviewId', interviewId)
+      .get()
+  }
+
   function getMomentsByProject (projectId: string): Moment[] {
     return repo.Moment
       .where('projectId', projectId)
       .get()
+  }
+
+  function createDetachedModel(projectId: string, name: string = "Detached model"): DetachedSynchronicModel {
+    // create detached model
+    const detachedModel = repo.DetachedSynchronicModel.save({ name, projectId, proxy: { name }})
+    return detachedModel
+  }
+
+  function getDetachedModels(projectId: string): DetachedSynchronicModel[] {
+    const detachedModels = repo.DetachedSynchronicModel
+      .where('projectId', projectId)
+      .with('proxy')
+      .get()
+    return detachedModels
+  }
+
+  function getDetachedModel(projectId: string, modelId: string): DetachedSynchronicModel | null {
+    // get or create detached model
+    const detachedModel = repo.DetachedSynchronicModel
+      .where('projectId', projectId)
+      .where('id', modelId)
+      .with('proxy')
+      .first()
+
+    return detachedModel
+  }
+
+  function deleteDetachedModel (modelId: string) {
+    // FIXME: check cascade deletion
+    repo.DetachedSynchronicModel
+      .where('id', modelId)
+      .delete()
   }
 
   function getNotes (projectId: string): Note[] {
@@ -728,6 +769,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     repoByEntity[element.$entity()].where('id', (element.id as any)).update(values)
   }
 
+  function updateInterview (identifier: string, values: object) {
+    repo.Interview.where('id', identifier).update(values)
+  }
+
   function updateMoment (identifier: string, values: object) {
     repo.Moment.where('id', identifier).update(values)
   }
@@ -1095,6 +1140,21 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function setActiveInterview(projectId: string, interviewId: string, active: boolean = true) {
+    updateInterview(interviewId, { isActive: active })
+    for (const moment of getMomentsByInterview(projectId, interviewId)) {
+      if (moment.specificsynchronicmodel)
+        updateElement(moment.specificsynchronicmodel, { isActive: active })
+    }
+  }
+
+  function setActiveDetachedModel(projectId: string, modelId: string, active: boolean = true) {
+    const detachedModel = getDetachedModel(projectId, modelId)
+    if (detachedModel !== null) {
+      updateElement(detachedModel.proxy, { isActive: active })
+    }
+  }
+
   function duplicateDescriptem (descriptemId: string) {
     // Duplicate a Descriptem with the same parent
     const descriptem = getDescriptem(descriptemId)
@@ -1174,14 +1234,59 @@ export const useProjectStore = defineStore('projectStore', () => {
     // It gets all defined specificsynchroniccategories (either from specific model or from template model)
 
     // Get all specificsynchroniccategories
-    const categories = repo.SpecificSynchronicCategory
+    const allCategories = repo.SpecificSynchronicCategory
       .with('model')
       .where('projectId', projectId)
       .get()
 
+    // Memoizing moment/model info - structure of
+    // { momentId, detachedModelId } (exclusive) indexed by ssc id (instance)
+
     // Reconstitute structure
-    const mapping = Object.fromEntries(categories.map(ssc => [ ssc.id, ssc ]))
-    const children: Record<string, SpecificSynchronicCategory[]> = groupBy(categories, 'parentId')
+    const mapping = Object.fromEntries(allCategories.map(ssc => [ ssc.id, ssc ]))
+    const children: Record<string, SpecificSynchronicCategory[]> = groupBy(allCategories, 'parentId')
+
+    const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
+
+    // We have to make 1 tree traversal to build the instance to container (moment or detached model) relationship
+    // It may be factorizable with the nameToGeneric traversal, but
+    // they are against different trees with potentially different
+    // roots, so it is not that simple
+    function propagateContainerInfo (ssc: SpecificSynchronicCategory, containerInfo: ContainerInfo | null = null) {
+      if (instanceIdToContainerInfo[ssc.id] !== undefined) {
+        // We already went through this ssc - circular reference somehow. Do not continue
+        return
+      }
+      if (! containerInfo) {
+        if (ssc.model) {
+          containerInfo = {
+            momentId: ssc.model.momentId,
+            detachedModelId: ssc.model.detachedModelId,
+            specificSynchronicModelId: ssc.model.id,
+            active: ssc.model.isActive
+          }
+        } else {
+          console.log(`Error: could not get containerInfo for ${ssc.id}`)
+          containerInfo = {
+            momentId: "",
+            detachedModelId: "",
+            specificSynchronicModelId: "",
+            active: false
+          }
+        }
+      }
+      instanceIdToContainerInfo[ssc.id] = containerInfo;
+      (children[ssc.id] || []).forEach((child: SpecificSynchronicCategory) => propagateContainerInfo(child, containerInfo))
+    }
+    // rootInstances only whose all instances are root. We want here
+    // to add container info to all categories, starting from their
+    // roots.
+    allCategories.filter(ssc => !!ssc.specificsynchronicmodelId).forEach(ssc => propagateContainerInfo(ssc))
+
+    // We know have a fully-initialized instanceIdToContainerInfo structure
+
+    // Filter our inactive categories
+    const categories = allCategories.filter(ssc => instanceIdToContainerInfo[ssc.id]?.active)
 
     const genericName = (category: SpecificSynchronicCategory) => {
       const name = category.name
@@ -1248,118 +1353,78 @@ export const useProjectStore = defineStore('projectStore', () => {
 
     // console.log({ children, names, genericCategories })
 
-    // Memoizing moment/model info - structure of
-    // { momentId, detachedModelId } (exclusive) indexed by ssc id (instance)
-
-    const instanceIdToContainerInfo: Record<string, ContainerInfo> = {}
-
-    // We have to make 1 tree traversal to build the instance to container (moment or detached model) relationship
-    // It may be factorizable with the nameToGeneric traversal, but
-    // they are against different trees with potentially different
-    // roots, so it is not that simple
-    function propagateContainerInfo (ssc: SpecificSynchronicCategory, containerInfo: ContainerInfo | null = null) {
-      if (instanceIdToContainerInfo[ssc.id] !== undefined) {
-        // We already went through this ssc - circular reference somehow. Do not continue
-        return
-      }
-      if (! containerInfo) {
-        if (ssc.model) {
-          containerInfo = {
-            momentId: ssc.model.momentId,
-            detachedModelId: ssc.model.detachedModelId,
-            specificSynchronicModelId: ssc.model.id
-          }
-        } else {
-          console.log(`Error: could not get containerInfo for ${ssc.id}`)
-          containerInfo = {
-            momentId: "",
-            detachedModelId: "",
-            specificSynchronicModelId: ""
-          }
-        }
-      }
-      instanceIdToContainerInfo[ssc.id] = containerInfo;
-      (children[ssc.id] || []).forEach((child: SpecificSynchronicCategory) => propagateContainerInfo(child, containerInfo))
-    }
-    // rootInstances only whose all instances are root. We want here
-    // to add container info to all categories, starting from their
-    // roots.
-    categories.filter(ssc => !!ssc.specificsynchronicmodelId).forEach(ssc => propagateContainerInfo(ssc))
-
-    // We know have a fully-initialized instanceIdToContainerInfo structure
-
     // Re-build the children graph + add momentIds/detachedModelIds info to every category
     const nameToGeneric = (name: string,
       ancestors: Set<string> | null = null): GenericCategory => {
-        const generic: GenericCategory | undefined = genericCategories[name]
+      const generic: GenericCategory | undefined = genericCategories[name]
 
-        if (ancestors === null) {
-          ancestors = new Set()
-        } else if (ancestors.has(name)) {
-          // Prevent recursive structures
-          const error = `Error in generic structure: ${name} is present as its own ancestor`
-          console.log(error)
-          if (generic) {
-            // Document the error in the byName mapping
+      if (ancestors === null) {
+        ancestors = new Set()
+      } else if (ancestors.has(name)) {
+        // Prevent recursive structures
+        const error = `Error in generic structure: ${name} is present as its own ancestor`
+        console.log(error)
+        if (generic) {
+          // Document the error in the byName mapping
+          generic.errors = [ ...(generic.errors ?? []), error ]
+        }
+        return {
+          name: `${name}`,
+          projectId,
+          errors: [ error ],
+          isRoot: true,
+          color: '',
+          instances: generic?.instances || [],
+          childrenNames: new Set(),
+          abstractionType: ''
+        }
+      }
+      /* Too costly:
+      else {
+      const rootAncestors = Array.from(ancestors).filter((name: string) => rootCategoryNames.has(name))
+      // There should be only 1 rootAncestor. If there are more that 1 we have an inconsistency.
+         if (rootAncestors.length > 1) {
+         const error = `Error in generic structure: ${name} has more that 1 root ancestor`
+         console.log(error)
+         if (generic) {
+         // Document the error in the byName mapping
             generic.errors = [ ...(generic.errors ?? []), error ]
-          }
-          return {
+            }
+            return {
             name: `${name}`,
-            projectId,
             errors: [ error ],
             isRoot: true,
             color: '',
             instances: generic?.instances || [],
             childrenNames: new Set(),
             abstractionType: ''
-          }
-        }
-        /* Too costly:
-        else {
-          const rootAncestors = Array.from(ancestors).filter((name: string) => rootCategoryNames.has(name))
-          // There should be only 1 rootAncestor. If there are more that 1 we have an inconsistency.
-          if (rootAncestors.length > 1) {
-            const error = `Error in generic structure: ${name} has more that 1 root ancestor`
-            console.log(error)
-            if (generic) {
-              // Document the error in the byName mapping
-              generic.errors = [ ...(generic.errors ?? []), error ]
             }
-            return {
-              name: `${name}`,
-              errors: [ error ],
-              isRoot: true,
-              color: '',
-              instances: generic?.instances || [],
-              childrenNames: new Set(),
-              abstractionType: ''
             }
-          }
-        }
-         */
+            }
+       */
 
-        if (! generic) {
-          const error = `Inconsistency in GenericCategory building for ${name}`
-          console.log(error)
-          return {
-            name,
-            projectId,
-            errors: [ error ],
-            isRoot: true,
-            color: '',
-            instances: [],
-            childrenNames: new Set(),
-            abstractionType: ''
-          }
+      if (! generic) {
+        const error = `Inconsistency in GenericCategory building for ${name}`
+        console.log(error)
+        return {
+          name,
+          projectId,
+          errors: [ error ],
+          isRoot: true,
+          color: '',
+          instances: [],
+          childrenNames: new Set(),
+          abstractionType: ''
         }
-        // We know we will follow the trees from their roots, so the
-        // container information will correctly propagate
-
-        const newAncestors = ancestors.union(new Set([ name ]))
-        return Object.assign({},
-          generic,
-          { children: [...generic.childrenNames.values()].toSorted().map(cname => nameToGeneric(cname, newAncestors)) })
       }
+      // We know we will follow the trees from their roots, so the
+      // container information will correctly propagate
+
+      const newAncestors = ancestors.union(new Set([ name ]))
+      return Object.assign({},
+        generic,
+        { children: [...generic.childrenNames.values()].toSorted().map(cname => nameToGeneric(cname, newAncestors)) })
+    }
 
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
@@ -1369,38 +1434,6 @@ export const useProjectStore = defineStore('projectStore', () => {
       byName: genericCategories,
       instanceIdToContainerInfo
     }
-  }
-
-  function createDetachedModel(projectId: string, name: string = "Detached model"): DetachedSynchronicModel {
-    // create detached model
-    const detachedModel = repo.DetachedSynchronicModel.save({ name, projectId, proxy: { name }})
-    return detachedModel
-  }
-
-  function getDetachedModels(projectId: string): DetachedSynchronicModel[] {
-    const detachedModels = repo.DetachedSynchronicModel
-      .where('projectId', projectId)
-      .with('proxy')
-      .get()
-    return detachedModels
-  }
-
-  function getDetachedModel(projectId: string, name: string): DetachedSynchronicModel | null {
-    // get or create detached model
-    const detachedModel = repo.DetachedSynchronicModel
-      .where('projectId', projectId)
-      .where('name', name)
-      .with('proxy')
-      .first()
-
-    return detachedModel
-  }
-
-  function deleteDetachedModel (modelId: string) {
-    // FIXME: check cascade deletion
-    repo.DetachedSynchronicModel
-      .where('id', modelId)
-      .delete()
   }
 
   // Build a DetachedSynchronicModel from the given graphs.
@@ -1575,6 +1608,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateModelFolder,
     updateSpecificSynchronicCategory,
     updateSynchronicCategoryColor,
-    mergeProjectData
+    mergeProjectData,
+    setActiveInterview,
+    setActiveDetachedModel
   }
 })

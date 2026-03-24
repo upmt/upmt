@@ -21,6 +21,11 @@
                 >
       </q-slider>
 
+      <q-checkbox v-model="splitByEpisode"
+                  left-label
+                  label="Split by marked Episode"
+                  />
+
       <q-space />
 
     </q-toolbar>
@@ -64,6 +69,8 @@
 
   const maximumDepth = ref(1)
 
+  const splitByEpisode = ref(true)
+
   const props = defineProps<{
       projectId: string
   }>()
@@ -73,12 +80,29 @@
   // getMomentsByPrefix returns raw Moments with no children
   // information. We fetch children info through the getMoment map and
   // the default value is just here to please TSC checker
-  const episodes = computed(() => store.getMomentsByPrefix(props.projectId, '%')
-      .map(moment => ({
-          id: moment.id,
-          moment: store.getMoment(moment.id) || { name: "None", children: [] },
-          interview: store.getInterviewByMoment(moment.id) || { label: "None" }
-      })))
+  const episodes = computed(() => {
+      if (splitByEpisode.value) {
+          return store.getMomentsByPrefix(props.projectId, '%')
+              .map(moment => ({
+                  id: moment.id,
+                  moment: store.getMoment(moment.id) || { name: "None", children: [] },
+                  interview: store.getInterviewByMoment(moment.id) || { label: "None" }
+              }))
+      } else {
+          // Return root moments
+          const rawRootMoments = store.getMomentsByProject(props.projectId).filter(moment => !moment.parentId)
+
+          return rawRootMoments
+          // Fetch full root moment (with children)
+              .map(moment => store.getMoment(moment.id))
+              .filter(moment => moment !== null)
+              .map(moment => ({
+                  id: moment.id,
+                  moment: moment,
+                  interview: store.getInterviewByMoment(moment.id) || { label: "None" }
+              }))
+      }
+  })
 
 </script>
 

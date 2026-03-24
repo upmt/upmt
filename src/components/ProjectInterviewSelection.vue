@@ -23,7 +23,9 @@
             >
             <q-route-tab v-for="interview in project.interviews"
                          :to="{ query: { tab: interview.label } }"
-                         icon="mdi-comment-text-outline"
+                         @click.meta="debug(interview)"
+                         :icon="interview.isActive ? 'mdi-comment-text-outline' : 'mdi-comment-off-outline'"
+                         no-caps
                          :name="interview.id"
                          :key="interview.id"
                          :title="interview.note"
@@ -198,6 +200,8 @@
   import { computed, ref, watch, onUnmounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useQuasar, useTimeout } from 'quasar'
+
+  import Interview from 'stores/models/interview'
 
   import DetachedModelsRepresentation from './DetachedModelsRepresentation.vue'
   import ElementMenu from './ElementMenu.vue'
@@ -413,11 +417,18 @@
       // istore.setCurrentProject(null)
   })
 
+  function debug(interview: Interview) {
+      (window as any).interview = interview
+      console.log("Interview", interview.name, interview)
+  }
 
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
-        [ "Delete", (interview) => {
+      [ "Toggle active status", (interview) => {
+          store.setActiveInterview(props.projectId, interview.id, !interview.isActive)
+      } ],
+      [ "Delete", (interview) => {
            $q.dialog({
              title: 'Confirm interview deletion',
              html: true,
@@ -434,8 +445,7 @@
              })
            })
         }
-      ],
-      [ "Debug", (interview) => console.log("Debug", { interview }) ]
+      ]
   ]
 </script>
 

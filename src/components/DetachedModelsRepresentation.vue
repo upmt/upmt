@@ -28,23 +28,12 @@
     <div class="detachedmodels-list flex column"
          v-if="project"
          >
-      <div class="detached-model-item"
-           v-for="model in project.detachedmodels"
-           :key="model.id">
-        <q-btn
-          class="detached-model-name"
-          align="left"
-          flat
-          dense
-          no-caps
-          @click="editDetachedModel(model.proxy.id)"
-          >
-          {{ model.proxy.name }}
-        </q-btn>
-        <ElementMenu
-          :actions="menuActions"
-          :parameter="model" />
-      </div>
+      <DetachedModelRepresentation
+        v-for="model in project.detachedmodels"
+        :projectId="projectId"
+        :modelId="model.id"
+        :key="model.id">
+      </DetachedModelRepresentation>
     </div>
 
   </div>
@@ -58,7 +47,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
-  import ElementMenu from './ElementMenu.vue'
+  import DetachedModelRepresentation from './DetachedModelRepresentation.vue'
 
   const store = useProjectStore()
 
@@ -76,29 +65,13 @@
       return p
   })
 
-  function editDetachedModel (proxyModelId: string) {
-      istore.setEditedSpecificSynchronicModelId(proxyModelId)
-  }
-
   function addDetachedModel () {
-      // FIXME: should add new one not just get the default
       const detachedModel = store.createDetachedModel(props.projectId, "Detached model")
       if (detachedModel) {
-          editDetachedModel(detachedModel.proxy.id)
+          istore.setEditedSpecificSynchronicModelId(detachedModel.proxy.id)
       }
       return detachedModel
   }
-
-  import type { NamedAction } from 'components/util.ts'
-
-  const menuActions: NamedAction[] = [
-      [ "Delete", (model) => {
-          if (istore.editedSpecificSynchronicModelId === model.proxy.id) {
-              editDetachedModel('')
-          }
-          store.deleteDetachedModel(model.id)
-      }],
-  ]
 </script>
 
 <style scoped>
