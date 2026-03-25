@@ -1,0 +1,4 @@
+
+.node .divider:last-child {
+    display: none;
+}

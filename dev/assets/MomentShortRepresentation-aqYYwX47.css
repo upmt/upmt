@@ -1,0 +1,54 @@
+
+.header-class[data-v-dcdd9eb2] {
+      font-weight: bold;
+      text-align: center;
+}
+.moment-children[data-v-dcdd9eb2] {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+}
+.moment-children.vertical[data-v-dcdd9eb2] {
+      flex-direction: column;
+}
+.moment-container[data-v-dcdd9eb2] {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+}
+.moment[data-v-dcdd9eb2] {
+      min-width: var(--moment-minimum-width);
+      max-width: var(--moment-maximum-width);
+      min-height: 40px;
+      margin: 4px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid grey;
+}
+.moment-name[data-v-dcdd9eb2] {
+      display: inline-flex;
+      flex-direction: row;
+}
+.moment-body[data-v-dcdd9eb2] {
+      border: 1px solid grey;
+      display: flex;
+      flex-grow: 1;
+}
+.transitional[data-v-dcdd9eb2] {
+      background-color: var(--transitional-color);
+}
+.transitional[data-v-dcdd9eb2]::after {
+      content: ' ';
+      position: absolute;
+      left: calc( 50% - var(--transitional-bar-width) / 2 );
+      top: 100%;
+      height: 80vh;
+      width: var(--transitional-bar-width);
+      background-color: var(--transitional-color);
+}
+.on-name-hover[data-v-dcdd9eb2] {
+      opacity: 0;
+}
+.moment-name:hover .on-name-hover[data-v-dcdd9eb2] {
+      opacity: 1;
+}
