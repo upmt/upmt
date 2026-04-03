@@ -67,8 +67,10 @@ jobs:
           # copy examples
           cp -a examples/ publish/${TARGET_DIR}/examples/
 
+          COMMIT_TIME=$(git show -s --format='%ci' ${GITHUB_SHA::8})
+
           # version file per branch
-          echo "${GITHUB_SHA}" > "publish/${TARGET_DIR}/version.txt"
+          echo "VERSION ${GITHUB_SHA} ${COMMIT_TIME}" > "publish/${TARGET_DIR}/version.txt"
 
       - name: Deploy to gh-pages (keep both main + dev)
         uses: peaceiris/actions-gh-pages@v4
