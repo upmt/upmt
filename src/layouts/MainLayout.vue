@@ -84,18 +84,49 @@
             aria-label="Login"
             :class="{ 'anonymous': isAnonymous }"
             :icon="isExpertMode ? 'mdi-account-cowboy-hat' : 'mdi-account'">
-            <q-tooltip
-              v-if="isAnonymous">
-              Click and enter a username
-            </q-tooltip>
-            <q-popup-edit
-              v-model="username"
-              auto-save
-              v-slot="scope">
-              <q-input v-model="scope.value"
+            <q-menu fit>
+              <q-list style="min-width: 240px;">
+                <q-item>
+                  <q-item-section no-wrap class="row"><span>Identified as <em>{{username}}</em></span></q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item
+                  clickable>
+                  <q-item-section>Modify username</q-item-section>
+                  <q-popup-edit
+                    v-model="username"
+                    auto-save
+                    v-slot="scope">
+                    <q-input v-model="scope.value"
                      @focus="($event.target as HTMLInputElement).select()"
-                       dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
+                             dense autofocus @keyup.enter="scope.set" />
+                  </q-popup-edit>
+                </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="leftDrawerOpen = false ; vueTour.startTour()"
+                  >
+                  <q-item-section>Take a tour of the interface</q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  href="https://github.com/upmt/upmt/wiki/%CE%BCPMT-documentation"
+                  target="web"
+                  >
+                  <q-item-section>Documentation</q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="about()"
+                  >
+                  <q-item-section>About μPMT</q-item-section>
+                </q-item>
+
+              </q-list>
+            </q-menu>
           </q-btn>
         </div>
 
@@ -129,20 +160,6 @@
 
             <q-separator :key="'sep' + index" v-if="item.separator" />
           </template>
-
-          <q-item
-            clickable
-            @click="leftDrawerOpen = false ; vueTour.startTour()"
-            v-ripple
-            >
-            <q-item-section avatar>
-              <q-icon name="mdi-tour" />
-            </q-item-section>
-            <q-item-section>
-              Take a tour
-            </q-item-section>
-          </q-item>
-
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -181,6 +198,7 @@
   import NoteIcon from 'components/NoteIcon.vue'
   import { VTour } from '@globalhive/vuejs-tour'
   import './vjt-style.css'
+  import axios from 'axios'
 
   defineOptions({
       name: 'MainLayout'
@@ -302,6 +320,26 @@
               doStoreProject()
           }
       }
+  }
+
+  function about() {
+      let message = 'Development version'
+      void axios.get('./version.txt').then((response) => {
+          if (response.data.startswith('VERSION ')) {
+              // We are reasonably sure we have a VERSION file
+              const [_, version, date] = response.data.replace(/[^a-z0-9_: .+-]/gim,"").split()
+              message = `Version <strong>${version}</strong>\nDate <strong>${date}</strong>`
+          }
+      }).finally(() => {
+          $q.dialog({
+              title: 'About μPMT...',
+              message: `<p><strong>μPMT</strong> - micro Phenomenology Modelling Tool</p>\n<p>${message}</p>`,
+              html: true
+          })
+              .onDismiss(() => {
+                  // console.log('I am triggered on both OK and Cancel')
+              })
+      })
   }
 
   onMounted(() => {
