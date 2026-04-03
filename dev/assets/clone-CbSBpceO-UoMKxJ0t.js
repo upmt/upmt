@@ -1,0 +1,9 @@
+import { O } from "./graph-CVVLTrhn-CT8vhQCq.js";
+var e = 4;
+function a(o) {
+  return O(o, e);
+}
+export {
+  a
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2xvbmUtQ2JTQnBjZU8tVW9NS3hKMHQuanMiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL25vZGVfbW9kdWxlcy92dWUtbWVybWFpZC1zdHJpbmcvZGlzdC9jbG9uZS1DYlNCcGNlTy5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBiIGFzIHIgfSBmcm9tIFwiLi9ncmFwaC1DVlZMVHJobi5qc1wiO1xudmFyIGUgPSA0O1xuZnVuY3Rpb24gYShvKSB7XG4gIHJldHVybiByKG8sIGUpO1xufVxuZXhwb3J0IHtcbiAgYSBhcyBjXG59O1xuIl0sIm5hbWVzIjpbInIiXSwibWFwcGluZ3MiOiI7QUFDQSxJQUFJLElBQUk7QUFDUixTQUFTLEVBQUUsR0FBRztBQUNaLFNBQU9BLEVBQUUsR0FBRyxDQUFDO0FBQ2Y7IiwieF9nb29nbGVfaWdub3JlTGlzdCI6WzBdfQ==
