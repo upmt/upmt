@@ -325,10 +325,11 @@
   function about() {
       let message = 'Development version'
       void axios.get('./version.txt').then((response) => {
-          if (response.data.startsWith('VERSION')) {
-              // We are reasonably sure we have a VERSION file.
-              const [_, version, date] = response.data.replace(/[^a-z0-9_: .+-]/gim, "").split()
-              message = `Version <strong>${version}</strong>\nDate <strong>${date}</strong>`
+          const m = response.data.match(/^VERSION\s(?<sha>[a-z0-9]+)\s(?<date>.+)/)
+          if (m) {
+              message = `Version <strong>${m.groups.sha}</strong>\nDate <strong>${m.groups.date}</strong>`
+          } else {
+              message = `No valid version information found`
           }
       }).finally(() => {
           $q.dialog({
