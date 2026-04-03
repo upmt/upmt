@@ -84,6 +84,17 @@
   position: relative;
 }
 
+[class*=vjt-highlight]::after {
+    background-color: yellow;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
 .vjt-actions {
   display: flex;
   justify-content: space-between;
