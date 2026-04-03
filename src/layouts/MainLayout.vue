@@ -325,9 +325,9 @@
   function about() {
       let message = 'Development version'
       void axios.get('./version.txt').then((response) => {
-          if (response.data.startswith('VERSION ')) {
-              // We are reasonably sure we have a VERSION file
-              const [_, version, date] = response.data.replace(/[^a-z0-9_: .+-]/gim,"").split()
+          if (response.data.startsWith('VERSION')) {
+              // We are reasonably sure we have a VERSION file.
+              const [_, version, date] = response.data.replace(/[^a-z0-9_: .+-]/gim, "").split()
               message = `Version <strong>${version}</strong>\nDate <strong>${date}</strong>`
           }
       }).finally(() => {
