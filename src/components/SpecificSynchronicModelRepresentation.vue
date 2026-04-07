@@ -37,8 +37,9 @@
       style="flex-grow: 1;"
       selector=".specificsynchronicmodel-categories"
       :minZoom="0.5"
-      :maxZoom="3"
-      :wheelZoomStep="0.5"
+      :maxZoom="4"
+      :enableTouchLock="istore.settings.touchLock"
+      :wheelZoomStep="istore.settings.zoomStep"
       >
       <div class="specificsynchronicmodel-categories">
         <SpecificSynchronicCategoryRepresentation

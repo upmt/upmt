@@ -31,9 +31,8 @@
           getProjectId: istore.getProjectId,
           setModified: istore.setModified
       }
+      istore.loadSettings()
       window.addEventListener('beforeunload', onBeforeUnload)
-      // Load username
-      istore.setUsername(localStorage.getItem('upmtUsername') ?? "anonymous")
 
       // Load sample projects if they were not stored
       for (const id of [ 'example' ]) {
@@ -66,7 +65,6 @@
     --transitional-color: #bbb;
     --transitional-bar-width: 12%;
     --header-height: 82px;
-    --chart-zoom: 1;
     --project-width: 250px;
     --moment-minimum-width: 200px;
     --moment-maximum-width: 600px;

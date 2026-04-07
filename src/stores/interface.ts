@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
-import { computed, ref, Ref } from 'vue'
+import { computed, reactive, ref, Ref, watch } from 'vue'
 import Interview from 'stores/models/interview'
 
 const SSCPrefix = "SSC"
 const MomentPrefix = "Moment "
 
 export const useInterfaceStore = defineStore('interface', () => {
-  const _username = ref("")
   const highlightedMomentId = ref("")
   const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
@@ -15,6 +14,11 @@ export const useInterfaceStore = defineStore('interface', () => {
   const isModified = ref(false)
   // expert mode
   const isExpertMode = ref(false)
+  const settings = reactive({
+    touchLock: false,
+    zoomStep: 0.5,
+    username: "anonymous"
+  })
 
   const currentProjectId: Ref<string | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
@@ -89,13 +93,12 @@ export const useInterfaceStore = defineStore('interface', () => {
 
   // To make the store act as ContextProvider
   function setUsername (value: string) {
-    _username.value = value
-    localStorage.setItem('upmtUsername', value)
+    settings.username = value
   }
 
   // To make the store act as ContextProvider
   function getUsername () {
-    return _username.value
+    return settings.username
   }
 
   const username = computed({
@@ -110,6 +113,21 @@ export const useInterfaceStore = defineStore('interface', () => {
   function setModified (value: boolean): boolean {
     isModified.value = value
     return value
+  }
+
+  // Serialize settings to localStorage on modification
+  watch(settings, () => {
+    window.localStorage['settings'] = JSON.stringify(settings);
+  })
+
+  // Load settings from localStorage
+  function loadSettings () {
+    const data = window.localStorage['settings']
+    if (data) {
+      const loaded = JSON.parse(data)
+      Object.assign(settings, loaded)
+    }
+    return settings
   }
 
   return {
@@ -136,6 +154,8 @@ export const useInterfaceStore = defineStore('interface', () => {
     setEditedSpecificSynchronicModelId,
     setHighlightedMomentId,
     setUsername,
+    settings,
+    loadSettings,
     username
     }
 })

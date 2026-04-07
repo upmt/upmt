@@ -57,8 +57,9 @@
       style="flex-grow: 1;"
       v-model:zoom="zoomLevel"
       :minZoom="0.5"
-      :maxZoom="3"
-      :wheelZoomStep="0.5"
+      :maxZoom="4"
+      :enableTouchLock="istore.settings.touchLock"
+      :wheelZoomStep="istore.settings.zoomStep"
       >
       <AnalysisRepresentation
         ref="analysis"
