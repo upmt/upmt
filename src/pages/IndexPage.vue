@@ -310,7 +310,7 @@
               }
               if (jsonData !== null && sourceFile?.name) {
                   // Check if jsonData.id is an existing id, ask the question if it is the case.
-                  const existingId = projectIds.value.find(jsonData.id)
+                  const existingId = projectIds.value.find((id) => id == jsonData.id)
                   if (existingId) {
                       // Ask the question.
                       importWithNewId(existingId, jsonData, sourceFile.name)
