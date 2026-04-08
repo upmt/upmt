@@ -53,17 +53,15 @@
     </q-toolbar>
 
     <VueZoomable
-      selector=".analysis"
+      selector=".analysis-representation"
       style="flex-grow: 1;"
-      v-model:zoom="zoomLevel"
       :minZoom="0.5"
       :maxZoom="4"
-      :enableTouchLock="istore.settings.touchLock"
       :wheelZoomStep="istore.settings.zoomStep"
       >
       <AnalysisRepresentation
         ref="analysis"
-        class="analysis"
+        class="analysis-representation"
         v-if="interview.analysis"
         :genericGraphs="genericGraphs"
         :analysisId="interview.analysis.id">
@@ -98,8 +96,6 @@
   const interview = computed(() => store.getInterview(props.interviewId))
 
   const el = ref(null)
-
-  const zoomLevel = ref(1.0)
 
   const momentMinimumWidthVar = useCssVar('--moment-minimum-width', el) as unknown as Ref<string>
 
