@@ -15,7 +15,8 @@ export const useInterfaceStore = defineStore('interface', () => {
   // expert mode
   const isExpertMode = ref(false)
   const settings = reactive({
-    touchLock: false,
+    zoomWheelLock: false,
+    zoomTouchLock: false,
     zoomStep: 0.5,
     username: "anonymous"
   })
