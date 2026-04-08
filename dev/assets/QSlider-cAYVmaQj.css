@@ -1,0 +1,11 @@
+
+.note-is-empty[data-v-20a9e075] {
+      opacity: .3;
+}
+.text-pre-line[data-v-20a9e075] {
+      /* Preserve all white-space characters, including line breaks */
+      white-space-collapse: preserve;
+}
+.note-tooltip[data-v-20a9e075] {
+      font-family: sans;
+}
