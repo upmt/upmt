@@ -212,6 +212,9 @@
   import { storeToRefs } from 'pinia'
   import { useQuasar } from 'quasar'
   import { stripContextFromName } from './util'
+
+  import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
+
   import DescriptemRepresentation from './DescriptemRepresentation.vue'
   import JustificationRepresentation from './JustificationRepresentation.vue'
   import DropZone from './DropZone.vue'
@@ -221,6 +224,7 @@
   import NoteIcon from './NoteIcon.vue'
   import ElementMenu from './ElementMenu.vue'
   import SpecificSynchronicCategoryRelation from './SpecificSynchronicCategoryRelation.vue'
+
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
@@ -489,10 +493,27 @@
 
   import type { NamedAction } from 'components/util.ts'
 
-  const menuActions: NamedAction[] = [
-      [ "Delete this category only", () => store.deleteSpecificSynchronicCategory(props.categoryId, false) ],
-      [ "Delete this category and its children", () => store.deleteSpecificSynchronicCategory(props.categoryId, true) ],
-  ]
+  const menuActions = computed(() => {
+      const actions: NamedAction[] = [
+          [ "Delete this category only", () => store.deleteSpecificSynchronicCategory(props.categoryId, false) ],
+          [ "Delete this category and its children", () => store.deleteSpecificSynchronicCategory(props.categoryId, true) ],
+      ]
+      if (category.value) {
+          const name = categoryName.value
+          if (name.endsWith(SpecificSynchronicCategory.CONTEXT_MARKER)) {
+              actions.push([ "Standard consistency check", () => {
+                  // Strip trailing /
+                  categoryName.value = name.substr(0, name.length - 1)
+              } ])
+          } else {
+              actions.push([ "Contextualized consistency check", () => {
+                  // Add trailing /
+                  categoryName.value = name + SpecificSynchronicCategory.CONTEXT_MARKER
+              } ])
+          }
+      }
+      return actions
+  })
 
   const relationActions: NamedAction[] = [
       [ "Create a new child category", () => createChildCategory() ],
