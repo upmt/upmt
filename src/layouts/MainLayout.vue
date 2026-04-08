@@ -87,7 +87,10 @@
             <q-menu fit>
               <q-list style="min-width: 240px;">
                 <q-item>
-                  <q-item-section no-wrap class="row"><span>Identified as <em>{{username}}</em></span></q-item-section>
+                  <q-item-section no-wrap class="row">
+                    <span><q-icon name="mdi-account" size="xs" dense />
+                      Identified as <em>{{username}}</em></span>
+                  </q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item
@@ -101,6 +104,13 @@
                      @focus="($event.target as HTMLInputElement).select()"
                              dense autofocus @keyup.enter="scope.set" />
                   </q-popup-edit>
+                </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="editSettings"
+                  >
+                  <q-item-section>Edit settings</q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -196,6 +206,7 @@
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject } from 'stores/storage'
   import NoteIcon from 'components/NoteIcon.vue'
+  import SettingsEditor from 'components/SettingsEditor.vue'
   import { VTour } from '@globalhive/vuejs-tour'
   import './vjt-style.css'
   import axios from 'axios'
@@ -322,6 +333,14 @@
       }
   }
 
+  function editSettings() {
+      $q.dialog({
+          component: SettingsEditor,
+      }).onDismiss(() => {
+          console.log('Called on OK or Cancel')
+      })
+  }
+
   function about() {
       let message = 'Development version'
       void axios.get('./version.txt').then((response) => {
@@ -361,7 +380,7 @@
       },
       {
           target: 'button[aria-label="Login"]',
-          content: 'This icon allows you to set your name so that authorship information is correctly recorded.'
+          content: 'This icon gives you access to your profile information and settings, as well as basic help/about information.'
       },
       {
           target: '.upmt-interviews',
