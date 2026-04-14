@@ -10,7 +10,7 @@
         size="sm"
         dense
         title="Edit metadata"
-        @click="isMetadataVisible = !isMetadataVisible"
+        @click="toggleMetadata"
         icon="edit"
         >
       </q-btn>
@@ -33,14 +33,13 @@
         :style="{ color: color }"
         />
     </q-toolbar>
-    <InterviewMetadataForm
-      v-if="isMetadataVisible"
-      :interview="interview"
-      :metadataOnly="true"
-      @cancel="isMetadataVisible = false"
-      @validate="metadataValidate"
-      />
     <div v-if="isMetadataVisible">
+      <InterviewMetadataForm
+        :interview="interview"
+        :metadataOnly="true"
+        @cancel="isMetadataVisible = false"
+        @validate="metadataValidate"
+        />
       <em>Interview text below is not modifiable</em>
     </div>
     <AnnotatedText
@@ -234,6 +233,17 @@
           classes.push(`descriptems${descriptemCount}`)
       }
       return [ ...new Set(classes) ].join(" ")
+  }
+
+  function toggleMetadata () {
+      isMetadataVisible.value = !isMetadataVisible.value
+      if (isMetadataVisible.value) {
+          // Scroll container to top
+          const container = document.querySelector(".textAnnotationContainer")
+          if (container) {
+              container.scrollTo(0, 0)
+          }
+      }
   }
 
   const spanEvents = {
