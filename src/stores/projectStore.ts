@@ -16,6 +16,7 @@ import SpecificSynchronicModel from './models/specificsynchronicmodel'
 import { stringToId, groupBy, stripFields } from './util'
 import { isStoredProject, getStoredProjectData } from './storage'
 import { useInterfaceStore } from 'stores/interface'
+import { useHistory } from './plugins/piniaHistory'
 
 /* From https://grrr.tech/posts/2021/typescript-partial/
  * This should be put in some common module.
@@ -590,13 +591,16 @@ export const useProjectStore = defineStore('projectStore', () => {
     // FIXME: use data.version info
     if ('modelfolder' in data) {
       // New style
-      // Configure pinia-orm context so that projectId is correctly set.
 
+      const history = useHistory()
+
+      history.beginTransaction('Project load')
       // Clear project data before loading
       if (clear) {
         clearProjectData(data.id)
       }
 
+      // Configure pinia-orm context so that projectId is correctly set.
       // Remove the ids so that if we load twice the same dataset, it does not mess with existing elements.
       // WARNING: since we strip id from interviews, then descriptems's interviewId  become invalid and we need to restore them
       const projectId = data.id
@@ -635,6 +639,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       istore.setCurrentProjectId(data.id)
 
       out = repo.Project.save(data as Project)
+      history.commitTransaction()
       // We must remap models
     } else {
       // Old upmt files

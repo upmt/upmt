@@ -50,6 +50,18 @@
               Modified - Click here to save
             </q-btn>
           </span>
+          <span>
+            <q-btn
+              :title="`${history.undoStack.length} items`"
+              :disable="!history.undoStack.length"
+              @click="doUndo"
+              icon="mdi-undo" />
+            <q-btn
+              :title="history.redoStack.length"
+              :disable="!history.redoStack.length"
+              @click="doRedo"
+              icon="mdi-redo" />
+          </span>
         </q-toolbar-title>
 
         <div
@@ -201,6 +213,7 @@
   import { ref, computed, onMounted } from 'vue'
   import { useQuasar } from 'quasar'
   import { storeToRefs } from 'pinia'
+  import { useHistory } from 'stores/plugins/piniaHistory'
   import { RouteLocationRaw } from 'vue-router'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
@@ -247,6 +260,8 @@
           return null
       }
   })
+
+  const history = useHistory()
 
   const isDevelopment = computed(() => document.location.hostname == 'localhost'
       || document.location.pathname.includes('/upmt/dev'))
@@ -324,6 +339,14 @@
       }
   }
 
+  function doUndo () {
+      history.undo()
+  }
+
+  function doRedo () {
+      history.redo()
+  }
+
   function onGlobalKeydown (e: KeyboardEvent) {
       if (e.ctrlKey && e.keyCode === 83 /* S */) {
           e.preventDefault()
@@ -366,7 +389,8 @@
       leftDrawerOpen.value = false
       rightDrawerOpen.value = false
       // From https://github.com/quasarframework/quasar/blob/dev/docs/src/layouts/doc-layout/DocSearch.vue#L296
-      window.addEventListener('keydown', onGlobalKeydown)
+      window.addEventListener('keydown', onGlobalKeydown);
+      (window as any).appHistory = history
   })
 
   const tourSteps = [

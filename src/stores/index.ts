@@ -2,6 +2,7 @@ import { defineStore } from '#q-app/wrappers'
 import { createPinia } from 'pinia'
 import { createORM } from 'pinia-orm'
 import { Router } from 'vue-router'
+import { PiniaHistoryPlugin } from './plugins/piniaHistory'
 
 // See https://github.com/quasarframework/quasar/discussions/12539 ?
 /*
@@ -27,5 +28,6 @@ declare module 'pinia' {
 export default defineStore((/* { ssrContext } */) => {
   const pinia = createPinia()
   pinia.use(createORM({ model: { withMeta: true } }))
+  pinia.use(PiniaHistoryPlugin)
   return pinia
 })
