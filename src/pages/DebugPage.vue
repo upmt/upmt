@@ -1,16 +1,14 @@
 // @ts-nocheck
 <template>
   <q-page padding>
+    <span>Projects</span>
     <VObjectInspector :data="projects" />
+    <span>Graphs</span>
     <VObjectInspector :expandLevel="2" :expandPaths="['$.*.children']" :data="genericgraphs" />
+    <span>Stack</span>
     <VObjectInspector :data="history.undoStack" />
+    <span>Diffs</span>
     <VObjectInspector :data="historyDiffs" />
-    <div>
-      <pre v-for="message, index in istore.logMessages"
-           :key="index">
-        {{ message }}
-      </pre>
-    </div>
   </q-page>
 </template>
 
