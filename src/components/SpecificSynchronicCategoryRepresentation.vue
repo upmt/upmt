@@ -565,10 +565,10 @@
       align-items: center;
   }
   .highlighted .specificsynchroniccategory {
-      border: 2px solid yellow;
+      border: 2px solid var(--highlighted-color);
   }
   .highlighted .specificsynchroniccategory-header {
-      background-color: yellow;
+      background-color: var(--highlighted-color);
   }
   .specificsynchroniccategory-justification {
       width: calc(var(--synchronic-category-descriptem-width) + 50px);

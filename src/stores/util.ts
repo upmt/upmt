@@ -1,10 +1,3 @@
-const ANNOTATION_COLORS = [
-  '#ff9797',
-  '#7084b0',
-  '#ffdc97',
-  '#7bcf7b'
-]
-
 const SHORT_TEXT_LIMIT = 25
 
 function ellipsize (text: string, limit: number = SHORT_TEXT_LIMIT): string {
@@ -266,6 +259,5 @@ timestampAdd,
 timestampGet,
 timestampStrip,
 wrapCsvValue,
-exportDataAsCsv,
-ANNOTATION_COLORS
+exportDataAsCsv
 }

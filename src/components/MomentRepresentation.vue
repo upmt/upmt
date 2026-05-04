@@ -433,10 +433,10 @@
       position: relative;
   }
   .highlighted .moment {
-      border: 2px solid yellow;
+      border: 2px solid var(--highlighted-color);
   }
   .highlighted .moment-header {
-      background-color: yellow;
+      background-color: var(--highlighted-color);
   }
   .moment-body {
       border: 1px solid grey;

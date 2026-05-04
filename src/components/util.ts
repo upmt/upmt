@@ -1,10 +1,11 @@
 import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
 
+// !Keep in sync with CSS variables in App.vue
 const ANNOTATION_COLORS = [
-  '#ff9797',
-  '#9eb2dd',
-  '#ffdc97',
-  '#7bcf7b'
+  "#ff9797",
+  "#7084b0",
+  "#ffdc97",
+  "#7bcf7b"
 ]
 
 /*!

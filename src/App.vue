@@ -74,6 +74,13 @@
     --overview-height: 12px;
     --overview-width: 50px;
     --overview-font-size: 8px;
+    /* ! Keep in sync with components/util/ANNOTATION_COLORS */
+    --annotation-color-red: #ff9797;
+    --annotation-color-blue:  #b2bfda;
+    --annotation-color-yellow: #ffdc97;
+    --annotation-color-green: #7bcf7b;
+    --annotation-color-mixed: #d07dd1;
+    --highlighted-color: yellow;
     }
 
 .expertMode {

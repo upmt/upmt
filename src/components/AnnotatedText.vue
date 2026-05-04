@@ -318,38 +318,38 @@
     white-space: pre-wrap;
   }
   .category1 {
-      background-color: #ff9797;
+      background-color: var(--annotation-color-red);
   }
   .category2 {
-      background-color: #7084b0;
+      background-color: var(--annotation-color-blue);
   }
   .category3 {
-      background-color: #ffdc97;
+      background-color: var(--annotation-color-yellow);
   }
   .category4 {
-      background-color: #7bcf7b;
+      background-color: var(--annotation-color-green);
   }
   .category1.category2 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   .category1.category3 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   .category1.category4 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   .category2.category3 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   .category2.category4 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   .category3.category4 {
-      background-color: orange;
+      background-color: var(--annotation-color-mixed);
   }
   /* For undefined categories */
   .category9 {
-      background-color: yellow;
+      background-color: #b874c1;
   }
   .descriptem {
       text-decoration: underline;
@@ -369,6 +369,6 @@
   .category2.highlighted,
   .category3.highlighted,
   .category4.highlighted {
-      background-color: yellow !important;
+      background-color: var(--highlighted-color) !important;
   }
 </style>
