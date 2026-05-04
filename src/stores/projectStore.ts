@@ -46,12 +46,14 @@ export type ContainerInfo = {
   momentId: string,
   detachedModelId: string,
   specificSynchronicModelId: string,
+  parentId: string,
   active: boolean
 }
 export type GraphInfo = {
   categories: GenericCategory[],
   byName: Record<string, GenericCategory>,
-  instanceIdToContainerInfo: Record<string, ContainerInfo>
+  instanceIdToContainerInfo: Record<string, ContainerInfo>,
+  errorCount: number
 }
 
 export type Note = {
@@ -1309,6 +1311,7 @@ export const useProjectStore = defineStore('projectStore', () => {
             momentId: ssc.model.momentId,
             detachedModelId: ssc.model.detachedModelId,
             specificSynchronicModelId: ssc.model.id,
+            parentId: ssc.parentId,
             active: ssc.model.isActive
           }
         } else {
@@ -1317,6 +1320,7 @@ export const useProjectStore = defineStore('projectStore', () => {
             momentId: "",
             detachedModelId: "",
             specificSynchronicModelId: "",
+            parentId: "",
             active: false
           }
         }
@@ -1356,6 +1360,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     // List of root SSC instances
     const rootInstances: SpecificSynchronicCategory[] = []
 
+    let errorCount = 0
+
     const genericCategories: Record<string, GenericCategory> = Object.fromEntries(
       Object.entries(names).map( ([name, instances]) => {
         const childrenNames = new Set(instances.map(ssc => (children[ssc.id] || []).map(c => genericName(c))).flat())
@@ -1381,6 +1387,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         if (types.size > 1) {
           // More than 1 abstractionType: error, and keep ''
           errors.push(`There are ${types.size} differents abstraction types for ${name}: ${[...types]}`)
+          errorCount++
         } else {
           abstractionType = [ ...types ][0] ?? ''
         }
@@ -1409,6 +1416,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       } else if (ancestors.has(name)) {
         // Prevent recursive structures
         const error = `Error in generic structure: ${name} is present as its own ancestor`
+        errorCount++
         console.log(error)
         if (generic) {
           // Document the error in the byName mapping
@@ -1451,6 +1459,7 @@ export const useProjectStore = defineStore('projectStore', () => {
 
       if (! generic) {
         const error = `Inconsistency in GenericCategory building for ${name}`
+        errorCount++
         console.log(error)
         return {
           name,
@@ -1478,7 +1487,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     return {
       categories: [ ...rootCategoryNames.values() ].toSorted().map(name => nameToGeneric(name, null)),
       byName: genericCategories,
-      instanceIdToContainerInfo
+      instanceIdToContainerInfo,
+      errorCount
     }
   }
 

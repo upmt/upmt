@@ -186,6 +186,7 @@
         class="print-removed"
         square
         @click="infoPanelDisplay = !infoPanelDisplay"
+        :color="infoPanelColor"
         size="md"
         icon="mdi-chevron-double-left"
         icon-right="mdi-chat-outline"
@@ -410,6 +411,10 @@
           })
       }
   }
+
+  const infoPanelColor = computed(() => {
+      return genericGraphs.value.errorCount > 0 ? 'red' : ''
+  })
 
   onUnmounted(() => {
       istore.setCurrentInterview(null)
