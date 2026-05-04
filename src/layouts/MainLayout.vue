@@ -53,12 +53,12 @@
           <span>
             <q-btn
               :title="`${history.undoStack.length} items`"
-              :disable="!history.undoStack.length"
+              :disable="!history.canUndo"
               @click="doUndo"
               icon="mdi-undo" />
             <q-btn
-              :title="history.redoStack.length"
-              :disable="!history.redoStack.length"
+              :title="`${history.redoStack.length} items`"
+              :disable="!history.canRedo"
               @click="doRedo"
               icon="mdi-redo" />
           </span>
