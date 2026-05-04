@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
     <DescriptemTable
+      v-if="currentProjectId"
       :projectId="currentProjectId" />
   </q-page>
 </template>

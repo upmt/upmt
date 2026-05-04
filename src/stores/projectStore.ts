@@ -53,7 +53,8 @@ export type GraphInfo = {
   categories: GenericCategory[],
   byName: Record<string, GenericCategory>,
   instanceIdToContainerInfo: Record<string, ContainerInfo>,
-  errorCount: number
+  errorCount: number,
+  specificSynchronicCategoryPath: (ssc: SpecificSynchronicCategory) => SpecificSynchronicCategory[]
 }
 
 export type Note = {
@@ -1481,6 +1482,20 @@ export const useProjectStore = defineStore('projectStore', () => {
         { children: [...generic.childrenNames.values()].toSorted().map(cname => nameToGeneric(cname, newAncestors)) })
     }
 
+    const specificSynchronicCategoryPath = (ssc: SpecificSynchronicCategory): SpecificSynchronicCategory[] => {
+      // Return the path of specificsynchroniccategory from root category
+      if (ssc.parentId) {
+        const parent  = mapping[ssc.parentId]
+        if (parent) {
+          return [ ...specificSynchronicCategoryPath(parent), ssc ]
+        } else {
+          return [ ssc ]
+        }
+      } else {
+        return [ ssc ]
+      }
+    }
+
     // Return the list of trees starting at rootCategoryNames,
     // which correspond to the GenericSynchronicCategories
     // and also the mapping by name
@@ -1488,7 +1503,8 @@ export const useProjectStore = defineStore('projectStore', () => {
       categories: [ ...rootCategoryNames.values() ].toSorted().map(name => nameToGeneric(name, null)),
       byName: genericCategories,
       instanceIdToContainerInfo,
-      errorCount
+      errorCount,
+      specificSynchronicCategoryPath
     }
   }
 

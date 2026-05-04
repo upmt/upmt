@@ -42,20 +42,34 @@
   import { computed, ref } from 'vue'
   import { exportFile } from 'quasar'
   import { useProjectStore } from 'stores/projectStore'
+  import SpecificSynchronicCategory from 'stores/models/specificsynchroniccategory'
 
   import { exportDataAsCsv } from 'stores/util'
 
   const store = useProjectStore()
 
   const props = defineProps<{
-      projectId: string | null,
+      projectId: string
   }>()
 
   const textFilter = ref("")
 
   const momentFilter = ref("")
 
-  const descriptems = computed(() => store.getDescriptemsByProject(props.projectId ?? ""))
+  const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
+
+  const descriptems = computed(() => {
+      return store.getDescriptemsByProject(props.projectId ?? "")
+  })
+
+  function categoryName(ssc: SpecificSynchronicCategory | null) {
+      if (ssc) {
+          const path = genericGraphs.value.specificSynchronicCategoryPath(ssc)
+          return path.map(ssc => ssc.name).join(" / ")
+      } else {
+          return ""
+      }
+  }
 
   const filteredDescriptems = computed(() => {
       let output = descriptems.value
@@ -96,7 +110,7 @@
         sortable: true },
       { name: 'category',
         label: 'Category',
-        field: (row: any) => row.specificsynchroniccategory?.name,
+        field: (row: any) => categoryName(row.specificsynchroniccategory),
         sortable: true },
       { name: 'creator',
         label: 'Creator',
@@ -135,6 +149,6 @@
   }
   .column-small {
       width: 200px !important;
-    overflow-x: hidden;
+      overflow-x: hidden;
   }
 </style>
