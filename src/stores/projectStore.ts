@@ -309,9 +309,12 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function deleteDetachedModel (modelId: string) {
+    const history = useHistory()
+    history.beginTransaction(`Delete detached model ${modelId}`)
     repo.DetachedSynchronicModel
       .where('id', modelId)
       .delete()
+    history.commitTransaction()
   }
 
   function getNotes (projectId: string): Note[] {
@@ -791,10 +794,18 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
-  function recursiveUpdateMoment (identifier: string, values: object) {
+  function doRecursiveUpdateMoment (identifier: string, values: object) {
+    // This is the internal version, where we are sure that a transaction has been started
     updateMoment(identifier, values)
     // Recursively call method on children
-    repo.Moment.where('parentId', identifier).get().forEach(moment => recursiveUpdateMoment(moment.id, values))
+    repo.Moment.where('parentId', identifier).get().forEach(moment => doRecursiveUpdateMoment(moment.id, values))
+  }
+
+  function recursiveUpdateMoment (identifier: string, values: object) {
+    const history = useHistory()
+    history.beginTransaction(`Recursive update moment ${identifier}`)
+    doRecursiveUpdateMoment(identifier, values)
+    history.commitTransaction()
   }
 
   function updateModelFolder (identifier: string, values: object) {
@@ -860,11 +871,14 @@ export const useProjectStore = defineStore('projectStore', () => {
         // In all cases, update child moment indexes
         // Make a copy of children array
         const children = [ ...destination.children ]
+        const history = useHistory()
+        history.beginTransaction(`Create moment`)
         repo.Moment.save(data)
         // Items before childIndex are the same. Renumber next ones.
         children.slice(childIndex).forEach(moment => {
           updateMoment(moment.id, { childIndex: moment.childIndex + 1 })
         })
+        history.commitTransaction()
     }
   }
 
@@ -898,6 +912,8 @@ export const useProjectStore = defineStore('projectStore', () => {
           parentId: parent.id,
           childIndex
         }
+        const history = useHistory()
+        history.beginTransaction(`Move moment ${source.name} (${sourceMomentId})`)
         // The "as any as Moment" is necessary because save may return (not here) an array.
         const newMoment = repo.Moment.save(data) as any as Moment
         // Insert the newMoment in the appropriate place
@@ -914,6 +930,7 @@ export const useProjectStore = defineStore('projectStore', () => {
             updateMoment(moment.id, { childIndex: index })
           }
         })
+        history.commitTransaction()
       } else {
           console.error("Strange error - parent", parent, " is null")
       }
@@ -1006,10 +1023,13 @@ export const useProjectStore = defineStore('projectStore', () => {
           (data.children as any) = [ { id: child.id } ]
           data.specificsynchronicmodelId = child.specificsynchronicmodelId
           data.interviewId = child.interviewId
+          const history = useHistory()
+          history.beginTransaction(`Add Specific Synchronic Category ${data.name}`)
           // Remove the child from the list of children of the model
           updateSpecificSynchronicCategory(child.id, { specificsynchronicmodelId: null })
           const ssc = repo.SpecificSynchronicCategory.save(data)
-          console.log("New ssc", ssc)
+          history.commitTransaction()
+          console.log(`New SSC ${ssc.id}`)
           // updateSpecificSynchronicCategory(child.id, { parentId: ssc.id })
         } else {
           console.error("Invalid id for destination SSCategory: ", where.slice(3))
@@ -1092,19 +1112,28 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function deleteModelFolder (folderId: string) {
+    const history = useHistory()
+    history.beginTransaction(`Delete model folder ${folderId}`)
     repo.ModelFolder.where('parentId', folderId).get().forEach(mf => deleteModelFolder(mf.id))
     //repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
     //repo.MomentModel.where('modelfolderId', folderId).get().forEach(mm => deleteMomentModel(mm.id))
     repo.ModelFolder.where('id', folderId).delete()
+    history.commitTransaction()
   }
 
   function deleteMoment (momentId: string) {
     // FIXME: check cascade deletion of justification/specificsynchronicmodel
+    const history = useHistory()
+    history.beginTransaction(`Delete moment ${momentId}`)
     repo.Moment.where('id', momentId).delete()
+    repo.Justification.where('parentId', momentId).delete()
+    history.commitTransaction()
   }
 
   function deleteProject (projectId: string) {
     // Typescript prevents doing a simple for loop without going through shenanigans
+    const history = useHistory()
+    history.beginTransaction(`Delete  project ${projectId}`)
     repo.Moment.where('projectId', projectId).delete()
     repo.SpecificSynchronicModel.where('projectId', projectId).delete()
     repo.SpecificSynchronicCategory.where('projectId', projectId).delete()
@@ -1116,11 +1145,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Annotation.where('projectId', projectId).delete()
     repo.Analysis.where('projectId', projectId).delete()
     repo.Project.where('id', projectId).delete()
+    history.commitTransaction()
   }
 
   function deleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
     const category = getSpecificSynchronicCategory(categoryId)
     if (category) {
+      const history = useHistory()
+      history.beginTransaction(`Delete SpecificSynchronicCategory ${category.name} (${categoryId})`)
       category.children.forEach(child => {
         if (recursive) {
           deleteSpecificSynchronicCategory(child.id, recursive)
@@ -1132,31 +1164,41 @@ export const useProjectStore = defineStore('projectStore', () => {
         }
       })
       repo.SpecificSynchronicCategory.where('id', categoryId).delete()
+      history.commitTransaction()
     }
   }
 
   function clearSpecificSynchronicModel (ssmId: string) {
     const model = getSpecificSynchronicModel(ssmId)
     if (model) {
+      const history = useHistory()
+      history.beginTransaction(`Clear specific synchronic model ${ssmId}`)
       model.categories.forEach(category => deleteSpecificSynchronicCategory(category.id, true))
+      history.commitTransaction()
     } else {
       console.log(`Error in clearSpecificSynchronicModel: empty model ${ssmId}`)
     }
   }
 
   function setActiveInterview(projectId: string, interviewId: string, active: boolean = true) {
+    const history = useHistory()
+    history.beginTransaction(`Update interview ${interviewId} active status`)
     updateInterview(interviewId, { isActive: active })
     for (const moment of getMomentsByInterview(projectId, interviewId)) {
       if (moment.specificsynchronicmodel)
         updateElement(moment.specificsynchronicmodel, { isActive: active })
     }
+    history.commitTransaction()
   }
 
   function setActiveDetachedModel(projectId: string, modelId: string, active: boolean = true) {
+    const history = useHistory()
+    history.beginTransaction(`Update detached model ${modelId} active status`)
     const detachedModel = getDetachedModel(projectId, modelId)
     if (detachedModel !== null) {
       updateElement(detachedModel.proxy, { isActive: active })
     }
+    history.commitTransaction()
   }
 
   function duplicateDescriptem (descriptemId: string) {
