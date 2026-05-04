@@ -37,7 +37,7 @@
           </q-tooltip>
           <span
             class="genericsynchroniccategory-label">
-            {{ genericcategory.name }} <q-btn
+            {{ stripContextFromName(genericcategory.name) }} <q-btn
                                          :title="currentInterviewMomentsLabel"
                                          size="sm"
                                          dense>
@@ -145,7 +145,7 @@
   import Interview from 'stores/models/interview'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { groupBy } from './util'
+  import { groupBy, stripContextFromName } from './util'
 
   import type { GenericCategory, GraphInfo, ContainerInfo } from 'stores/projectStore'
 
