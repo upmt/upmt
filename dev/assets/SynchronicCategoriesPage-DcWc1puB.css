@@ -1,0 +1,13 @@
+
+.column-large {
+    width: 400px !important;
+    overflow-x: hidden;
+}
+.column-medium {
+    width: 300px !important;
+    overflow-x: hidden;
+}
+.column-small {
+      width: 200px !important;
+    overflow-x: hidden;
+}
