@@ -527,22 +527,6 @@ export const useProjectStore = defineStore('projectStore', () => {
     return descriptems
   }
 
-  function createProject (projectData: Subset<Project>) {
-    if (! projectData.id) {
-      // Generate an id from the name
-      let id = stringToId(projectData.name || "project")
-      // If an existing project with the same id exists, add a suffix
-      while (isStoredProject(id)) {
-        id = id + "_new"
-      }
-      projectData.id = id
-    }
-    if (! projectData.filename) {
-      projectData.filename = `${projectData.id}.upmt`
-    }
-    repo.Project.save(projectData)
-  }
-
   /**
    * Clear Pinia store from all elements related to project
    */
@@ -688,6 +672,39 @@ export const useProjectStore = defineStore('projectStore', () => {
       const p = importProject(data, data.filename)
       return p
     }
+  }
+
+  function activateProject (projectId: string) {
+      if (! isProjectLoaded(projectId)) {
+        // Load the project
+        const p = loadStoredProject(projectId)
+        // This is already done in the importProject called by loadStoredProject
+        // but let's be explicit
+        const istore = useInterfaceStore()
+        istore.setCurrentProjectId(projectId)
+        istore.setModified(false)
+        return p
+      } else {
+        return getProject(projectId)
+      }
+  }
+
+  function createProject (projectData: Subset<Project>) {
+    if (! projectData.id) {
+      // Generate an id from the name
+      let id = stringToId(projectData.name || "project")
+      // If an existing project with the same id exists, add a suffix
+      while (isStoredProject(id)) {
+        id = id + "_new"
+      }
+      projectData.id = id
+    }
+    if (! projectData.filename) {
+      projectData.filename = `${projectData.id}.upmt`
+    }
+    repo.Project.save(projectData)
+    const istore = useInterfaceStore()
+    istore.setCurrentProjectId(projectData.id)
   }
 
   /*
@@ -1550,21 +1567,6 @@ export const useProjectStore = defineStore('projectStore', () => {
       repo.SpecificSynchronicCategory.save(data)
     })
     return specificModel
-  }
-
-  function activateProject (projectId: string) {
-      if (! isProjectLoaded(projectId)) {
-        // Load the project
-        const p = loadStoredProject(projectId)
-        // This is already done in the importProject called by loadStoredProject
-        // but let's be explicit
-        const istore = useInterfaceStore()
-        istore.setCurrentProjectId(projectId)
-        istore.setModified(false)
-        return p
-      } else {
-        return getProject(projectId)
-      }
   }
 
   /**
