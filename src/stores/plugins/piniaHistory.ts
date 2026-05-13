@@ -28,19 +28,24 @@
  *
  *   const history = useHistory()
  *
- *   // Simple action – automatically captured
+ *   // Simple action - automatically captured
  *   userStore.deleteUser(id)
  *
- *   // Transaction – groups several mutations into one undoable step
+ *   // Transaction - groups several mutations into one undoable step
  *   history.beginTransaction('Delete user + posts')
  *   userStore.deleteUser(id)          // cascade: also calls postStore.deleteByUser(id)
  *   history.commitTransaction()
+ *
+ *   // Transient change: do not record history just for the next change
+ *   history.isTransientChange = true
+ *   userStore.basicAction()
  *
  *   history.undo()
  *   history.redo()
  */
 
 import { type PiniaPlugin, type PiniaPluginContext, defineStore } from 'pinia'
+import { toRaw } from 'vue'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -189,7 +194,10 @@ export const useHistoryStore = defineStore('__piniaHistory__', {
     undoStack: [] as HistoryEntry[],
     redoStack: [] as HistoryEntry[],
 
-    /** True while replaying (undo/redo) – prevents re-recording. */
+    /** Transient change (updating callback) - do not record and reset isTransientChange state */
+    isTransientChange: false,
+
+    /** True while replaying (undo/redo) - prevents re-recording. */
     isReplaying: false,
 
     /** True while a transaction is open. */
@@ -258,15 +266,17 @@ export const PiniaHistoryPlugin: PiniaPlugin = (context: PiniaPluginContext) => 
 
   // Register the store
   storeRegistry.set(store.$id, {
-    getState: () => store.$state?.data ?? null,
+    getState: () => toRaw(store.$state) ?? null,
     setState: (s) => {
-      const state = store.$state
-      const snap = s as Record<string, unknown>
-      for (const key of Object.keys(state)) {
-        if (!(key in snap)) delete state[key]
-      }
-      Object.assign(state, snap)
-    },
+      // Group store changes
+      store.$patch( (state) => {
+        const snap = s as Record<string, unknown>
+        for (const key of Object.keys(state)) {
+          if (!(key in snap)) delete state[key]
+        }
+        Object.assign(state, snap)
+      })
+    }
   })
 
   // Subscribe to mutations
@@ -274,6 +284,11 @@ export const PiniaHistoryPlugin: PiniaPlugin = (context: PiniaPluginContext) => 
     (_mutation, _state) => {
       const historyStore = useHistoryStore()
 
+      console.log("mutation record", _mutation)
+      if (historyStore.isTransientChange) {
+        historyStore.isTransientChange = false
+        return
+      }
       // Never record while we are replaying or inside a transaction
       if (historyStore.isReplaying) return
       if (historyStore.isTransactionOpen) return
@@ -310,6 +325,10 @@ export const PiniaHistoryPlugin: PiniaPlugin = (context: PiniaPluginContext) => 
 
 export function useHistory() {
   const historyStore = useHistoryStore()
+
+  function setTransientChange() {
+    historyStore.isTransientChange = true
+  }
 
   /**
    * Open a transaction. All mutations made until commitTransaction() or
@@ -431,6 +450,7 @@ export function useHistory() {
     beginTransaction,
     commitTransaction,
     rollbackTransaction,
+    setTransientChange,
     undo,
     redo,
     clearHistory,
@@ -450,6 +470,6 @@ export function useHistory() {
     },
     get isTransactionOpen() {
       return historyStore.isTransactionOpen
-    },
+    }
   }
 }
