@@ -1151,14 +1151,12 @@ export const useProjectStore = defineStore('projectStore', () => {
     history.commitTransaction()
   }
 
-  function deleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
+  function doDeleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
     const category = getSpecificSynchronicCategory(categoryId)
     if (category) {
-      const history = useHistory()
-      history.beginTransaction(`Delete SpecificSynchronicCategory ${category.name} (${categoryId})`)
       category.children.forEach(child => {
         if (recursive) {
-          deleteSpecificSynchronicCategory(child.id, recursive)
+          doDeleteSpecificSynchronicCategory(child.id, recursive)
         } else {
           updateSpecificSynchronicCategory(child.id, {
             parentId: category.parentId,
@@ -1167,6 +1165,15 @@ export const useProjectStore = defineStore('projectStore', () => {
         }
       })
       repo.SpecificSynchronicCategory.where('id', categoryId).delete()
+    }
+  }
+
+  function deleteSpecificSynchronicCategory (categoryId: string, recursive: boolean = false) {
+    const category = getSpecificSynchronicCategory(categoryId)
+    if (category) {
+      const history = useHistory()
+      history.beginTransaction(`Delete SpecificSynchronicCategory ${category.name} (${categoryId})`)
+      doDeleteSpecificSynchronicCategory(categoryId, recursive)
       history.commitTransaction()
     }
   }
