@@ -20,7 +20,11 @@
           </div>
       </router-link>
       <div class="text-subtitle2">{{ projectInfo.interview_count }} interviews</div>
-      <div class="text-subtitle2" v-if="last_saved_date">Last saved {{ last_saved_date }}</div>
+      <div class="text-subtitle2" v-if="last_saved_date">
+        <span v-if="projectInfo.filename">Last saved</span>
+        <span v-else>Created</span>
+        {{ last_saved_date }}
+      </div>
     </q-card-section>
 
     <q-separator />
@@ -80,11 +84,33 @@
 
   const { currentProjectId, isModified } = storeToRefs(istore)
 
-  const projectInfo = computed(() => getStoredProjectInfo(props.projectId))
-
   const isCurrentProject = computed(() => currentProjectId.value == props.projectId)
 
   const currentProject = computed(() => store.getProject(currentProjectId.value))
+
+  const projectInfo = computed(() => {
+      // One corner case is the creation of a new blank project, that we will not have stored yet.
+      const storedInfo = getStoredProjectInfo(props.projectId)
+      if (storedInfo) {
+          return storedInfo
+      } else {
+          // Check local
+          const project = currentProject.value
+          if (project) {
+              return {
+                  filename: null,
+                  name: project.name,
+                  interview_count: project.interviews.length,
+                  note: project.note,
+                  version_count: 0,
+                  date: project.created
+              }
+          } else {
+              // We are trying to display a non-existant project.
+              return null
+          }
+      }
+  })
 
   const last_saved_date = computed(() => {
       return projectInfo.value ? moment(projectInfo.value.date).fromNow() : null

@@ -102,7 +102,8 @@ function deleteStoredProject(id: string)  {
 }
 
 /**
- * Get information about a stored projects
+ * Get information about a stored project
+ *
  * @returns ProjectInfo object
  */
 function getStoredProjectInfo (projectId: string) {
@@ -111,18 +112,22 @@ function getStoredProjectInfo (projectId: string) {
     return null
   const files = getProjectFiles(projectId)
   const info = files.length ? files[0] : null
-  return {
-    id: projectId,
-    basename: info?.basename ?? "",
-    filename: info?.filename ?? "",
-    date: info?.date ?? null,
-    modified: data.modified,
-    creator: data.creator,
-    contributor: data.contributor,
-    name: data.name,
-    note: data.note,
-    interview_count: data.interviews.length,
-    version_count: files.length
+  if (info) {
+    return {
+      id: projectId,
+      basename: info.basename ?? "",
+      filename: info.filename ?? "",
+      date: info.date ?? null,
+      modified: data.modified,
+      creator: data.creator,
+      contributor: data.contributor,
+      name: data.name,
+      note: data.note,
+      interview_count: data.interviews.length,
+      version_count: files.length
+    }
+  } else {
+    return null
   }
 }
 
