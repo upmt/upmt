@@ -1,0 +1,6 @@
+import { b4 as st, b5 as _e } from "./SynchronicGraphPage-Dz4ROPO2.js";
+const t = (a, r) => st.lang.round(_e.parse(a)[r]);
+export {
+  t
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2hhbm5lbC04YWlUeUhKVi1EdU1zNHV3Xy5qcyIsInNvdXJjZXMiOlsiLi4vLi4vLi4vbm9kZV9tb2R1bGVzL3Z1ZS1tZXJtYWlkLXN0cmluZy9kaXN0L2NoYW5uZWwtOGFpVHlISlYuanMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgYXAgYXMgbywgYXEgYXMgbiB9IGZyb20gXCIuL2VudHJ5LUIyVlgta3hhLmpzXCI7XG5jb25zdCB0ID0gKGEsIHIpID0+IG8ubGFuZy5yb3VuZChuLnBhcnNlKGEpW3JdKTtcbmV4cG9ydCB7XG4gIHQgYXMgY1xufTtcbiJdLCJuYW1lcyI6WyJvIiwibiJdLCJtYXBwaW5ncyI6IjtBQUNLLE1BQUMsSUFBSSxDQUFDLEdBQUcsTUFBTUEsR0FBRSxLQUFLLE1BQU1DLEdBQUUsTUFBTSxDQUFDLEVBQUUsQ0FBQyxDQUFDOyIsInhfZ29vZ2xlX2lnbm9yZUxpc3QiOlswXX0=
