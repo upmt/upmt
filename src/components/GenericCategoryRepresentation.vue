@@ -11,7 +11,7 @@
         <DragElement
           class="genericsynchroniccategory-name"
           :class="{ 'has-error': genericcategory.errors?.length }"
-          :style="{ backgroundColor: genericcategory.color }"
+          :style="{ backgroundColor: genericcategory.color || 'transparent' }"
           @click="debug"
           type="genericsynchroniccategory"
           :data="genericcategory.name">
@@ -52,7 +52,7 @@
                     flat
                     @click="highlightMoment(moment.id)"
                     size="sm"
-                    :style="{ backgroundColor: moment.color }"
+                    :style="{ backgroundColor: moment.color || 'transparent' }"
                     icon="mdi-alpha-d-box-outline">
                   </q-btn>
                   <q-btn

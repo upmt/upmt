@@ -96,7 +96,7 @@
               :data="annotation.id">
               <q-icon
                 size="xs"
-                :style="{ backgroundColor: annotation.color }"
+                :style="{ backgroundColor: annotation.color || 'transparent' }"
                 name="mdi-comment-quote-outline"></q-icon>
               <span class="extract">{{ annotation.shorttext }}</span>
             </DragElement>

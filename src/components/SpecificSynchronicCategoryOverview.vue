@@ -4,7 +4,7 @@
        :data-specificsynchroniccategory="categoryId">
 
     <div class="specificsynchroniccategory"
-         :style="{ backgroundColor: category.color }"
+         :style="{ backgroundColor: category.color || 'transparent' }"
          v-if="category"
          :data-specificsynchroniccategory="categoryId">
 

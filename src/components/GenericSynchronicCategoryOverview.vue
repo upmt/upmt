@@ -5,7 +5,7 @@
 
     <div class="genericsynchroniccategory"
          :class="{ 'root-generic-synchronic-category': category.isRoot }"
-         :style="{ backgroundColor: category.color }"
+         :style="{ backgroundColor: category.color || 'transparent' }"
          v-if="category"
          :data-genericsynchroniccategory="category.name">
 

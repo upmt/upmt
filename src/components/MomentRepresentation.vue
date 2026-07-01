@@ -23,7 +23,7 @@
     </DropZone>
 
     <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
-         :style="{ backgroundColor: moment.color }"
+         :style="{ backgroundColor: moment.color || 'transparent' }"
          v-if="moment"
          :data-moment="moment.id">
 
@@ -270,7 +270,7 @@
   }
 
   function droppedColor (color: string) {
-      store.updateMoment(props.momentId, { color: color })
+      store.updateMomentColor(props.momentId, color)
   }
 
   function droppedSpecificSynchronicCategory (sscId: string) {
@@ -363,10 +363,7 @@
           return moment.value ? moment.value.color : ""
       },
       set (color: string) {
-          if (color == '#ffffff') {
-              color = ''
-          }
-          store.updateMoment(props.momentId, { color })
+          store.updateMomentColor(props.momentId, color)
       }
   })
 

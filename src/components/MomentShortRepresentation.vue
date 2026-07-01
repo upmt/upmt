@@ -8,7 +8,7 @@
                 @color="droppedColor">
 
         <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
-             :style="{ backgroundColor: moment.color }"
+             :style="{ backgroundColor: moment.color || 'transparent' }"
              v-if="moment"
              :data-moment="moment.id">
 

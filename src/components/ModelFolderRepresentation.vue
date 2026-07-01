@@ -1,7 +1,7 @@
 <template>
   <div class="modelfolder-container"
        v-if="modelfolder"
-       :style="{ backgroundColor: modelfolder.color }"
+       :style="{ backgroundColor: modelfolder.color || 'transparent' }"
        :data-modelfolder="modelfolderId">
 
     <q-expansion-item
