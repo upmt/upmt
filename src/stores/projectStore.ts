@@ -804,6 +804,13 @@ export const useProjectStore = defineStore('projectStore', () => {
     repo.Moment.where('id', identifier).update(values)
   }
 
+  function updateMomentColor (identifier: string, color: string) {
+    if (color == '#ffffff') {
+      color = ''
+    }
+    repo.Moment.where('id', identifier).update({ color })
+  }
+
   function updateSpecificSynchronicCategory (identifier: string, values: object) {
     repo.SpecificSynchronicCategory.where('id', identifier).update(values)
   }
@@ -1684,6 +1691,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateDescriptem,
     updateElement,
     updateMoment,
+    updateMomentColor,
     updateProject,
     recursiveUpdateMoment,
     updateModelFolder,

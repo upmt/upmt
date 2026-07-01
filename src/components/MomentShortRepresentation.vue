@@ -79,15 +79,12 @@
           return moment.value ? moment.value.color : ""
       },
       set (color: string) {
-          if (color == '#ffffff') {
-              color = ''
-          }
-          store.updateMoment(props.momentId, { color })
+          store.updateMomentColor(props.momentId, color)
       }
   })
 
   function droppedColor (color: string) {
-      store.updateMoment(props.momentId, { color: color })
+      store.updateMomentColor(props.momentId, color)
   }
 
 </script>

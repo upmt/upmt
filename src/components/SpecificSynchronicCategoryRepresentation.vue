@@ -265,9 +265,6 @@
           return category.value ? category.value.color : ""
       },
       set (color: string) {
-          if (color == '#ffffff') {
-              color = ''
-          }
           store.updateSynchronicCategoryColor(category.value?.projectId, category.value?.name, color)
       }
   })
