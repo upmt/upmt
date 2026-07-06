@@ -12,8 +12,8 @@
               @selection="droppedCreatingSelection"
               @descriptem="droppedCreatingDescriptem">
       <DragElement
-        type="specificsynchroniccategory"
-        data=""
+        type="specificsynchronicmodel"
+        data="modelId"
         @click.meta="debug">
         <div class="specificsynchronicmodel-title">
           <q-icon
