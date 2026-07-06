@@ -15,6 +15,7 @@
                              'color',
                              'moment',
                              'project',
+                             'detachedmodel', 'specificsynchronicmodel',
                              'specificsynchroniccategory', 'genericsynchroniccategory',
                            ])
 
