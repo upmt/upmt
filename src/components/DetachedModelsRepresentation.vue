@@ -14,15 +14,6 @@
         <q-tooltip>Detached models are synchronic models (trees) that are not linked to an interview. <br>They are used to propose the category names/children when editing.<br> Since they are also taken into account in the dynamic model generation, they also are used to detect inconsistencies.
         </q-tooltip>
       </q-btn>
-      <q-btn
-        flat
-        dense
-        size="xs"
-        title="Add detached model"
-        @click="addDetachedModel()"
-        icon="mdi-plus"
-        no-caps>
-      </q-btn>
     </div>
 
     <div class="detachedmodels-list flex column"
@@ -35,6 +26,17 @@
         :key="model.id">
       </DetachedModelRepresentation>
     </div>
+
+    <q-btn
+      flat
+      class="detachedmodel-add"
+      dense
+      size="xs"
+      title="Add detached model"
+      @click="addDetachedModel()"
+      icon="mdi-plus"
+      no-caps>
+    </q-btn>
 
   </div>
 </template>
@@ -75,4 +77,13 @@
 </script>
 
 <style scoped>
+.detachedmodels-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.detachedmodel-add {
+    align-items: end;
+    padding-right: 20px;
+}
 </style>

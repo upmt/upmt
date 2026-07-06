@@ -1,12 +1,17 @@
 <template>
   <div class="detached-model"
-       data-id="{{ modelId }}">
-    <q-icon
-      class="q-px-sm"
-      flat
-      dense
-      size="xs"
-      :name="isActive ? 'mdi-graph' : 'mdi-select-off'" />
+       :data-id="modelId">
+    <DragElement
+      type="detachedmodel"
+      :data="modelId"
+      @click.meta="debug">
+      <q-icon
+        class="q-px-sm"
+        flat
+        dense
+        size="xs"
+        :name="isActive ? 'mdi-graph' : 'mdi-select-off'" />
+    </DragElement>
     <q-btn
       class="detached-model-name"
       align="left"
@@ -30,6 +35,7 @@
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
 
+  import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
 
   const store = useProjectStore()
@@ -59,6 +65,11 @@
       istore.setEditedSpecificSynchronicModelId(proxyModelId)
   }
 
+  function debug () {
+      (window as any).detachedmodel = model.value;
+      console.log("DetachedModel", { detachedmodel: model.value })
+  }
+
   import type { NamedAction } from 'components/util.ts'
 
   const menuActions: NamedAction[] = [
@@ -76,4 +87,8 @@
 </script>
 
 <style scoped>
+.detached-model {
+    display: flex;
+    align-items: center;
+}
 </style>
