@@ -1,4 +1,5 @@
 import BaseModel from './basemodel'
+import GenericDiachronicCategory from './genericdiachroniccategory'
 import { Attr, Str, Uid, Bool, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
 
 export default class ModelFolder extends BaseModel {
@@ -23,6 +24,8 @@ export default class ModelFolder extends BaseModel {
   @Attr() parentId!: string
   @HasMany(() => ModelFolder, 'parentId') @OnDelete('cascade') declare folders: ModelFolder[]
 
+  @HasMany(() => GenericDiachronicCategory, 'modelfolderId') @OnDelete('cascade') declare genericdiachroniccategories: GenericDiachronicCategory[]
+
   toJSON (shallow = false): any {
     return {
       id: this.id,
@@ -34,7 +37,8 @@ export default class ModelFolder extends BaseModel {
       name: this.name,
       color: this.color,
       isExpanded: this.isExpanded,
-      folders: this.folders?.map(f => f.toJSON(shallow))
+      folders: this.folders?.map(f => f.toJSON(shallow)),
+      genericdiachroniccategories: this.genericdiachroniccategories?.map(c => c.toJSON(shallow)),
     }
   }
 }

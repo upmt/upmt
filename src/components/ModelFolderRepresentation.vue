@@ -4,22 +4,14 @@
        :style="{ backgroundColor: modelfolder.color || 'transparent' }"
        :data-modelfolder="modelfolderId">
 
-    <q-expansion-item
-      class="modelfolder-body"
-      dense
-      dense-toggle
-      :duration="0"
-      expand-icon-toggle
-      switch-toggle-side
+    <custom-expansion-item
+      class="genericdiachroniccategory-body"
       v-model="expand"
-      header-class="header-class"
-      :title="modelfolder.name"
-      :content-inset-level=".2"
       >
 
       <template v-slot:header>
         <DropZone data="header"
-                  class="empty-padding"
+                  class="modelfolder-header"
                   types="upmt/modelfolder"
                   @modelfolder="droppedModelFolder">
           <DragElement
@@ -54,9 +46,16 @@
             :modelfolderId="f.id">
           </ModelFolderRepresentation>
         </div>
+        <div v-for="c in modelfolder.genericdiachroniccategories" :key="c.id">
+          <GenericDiachronicCategoryRepresentation
+            v-if="! c.parentId"
+            :currentInterviewId="currentInterviewId"
+            :categoryId="c.id">
+          </GenericDiachronicCategoryRepresentation>
+        </div>
       </div>
 
-    </q-expansion-item>
+    </custom-expansion-item>
 
   </div>
 </template>
@@ -64,10 +63,12 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'
+  import CustomExpansionItem from './CustomExpansionItem.vue'
   import ColorizeIcon from './ColorizeIcon.vue'
   import DropZone from './DropZone.vue'
   import DragElement from './DragElement.vue'
   import ElementMenu from './ElementMenu.vue'
+  import GenericDiachronicCategoryRepresentation from './GenericDiachronicCategoryRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
   const store = useProjectStore()
@@ -172,6 +173,10 @@
   }
   .on-name-hover {
       opacity: 0;
+  }
+  .modelfolder-name {
+      display: flex;
+      flex-direction: row;
   }
   .modelfolder-name:hover .on-name-hover {
       opacity: 1;

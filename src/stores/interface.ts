@@ -3,6 +3,7 @@ import { computed, reactive, ref, Ref, watch } from 'vue'
 import Interview from 'stores/models/interview'
 
 const SSCPrefix = "SSC"
+const GDCPrefix = "Category "
 const MomentPrefix = "Moment "
 const DetachedModelPrefix = "Detached Model "
 
@@ -11,6 +12,7 @@ export const useInterfaceStore = defineStore('interface', () => {
   const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
   const newSSCIndex = ref(1)
+  const newGDCIndex = ref(1)
   const newDetachedModelIndex = ref(1)
   // Is the data modified?
   const isModified = ref(false)
@@ -35,6 +37,10 @@ export const useInterfaceStore = defineStore('interface', () => {
     return newSSCIndex.value++
   }
 
+  function newGDCIndexIncrement () {
+    return newGDCIndex.value++
+  }
+
   function newDetachedModelIndexIncrement () {
     return newDetachedModelIndex.value++
   }
@@ -46,6 +52,10 @@ export const useInterfaceStore = defineStore('interface', () => {
     // (e.g. extracting name from textual content)
     // See https://github.com/retextjs/retext-keywords
     return `${prefix}${newSSCIndexIncrement()}`
+  }
+
+  function newGDCId (prefix: string = GDCPrefix) {
+    return `${prefix}${newGDCIndexIncrement()}`
   }
 
   function newMomentId (prefix: string = MomentPrefix) {
@@ -156,6 +166,7 @@ export const useInterfaceStore = defineStore('interface', () => {
     newSSCIndexIncrement,
     newMomentId,
     newSSCId,
+    newGDCId,
     newDetachedModelId,
     resetIndexes,
     setCurrentInterview,

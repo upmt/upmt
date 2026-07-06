@@ -1,4 +1,6 @@
-import { Attr, Num, Str, Uid, BelongsTo, Bool, HasOne, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
+import { Attr, Num, Str, Uid, BelongsTo, BelongsToMany, Bool, HasOne, HasMany, OnDelete } from 'pinia-orm/dist/decorators'
+import GenericDiachronicCategory from './genericdiachroniccategory'
+import DiachronicAssociation from './diachronicassociation'
 import Justifiable from './justifiable'
 import Justification from './justification'
 import SpecificSynchronicModel from './specificsynchronicmodel'
@@ -32,6 +34,8 @@ export default class Moment extends Justifiable {
   @HasMany(() => Moment, 'parentId') @OnDelete('cascade') declare children: Moment[]
 
   @Num(0) declare childIndex: number
+
+  @BelongsToMany(() => GenericDiachronicCategory, () => DiachronicAssociation, 'momentId', 'genericDiachronicCategoryId') declare genericdiachroniccategories: GenericDiachronicCategory[]
 
   get descriptionLabel () {
     return this.name

@@ -13,6 +13,8 @@ import Moment from './models/moment'
 import Project from './models/project'
 import SpecificSynchronicCategory from './models/specificsynchroniccategory'
 import SpecificSynchronicModel from './models/specificsynchronicmodel'
+import GenericDiachronicCategory from './models/genericdiachroniccategory'
+import DiachronicAssociation from './models/diachronicassociation'
 import { stringToId, groupBy, stripFields } from './util'
 import { isStoredProject, getStoredProjectData } from './storage'
 import { useInterfaceStore } from 'stores/interface'
@@ -90,6 +92,8 @@ const repo = {
   Project:          useRepo(Project),
   SpecificSynchronicCategory: useRepo(SpecificSynchronicCategory),
   SpecificSynchronicModel: useRepo(SpecificSynchronicModel),
+  GenericDiachronicCategory: useRepo(GenericDiachronicCategory),
+  DiachronicAssociation: useRepo(DiachronicAssociation),
 }
 
 // For updateElement, only the entity name seems to be easily available.
@@ -179,8 +183,9 @@ export const useProjectStore = defineStore('projectStore', () => {
     return repo.ModelFolder
       // .with('categorymodels', (query) => { query.with('properties') })
       // .with('momentmodels')
-        .with('folders', (query) => { query.withAll() })
-        .find(id)
+      .with('folders', (query) => { query.withAll() })
+      .with('genericdiachroniccategories')
+      .find(id)
   }
 
   function getRepo () {
@@ -496,6 +501,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     } else {
       return []
     }
+  }
+
+  function getGenericDiachronicCategory (id: string) {
+    return repo.GenericDiachronicCategory
+      .with('children')
+      .with('folder')
+      .with('moments')
+      .find(id)
   }
 
   function getInterviewAnnotations (interviewId: string) {
@@ -821,6 +834,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  function updateGenericDiachronicCategory (categoryId: string, values: object) {
+    repo.GenericDiachronicCategory.where('id', categoryId).update(values)
+  }
+
   function doRecursiveUpdateMoment (identifier: string, values: object) {
     // This is the internal version, where we are sure that a transaction has been started
     updateMoment(identifier, values)
@@ -907,6 +924,25 @@ export const useProjectStore = defineStore('projectStore', () => {
         })
         history.commitTransaction()
     }
+  }
+
+  function addGenericDiachronicCategory (name: string, modelFolder: ModelFolder) {
+    const data = {
+      name,
+      folder: modelFolder
+    }
+    return repo.GenericDiachronicCategory.save(data)
+  }
+
+  function addGenericDiachronicCategoryToMoment (categoryId: string, momentId: string) {
+    repo.Moment.save({
+      id: momentId,
+      genericdiachroniccategories: [
+        {
+          id: categoryId
+        }
+      ]
+    })
   }
 
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
@@ -1623,6 +1659,8 @@ export const useProjectStore = defineStore('projectStore', () => {
   return {
     activateProject,
     addAnnotation,
+    addGenericDiachronicCategory,
+    addGenericDiachronicCategoryToMoment,
     addModelFolder,
     addMoment,
     addSpecificSynchronicCategory,
@@ -1664,6 +1702,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     createDetachedModel,
     getDetachedModel,
     getDetachedModels,
+    getGenericDiachronicCategory,
     getInterview,
     getInterviewAnnotations,
     getInterviewByMoment,
@@ -1697,6 +1736,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     updateModelFolder,
     updateSpecificSynchronicCategory,
     updateSynchronicCategoryColor,
+    updateGenericDiachronicCategory,
     mergeProjectData,
     setActiveInterview,
     setActiveDetachedModel

@@ -40,10 +40,18 @@
             <q-route-tab :to="{ query: { tab: newInterviewId } }"
                          :label="newInterviewLabel"
                          class="new-interview"
+                         content-class="new-interview"
                          :name="newInterviewId"
                          icon="add">
             </q-route-tab>
           </q-tabs>
+          <q-separator />
+          <GenericDiachronicCategoriesRepresentation
+            title="Generic Diachronic Categories"
+            class="generic-diachronic-categories"
+            :projectId="projectId"
+            :currentInterviewId="currentInterviewId">
+          </GenericDiachronicCategoriesRepresentation>
           <q-separator />
           <div class="text-bold"></div>
           <DetachedModelsRepresentation
@@ -208,6 +216,7 @@
   import ElementMenu from './ElementMenu.vue'
   import GenericCategoriesOverview from 'components/GenericCategoriesOverview.vue'
   import GenericCategoriesRepresentation from 'components/GenericCategoriesRepresentation.vue'
+  import GenericDiachronicCategoriesRepresentation from 'components/GenericDiachronicCategoriesRepresentation.vue'
   import InfoPanel from './InfoPanel.vue'
   import InterviewRepresentation from 'components/InterviewRepresentation.vue'
   //  import ModelFolderRepresentation from './ModelFolderRepresentation.vue'

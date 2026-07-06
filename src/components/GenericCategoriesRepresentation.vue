@@ -15,13 +15,14 @@
         </q-tooltip>
       </q-btn>
     </div>
-    <GenericCategoryRepresentation
-      v-for="category in genericGraphs.categories"
-      :key="category.name"
-      :genericGraphs="genericGraphs"
-      :genericcategory="category"
-      :currentInterviewId="currentInterviewId" />
-
+    <div class="genericcategories-list">
+      <GenericCategoryRepresentation
+        v-for="category in genericGraphs.categories"
+        :key="category.name"
+        :genericGraphs="genericGraphs"
+        :genericcategory="category"
+        :currentInterviewId="currentInterviewId" />
+    </div>
   </div>
 </template>
 

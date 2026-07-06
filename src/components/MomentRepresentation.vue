@@ -28,7 +28,7 @@
          :data-moment="moment.id">
 
       <DropZone data="header"
-                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/specificsynchronicmodel upmt/moment"
+                types="upmt/descriptem upmt/annotation upmt/selection upmt/color upmt/specificsynchroniccategory upmt/genericsynchroniccategory upmt/specificsynchronicmodel upmt/genericdiachroniccategory upmt/moment"
                 class="row full-width justify-center moment-header q-pa-xs"
                 @annotation="droppedAnnotation"
                 @moment="droppedMoment"
@@ -37,6 +37,7 @@
                 @specificsynchroniccategory="droppedSpecificSynchronicCategory"
                 @genericsynchroniccategory="droppedGenericSynchronicCategory"
                 @specificsynchronicmodel="droppedSpecificSynchronicModel"
+                @genericdiachroniccategory="droppedGenericDiachronicCategory"
                 @color="droppedColor">
         <custom-expansion-item
           class="moment-body pa-md-xs relative-position"
@@ -293,6 +294,11 @@
                                               genericInfo.abstractionType)
 
       }
+  }
+
+  function droppedGenericDiachronicCategory (categoryId: string) {
+      store.addGenericDiachronicCategoryToMoment(categoryId,
+                                                 props.momentId)
   }
 
   // Dropped selections to create a moment. data is before or after
