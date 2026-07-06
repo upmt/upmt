@@ -66,7 +66,7 @@
   })
 
   function addDetachedModel () {
-      const detachedModel = store.createDetachedModel(props.projectId, "Detached model")
+      const detachedModel = store.createDetachedModel(props.projectId, istore.newDetachedModelId())
       if (detachedModel) {
           istore.setEditedSpecificSynchronicModelId(detachedModel.proxy.id)
       }

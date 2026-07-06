@@ -4,12 +4,14 @@ import Interview from 'stores/models/interview'
 
 const SSCPrefix = "SSC"
 const MomentPrefix = "Moment "
+const DetachedModelPrefix = "Detached Model "
 
 export const useInterfaceStore = defineStore('interface', () => {
   const highlightedMomentId = ref("")
   const highlightedDescriptemId = ref("")
   const newMomentIndex = ref(1)
   const newSSCIndex = ref(1)
+  const newDetachedModelIndex = ref(1)
   // Is the data modified?
   const isModified = ref(false)
   // expert mode
@@ -33,6 +35,10 @@ export const useInterfaceStore = defineStore('interface', () => {
     return newSSCIndex.value++
   }
 
+  function newDetachedModelIndexIncrement () {
+    return newDetachedModelIndex.value++
+  }
+
   function newSSCId (prefix: string = SSCPrefix) {
     // FIXME: could have either generic "context" info or
     // descriptem/annotation/selection data to generate a unique name
@@ -44,6 +50,10 @@ export const useInterfaceStore = defineStore('interface', () => {
 
   function newMomentId (prefix: string = MomentPrefix) {
     return `${prefix}${newMomentIndexIncrement()}`
+  }
+
+  function newDetachedModelId (prefix: string = DetachedModelPrefix) {
+    return `${prefix}${newDetachedModelIndexIncrement()}`
   }
 
   function maxIndexValue (names: string[], prefix: string) {
@@ -146,6 +156,7 @@ export const useInterfaceStore = defineStore('interface', () => {
     newSSCIndexIncrement,
     newMomentId,
     newSSCId,
+    newDetachedModelId,
     resetIndexes,
     setCurrentInterview,
     setCurrentProjectId,
