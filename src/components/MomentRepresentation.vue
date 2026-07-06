@@ -69,6 +69,21 @@
                 </q-popup-edit>
               </span>
             </DragElement>
+            <q-icon
+              v-if="moment.genericdiachroniccategories.length"
+              size="xs"
+              name="mdi-alpha-d-box">
+              <q-tooltip class="flex column">
+                <q-btn
+                  no-caps
+                  dense
+                  anchor="center middle"
+                  self="top left"
+                  v-for="category in moment.genericdiachroniccategories"
+                  :key="category.id">{{ category.fullName }}
+                </q-btn>
+              </q-tooltip>
+            </q-icon>
             <NoteIcon
               :element="moment" />
             <div class="element-toolbar on-name-hover">

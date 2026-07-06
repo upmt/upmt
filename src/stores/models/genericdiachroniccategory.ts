@@ -32,6 +32,14 @@ export default class GenericDiachronicCategory extends BaseModel {
     return { genericdiachroniccategory: this }
   }
 
+  get fullName (): string {
+    if (this.parentId) {
+      return `${this.parent?.fullName ?? ""} / ${this.name}`
+    } else {
+      return this.name
+    }
+  }
+
   toJSON (shallow=false): any {
     const base = {
       name: this.name,

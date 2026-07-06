@@ -252,6 +252,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         (qc) => qc.with('justification',
           (qj) => qj.with('descriptems', qd => qd.orderBy('startIndex'))
         )))
+      .with('genericdiachroniccategories')
       .find(id)
   }
 
