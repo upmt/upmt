@@ -239,7 +239,7 @@
   .on-name-hover {
       opacity: 0;
   }
-  .genericdiachroniccategory-name:hover .on-name-hover {
+  .genericdiachroniccategory:hover .on-name-hover {
       opacity: 1;
   }
   .genericdiachroniccategory-children {
