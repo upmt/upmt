@@ -22,3 +22,10 @@
   const store = useProjectStore()
   const project = computed(() => store.activateProject(props.projectId))
 </script>
+
+<style>
+.episodes {
+    --moment-maximum-width: none;
+    --moment-minimum-width: 200px;
+}
+</style>

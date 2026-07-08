@@ -107,10 +107,6 @@
 </script>
 
 <style scoped>
-.episodes {
-    --moment-maximum-width: 200px;
-    --moment-minimum-width: 200px;
-}
 .horizontal {
     display: flex;
     flex-direction: row;

@@ -37,3 +37,9 @@
       }
   })
 </script>
+<style>
+.interviews {
+    --moment-maximum-width: none;
+    --moment-minimum-width: 200px;
+}
+</style>
