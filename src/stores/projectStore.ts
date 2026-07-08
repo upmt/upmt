@@ -252,7 +252,7 @@ export const useProjectStore = defineStore('projectStore', () => {
         (qc) => qc.with('justification',
           (qj) => qj.with('descriptems', qd => qd.orderBy('startIndex'))
         )))
-      .with('genericdiachroniccategories')
+      .with('genericdiachroniccategories', (qd) => qd.with('parent'))
       .find(id)
   }
 
@@ -509,6 +509,7 @@ export const useProjectStore = defineStore('projectStore', () => {
       .with('children')
       .with('folder')
       .with('moments')
+      .with('parent')
       .find(id)
   }
 
@@ -1185,6 +1186,14 @@ export const useProjectStore = defineStore('projectStore', () => {
     history.commitTransaction()
   }
 
+  function deleteGenericDiachronicCategory (categoryId: string) {
+    // FIXME: check cascade deletion of children
+    const history = useHistory()
+    history.beginTransaction(`Delete Generic Diachronic Category ${categoryId}`)
+    repo.GenericDiachronicCategory.where('id', categoryId).delete()
+    history.commitTransaction()
+  }
+
   function deleteMoment (momentId: string) {
     // FIXME: check cascade deletion of justification/specificsynchronicmodel
     const history = useHistory()
@@ -1674,6 +1683,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     deleteAnnotation,
     deleteDescriptem,
     deleteDetachedModel,
+    deleteGenericDiachronicCategory,
     deleteInterview,
     deleteModelFolder,
     deleteMoment,

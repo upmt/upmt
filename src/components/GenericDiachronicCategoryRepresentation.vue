@@ -220,6 +220,7 @@
 
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
+      [ "Delete", () => store.deleteGenericDiachronicCategory(props.categoryId) ],
       [ "Debug", () => debug() ]
   ]
 </script>
