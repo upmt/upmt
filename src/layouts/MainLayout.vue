@@ -52,15 +52,27 @@
           </span>
           <span>
             <q-btn
-              :title="`${history.undoStack.length} items`"
               :disable="!history.canUndo"
               @click="doUndo"
-              icon="mdi-undo" />
+              icon="mdi-undo">
+              <q-tooltip class="flex column bg-white text-black shadow-1">
+                <span
+                  v-for="item in history.undoStack"
+                  :key="item.timestamp">{{ item.label }}
+                </span>
+              </q-tooltip>
+            </q-btn>
             <q-btn
-              :title="`${history.redoStack.length} items`"
               :disable="!history.canRedo"
               @click="doRedo"
-              icon="mdi-redo" />
+              icon="mdi-redo">
+              <q-tooltip class="flex column bg-white text-black shadow-1">
+                <span
+                  v-for="item in history.redoStack"
+                  :key="item.timestamp">{{ item.label }}
+                </span>
+              </q-tooltip>
+            </q-btn>
           </span>
         </q-toolbar-title>
 
