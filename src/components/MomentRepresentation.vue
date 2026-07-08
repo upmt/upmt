@@ -141,6 +141,7 @@
       </div>
 
       <DropZone :data="`in:${momentId}`"
+                v-if="! moment.children.length"
                 class="empty-padding"
                 types="upmt/moment upmt/selection upmt/descriptem upmt/annotation"
                 @moment="droppedNewMoment"
