@@ -10,8 +10,9 @@
       <template v-slot:header>
         <DropZone data="header"
                   class="genericdiachroniccategory-header"
-                  types="upmt/genericdiachroniccategory"
-                  @genericdiachroniccategory="droppedGenericDiachronicCategory">
+                  types="upmt/genericdiachroniccategory upmt/moment"
+                  @genericdiachroniccategory="droppedGenericDiachronicCategory"
+                  @moment="droppedMoment">
           <DragElement
             class="genericdiachroniccategory"
             :style="{ backgroundColor: genericdiachroniccategory.color || 'transparent' }"
@@ -216,6 +217,11 @@
               folder: genericdiachroniccategory.value.folder
           })
       }
+  }
+
+  function droppedMoment (momentId: string) {
+      store.addGenericDiachronicCategoryToMoment(props.categoryId,
+                                                 momentId)
   }
 
   import type { NamedAction } from 'components/util.ts'
