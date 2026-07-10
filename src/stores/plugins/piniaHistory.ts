@@ -47,6 +47,8 @@
 import { type PiniaPlugin, type PiniaPluginContext, defineStore } from 'pinia'
 import { toRaw } from 'vue'
 
+const STORE_DIFFS = false
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
@@ -176,7 +178,7 @@ export interface HistoryEntry {
   before: GlobalSnapshot
   /** The global state **after** this entry's mutations. */
   after: GlobalSnapshot
-  diff: any
+  diff?: any
   /** ISO timestamp of when the entry was recorded. */
   timestamp: string
 }
@@ -306,10 +308,12 @@ export const PiniaHistoryPlugin: PiniaPlugin = (context: PiniaPluginContext) => 
         label: `Mutation #${mutationCounter} on "${store.$id}"`,
         before,
         after,
-        diff: diffSnapshot(before, after),
         timestamp: new Date().toISOString(),
       }
-      console.log(`diff for ${entry.label}`, entry.diff)
+      if (STORE_DIFFS) {
+        entry.diff = diffSnapshot(before, after)
+        console.log(`diff for ${entry.label}`, entry.diff)
+      }
 
       historyStore.undoStack.push(entry)
       // Any new mutation invalidates the redo stack
@@ -366,11 +370,13 @@ export function useHistory() {
       label: historyStore.transactionLabel,
       before,
       after,
-      timestamp: new Date().toISOString(),
-      diff: diffSnapshot(before, after)
+      timestamp: new Date().toISOString()
     }
 
-    console.log(`diff for ${entry.label}`, entry.diff)
+    if (STORE_DIFFS) {
+      entry.diff = diffSnapshot(before, after)
+      console.log(`diff for ${entry.label}`, entry.diff)
+    }
 
     historyStore.undoStack.push(entry)
     historyStore.redoStack = []
