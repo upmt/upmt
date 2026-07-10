@@ -1253,7 +1253,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     if (model) {
       const history = useHistory()
       history.beginTransaction(`Clear specific synchronic model ${ssmId}`)
-      model.categories.forEach(category => deleteSpecificSynchronicCategory(category.id, true))
+      model.categories.forEach(category => doDeleteSpecificSynchronicCategory(category.id, true))
       history.commitTransaction()
     } else {
       console.log(`Error in clearSpecificSynchronicModel: empty model ${ssmId}`)
