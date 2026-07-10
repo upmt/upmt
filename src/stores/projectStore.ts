@@ -645,6 +645,10 @@ export const useProjectStore = defineStore('projectStore', () => {
 
       out = repo.Project.save(data as Project)
       history.commitTransaction()
+
+      // Clear history, it makes no sense to have the ProjectLoad item on the Undo stack
+      history.clearHistory()
+
       // We must remap models
     } else {
       // Old upmt files
