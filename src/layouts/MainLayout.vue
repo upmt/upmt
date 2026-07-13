@@ -50,7 +50,21 @@
               Modified - Click here to save
             </q-btn>
           </span>
-          <span>
+        </q-toolbar-title>
+
+        <div
+          class="print-hidden"
+          >
+          <q-btn
+            v-if="isDevelopment"
+            class="q-ml-xl"
+            outline
+            color="info"
+            no-caps>
+            Development version
+          </q-btn>
+          <span
+            v-if="router.currentRoute.value.name == 'project'">
             <q-btn
               :disable="!history.canUndo"
               @click="doUndo"
@@ -74,19 +88,6 @@
               </q-tooltip>
             </q-btn>
           </span>
-        </q-toolbar-title>
-
-        <div
-          class="print-hidden"
-          >
-          <q-btn
-            v-if="isDevelopment"
-            class="q-ml-xl"
-            outline
-            color="info"
-            no-caps>
-            Development version
-          </q-btn>
           <q-btn
             v-if="currentProject"
             dense
@@ -226,7 +227,7 @@
   import { useQuasar } from 'quasar'
   import { storeToRefs } from 'pinia'
   import { useHistory } from 'stores/plugins/piniaHistory'
-  import { RouteLocationRaw } from 'vue-router'
+  import { RouteLocationRaw, useRouter } from 'vue-router'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
   import { storeProject } from 'stores/storage'
@@ -255,6 +256,9 @@
 
   const istore = useInterfaceStore()
 
+  const router = useRouter()
+
+  console.log("Router", router.currentRoute)
   const {
       currentInterview,
       currentProjectId,
