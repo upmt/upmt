@@ -1,6 +1,5 @@
 import { Model } from 'pinia-orm'
 import { Str, Uid } from 'pinia-orm/dist/decorators'
-import { useHistory } from 'stores/plugins/piniaHistory'
 
 // When changing API, also update App.vue
 type ContextProvider = {
@@ -53,16 +52,10 @@ export default class BaseModel extends Model {
   }
 
   static override updating (model: BaseModel) {
-    const history = useHistory()
-
     // updating is called after the actual data history mutation code.
     // Thus it generates 2 history records (1 for the data, 1 because of the updating)
     // (because updating returns true, which triggers model save)
     // We ignore the 'modified' update by setting it as a transient change.
-
-    // It is not a correct solution (since the 'modified' data is not consistent)
-    // but should make undo usable at least.
-    history.setTransientChange()
 
     model.modified = (new Date()).toISOString()
     if (this.context?.setModified) {
