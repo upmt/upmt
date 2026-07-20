@@ -69,21 +69,33 @@
                 </q-popup-edit>
               </span>
             </DragElement>
-            <q-icon
+            <q-btn
               v-if="moment.genericdiachroniccategories.length"
               size="xs"
-              name="mdi-alpha-d-box">
-              <q-tooltip class="flex column">
-                <q-btn
-                  no-caps
-                  dense
-                  anchor="center middle"
-                  self="top left"
-                  v-for="category in moment.genericdiachroniccategories"
-                  :key="category.id">{{ category.fullName }}
-                </q-btn>
-              </q-tooltip>
-            </q-icon>
+              dense
+              flat
+              icon="mdi-alpha-d-box">
+              <q-menu class="column">
+                <div  v-for="category in moment.genericdiachroniccategories"
+                      class="flex row justify-between"
+                      :key="category.id">
+                  <q-btn
+                    :label="category.fullName"
+                    align="left"
+                    :style="{ backgroundColor: category.color || 'transparent' }"
+                    size="sm"
+                    no-caps
+                    flat
+                    dense>
+                  </q-btn>
+                  <q-btn
+                    icon="mdi-delete"
+                    title="Remove category"
+                    dense
+                    size="sm" />
+                </div>
+              </q-menu>
+            </q-btn>
             <NoteIcon
               :element="moment" />
             <div class="element-toolbar on-name-hover">
