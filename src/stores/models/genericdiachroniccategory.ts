@@ -55,7 +55,8 @@ export default class GenericDiachronicCategory extends BaseModel {
     } else {
       return {
         ...base,
-        children: this.children.map(c => c.toJSON(shallow))
+        moments: this.moments?.map(m => m.toJSON()),
+        children: this.children.map(c => c.toJSON())
       }
     }
   }

@@ -67,6 +67,7 @@ export default class Moment extends Justifiable {
         ...base,
         justification: this.justification?.toJSON(),
         specificsynchronicmodel: this.specificsynchronicmodel?.toJSON(shallow),
+        genericdiachroniccategories: this.genericdiachroniccategories?.map(gdc => gdc.toJSON(shallow)),
         children: this.children?.map(m => m.toJSON(shallow))
       }
     }
