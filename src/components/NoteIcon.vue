@@ -31,6 +31,7 @@
 
   import { computed } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
+  import { useHistory } from 'stores/plugins/piniaHistory'
   import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
@@ -46,7 +47,10 @@
       },
       set: (value) => {
           if (props.element) {
+              const history = useHistory()
+              history.beginTransaction(`Update note on ${props.element.name}`)
               store.updateElement(props.element as BaseModel, { note: value })
+              history.commitTransaction()
           }
       }
   })
