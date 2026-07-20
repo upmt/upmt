@@ -164,17 +164,6 @@ export const useProjectStore = defineStore('projectStore', () => {
       .find(id)
   }
 
-  /**
-   * Strip the given data from ids so that they get restored correctly upon load
-   * Caution: the project id itself will be removed
-   */
-  function stripProjectData (data: any) {
-    return stripFields(data,
-      [ 'id', 'projectId', 'ownerId', 'parentId',
-        'momentId', 'detachedModelId', 'specificsynchronicmodelId',
-        'interviewId', 'analysisId', 'justificationId' ])
-  }
-
   function getProjectByName (name: string): Project | null {
     return repo.Project.where('name', name).first()
   }
@@ -588,6 +577,77 @@ export const useProjectStore = defineStore('projectStore', () => {
     }
   }
 
+  // Recursively backup or restore GDC ids for a given ModelFolder
+  // backup: copy id/parentId to _id/_parentId so that it is preserved
+  // restore: copy _id/_parentId to id/parentId to get the information back
+  // Return a Set of original_id in backup mode
+  // Note: we process JSON data here, not ORM model
+  function backupOrRestoreGenericDiachronicCategoriesIds (
+    folder: any,
+    mode: string = 'backup',
+    transform: (arg0: string) => string = (s) => s) {
+    const idSet = new Set()
+
+    if (! folder.genericdiachroniccategories) {
+      return idSet
+    }
+
+    // genericdiachroniccategories is a flat list of items
+    for (const category of folder.genericdiachroniccategories) {
+      if (mode == 'restore') {
+        category.id = transform(category._id)
+        category.parentId = transform(category._parentId)
+      } else {
+        // Default is backup
+        category._id = category.id
+        idSet.add(category.id)
+        category._parentId = category.parentId
+      }
+    }
+    // Recursively process folders
+    for (const child of folder.folders) {
+      for (const id of backupOrRestoreGenericDiachronicCategoriesIds(child, mode, transform)) {
+        idSet.add(id)
+      }
+    }
+    return idSet
+  }
+
+  function backupGDCReferences (moment: any) {
+    // Copy the GDC references to a temporary genericcategoryIds list
+    if (moment.genericdiachroniccategories) {
+      moment.genericdiachroniccategoryIds = moment.genericdiachroniccategories.map((gdc: any) => gdc.id)
+      delete moment.genericdiachroniccategories
+    }
+    for (const child of moment.children) {
+      backupGDCReferences(child)
+    }
+  }
+
+  function restoreGDCReferences (moment: any, transform: (arg0: string) => string = (s) => s) {
+    // Restore the GDC references from the temporary
+    // genericcategoryIds list to the genericcategories list,
+    // transforming ids
+    if (moment.genericdiachroniccategoryIds) {
+      moment.genericdiachroniccategories = moment.genericdiachroniccategoryIds.map((gdcId: string) => ({ id: transform(gdcId) }))
+      delete moment.genericdiachroniccategoryIds
+    }
+    for (const child of moment.children) {
+      restoreGDCReferences(child, transform)
+    }
+  }
+
+  /**
+   * Strip the given data from ids so that they get restored correctly upon load
+   * Caution: the project id itself will be removed
+   */
+  function stripProjectData (data: any) {
+    return stripFields(data,
+      [ 'id', 'projectId', 'ownerId', 'parentId',
+        'momentId', 'detachedModelId', 'specificsynchronicmodelId',
+        'interviewId', 'analysisId', 'justificationId', 'modelfolderId' ])
+  }
+
   /**
    * Import a data structure (read from a JSON object)
    */
@@ -608,10 +668,33 @@ export const useProjectStore = defineStore('projectStore', () => {
       // Configure pinia-orm context so that projectId is correctly set.
       // Remove the ids so that if we load twice the same dataset, it does not mess with existing elements.
       // WARNING: since we strip id from interviews, then descriptems's interviewId  become invalid and we need to restore them
+
+      // WARNING: genericcategories are defined in modelfolder, then
+      // referenced in moments. But since we strip ids, we lose all
+      // associations. We need to preserve the ids, before stripping,
+      // so that we can restore the links afterwards
+      const GDCIdSet = backupOrRestoreGenericDiachronicCategoriesIds(data.modelfolder)
+      for (const interview of data.interviews) {
+        backupGDCReferences(interview.analysis.rootMoment)
+      }
+
       const projectId = data.id
       data = stripProjectData(data)
       // Restore projectId
       data.id = projectId
+
+      // Generate new ids for all GDC ids
+      const GDCIdMap = new Map()
+      for (const id of GDCIdSet) {
+        GDCIdMap.set(id, crypto.randomUUID())
+      }
+
+      // Restore ids for generic categories
+      backupOrRestoreGenericDiachronicCategoriesIds(data.modelfolder, 'restore', (id) => GDCIdMap.get(id))
+      // Restore GDCIds in moments
+      for (const interview of data.interviews) {
+        restoreGDCReferences(interview.analysis.rootMoment, (id) => GDCIdMap.get(id))
+      }
 
       // v2 models had a .genericmodels that has been renamed to .detachedmodels
       if (data.genericmodels && data.detachedmodels === undefined) {
@@ -803,6 +886,10 @@ export const useProjectStore = defineStore('projectStore', () => {
    * Return a project structure with all relationships hydrated, and all *Id attributes stripped
    * so that it can be imported without overwriting existing elements
    * Preserve the project id
+   *
+   * Warning: this will currently mess the genericdiachroniccategories
+   * relations in moments, since we need their id to properly identify
+   * them.
    */
   function hydrateAndStripProject (projectId: string): any {
     const data = stripProjectData(hydrateProject(projectId))
@@ -933,11 +1020,15 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function addGenericDiachronicCategory (name: string, modelFolder: ModelFolder) {
+    const history = useHistory()
+    history.beginTransaction(`Add GenericDiachronicCategory ${name}`)
     const data = {
       name,
       folder: modelFolder
     }
-    return repo.GenericDiachronicCategory.save(data)
+    const gdc = repo.GenericDiachronicCategory.save(data)
+    history.commitTransaction()
+    return gdc
   }
 
   function addGenericDiachronicCategoryToMoment (categoryId: string, momentId: string) {
@@ -954,6 +1045,10 @@ export const useProjectStore = defineStore('projectStore', () => {
     history.commitTransaction()
   }
 
+  function removeGenericDiachronicCategory (categoryId: string, momentId: string) {
+    repo.DiachronicAssociation
+      .whereId([ categoryId, momentId ])
+      .delete()
   }
 
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
@@ -1189,6 +1284,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     const history = useHistory()
     history.beginTransaction(`Delete model folder ${folderId}`)
     repo.ModelFolder.where('parentId', folderId).get().forEach(mf => deleteModelFolder(mf.id))
+    // FIXME: delete genericdiachroniccategories
     //repo.CategoryModel.where('modelfolderId', folderId).get().forEach(cm => deleteCategoryModel(cm.id))
     //repo.MomentModel.where('modelfolderId', folderId).get().forEach(mm => deleteMomentModel(mm.id))
     repo.ModelFolder.where('id', folderId).delete()
@@ -1680,6 +1776,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     addAnnotation,
     addGenericDiachronicCategory,
     addGenericDiachronicCategoryToMoment,
+    removeGenericDiachronicCategory,
     addModelFolder,
     addMoment,
     addSpecificSynchronicCategory,
