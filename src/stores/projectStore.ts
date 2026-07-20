@@ -941,6 +941,8 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function addGenericDiachronicCategoryToMoment (categoryId: string, momentId: string) {
+    const history = useHistory()
+    history.beginTransaction(`Add GenericDiachronicCategory ${categoryId} to moment ${momentId}`)
     repo.Moment.save({
       id: momentId,
       genericdiachroniccategories: [
@@ -949,6 +951,9 @@ export const useProjectStore = defineStore('projectStore', () => {
         }
       ]
     })
+    history.commitTransaction()
+  }
+
   }
 
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
