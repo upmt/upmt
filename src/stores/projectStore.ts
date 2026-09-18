@@ -1326,6 +1326,10 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function deleteProject (projectId: string) {
+    const istore = useInterfaceStore()
+    if (istore.currentProjectId === projectId) {
+      istore.setCurrentProjectId("")
+    }
     // Typescript prevents doing a simple for loop without going through shenanigans
     const history = useHistory()
     history.beginTransaction(`Delete  project ${projectId}`)
