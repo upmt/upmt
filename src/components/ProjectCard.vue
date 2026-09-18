@@ -213,7 +213,7 @@
       [ "Export as CSV", () => doCsvExport(props.projectId) ],
       [ "Delete project", () => doDeleteProject(props.projectId) ]
   ]
-  if (currentProject.value) {
+  if (currentProject.value && currentProjectId.value !== props.projectId) {
       menuActions.push([ `Merge into current project ${currentProject.value.name}`, () => doMergeIntoCurrent(props.projectId) ])
   }
 </script>
