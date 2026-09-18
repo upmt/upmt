@@ -121,6 +121,7 @@
   const menuActions = computed(() => {
       const actions: NamedAction[] = [
           [ `Add a folder`, () => store.addModelFolder(props.modelfolderId, "newfolder") ],
+          [ `Add a category`, () => modelfolder.value && store.addGenericDiachronicCategory("DiachronicCategory", modelfolder.value) ]
       ]
 
       if (modelfolder.value && modelfolder.value.parentId) {
