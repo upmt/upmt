@@ -1031,6 +1031,18 @@ export const useProjectStore = defineStore('projectStore', () => {
     return gdc
   }
 
+  function addGenericDiachronicSubcategory (name: string, parent: GenericDiachronicCategory) {
+    const history = useHistory()
+    history.beginTransaction(`Add GenericDiachronicCategory ${name}`)
+    const data = {
+      name,
+      parent
+    }
+    const gdc = repo.GenericDiachronicCategory.save(data)
+    history.commitTransaction()
+    return gdc
+  }
+
   function addGenericDiachronicCategoryToMoment (categoryId: string, momentId: string) {
     const history = useHistory()
     history.beginTransaction(`Add GenericDiachronicCategory ${categoryId} to moment ${momentId}`)
@@ -1775,6 +1787,7 @@ export const useProjectStore = defineStore('projectStore', () => {
     activateProject,
     addAnnotation,
     addGenericDiachronicCategory,
+    addGenericDiachronicSubcategory,
     addGenericDiachronicCategoryToMoment,
     removeGenericDiachronicCategory,
     addModelFolder,

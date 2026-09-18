@@ -226,6 +226,7 @@
 
   import type { NamedAction } from 'components/util.ts'
   const menuActions: NamedAction[] = [
+      [ "Add subcategory", () => genericdiachroniccategory.value && store.addGenericDiachronicSubcategory("DiachronicCategory", genericdiachroniccategory.value) ],
       [ "Delete", () => store.deleteGenericDiachronicCategory(props.categoryId) ],
       [ "Debug", () => debug() ]
   ]
