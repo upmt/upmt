@@ -92,6 +92,7 @@
                     icon="mdi-delete"
                     title="Remove category"
                     dense
+                    @click="removeGenericDiachronicCategory(category.id)"
                     size="sm" />
                 </div>
               </q-menu>
@@ -365,6 +366,10 @@
       } catch (e) {
           console.log(`Cannot parse ${selectionData}: ${e}`)
       }
+  }
+
+  function removeGenericDiachronicCategory (categoryId: string) {
+      store.removeGenericDiachronicCategory(categoryId, props.momentId)
   }
 
   function clearModel () {

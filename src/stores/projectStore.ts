@@ -1058,9 +1058,13 @@ export const useProjectStore = defineStore('projectStore', () => {
   }
 
   function removeGenericDiachronicCategory (categoryId: string, momentId: string) {
+    const history = useHistory()
+    history.beginTransaction(`Remove Generic Diachronic Category ${categoryId} from moment ${momentId}`)
     repo.DiachronicAssociation
-      .whereId([ categoryId, momentId ])
+      .where('genericDiachronicCategoryId', categoryId as any)
+      .where('momentId', momentId as any)
       .delete()
+    history.commitTransaction()
   }
 
   function moveMoment (sourceMomentId: string, referenceMomentId: string, where = "") {
