@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHr lpr fFr"
+            :key="istore.refreshIndex"
             :class="{ 'isExpertMode': isExpertMode }">
     <q-header elevated>
       <q-toolbar>

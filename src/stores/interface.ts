@@ -24,6 +24,8 @@ export const useInterfaceStore = defineStore('interface', () => {
     zoomStep: 0.5,
     username: "anonymous"
   })
+  // Force refresh index (used as key in App)
+  const refreshIndex = ref(0)
 
   const currentProjectId: Ref<string | null> = ref(null)
   const currentInterview: Ref<Interview | null> = ref(null)
@@ -151,12 +153,18 @@ export const useInterfaceStore = defineStore('interface', () => {
     return settings
   }
 
+  function forceRefresh () {
+    refreshIndex.value += 1
+  }
+
   return {
     // Constants
     SSCPrefix,
     MomentPrefix,
     currentInterview,
     currentProjectId,
+    forceRefresh,
+    refreshIndex,
     getUsername,
     getProjectId,
     editedSpecificSynchronicModelId,

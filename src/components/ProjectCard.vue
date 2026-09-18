@@ -147,6 +147,7 @@
               type: 'info',
               message: `Deleted project ${projectId}`
           })
+          istore.forceRefresh()
       })
   }
 
