@@ -1036,7 +1036,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     history.beginTransaction(`Add GenericDiachronicCategory ${name}`)
     const data = {
       name,
-      parent
+      parent,
+      folder: parent.folder
     }
     const gdc = repo.GenericDiachronicCategory.save(data)
     history.commitTransaction()
