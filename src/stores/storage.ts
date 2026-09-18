@@ -92,7 +92,12 @@ function getStoredProjectData(id: string, filename: string = "")  {
 function deleteStoredProject(id: string)  {
   const projectPath = id2path(id)
   try {
-    fs.rmSync(projectPath)
+    const versions = fs.readdirSync(projectPath)
+    for (const basename of versions) {
+      fs.rmSync(`${projectPath}/${basename}`)
+    }
+    // The directory should now be empty
+    fs.rmdirSync(projectPath)
     console.log(`Project ${projectPath} deleted`)
     return null
   } catch (error) {
