@@ -9,7 +9,15 @@
                   { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
       </q-btn-toggle>
 
-      <span class="q-px-md text-bold">Profondeur&nbsp;:</span>
+      <span class="q-px-md text-bold">Mode</span>
+      <q-btn-toggle
+        size="xs"
+        v-model="genericDiachronicMode"
+        :options="[ { icon: 'mdi-alpha-d-box-outline', value: '' },
+                  { icon: 'mdi-alpha-d-box', value: 'replace' } ]">
+      </q-btn-toggle>
+
+      <span class="q-px-md text-bold">Depth&nbsp;:</span>
       <q-slider v-model="maximumDepth"
                 class="col-4"
                 snap
@@ -49,6 +57,7 @@
             :key="moment.id"
             :maximumDepth="maximumDepth"
             :momentId="moment.id"
+            :genericDiachronicMode="genericDiachronicMode"
             :layout="editViewMode">
           </MomentShortRepresentation>
         </div>
@@ -67,9 +76,11 @@
 
   const editViewMode = ref('horizontal')
 
+  const genericDiachronicMode = ref('')
+
   const maximumDepth = ref(1)
 
-  const splitByEpisode = ref(true)
+  const splitByEpisode = ref(false)
 
   const props = defineProps<{
       projectId: string
