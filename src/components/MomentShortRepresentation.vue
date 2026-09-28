@@ -13,7 +13,10 @@
              :data-moment="moment.id">
 
           <span class="moment-name">
-            <span>{{ momentName }}
+            <span v-if="genericDiachronicMode == 'replace'">
+              {{ genericDiachronicLabel }}
+            </span>
+            <span v-else>{{ momentName }}
               <q-popup-edit v-model="momentName" auto-save v-slot="scope">
                 <MomentNameInput @change="scope.cancel"
                                  :moment="moment" />
@@ -35,7 +38,8 @@
                 :maximumDepth="maximumDepth"
                 :momentDepth="momentDepth + 1"
                 :momentId="m.id"
-            :layout="layout">
+                :genericDiachronicMode="genericDiachronicMode"
+                :layout="layout">
               </MomentShortRepresentation>
             </div>
           </div>
@@ -60,7 +64,8 @@
       momentId: { type: String, default: "" },
       momentDepth: { type: Number, default: 0 },
       maximumDepth: { type: Number, default: 0 },
-      layout: { type: String, default: "horizontal" }
+      layout: { type: String, default: "horizontal" },
+      genericDiachronicMode: { type: String, default: "" }
   })
 
   const moment = computed(() => store.getMoment(props.momentId))
@@ -80,6 +85,14 @@
       },
       set (color: string) {
           store.updateMomentColor(props.momentId, color)
+      }
+  })
+
+  const genericDiachronicLabel = computed(() => {
+      if (moment.value && moment.value.genericdiachroniccategories.length) {
+          return moment.value.genericdiachroniccategories.map(gcd => gcd.fullName).join(", ")
+      } else {
+          return ""
       }
   })
 
