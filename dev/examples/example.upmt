@@ -5,8 +5,8 @@
   "contributor": "olivier",
   "created": "2026-01-08T13:56:54.227Z",
   "modified": "2026-04-13T18:22:29.085Z",
-  "filename": "/projects/Basic_Example/2026-09-18T173627-Basic_Example.upmt",
-  "name": "Basic Example",
+  "filename": "/projects/example/2026-09-18T173627-example.upmt",
+  "name": "example",
   "note": "This a basic example project to illustrate the tool.",
   "modelfolder": {
     "id": "Lcy7bCBuvQPI4XTXYaiZo",
