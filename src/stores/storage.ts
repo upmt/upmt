@@ -182,7 +182,7 @@ function importProjectFromUrl (url: string, projectId: string = "") {
       if (!fs.existsSync(projectDir)) {
         fs.mkdirSync(projectDir)
       }
-      fs.writeFileSync(`${projectDir}/${basename}.upmt`, response.data)
+      fs.writeFileSync(`${projectDir}/${basename}.upmt`, JSON.stringify(response.data, null, 2))
       return projectId
     }
   })
