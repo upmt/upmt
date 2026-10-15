@@ -1,74 +1,91 @@
 <template>
   <div>
-    <q-toolbar class="row toolbar">
+    <q-splitter
+      v-model="splitterModel"
+      :limits="[5,50]">
 
-      <q-btn-toggle
-        size="xs"
-        v-model="editViewMode"
-        :options="[ { icon: 'mdi-pan-horizontal', value: 'horizontal' },
-                  { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
-      </q-btn-toggle>
+      <template v-slot:before>
+        <GenericDiachronicCategoriesRepresentation
+          title="Generic Diachronic Categories"
+          class="generic-diachronic-categories"
+          :projectId="projectId"
+          currentInterviewId="">
+        </GenericDiachronicCategoriesRepresentation>
+      </template>
 
-      <span class="q-px-md text-bold">Mode</span>
-      <q-btn-toggle
-        size="xs"
-        v-model="genericDiachronicMode"
-        :options="[ { icon: 'mdi-alpha-d-box-outline', value: '' },
-                  { icon: 'mdi-alpha-d-box', value: 'replace' } ]">
-      </q-btn-toggle>
+      <template v-slot:after>
+        <q-toolbar class="row toolbar">
 
-      <span class="q-px-md text-bold">Depth&nbsp;:</span>
-      <q-slider v-model="maximumDepth"
-                class="col-4"
-                snap
-                markers
-                marker-labels
-                :min="0"
-                :max="4"
-                :step="1"
-                >
-      </q-slider>
+          <q-btn-toggle
+            size="xs"
+            v-model="editViewMode"
+            :options="[ { icon: 'mdi-pan-horizontal', value: 'horizontal' },
+                      { icon: 'mdi-pan-vertical', value: 'vertical' } ]">
+          </q-btn-toggle>
 
-      <q-checkbox v-model="splitByEpisode"
-                  left-label
-                  label="Split by marked Episode"
-                  />
+          <span class="q-px-md text-bold">Mode</span>
+          <q-btn-toggle
+            size="xs"
+            v-model="genericDiachronicMode"
+            :options="[ { icon: 'mdi-alpha-d-box-outline', value: '' },
+                      { icon: 'mdi-alpha-d-box', value: 'replace' } ]">
+          </q-btn-toggle>
 
-      <q-space />
+          <span class="q-px-md text-bold">Depth&nbsp;:</span>
+          <q-slider v-model="maximumDepth"
+                    class="col-4"
+                    snap
+                    markers
+                    marker-labels
+                    :min="0"
+                    :max="4"
+                    :step="1"
+                    >
+          </q-slider>
 
-    </q-toolbar>
+          <q-checkbox v-model="splitByEpisode"
+                      left-label
+                      label="Split by marked Episode"
+                      />
 
-    <div class="episodes"
-         :class="editViewMode">
-      <div v-for="episode in episodes"
-           class="episode"
-           :key="episode.id">
-        <q-btn
-          dense
-          flat
-          :to="{ name: 'project', query: { tab: episode.interview.label } }"
-          no-caps>
-          {{ episode.moment.name }} ({{ episode.interview.label }})
-        </q-btn>
-        <div class="episode-children"
+          <q-space />
+
+        </q-toolbar>
+
+        <div class="episodes"
              :class="editViewMode">
-          <MomentShortRepresentation
-            v-for="moment in episode.moment.children"
-            :key="moment.id"
-            :maximumDepth="maximumDepth"
-            :momentId="moment.id"
-            :genericDiachronicMode="genericDiachronicMode"
-            :layout="editViewMode">
-          </MomentShortRepresentation>
+          <div v-for="episode in episodes"
+               class="episode"
+               :key="episode.id">
+            <q-btn
+              dense
+              flat
+              :to="{ name: 'project', query: { tab: episode.interview.label } }"
+              no-caps>
+              {{ episode.moment.name }} ({{ episode.interview.label }})
+            </q-btn>
+            <div class="episode-children"
+                 :class="editViewMode">
+              <MomentShortRepresentation
+                v-for="moment in episode.moment.children"
+                :key="moment.id"
+                :maximumDepth="maximumDepth"
+                :momentId="moment.id"
+                :genericDiachronicMode="genericDiachronicMode"
+                :layout="editViewMode">
+              </MomentShortRepresentation>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </q-splitter>
   </div>
 </template>
 
 <script setup lang="ts">
 
   import { computed, ref } from 'vue'
+  import GenericDiachronicCategoriesRepresentation from 'components/GenericDiachronicCategoriesRepresentation.vue'
   import MomentShortRepresentation from './MomentShortRepresentation.vue'
   import { useProjectStore } from 'stores/projectStore'
 
@@ -87,6 +104,8 @@
   }>()
 
   store.activateProject(props.projectId)
+
+  const splitterModel = ref(20)
 
   // getMomentsByPrefix returns raw Moments with no children
   // information. We fetch children info through the getMoment map and
