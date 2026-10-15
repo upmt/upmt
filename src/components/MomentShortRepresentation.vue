@@ -16,6 +16,19 @@
              :data-moment="moment.id">
 
           <span class="moment-name">
+            <q-tooltip v-if="genericDiachronicMode == 'replace'"
+                       class="bg-white text-black shadow-1"
+                       anchor="top left"
+                       self="bottom left">
+              {{ momentName }}
+            </q-tooltip>
+            <q-tooltip v-else
+                       class="bg-white text-black shadow-1"
+                       anchor="top left"
+                       self="bottom left">
+              {{ genericDiachronicLabel }}
+            </q-tooltip>
+
             <span v-if="genericDiachronicMode == 'replace'">
               {{ genericDiachronicLabel }}
             </span>
