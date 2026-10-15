@@ -6,7 +6,7 @@
   import { onMounted } from 'vue'
   import { useProjectStore } from 'stores/projectStore'
   import { useInterfaceStore } from 'stores/interface'
-  import { getStoredProjectInfo, importProjectFromUrl } from 'stores/storage'
+  import { getStoredProjectInfo, storeProjectFromUrl } from 'stores/storage'
   import BaseModel from 'stores/models/basemodel'
 
   const store = useProjectStore()
@@ -38,7 +38,7 @@
       for (const id of [ 'example' ]) {
           if (! getStoredProjectInfo(id)) {
               try {
-                  void importProjectFromUrl(`./examples/${id}.upmt`, id)
+                  void storeProjectFromUrl(`./examples/${id}.upmt`, id)
               } catch (error) {
                   console.log(`Cannot load example ${id}:`, error)
               }

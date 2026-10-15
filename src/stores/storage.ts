@@ -169,12 +169,19 @@ function storeProject (projectId: string) {
  * Import project from URL directly into storage
  * @returns Promise<string>: the projectId
  */
-function importProjectFromUrl (url: string, projectId: string = "") {
+function storeProjectFromUrl (url: string, projectId: string = "") {
   return axios.get(url).then((response) => {
     if (response.headers['content-type'] == 'text/html') {
       console.log(`Invalid data (text/html) from ${url}`)
       return null
     } else {
+      if (projectId == "") {
+        projectId = response.data.id
+      }
+      if (projectId == "") {
+        console.log("Error - no project id is defined")
+        return ""
+      }
       response.data.id = projectId
       const projectDir = id2path(projectId)
       const basename = timestampAdd(projectId)
@@ -198,5 +205,5 @@ export {
    listStoredProjectsInfo,
    deleteStoredProject,
    storeProject,
-   importProjectFromUrl
+   storeProjectFromUrl
 }
