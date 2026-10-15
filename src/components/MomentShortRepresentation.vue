@@ -9,7 +9,9 @@
                 @color="droppedColor">
 
         <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
-             :style="{ backgroundColor: moment.color || 'transparent' }"
+             :style="{ backgroundColor: moment.color || 'transparent',
+                       borderTop: topBorderStyle
+                     }"
              v-if="moment"
              :data-moment="moment.id">
 
@@ -89,6 +91,17 @@
       set (color: string) {
           store.updateMomentColor(props.momentId, color)
       }
+  })
+
+  const topBorderStyle = computed(() => {
+      if (moment.value && moment.value.genericdiachroniccategories.length) {
+          const category = moment.value.genericdiachroniccategories[0]
+          if (category && category.color) {
+              const color = category.color || 'black'
+              return `6px solid ${color}`
+          }
+      }
+      return ""
   })
 
   const genericDiachronicLabel = computed(() => {
