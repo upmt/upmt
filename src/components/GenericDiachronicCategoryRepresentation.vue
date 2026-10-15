@@ -26,10 +26,12 @@
               name="mdi-alpha-d-box" />
             <span
               class="genericdiachroniccategory-label">
-              {{ genericdiachroniccategory.name }} <q-btn
-                                                     :title="currentInterviewMomentsLabel"
-                                                     size="sm"
-                                                     dense>
+              {{ genericdiachroniccategory.name }}
+              <q-btn
+                :title="currentInterviewMomentsLabel"
+                size="xs"
+                round
+                dense>
                 <q-menu class="column">
                   <div  v-for="moment in currentMoments"
                         class="flex row justify-between"
@@ -49,7 +51,8 @@
                 {{ currentMoments.length }}</q-btn> /
               <q-btn
                 :title="momentsLabel"
-                size="sm"
+                size="xs"
+                round
                 dense>
                 <q-menu class="column">
                   <div class="row items-left no-wrap"
@@ -58,6 +61,7 @@
                     <q-btn class="full-width justify-content-between"
                            align="left"
                            no-caps
+                           flat
                            :label="name"
                            icon="mdi-comment-text-outline"
                            @click="switchTab(name)"
