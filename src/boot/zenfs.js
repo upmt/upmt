@@ -5,7 +5,7 @@ import { IndexedDB } from '@zenfs/dom'
 
 export default defineBoot(async () => {
     await configureSingle({ backend: IndexedDB });
-    console.log("zenfs boot configured", fs.mounts)
+    console.log("zenfs boot configured (fs variable)", fs.mounts)
     window.fs = fs
 
     // Make storage persistant.

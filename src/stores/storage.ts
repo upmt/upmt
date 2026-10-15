@@ -77,11 +77,17 @@ function getStoredProjectData(id: string, filename: string = "")  {
     filename = info.filename
   }
   try {
-    const data = JSON.parse(fs.readFileSync(filename).toString())
-    data.filename = filename
-    return data
+    const content = fs.readFileSync(filename).toString()
+    if (content) {
+      const data = JSON.parse(content)
+      data.filename = filename
+      return data
+    } else {
+      console.log("Empty project", id)
+      return null
+    }
   } catch (error) {
-    console.log("No such stored project", id, error)
+    console.log("Cannot parse project", id, error)
     return null
   }
 }
