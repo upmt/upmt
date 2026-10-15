@@ -75,7 +75,16 @@
               dense
               flat
               icon="mdi-alpha-d-box">
-              <q-menu class="column">
+              <q-tooltip anchor="top middle" self="center middle" class="flex column bg-white text-black shadow-1">
+                <div  v-for="category in moment.genericdiachroniccategories"
+                      :style="{ backgroundColor: category.color || 'transparent' }"
+                      :key="category.id">
+                  {{ category.fullName }}
+                </div>
+              </q-tooltip>
+              <q-menu class="column"
+                      anchor="top middle"
+                      self="center middle">
                 <div  v-for="category in moment.genericdiachroniccategories"
                       class="flex row justify-between"
                       :key="category.id">
