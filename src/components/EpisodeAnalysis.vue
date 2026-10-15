@@ -69,6 +69,7 @@
               <MomentShortRepresentation
                 v-for="moment in episode.moment.children"
                 :key="moment.id"
+                :genericGraphs="genericGraphs"
                 :maximumDepth="maximumDepth"
                 :momentId="moment.id"
                 :genericDiachronicMode="genericDiachronicMode"
@@ -106,6 +107,8 @@
   store.activateProject(props.projectId)
 
   const splitterModel = ref(20)
+
+  const genericGraphs = computed(() => store.getGenericSynchronicGraphs(props.projectId))
 
   // getMomentsByPrefix returns raw Moments with no children
   // information. We fetch children info through the getMoment map and

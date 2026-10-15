@@ -3,8 +3,9 @@
        :data-moment="momentId">
 
       <DropZone data="header"
-                types="upmt/color"
+                types="upmt/color upmt/genericdiachroniccategory"
                 class="row full-width justify-center moment-header q-pa-xs"
+                @genericdiachroniccategory="droppedGenericDiachronicCategory"
                 @color="droppedColor">
 
         <div :class="[ 'moment', { 'transitional': moment.isTransitional } ]"
@@ -35,9 +36,10 @@
             <div v-for="m in moment.children"
              :key="m.id">
               <MomentShortRepresentation
+                :momentId="m.id"
+                :genericGraphs="genericGraphs"
                 :maximumDepth="maximumDepth"
                 :momentDepth="momentDepth + 1"
-                :momentId="m.id"
                 :genericDiachronicMode="genericDiachronicMode"
                 :layout="layout">
               </MomentShortRepresentation>
@@ -62,6 +64,7 @@
 
   const props = defineProps({
       momentId: { type: String, default: "" },
+      genericGraphs: { type: Object, default: null },
       momentDepth: { type: Number, default: 0 },
       maximumDepth: { type: Number, default: 0 },
       layout: { type: String, default: "horizontal" },
@@ -95,6 +98,11 @@
           return ""
       }
   })
+
+  function droppedGenericDiachronicCategory (categoryId: string) {
+      store.addGenericDiachronicCategoryToMoment(categoryId,
+                                                 props.momentId)
+  }
 
   function droppedColor (color: string) {
       store.updateMomentColor(props.momentId, color)
