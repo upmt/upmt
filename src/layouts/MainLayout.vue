@@ -287,6 +287,11 @@
       let menu: MenuItem[] = [
       ]
 
+      menu.push({
+          label: "Home",
+          icon: 'mdi-home-outline',
+          link: `/`
+      })
       if (currentProjectId.value) {
           menu.push({
               label: "Project editor",
